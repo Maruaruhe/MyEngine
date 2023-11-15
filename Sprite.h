@@ -66,6 +66,7 @@ private:
 
 	Transform transform_;
 	//Matrix4x4 worldMatrix_;
+	bool isInvisible_;
 
 	const int32_t kClientWidth = 1280;
 	const int32_t kClientHeight = 720;

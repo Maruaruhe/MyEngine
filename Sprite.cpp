@@ -9,6 +9,7 @@ void Sprite::Initialize(DirectX12* directX12, SpriteData spriteData) {
 		{0.0f,0.0f,0.0f},
 		{0.0f,0.0f,0.0f},
 	};
+	isInvisible_ = false;
 	CreateVertexResource();
 	CreateMaterialResource();
 	CreateVertexBufferView();
@@ -59,19 +60,21 @@ void Sprite::Update(Vector4& color, Transform& transform_) {
 }
 
 void Sprite::Draw() {
-	directX12_->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView);	//VBVを設定
-	directX12_->GetCommandList()->IASetIndexBuffer(&indexBufferView);	//VBVを設定
-	//形状を設定。PSOに設定しているものとはまた別。同じものを設定すると考えておけばよい
-	directX12_->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	directX12_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
-	//directX12_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResourceSprite->GetGPUVirtualAddress());
-	//wvp用のCBufferの場所を設定
-	directX12_->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
+	if (!isInvisible_) {
+		directX12_->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView);	//VBVを設定
+		directX12_->GetCommandList()->IASetIndexBuffer(&indexBufferView);	//VBVを設定
+		//形状を設定。PSOに設定しているものとはまた別。同じものを設定すると考えておけばよい
+		directX12_->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		directX12_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
+		//directX12_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResourceSprite->GetGPUVirtualAddress());
+		//wvp用のCBufferの場所を設定
+		directX12_->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
 
-	directX12_->GetCommandList()->SetGraphicsRootDescriptorTable(2, directX12_->GetSrvHandleGPU());
-	//描画！　（DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
-	//directX12_->GetCommandList()->DrawInstanced(6, 1, 0, 0);
-	directX12_->GetCommandList()->DrawIndexedInstanced(6, 1, 0, 0, 0);
+		directX12_->GetCommandList()->SetGraphicsRootDescriptorTable(2, directX12_->GetSrvHandleGPU());
+		//描画！　（DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
+		//directX12_->GetCommandList()->DrawInstanced(6, 1, 0, 0);
+		directX12_->GetCommandList()->DrawIndexedInstanced(6, 1, 0, 0, 0);
+	}
 }
 
 void Sprite::CreateVertexResource() {
