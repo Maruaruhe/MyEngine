@@ -22,6 +22,7 @@ public:
 
 
 	HWND GetHwnd() const { return hwnd; }
+	HINSTANCE GetHInstance() { return wc.hInstance; }
 
 private:
 	//ウインドウクラスの設定
