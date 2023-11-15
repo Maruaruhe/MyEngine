@@ -19,6 +19,8 @@ void GameScene::Initialize(DirectX12* directX12, WindowsAPI* windowsAPI)
 
 	graphicsRenderer_->Initialize(directX12);
 
+	input_->Initialize(windowsAPI);
+
 	sprite->Initialize(directX12_, spriteData);
 	sphere->Initialize(directX12_);
 	model->Initialize(directX12_);
@@ -33,6 +35,7 @@ void GameScene::Initialize(DirectX12* directX12, WindowsAPI* windowsAPI)
 }
 
 void GameScene::Update() {
+	input_->Update();
 	//ImGui::ShowDemoWindow();
 	transform.rotate.y += 0.02f;
 

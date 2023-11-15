@@ -9,6 +9,7 @@
 #include "Lighting.h"
 #include "Sprite.h"
 #include "Model.h"
+#include "Input.h"
 
 #define TRIANGLECOUNT 2
 
@@ -18,6 +19,7 @@ class WindowsAPI;
 class Texture;
 class Sphere;
 class Lighting;
+class Input;
 
 class GameScene
 {
@@ -38,6 +40,7 @@ private:
 
 	DirectX12* directX12_ = new DirectX12;
 	GraphicsRenderer* graphicsRenderer_ = new GraphicsRenderer;
+	Input* input_ = new Input;
 	Triangle** triangle_ = new Triangle * [TRIANGLECOUNT];
 	Sprite* sprite = new Sprite;
 	//Texture* texture_ = new Texture;
