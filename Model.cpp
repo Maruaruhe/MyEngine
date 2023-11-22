@@ -69,8 +69,8 @@ ModelData Model::LoadObjFile(const std::string& directoryPath, const std::string
 	return modelData;
 }
 void Model::InitializePosition() {
-	modelData = LoadObjFile("Resources","plane.obj");
-	vertexResource = directX12_->CreateBufferResource(directX12_->GetDevice(), sizeof(vertexData) * modelData.vertices.size());
+	modelData = LoadObjFile("Resources","multiMaterial.obj");
+	vertexResource = directX12_->CreateBufferResource(directX12_->GetDevice(), sizeof(VertexData) * modelData.vertices.size());
 
 	vertexBufferView = {};
 	vertexBufferView.BufferLocation = vertexResource->GetGPUVirtualAddress();
