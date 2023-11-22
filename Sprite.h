@@ -27,7 +27,7 @@ public:
 
 	void CreateIndexResource();
 
-	void Update(Vector4& color, Transform& transform_);
+	void Update(Vector4& color, const Transform& transform_);
 
 	void Draw();
 private:

@@ -41,7 +41,7 @@ public:
 
 	void CreateDirectionalLightResource();
 
-	void Update(Vector4& color, Transform& transform_, DirectionalLight& directionalLight);
+	void Update(Vector4& color, const Transform& transform_, DirectionalLight& directionalLight);
 
 	void Draw();
 

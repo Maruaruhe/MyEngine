@@ -24,6 +24,7 @@ void GameScene::Initialize(DirectX12* directX12, WindowsAPI* windowsAPI)
 	sprite->Initialize(directX12_, spriteData);
 	sphere->Initialize(directX12_);
 	model->Initialize(directX12_);
+	camera->Initialize();
 
 	graphicsRenderer_->ViewportScissor();
 
@@ -37,21 +38,18 @@ void GameScene::Initialize(DirectX12* directX12, WindowsAPI* windowsAPI)
 void GameScene::Update() {
 	input_->Update();
 	//ImGui::ShowDemoWindow();
-	transform.rotate.y += 0.02f;
 
 	ImGui::ColorEdit3("TriangleColor", colorVolume);
 	ImGui::SliderFloat3("TriangleColor", colorVolume, 0.0f, 1.0f);
-	ImGui::SliderFloat3("translate", &transform.translate.x, -1.5f, 1.5f);
-	ImGui::SliderFloat3("rotate", &transform.rotate.x, -3.0f, 3.0f);
-	ImGui::SliderFloat3("scale", &transform.scale.x, 0.0f, 10.0f);
+	camera->Update();
 	ImGui::SliderFloat3("lightcolor", &light.color.x, 0.0f, 1.0f);
 	ImGui::SliderFloat3("light", &light.direction.x, -1.0f, 1.0f);
 
 	Vector4 color = {colorVolume[0],colorVolume[1],colorVolume[2],1.0f};
 
-	sprite->Update(color, transform);
+	sprite->Update(color, camera->GetTransform());
 	sphere->Update(color, transform, light);
-	model->Update(color, transform, light);
+	model->Update(color, camera->GetTransform(), light);
 
 	ImGui::Render();
 }
@@ -84,8 +82,8 @@ void GameScene::Final() {
 }
 
 void GameScene::Draw() {
-	sprite->Draw();
-	sphere->Draw();
+	//sprite->Draw();
+	//sphere->Draw();
 	model->Draw();
 }
 

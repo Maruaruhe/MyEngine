@@ -10,6 +10,7 @@
 #include "Sprite.h"
 #include "Model.h"
 #include "Input.h"
+#include "Camera.h"
 
 #define TRIANGLECOUNT 2
 
@@ -20,6 +21,7 @@ class Texture;
 class Sphere;
 class Lighting;
 class Input;
+class Camera;
 
 class GameScene
 {
@@ -46,6 +48,7 @@ private:
 	//Texture* texture_ = new Texture;
 	Sphere* sphere = new Sphere;
 	Model* model = new Model;
+	Camera* camera = new Camera;
 
 	DirectionalLight light;
 

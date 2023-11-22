@@ -69,7 +69,7 @@ ModelData Model::LoadObjFile(const std::string& directoryPath, const std::string
 	return modelData;
 }
 void Model::InitializePosition() {
-	modelData = LoadObjFile("Resources","multiMaterial.obj");
+	modelData = LoadObjFile("Resources","ghostPori.obj");
 	vertexResource = directX12_->CreateBufferResource(directX12_->GetDevice(), sizeof(VertexData) * modelData.vertices.size());
 
 	vertexBufferView = {};
@@ -93,7 +93,7 @@ void Model::Initialize(DirectX12* directX12) {
 	InitializePosition();
 }
 
-void Model::Update(Vector4& color, Transform& transform_, DirectionalLight& direcionalLight) {
+void Model::Update(Vector4& color, const Transform& transform_, DirectionalLight& direcionalLight) {
 	transform.translate = transform_.translate;
 	transform.rotate = transform_.rotate;
 	transform.scale = transform_.scale;

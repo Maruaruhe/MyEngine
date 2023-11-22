@@ -189,6 +189,6 @@ void GlobalVariables::SetValue(const std::string& groupName, const std::string& 
 	group.items[key] = newItem;
 }
 
-void GlobalVariables::SetValueAddItem(const std::string& groupName, const std::string& key, int32_t value);
-void GlobalVariables::SetValueAddItem(const std::string& groupName, const std::string& key, float value);
-void GlobalVariables::SetValueAddItem(const std::string& groupName, const std::string& key, const Vector3& value);
+//void GlobalVariables::SetValueAddItem(const std::string& groupName, const std::string& key, int32_t value);
+//void GlobalVariables::SetValueAddItem(const std::string& groupName, const std::string& key, float value);
+//void GlobalVariables::SetValueAddItem(const std::string& groupName, const std::string& key, const Vector3& value);

@@ -37,7 +37,7 @@ void Sprite::Initialize(DirectX12* directX12, SpriteData spriteData) {
 	vertexData[3].normal = { 0.0f,0.0f,-1.0f };
 }
 
-void Sprite::Update(Vector4& color, Transform& transform_) {
+void Sprite::Update(Vector4& color, const Transform& transform_) {
 	ImGui::DragFloat2("uvTranslate", &uvTransform.translate.x, 0.01f, -10.0f, 10.0f);
 	ImGui::DragFloat2("uvScale", &uvTransform.scale.x, 0.01f, -10.0f, 10.0f);
 	ImGui::SliderAngle("ucRotate", &uvTransform.rotate.z);
