@@ -3,9 +3,9 @@
 #include <map>
 #include <string>
 #include <fstream>
-#include "Vector4.h"
-#include "ImGuiWND.h"
-#include "externals/nlohmann/json.hpp"
+#include "../../Math/Vector4.h"
+#include "../ImGui/ImGuiWND.h"
+#include "../../../externals/nlohmann/json.hpp"
 
 struct Item {
 	std::variant<int32_t, float, Vector3> value;

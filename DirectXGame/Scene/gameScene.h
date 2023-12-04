@@ -1,16 +1,16 @@
 #pragma once
-#include "DirectX12.h"
-#include "GraphicsRenderer.h"
-#include "WindowsAPI.h"
-#include "Triangle.h"
-#include "ImGuiWND.h"
-#include "Texture.h"
-#include "Sphere.h"
-#include "Lighting.h"
-#include "Sprite.h"
-#include "Model.h"
-#include "Input.h"
-#include "Camera.h"
+#include "../Base/DirextX12/DirectX12.h"
+#include "../Base/GraphicsRenderer/GraphicsRenderer.h"
+#include "../Base/WindowsAPI/WindowsAPI.h"
+#include "../Object/Triangle/Triangle.h"
+#include "../Base/ImGui/ImGuiWND.h"
+#include "../Object/Texture/Texture.h"
+#include "../Object/Sphere/Sphere.h"
+#include "../Object/Light/Lighting.h"
+#include "../Object/Sprite/Sprite.h"
+#include "../Object/Model/Model.h"
+#include "../Base/Input/Input.h"
+#include "../Object/Camera/Camera.h"
 
 #define TRIANGLECOUNT 2
 

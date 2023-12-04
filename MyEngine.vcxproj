@@ -88,8 +88,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="DirectX12.cpp" />
+    <ClCompile Include="DirectXGame\Object\Camera\Camera.cpp" />
+    <ClCompile Include="DirectXGame\Base\DirextX12\DirectX12.cpp" />
     <ClCompile Include="externals\imgui\imgui.cpp" />
     <ClCompile Include="externals\imgui\imgui_demo.cpp" />
     <ClCompile Include="externals\imgui\imgui_draw.cpp" />
@@ -97,21 +97,21 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="externals\imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="externals\imgui\imgui_tables.cpp" />
     <ClCompile Include="externals\imgui\imgui_widgets.cpp" />
-    <ClCompile Include="GlobalVariables.cpp" />
-    <ClCompile Include="ImGuiWND.cpp" />
-    <ClCompile Include="Input.cpp" />
-    <ClCompile Include="Lighting.cpp" />
-    <ClCompile Include="Matrix4x4.cpp" />
-    <ClCompile Include="Model.cpp" />
-    <ClCompile Include="Sphere.cpp" />
-    <ClCompile Include="Sprite.cpp" />
-    <ClCompile Include="Texture.cpp" />
-    <ClCompile Include="Triangle.cpp" />
-    <ClCompile Include="Log.cpp" />
+    <ClCompile Include="DirectXGame\Base\GlobalVariables\GlobalVariables.cpp" />
+    <ClCompile Include="DirectXGame\Base\ImGui\ImGuiWND.cpp" />
+    <ClCompile Include="DirectXGame\Base\Input\Input.cpp" />
+    <ClCompile Include="DirectXGame\Object\Light\Lighting.cpp" />
+    <ClCompile Include="DirectXGame\Math\Matrix4x4.cpp" />
+    <ClCompile Include="DirectXGame\Object\Model\Model.cpp" />
+    <ClCompile Include="DirectXGame\Object\Sphere\Sphere.cpp" />
+    <ClCompile Include="DirectXGame\Object\Sprite\Sprite.cpp" />
+    <ClCompile Include="DirectXGame\Object\Texture\Texture.cpp" />
+    <ClCompile Include="DirectXGame\Object\Triangle\Triangle.cpp" />
+    <ClCompile Include="DirectXGame\Base\Log\Log.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="gameScene.cpp" />
-    <ClCompile Include="GraphicsRenderer.cpp" />
-    <ClCompile Include="WindowsAPI.cpp" />
+    <ClCompile Include="DirectXGame\Scene\gameScene.cpp" />
+    <ClCompile Include="DirectXGame\Base\GraphicsRenderer\GraphicsRenderer.cpp" />
+    <ClCompile Include="DirectXGame\Base\WindowsAPI\WindowsAPI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Object3d.PS.hlsl">
@@ -128,8 +128,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="DirectX12.h" />
+    <ClInclude Include="DirectXGame\Object\Camera\Camera.h" />
+    <ClInclude Include="DirectXGame\Base\DirextX12\DirectX12.h" />
     <ClInclude Include="externals\imgui\imconfig.h" />
     <ClInclude Include="externals\imgui\imgui.h" />
     <ClInclude Include="externals\imgui\imgui_impl_dx12.h" />
@@ -138,23 +138,23 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="externals\imgui\imstb_rectpack.h" />
     <ClInclude Include="externals\imgui\imstb_textedit.h" />
     <ClInclude Include="externals\imgui\imstb_truetype.h" />
-    <ClInclude Include="GlobalVariables.h" />
-    <ClInclude Include="ImGuiWND.h" />
-    <ClInclude Include="Input.h" />
-    <ClInclude Include="Lighting.h" />
-    <ClInclude Include="Matrix4x4.h" />
-    <ClInclude Include="Model.h" />
-    <ClInclude Include="Sphere.h" />
-    <ClInclude Include="Sprite.h" />
-    <ClInclude Include="struct.h" />
-    <ClInclude Include="Texture.h" />
-    <ClInclude Include="TransformationMatrix.h" />
-    <ClInclude Include="Triangle.h" />
-    <ClInclude Include="Log.h" />
-    <ClInclude Include="gameScene.h" />
-    <ClInclude Include="GraphicsRenderer.h" />
-    <ClInclude Include="Vector4.h" />
-    <ClInclude Include="WindowsAPI.h" />
+    <ClInclude Include="DirectXGame\Base\GlobalVariables\GlobalVariables.h" />
+    <ClInclude Include="DirectXGame\Base\ImGui\ImGuiWND.h" />
+    <ClInclude Include="DirectXGame\Base\Input\Input.h" />
+    <ClInclude Include="DirectXGame\Object\Light\Lighting.h" />
+    <ClInclude Include="DirectXGame\Math\Matrix4x4.h" />
+    <ClInclude Include="DirectXGame\Object\Model\Model.h" />
+    <ClInclude Include="DirectXGame\Object\Sphere\Sphere.h" />
+    <ClInclude Include="DirectXGame\Object\Sprite\Sprite.h" />
+    <ClInclude Include="DirectXGame\Math\struct.h" />
+    <ClInclude Include="DirectXGame\Object\Texture\Texture.h" />
+    <ClInclude Include="DirectXGame\Math\TransformationMatrix.h" />
+    <ClInclude Include="DirectXGame\Object\Triangle\Triangle.h" />
+    <ClInclude Include="DirectXGame\Base\Log\Log.h" />
+    <ClInclude Include="DirectXGame\Scene\gameScene.h" />
+    <ClInclude Include="DirectXGame\Base\GraphicsRenderer\GraphicsRenderer.h" />
+    <ClInclude Include="DirectXGame\Math\Vector4.h" />
+    <ClInclude Include="DirectXGame\Base\WindowsAPI\WindowsAPI.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt" />
