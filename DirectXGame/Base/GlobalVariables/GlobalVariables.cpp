@@ -1,8 +1,9 @@
 #include "GlobalVariables.h"
 
-//GlobalVariables* GlobalVariables::GetInstance() {
-//
-//}
+GlobalVariables* GlobalVariables::GetInstance() {
+	static GlobalVariables instance;
+	return &instance;
+}
 
 void GlobalVariables::Update() {
 	if (!ImGui::Begin("Global Variables", nullptr, ImGuiWindowFlags_MenuBar)) {
@@ -189,6 +190,40 @@ void GlobalVariables::SetValue(const std::string& groupName, const std::string& 
 	group.items[key] = newItem;
 }
 
+void GlobalVariables::AddItem(const std::string& groupName, const std::string& key, int32_t value) {
+	if(groupName.empty()) {
+		SetValue(groupName, key, value);
+	}
+}
+
+void GlobalVariables::AddItem(const std::string& groupName, const std::string& key, float value) {
+	if (groupName.empty()) {
+		SetValue(groupName, key, value);
+	}
+}
+
+void GlobalVariables::AddItem(const std::string& groupName, const std::string& key, const Vector3& value) {
+	if (groupName.empty()) {
+		SetValue(groupName, key, value);
+	}
+}
+
+int32_t GlobalVariables::GetIntValue(const std::string& groupName, const std::string& key)const {
+	assert(groupName.empty());
+	const Group& group = datas_.at(groupName);
+
+	assert(group.items.find(key));
+
+	return ;
+}
+
+float GlobalVariables::GetFloatValue(const std::string& groupName, const std::string& key)const {
+
+}
+
+Vector3 GlobalVariables::GetVector3Value(const std::string& groupName, const std::string& key)const {
+
+}
 //void GlobalVariables::SetValueAddItem(const std::string& groupName, const std::string& key, int32_t value);
 //void GlobalVariables::SetValueAddItem(const std::string& groupName, const std::string& key, float value);
 //void GlobalVariables::SetValueAddItem(const std::string& groupName, const std::string& key, const Vector3& value);

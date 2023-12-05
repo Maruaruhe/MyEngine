@@ -35,6 +35,10 @@ public:
 	void AddItem(const std::string& groupName, const std::string& key, float value);
 	void AddItem(const std::string& groupName, const std::string& key, const Vector3& value);
 
+	int32_t GetIntValue(const std::string& groupName, const std::string& key)const;
+	float GetFloatValue(const std::string& groupName, const std::string& key)const;
+	Vector3 GetVector3Value(const std::string& groupName, const std::string& key)const;
+
 private:
 	GlobalVariables() = default;
 	~GlobalVariables() = default;
