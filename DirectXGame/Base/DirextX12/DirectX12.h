@@ -4,9 +4,9 @@
 #include <cassert>
 #include <format>
 #include <dxgidebug.h>
-#include "Vector4.h"
-#include "ImGuiWND.h"
-#include "WindowsAPI.h"
+#include "../../Math/Vector4.h"
+#include "../../Base/ImGui/ImGuiWND.h"
+#include "../WindowsAPI/WindowsAPI.h"
 #include <wrl.h>
 #include <chrono>
 

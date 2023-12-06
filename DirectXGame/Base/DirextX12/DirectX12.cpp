@@ -1,6 +1,6 @@
 #include "DirectX12.h"
-#include "Log.h"
-#include "Texture.h"
+#include "../Log/Log.h"
+#include "../../Object/Texture/Texture.h"
 
 void DirectX12::Init(WindowsAPI* windowsAPI) {
 	InitializeFixFPS();

@@ -1,7 +1,7 @@
 #pragma once
 #include <Windows.h>
 #include <cstdint>
-#include "ImGuiWND.h"
+#include "../ImGui/ImGuiWND.h"
 
 #pragma comment(lib,"winmm.lib")
 //クライアント領域のサイズ

@@ -1,7 +1,5 @@
 #include "gameScene.h"
 
-
-
 void GameScene::Initialize(DirectX12* directX12, WindowsAPI* windowsAPI)
 {
 	//light->Initialize();
@@ -44,6 +42,8 @@ void GameScene::Update() {
 	camera->Update();
 	ImGui::SliderFloat3("lightcolor", &light.color.x, 0.0f, 1.0f);
 	ImGui::SliderFloat3("light", &light.direction.x, -1.0f, 1.0f);
+
+	GlobalVariables::GetInstance()->Update();
 
 	Vector4 color = {colorVolume[0],colorVolume[1],colorVolume[2],1.0f};
 

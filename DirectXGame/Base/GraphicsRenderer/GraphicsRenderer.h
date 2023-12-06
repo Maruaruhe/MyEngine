@@ -1,5 +1,5 @@
 #pragma once
-#include "Vector4.h"
+#include "../../Math/Vector4.h"
 #include <d3d12.h>
 #include <dxgi1_6.h>
 #include <cassert>
@@ -8,8 +8,8 @@
 #include <dxgidebug.h>
 #include <dxcapi.h>
 
-#include "Log.h"
-#include "DirectX12.h"
+#include "../Log/Log.h"
+#include "../DirextX12/DirectX12.h"
 
 #pragma comment(lib,"d3d12.lib")
 #pragma comment(lib,"dxgi.lib")

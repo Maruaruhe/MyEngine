@@ -6,7 +6,7 @@
 #define DIRECTINPUT_VERSION 0x0800
 #include <dinput.h>
 
-#include "WindowsAPI.h"
+#include "../WindowsAPI/WindowsAPI.h"
 
 class Input
 {

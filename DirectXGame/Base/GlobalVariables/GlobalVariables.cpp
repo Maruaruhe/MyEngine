@@ -69,6 +69,7 @@ void GlobalVariables::SaveFile(const std::string& groupName) {
 	root[groupName] = json::object();
 
 	for (std::map<std::string, Item>::iterator itItem = itGroup->second.items.begin(); itItem != itGroup->second.items.end(); ++itItem) {
+		
 		const std::string& itemName = itItem->first;
 		Item& item = itItem->second;
 
@@ -208,22 +209,22 @@ void GlobalVariables::AddItem(const std::string& groupName, const std::string& k
 	}
 }
 
-int32_t GlobalVariables::GetIntValue(const std::string& groupName, const std::string& key)const {
-	assert(groupName.empty());
-	const Group& group = datas_.at(groupName);
-
-	assert(group.items.find(key));
-
-	return ;
-}
-
-float GlobalVariables::GetFloatValue(const std::string& groupName, const std::string& key)const {
-
-}
-
-Vector3 GlobalVariables::GetVector3Value(const std::string& groupName, const std::string& key)const {
-
-}
+//int32_t GlobalVariables::GetIntValue(const std::string& groupName, const std::string& key)const {
+//	assert(groupName.empty());
+//	const Group& group = datas_.at(groupName);
+//
+//	assert(group.items.empty());
+//
+//	return ;
+//}
+//
+//float GlobalVariables::GetFloatValue(const std::string& groupName, const std::string& key)const {
+//
+//}
+//
+//Vector3 GlobalVariables::GetVector3Value(const std::string& groupName, const std::string& key)const {
+//
+//}
 //void GlobalVariables::SetValueAddItem(const std::string& groupName, const std::string& key, int32_t value);
 //void GlobalVariables::SetValueAddItem(const std::string& groupName, const std::string& key, float value);
 //void GlobalVariables::SetValueAddItem(const std::string& groupName, const std::string& key, const Vector3& value);

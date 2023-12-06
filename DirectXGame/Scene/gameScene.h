@@ -11,6 +11,7 @@
 #include "../Object/Model/Model.h"
 #include "../Base/Input/Input.h"
 #include "../Object/Camera/Camera.h"
+#include "../Base/GlobalVariables/GlobalVariables.h"
 
 #define TRIANGLECOUNT 2
 

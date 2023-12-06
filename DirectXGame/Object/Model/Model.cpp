@@ -1,5 +1,6 @@
 #include "Model.h"
 #include <assert.h>
+#include "../../Base/GlobalVariables/GlobalVariables.h"
 
 ModelData Model::LoadObjFile(const std::string& directoryPath, const std::string& filename) {
 	ModelData modelData;
@@ -89,6 +90,10 @@ void Model::Initialize(DirectX12* directX12) {
 	CreateMaterialResource();
 	CreateTransformationMatrixResource();
 	CreateDirectionalLightResource();
+
+	const char* groupName = "Player";
+	GlobalVariables::GetInstance()->CreateGroup(groupName);
+	GlobalVariables::GetInstance()->SetValue(groupName, "Test", 90);
 
 	InitializePosition();
 }

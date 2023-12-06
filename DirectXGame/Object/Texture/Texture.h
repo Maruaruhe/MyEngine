@@ -1,10 +1,10 @@
 #pragma once
 #include <string>
 #include <d3d12.h>
-#include "externals/DirectXTex/DirectXTex.h"
+#include "../../../externals/DirectXTex/DirectXTex.h"
 
-#include "DirectX12.h"
-#include "Log.h"
+#include "../../Base/DirextX12/DirectX12.h"
+#include "../../Base/Log/Log.h"
 
 class Texture
 {

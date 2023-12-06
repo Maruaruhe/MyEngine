@@ -1,11 +1,11 @@
 #pragma once
 #include <stdint.h>
-#include "DirectX12.h"
+#include "../../Base/DirextX12/DirectX12.h"
 #include <dxcapi.h>
-#include "Vector4.h"
-#include "Matrix4x4.h"
-#include "struct.h"
-#include "Lighting.h"
+#include "../../Math/Vector4.h"
+#include "../../Math/Matrix4x4.h"
+#include "../../Math/struct.h"	
+#include "../Light/Lighting.h"
 
 #include <wrl.h>
 

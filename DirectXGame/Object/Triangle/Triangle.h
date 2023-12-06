@@ -1,9 +1,9 @@
 #pragma once
-#include "DirectX12.h"
+#include "../../Base/DirextX12/DirectX12.h"
 #include <dxcapi.h>
-#include "Vector4.h"
-#include "Matrix4x4.h"
-#include "struct.h"
+#include "../../Math/Vector4.h"
+#include "../../Math/Matrix4x4.h"
+#include "../../Math/struct.h"	
 #include <wrl.h>
 
 #pragma comment(lib,"dxcompiler.lib")
