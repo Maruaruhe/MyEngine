@@ -91,9 +91,11 @@ void Model::Initialize(DirectX12* directX12) {
 	CreateTransformationMatrixResource();
 	CreateDirectionalLightResource();
 
-	const char* groupName = "Player";
+	const char* groupName = "Model";
 	GlobalVariables::GetInstance()->CreateGroup(groupName);
-	GlobalVariables::GetInstance()->SetValue(groupName, "Test", 90);
+	GlobalVariables::GetInstance()->AddItem(groupName, "Translate", transform.translate);
+	GlobalVariables::GetInstance()->AddItem(groupName, "Scale", transform.scale);
+	GlobalVariables::GetInstance()->AddItem(groupName, "Rotate", transform.rotate);
 
 	InitializePosition();
 }

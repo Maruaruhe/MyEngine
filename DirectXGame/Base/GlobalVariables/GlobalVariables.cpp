@@ -61,7 +61,7 @@ void GlobalVariables::CreateGroup(const std::string& groupName) {
 void GlobalVariables::SaveFile(const std::string& groupName) {
 	std::map<std::string, Group>::iterator itGroup = datas_.find(groupName);
 
-	assert(itGroup != datas_.end());
+	assert(itGroup  != datas_.end());
 
 	json root;
 	root = json::object();
@@ -87,10 +87,15 @@ void GlobalVariables::SaveFile(const std::string& groupName) {
 			root[groupName][itemName] = json::array({ value.x,value.y,value.z });
 		}
 	}
+
+	//koko
+
 	std::filesystem::path dir(kDirectoryPath);
 	if (!std::filesystem::exists(kDirectoryPath)) {
 		std::filesystem::create_directory(kDirectoryPath);
 	}
+	//
+
 	std::string filePath = kDirectoryPath + groupName + ".json";
 	std::ofstream ofs;
 	ofs.open(filePath);
@@ -192,39 +197,58 @@ void GlobalVariables::SetValue(const std::string& groupName, const std::string& 
 }
 
 void GlobalVariables::AddItem(const std::string& groupName, const std::string& key, int32_t value) {
-	if(groupName.empty()) {
+	Group& group = datas_[groupName];
+	if (!group.items.contains(key)) {
 		SetValue(groupName, key, value);
 	}
 }
 
 void GlobalVariables::AddItem(const std::string& groupName, const std::string& key, float value) {
-	if (groupName.empty()) {
+	Group& group = datas_[groupName];
+	if (!group.items.contains(key)) {
 		SetValue(groupName, key, value);
 	}
 }
 
 void GlobalVariables::AddItem(const std::string& groupName, const std::string& key, const Vector3& value) {
-	if (groupName.empty()) {
+	Group& group = datas_[groupName];
+	if (!group.items.contains(key)) {
 		SetValue(groupName, key, value);
 	}
 }
 
-//int32_t GlobalVariables::GetIntValue(const std::string& groupName, const std::string& key)const {
-//	assert(groupName.empty());
-//	const Group& group = datas_.at(groupName);
-//
-//	assert(group.items.empty());
-//
-//	return ;
-//}
-//
-//float GlobalVariables::GetFloatValue(const std::string& groupName, const std::string& key)const {
-//
-//}
-//
-//Vector3 GlobalVariables::GetVector3Value(const std::string& groupName, const std::string& key)const {
-//
-//}
-//void GlobalVariables::SetValueAddItem(const std::string& groupName, const std::string& key, int32_t value);
-//void GlobalVariables::SetValueAddItem(const std::string& groupName, const std::string& key, float value);
-//void GlobalVariables::SetValueAddItem(const std::string& groupName, const std::string& key, const Vector3& value);
+int32_t GlobalVariables::GetIntValue(const std::string& groupName, const std::string& key)const {
+	assert(groupName.empty());
+	const Group& group = datas_.at(groupName);
+
+	assert(group.items.empty());
+
+	if (group.items.at(key).value.index() == 0) {
+		return std::get<0>(group.items.at(key).value);
+	}
+	return 0;
+}
+
+float GlobalVariables::GetFloatValue(const std::string& groupName, const std::string& key)const {
+	assert(groupName.empty());
+	const Group& group = datas_.at(groupName);
+
+	assert(group.items.empty());
+
+	if (group.items.at(key).value.index() == 1) {
+		return std::get<1>(group.items.at(key).value);
+	}
+	return 0;
+}
+
+Vector3 GlobalVariables::GetVector3Value(const std::string& groupName, const std::string& key)const {
+	assert(groupName.empty());
+	const Group& group = datas_.at(groupName);
+
+	assert(group.items.empty());
+
+	if (group.items.at(key).value.index() == 2) {
+		return std::get<2>(group.items.at(key).value);
+	}
+	return {};
+}

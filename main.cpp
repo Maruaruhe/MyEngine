@@ -1,8 +1,12 @@
-#include "gameScene.h"
+#include "DirectXGame/Scene/gameScene.h"
+#include "DirectXGame/Base/GlobalVariables/GlobalVariables.h"
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	CoInitializeEx(0, COINIT_MULTITHREADED);
 	//インスタンス
+
+	GlobalVariables::GetInstance()->LoadFiles();
+
 	GameScene* gameScene = new GameScene;
 
 	WindowsAPI* windowsAPI = new WindowsAPI;
