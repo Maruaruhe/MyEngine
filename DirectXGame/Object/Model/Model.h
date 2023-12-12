@@ -26,6 +26,8 @@ public:
 
 	void InitializePosition();
 
+	void ApplyGlobalVariables();
+
 	void CreateVertexResource();
 
 	void CreateVertexBufferView();

@@ -100,10 +100,21 @@ void Model::Initialize(DirectX12* directX12) {
 	InitializePosition();
 }
 
+void Model::ApplyGlobalVariables() {
+	const char* groupName = "Model";
+	transform.translate = GlobalVariables::GetInstance()->GetVector3Value(groupName, "Translate");
+	transform.scale = GlobalVariables::GetInstance()->GetVector3Value(groupName, "Scale");
+	transform.rotate = GlobalVariables::GetInstance()->GetVector3Value(groupName, "Rotate");
+}
+
 void Model::Update(Vector4& color, const Transform& transform_, DirectionalLight& direcionalLight) {
 	transform.translate = transform_.translate;
 	transform.rotate = transform_.rotate;
 	transform.scale = transform_.scale;
+
+	//ApplyGlobalVariables();
+
+
 	materialData_->uvTransform = MakeIdentity4x4();
 	transformationMatrix->World = MakeAffineMatrix(transform.scale, transform.rotate, transform.translate);
 	Matrix4x4 cameraMatrix = MakeAffineMatrix(cameraTransform.scale, cameraTransform.rotate, cameraTransform.translate);
