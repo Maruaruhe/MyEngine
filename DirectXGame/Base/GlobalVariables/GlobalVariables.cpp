@@ -218,10 +218,10 @@ void GlobalVariables::AddItem(const std::string& groupName, const std::string& k
 }
 
 int32_t GlobalVariables::GetIntValue(const std::string& groupName, const std::string& key)const {
-	assert(groupName.empty());
+	assert(!groupName.empty());
 	const Group& group = datas_.at(groupName);
 
-	assert(group.items.empty());
+	assert(group.items.contains(key));
 
 	if (group.items.at(key).value.index() == 0) {
 		return std::get<0>(group.items.at(key).value);
@@ -230,10 +230,10 @@ int32_t GlobalVariables::GetIntValue(const std::string& groupName, const std::st
 }
 
 float GlobalVariables::GetFloatValue(const std::string& groupName, const std::string& key)const {
-	assert(groupName.empty());
+	assert(!groupName.empty());
 	const Group& group = datas_.at(groupName);
 
-	assert(group.items.empty());
+	assert(group.items.contains(key));
 
 	if (group.items.at(key).value.index() == 1) {
 		return std::get<1>(group.items.at(key).value);
@@ -242,10 +242,10 @@ float GlobalVariables::GetFloatValue(const std::string& groupName, const std::st
 }
 
 Vector3 GlobalVariables::GetVector3Value(const std::string& groupName, const std::string& key)const {
-	assert(groupName.empty());
+	assert(!groupName.empty());
 	const Group& group = datas_.at(groupName);
 
-	assert(group.items.empty());
+	assert(group.items.contains(key));
 
 	if (group.items.at(key).value.index() == 2) {
 		return std::get<2>(group.items.at(key).value);

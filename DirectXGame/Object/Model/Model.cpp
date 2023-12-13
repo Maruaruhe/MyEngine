@@ -112,7 +112,7 @@ void Model::Update(Vector4& color, const Transform& transform_, DirectionalLight
 	transform.rotate = transform_.rotate;
 	transform.scale = transform_.scale;
 
-	//ApplyGlobalVariables();
+	ApplyGlobalVariables();
 
 
 	materialData_->uvTransform = MakeIdentity4x4();
