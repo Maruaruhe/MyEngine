@@ -36,6 +36,12 @@ void Sprite::Initialize(DirectX12* directX12, SpriteData spriteData) {
 	vertexData[3].texcoord = spriteData.RightTop.texcoord;
 	vertexData[3].normal = { 0.0f,0.0f,-1.0f };
 }
+//void Sprite::SetPosition(Vector2 LB, Vector2 LT, Vector2 RB, Vector2 RT) {
+//	vertexData[0].position = {0,0,0,0};
+//	//vertexData[1].position = { LT.x,LT.y,0,0 };
+//	//vertexData[2].position = { RB.x,RB.y,0,0 };
+//	//vertexData[3].position = { RT.x,RT.y,0,0 };
+//}
 
 void Sprite::Update(Vector4& color, const Transform& transform_) {
 	ImGui::DragFloat2("uvTranslate", &uvTransform.translate.x, 0.01f, -10.0f, 10.0f);

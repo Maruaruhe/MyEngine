@@ -13,6 +13,9 @@ class Sprite
 public:
 	void Initialize(DirectX12* directX12, SpriteData spriteData);
 
+	void SetPosition(Vector2 LB, Vector2 LT, Vector2 RB, Vector2 RT);
+	VertexData GetPosition() { return vertexData[0], vertexData[1], vertexData[2], vertexData[3]; }
+
 	void CreateVertexResource();
 
 	void CreateVertexBufferView();

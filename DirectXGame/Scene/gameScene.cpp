@@ -82,31 +82,12 @@ void GameScene::Final() {
 }
 
 void GameScene::Draw() {
-	//sprite->Draw();
+	sprite->Draw();
 	//sphere->Draw();
 	model->Draw();
 }
 
 void GameScene::VariableInit() {
-	triangleData[0].Left_.position = { -0.5f,-0.5f,0.0f,1.0f };
-	triangleData[0].Left_.texcoord = { 0.0f,1.0f };
-
-	triangleData[0].Top_.position = { 0.0f,0.5f,0.0f,1.0f };
-	triangleData[0].Top_.texcoord = { 0.5f,0.0f };
-
-	triangleData[0].Right_.position = { 0.5f,-0.5f,0.0f,1.0f };
-	triangleData[0].Right_.texcoord = { 1.0f,1.0f };
-
-	//
-	triangleData[1].Left_.position = { -0.5f,-0.5f,0.5f,1.0f };
-	triangleData[1].Left_.texcoord = { 0.0f,1.0f };
-
-	triangleData[1].Top_.position = { 0.0f,0.0f,0.0f,1.0f };
-	triangleData[1].Top_.texcoord = { 0.5f,0.0f };
-
-	triangleData[1].Right_.position = { 0.5f,-0.5f,-0.5f,1.0f };
-	triangleData[1].Right_.texcoord = { 1.0f,1.0f };
-
 	spriteData.LeftBot.position = { 0.0f,360.0f,0.0f,1.0f };
 	spriteData.LeftBot.texcoord = { 0.0f,1.0f };
 	spriteData.LeftTop.position = { 0.0f,0.0f,0.0f,1.0f };

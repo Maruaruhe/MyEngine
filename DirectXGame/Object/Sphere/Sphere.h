@@ -11,10 +11,6 @@
 
 #pragma comment(lib,"dxcompiler.lib")
 
-//struct SpriteData {
-//	TriangleData first;
-//	TriangleData second;
-//};
 
 class Sphere
 {
@@ -79,7 +75,6 @@ private:
 	bool useMonsterBall = true;
 
 private:
-	//SpriteData spData[256];
 	VertexData* vertexData;
 
 	float num = 0.0625f;
