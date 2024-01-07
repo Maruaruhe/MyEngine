@@ -37,11 +37,13 @@ void GameScene::Update() {
 	input_->Update();
 	//ImGui::ShowDemoWindow();
 
+	ImGui::Begin("s");
 	ImGui::ColorEdit3("TriangleColor", colorVolume);
 	ImGui::SliderFloat3("TriangleColor", colorVolume, 0.0f, 1.0f);
 	camera->Update();
 	ImGui::SliderFloat3("lightcolor", &light.color.x, 0.0f, 1.0f);
 	ImGui::SliderFloat3("light", &light.direction.x, -1.0f, 1.0f);
+	ImGui::End();
 
 	GlobalVariables::GetInstance()->Update();
 

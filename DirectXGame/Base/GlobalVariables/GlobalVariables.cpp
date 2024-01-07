@@ -7,6 +7,7 @@ GlobalVariables* GlobalVariables::GetInstance() {
 
 void GlobalVariables::Update() {
 	if (!ImGui::Begin("Global Variables", nullptr, ImGuiWindowFlags_MenuBar)) {
+		ImGui::End();
 		return;
 	}
 	if (!ImGui::BeginMenuBar()) {
