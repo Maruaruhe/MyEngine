@@ -17,11 +17,12 @@ void GameScene::Initialize(DirectX12* directX12, WindowsAPI* windowsAPI)
 
 	graphicsRenderer_->Initialize(directX12);
 
-	input_->Initialize(windowsAPI);
+	//input_->Initialize(windowsAPI);
+	Input::GetInstance()->Initialize(windowsAPI);
 
 	sprite->Initialize(directX12_, spriteData);
 	sphere->Initialize(directX12_);
-	model->Initialize(directX12_);
+	model->Initialize(directX12_, windowsAPI);
 	camera->Initialize();
 
 	graphicsRenderer_->ViewportScissor();
@@ -34,7 +35,8 @@ void GameScene::Initialize(DirectX12* directX12, WindowsAPI* windowsAPI)
 }
 
 void GameScene::Update() {
-	input_->Update();
+	//input_->Update();
+	Input::GetInstance()->Update();
 	//ImGui::ShowDemoWindow();
 
 	ImGui::Begin("s");
@@ -44,6 +46,7 @@ void GameScene::Update() {
 	ImGui::SliderFloat3("lightcolor", &light.color.x, 0.0f, 1.0f);
 	ImGui::SliderFloat3("light", &light.direction.x, -1.0f, 1.0f);
 	ImGui::End();
+
 
 	GlobalVariables::GetInstance()->Update();
 

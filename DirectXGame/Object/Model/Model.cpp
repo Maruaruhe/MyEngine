@@ -83,8 +83,9 @@ void Model::InitializePosition() {
 	std::memcpy(vertexData, modelData.vertices.data(), sizeof(VertexData) * modelData.vertices.size());
 }
 
-void Model::Initialize(DirectX12* directX12) {
+void Model::Initialize(DirectX12* directX12, WindowsAPI* windowsAPI) {
 	directX12_ = directX12;
+
 	transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
 	cameraTransform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,-10.0f} };
 	CreateMaterialResource();
@@ -97,6 +98,8 @@ void Model::Initialize(DirectX12* directX12) {
 	GlobalVariables::GetInstance()->AddItem(groupName, "Scale", transform.scale);
 	GlobalVariables::GetInstance()->AddItem(groupName, "Rotate", transform.rotate);
 
+	ApplyGlobalVariables();
+
 	InitializePosition();
 }
 
@@ -108,11 +111,18 @@ void Model::ApplyGlobalVariables() {
 }
 
 void Model::Update(Vector4& color, const Transform& transform_, DirectionalLight& direcionalLight) {
-	transform.translate = transform_.translate;
-	transform.rotate = transform_.rotate;
-	transform.scale = transform_.scale;
 
-	ApplyGlobalVariables();
+	//transform.translate = transform_.translate;
+	//transform.rotate = transform_.rotate;
+	//transform.scale = transform_.scale;
+
+
+	if (Input::GetInstance()->PushKey(DIK_W)) {
+		transform.translate.y += 0.1f;
+	}
+	if (Input::GetInstance()->PushKey(DIK_S)) {
+		transform.translate.z += 0.1f;
+	}
 
 
 	materialData_->uvTransform = MakeIdentity4x4();

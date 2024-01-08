@@ -11,6 +11,7 @@
 class Input
 {
 public:
+	static Input* GetInstance();
 	/// <summary>
 	/// 初期化
 	/// </summary>

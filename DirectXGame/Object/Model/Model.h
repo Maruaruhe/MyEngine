@@ -10,6 +10,8 @@
 #include "../../Math/struct.h"	
 #include "../Light/Lighting.h"
 
+#include "../../Base/Input/Input.h"
+
 #pragma comment(lib,"dxcompiler.lib")
 
 struct ModelData {
@@ -22,7 +24,7 @@ class Model
 public:
 	ModelData LoadObjFile(const std::string& directoryPath, const std::string& filename);
 
-	void Initialize(DirectX12* directX12);
+	void Initialize(DirectX12* directX12, WindowsAPI* windowsAPI);
 
 	void InitializePosition();
 
@@ -50,6 +52,7 @@ public:
 
 private:
 	DirectX12* directX12_;
+	Input* input_;
 	ModelData modelData;
 
 	Transform transform;
