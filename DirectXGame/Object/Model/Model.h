@@ -44,7 +44,7 @@ public:
 
 	void CreateDirectionalLightResource();
 
-	void Update(Vector4& color, const Transform& transform_, DirectionalLight& directionalLight);
+	void Update(Vector4& color, const Transform& cameraTransform_, DirectionalLight& directionalLight);
 
 	void Draw();
 
@@ -78,8 +78,6 @@ private:
 
 	TransformationMatrix* transformationMatrix;
 	//Matrix4x4* wvpData;
-
-	Transform transform_;
 	//Matrix4x4 worldMatrix_;
 
 	DirectionalLight* directionalLight_;

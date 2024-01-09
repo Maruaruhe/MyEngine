@@ -13,6 +13,9 @@
 #include "../Object/Camera/Camera.h"
 #include "../Base/GlobalVariables/GlobalVariables.h"
 
+#include <iostream>
+#include <memory>
+
 #define TRIANGLECOUNT 2
 
 class DirectX12;
@@ -27,7 +30,7 @@ class Camera;
 class GameScene
 {
 public:
-	void Initialize(DirectX12* directX12, WindowsAPI* windowsAPI);
+	void Initialize();
 	void Update();
 	void Release();
 
@@ -41,14 +44,17 @@ private:
 	TriangleData triangleData[TRIANGLECOUNT];
 	SpriteData spriteData;
 
-	DirectX12* directX12_ = new DirectX12;
+	DirectX12* directX12_ = nullptr;
+	WindowsAPI* windowsAPI_ = nullptr;
+
 	GraphicsRenderer* graphicsRenderer_ = new GraphicsRenderer;
 	Input* input_ = new Input;
 	Triangle** triangle_ = new Triangle * [TRIANGLECOUNT];
 	Sprite* sprite = new Sprite;
 	//Texture* texture_ = new Texture;
 	Sphere* sphere = new Sphere;
-	Model* model = new Model;
+	//Model* model = new Model;
+	std::unique_ptr<Model> model;
 	Camera* camera = new Camera;
 
 	DirectionalLight light;
