@@ -2,7 +2,8 @@
 
 void Player::Initialize(const std::string& filename) {
 	input_ = Input::GetInstance();
-	model_ = std::make_unique<Model>();
+	//model_ = std::make_unique<Model>();
+	model_ = new Model();
 	model_->Initialize(filename);
 
 	transform_.translate = { 0.0f,0.0f,0.0f };
@@ -10,9 +11,9 @@ void Player::Initialize(const std::string& filename) {
 	transform_.scale = { 1.0f,1.0f,1.0f };
 }
 
-void Player::Update(Vector4& color, const Transform& transform_, DirectionalLight& directionalLight) {
+void Player::Update(Vector4& color, DirectionalLight& directionalLight) {
 	Move();
-	model_->Update(color, directionalLight);
+	model_->Update(color, transform_, directionalLight);
 }
 
 void Player::Move() {

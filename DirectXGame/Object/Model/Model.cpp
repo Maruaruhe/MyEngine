@@ -87,55 +87,47 @@ void Model::Initialize(const std::string& filename) {
 	directX12_ = DirectX12::GetInstance();
 	camera_ = Camera::GetInstance();
 
-	transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
+	//transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
 	CreateMaterialResource();
 	CreateTransformationMatrixResource();
 	CreateDirectionalLightResource();
 
-	const char* groupName = "Model";
+	/*const char* groupName = "Model";
 	GlobalVariables::GetInstance()->CreateGroup(groupName);
 	GlobalVariables::GetInstance()->AddItem(groupName, "Translate", transform.translate);
 	GlobalVariables::GetInstance()->AddItem(groupName, "Scale", transform.scale);
 	GlobalVariables::GetInstance()->AddItem(groupName, "Rotate", transform.rotate);
 
-	ApplyGlobalVariables();
+	ApplyGlobalVariables();*/
 
 	InitializePosition(filename);
 }
 
 void Model::ApplyGlobalVariables() {
-	const char* groupName = "Model";
+	/*const char* groupName = "Model";
 	transform.translate = GlobalVariables::GetInstance()->GetVector3Value(groupName, "Translate");
 	transform.scale = GlobalVariables::GetInstance()->GetVector3Value(groupName, "Scale");
-	transform.rotate = GlobalVariables::GetInstance()->GetVector3Value(groupName, "Rotate");
+	transform.rotate = GlobalVariables::GetInstance()->GetVector3Value(groupName, "Rotate");*/
 }
 
-void Model::Update(Vector4& color, DirectionalLight& direcionalLight) {
+void Model::Update(Vector4& color, Transform& transform, DirectionalLight& direcionalLight) {
 
-	//transform.translate = transform_.translate;
-	//transform.rotate = transform_.rotate;
-	//transform.scale = transform_.scale;
+	//ApplyGlobalVariables();
 
-	ApplyGlobalVariables();
+	//if (Input::GetInstance()->PushKey(DIK_W)) {
+	//	transform.translate.y += 0.1f;
+	//}
+	//if (Input::GetInstance()->PushKey(DIK_S)) {
+	//	transform.translate.y -= 0.1f;
+	//}
+	//if (Input::GetInstance()->PushKey(DIK_A)) {
+	//	transform.translate.x -= 0.1f;
+	//}
+	//if (Input::GetInstance()->PushKey(DIK_D)) {
+	//	transform.translate.x += 0.1f;
+	//}
 
-	if (Input::GetInstance()->PushKey(DIK_W)) {
-		transform.translate.y += 0.1f;
-	}
-	if (Input::GetInstance()->PushKey(DIK_S)) {
-		transform.translate.y -= 0.1f;
-	}
-	if (Input::GetInstance()->PushKey(DIK_A)) {
-		transform.translate.x -= 0.1f;
-	}
-	if (Input::GetInstance()->PushKey(DIK_D)) {
-		transform.translate.x += 0.1f;
-	}
-
-	GlobalVariables::GetInstance()->SetValue("Model", "Translate", transform.translate);
-	/*if (Input::GetInstance()->PushKey(DIK_S)) {
-		transform.translate.z += 0.1f;
-	}*/
-
+	//GlobalVariables::GetInstance()->SetValue("Model", "Translate", transform.translate);
 
 	materialData_->uvTransform = MakeIdentity4x4();
 	transformationMatrix->World = MakeAffineMatrix(transform.scale, transform.rotate, transform.translate);

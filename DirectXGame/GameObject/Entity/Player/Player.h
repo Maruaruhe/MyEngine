@@ -10,16 +10,19 @@ class Player
 public:
 	void Initialize(const std::string& filename);
 
-	void Update(Vector4& color, const Transform& transform_, DirectionalLight& directionalLight);
+	void Update(Vector4& color, DirectionalLight& directionalLight);
 
 	void Move();
 
 	void Draw();
 
 	Transform GetTransform() { return transform_; }
+	void SetTransform(Transform transform) { transform_ = transform; }
+
 private:
 	Input* input_ = nullptr;
 
 	Transform transform_;
-	std::unique_ptr<Model> model_;
+	//std::unique_ptr<Model> model_;
+	Model* model_;
 };

@@ -13,6 +13,8 @@
 #include "../Object/Camera/Camera.h"
 #include "../Base/GlobalVariables/GlobalVariables.h"
 
+#include "../GameObject/Entity/Player/Player.h"
+
 #include <iostream>
 #include <memory>
 
@@ -50,12 +52,14 @@ private:
 
 	GraphicsRenderer* graphicsRenderer_ = new GraphicsRenderer;
 	Input* input_ = new Input;
-	Triangle** triangle_ = new Triangle * [TRIANGLECOUNT];
-	Sprite* sprite = new Sprite;
-	//Texture* texture_ = new Texture;
-	Sphere* sphere = new Sphere;
+	//Triangle** triangle_ = new Triangle * [TRIANGLECOUNT];
+	//Sprite* sprite = new Sprite;
+	////Texture* texture_ = new Texture;
+	//Sphere* sphere = new Sphere;
 
-	std::unique_ptr<Model> model;
+	//std::unique_ptr<Model> model;
+	//std::unique_ptr<Player> player_;
+	Player* player_;
 
 	DirectionalLight light;
 

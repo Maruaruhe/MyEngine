@@ -13,7 +13,12 @@ public:
 	Matrix4x4 MakeWVPMatrix(Transform& transform);
 
 	Transform GetTransform() { return cameraTransform; }
+
+	Camera(const Camera&) = delete;
+	Camera& operator=(const Camera&) = delete;
 private:
+	Camera() = default;
+	~Camera() = default;
 	Transform cameraTransform;
 
 	const int32_t kClientWidth = 1280;
