@@ -1,6 +1,7 @@
 #pragma once
 #include "../../Math/Matrix4x4.h"
 #include "../../Base/ImGui/ImGuiWND.h"
+#include "../../Base/Input/Input.h"
 
 class Camera
 {

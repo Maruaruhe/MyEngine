@@ -17,12 +17,11 @@ void GameScene::Initialize(DirectX12* directX12, WindowsAPI* windowsAPI)
 
 	graphicsRenderer_->Initialize(directX12);
 
-	//input_->Initialize(windowsAPI);
 	Input::GetInstance()->Initialize(windowsAPI);
 
 	sprite->Initialize(directX12_, spriteData);
 	sphere->Initialize(directX12_);
-	model->Initialize(directX12_, windowsAPI);
+	model->Initialize(directX12_, "ghostPori");
 	camera->Initialize();
 
 	graphicsRenderer_->ViewportScissor();
@@ -35,7 +34,6 @@ void GameScene::Initialize(DirectX12* directX12, WindowsAPI* windowsAPI)
 }
 
 void GameScene::Update() {
-	//input_->Update();
 	Input::GetInstance()->Update();
 	//ImGui::ShowDemoWindow();
 
@@ -52,7 +50,7 @@ void GameScene::Update() {
 
 	Vector4 color = {colorVolume[0],colorVolume[1],colorVolume[2],1.0f};
 
-	sprite->Update(color, camera->GetTransform());
+	sprite->Update(color,transform);
 	sphere->Update(color, transform, light);
 	model->Update(color, camera->GetTransform(), light);
 

@@ -24,9 +24,9 @@ class Model
 public:
 	ModelData LoadObjFile(const std::string& directoryPath, const std::string& filename);
 
-	void Initialize(DirectX12* directX12, WindowsAPI* windowsAPI);
+	void Initialize(DirectX12* directX12, const std::string& filename);
 
-	void InitializePosition();
+	void InitializePosition(const std::string& filename);
 
 	void ApplyGlobalVariables();
 

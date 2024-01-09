@@ -9,7 +9,7 @@ ModelData Model::LoadObjFile(const std::string& directoryPath, const std::string
 	std::vector<Vector2> texcoords;
 	std::string line;
 
-	std::ifstream file(directoryPath + "/" + filename);
+	std::ifstream file(directoryPath + "/" + filename + ".obj");
 	assert(file.is_open());
 
 	while (std::getline(file, line)) {
@@ -69,8 +69,8 @@ ModelData Model::LoadObjFile(const std::string& directoryPath, const std::string
 	}
 	return modelData;
 }
-void Model::InitializePosition() {
-	modelData = LoadObjFile("Resources","ghostPori.obj");
+void Model::InitializePosition(const std::string& filename) {
+	modelData = LoadObjFile("Resources",filename);
 	vertexResource = directX12_->CreateBufferResource(directX12_->GetDevice(), sizeof(VertexData) * modelData.vertices.size());
 
 	vertexBufferView = {};
@@ -83,7 +83,7 @@ void Model::InitializePosition() {
 	std::memcpy(vertexData, modelData.vertices.data(), sizeof(VertexData) * modelData.vertices.size());
 }
 
-void Model::Initialize(DirectX12* directX12, WindowsAPI* windowsAPI) {
+void Model::Initialize(DirectX12* directX12, const std::string& filename) {
 	directX12_ = directX12;
 
 	transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
@@ -100,7 +100,7 @@ void Model::Initialize(DirectX12* directX12, WindowsAPI* windowsAPI) {
 
 	ApplyGlobalVariables();
 
-	InitializePosition();
+	InitializePosition(filename);
 }
 
 void Model::ApplyGlobalVariables() {
@@ -110,7 +110,7 @@ void Model::ApplyGlobalVariables() {
 	transform.rotate = GlobalVariables::GetInstance()->GetVector3Value(groupName, "Rotate");
 }
 
-void Model::Update(Vector4& color, const Transform& transform_, DirectionalLight& direcionalLight) {
+void Model::Update(Vector4& color, const Transform& cameraTransform, DirectionalLight& direcionalLight) {
 
 	//transform.translate = transform_.translate;
 	//transform.rotate = transform_.rotate;
@@ -130,6 +130,8 @@ void Model::Update(Vector4& color, const Transform& transform_, DirectionalLight
 	if (Input::GetInstance()->PushKey(DIK_D)) {
 		transform.translate.x += 0.1f;
 	}
+
+	GlobalVariables::GetInstance()->SetValue("Model", "Translate", transform.translate);
 	/*if (Input::GetInstance()->PushKey(DIK_S)) {
 		transform.translate.z += 0.1f;
 	}*/
@@ -158,7 +160,8 @@ void Model::Draw() {
 	//wvp用のCBufferの場所を設定
 	directX12_->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
 
-	directX12_->GetCommandList()->SetGraphicsRootDescriptorTable(2, directX12_->GetSrvHandleGPU());
+	//koko
+	directX12_->GetCommandList()->SetGraphicsRootDescriptorTable(2, directX12_->GetSrvHandleGPU2());
 	//directX12_->GetCommandList()->SetGraphicsRootConstantBufferView(3, directionalLightResource->GetGPUVirtualAddress());
 	//描画！　（DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
 	directX12_->GetCommandList()->DrawInstanced(UINT(modelData.vertices.size()), 1, 0, 0);
