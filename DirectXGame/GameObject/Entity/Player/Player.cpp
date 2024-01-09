@@ -1,9 +1,9 @@
 #include "Player.h"
 
-void Player::Initialize() {
+void Player::Initialize(const std::string& filename) {
 	input_ = Input::GetInstance();
 	model_ = std::make_unique<Model>();
-	//model_->Initialize();
+	model_->Initialize(filename);
 
 	transform_.translate = { 0.0f,0.0f,0.0f };
 	transform_.rotate = { 0.0f,0.0f,0.0f };
