@@ -13,6 +13,8 @@
 #include "../Object/Camera/Camera.h"
 #include "../Base/GlobalVariables/GlobalVariables.h"
 
+#include "../GameObject/Entity/Player/Player.h"
+
 #define TRIANGLECOUNT 2
 
 class DirectX12;
@@ -50,6 +52,8 @@ private:
 	Sphere* sphere = new Sphere;
 	Model* model = new Model;
 	Camera* camera = new Camera;
+
+	std::unique_ptr<Player> player_;
 
 	DirectionalLight light;
 

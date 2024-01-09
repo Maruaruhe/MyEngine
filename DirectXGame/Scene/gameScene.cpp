@@ -24,6 +24,10 @@ void GameScene::Initialize(DirectX12* directX12, WindowsAPI* windowsAPI)
 	model->Initialize(directX12_, "ghostPori");
 	camera->Initialize();
 
+	player_ = std::make_unique<Player>();
+	//player_ = new Player();
+	player_->Initialize(directX12_,"ghostPori");
+
 	graphicsRenderer_->ViewportScissor();
 
 	transform.translate = { 0.0f,0.0f,0.0f };
@@ -53,6 +57,7 @@ void GameScene::Update() {
 	sprite->Update(color,transform);
 	sphere->Update(color, transform, light);
 	model->Update(color, camera->GetTransform(), light);
+	player_->Update(color, light);
 
 	ImGui::Render();
 }
@@ -87,7 +92,9 @@ void GameScene::Final() {
 void GameScene::Draw() {
 	sprite->Draw();
 	//sphere->Draw();
-	model->Draw();
+	//model->Draw();
+
+	player_->Draw();
 }
 
 void GameScene::VariableInit() {
