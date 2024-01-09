@@ -146,10 +146,7 @@ void Sphere::Initialize(DirectX12* directX12) {
 	InitializePosition();
 }
 
-void Sphere::Update(Vector4& color, Transform& transform_,DirectionalLight& direcionalLight) {
-	transform.translate = transform_.translate;
-	transform.rotate = transform_.rotate;
-	transform.scale = transform_.scale;
+void Sphere::Update(Vector4& color, Transform& transform, const Transform& cameraTransform, DirectionalLight& direcionalLight) {
 	materialData_->uvTransform = MakeIdentity4x4();
 	transformationMatrix->World = MakeAffineMatrix(transform.scale, transform.rotate, transform.translate);
 	Matrix4x4 cameraMatrix = MakeAffineMatrix(cameraTransform.scale, cameraTransform.rotate, cameraTransform.translate);

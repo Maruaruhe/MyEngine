@@ -86,52 +86,31 @@ void Model::InitializePosition(const std::string& filename) {
 void Model::Initialize(DirectX12* directX12, const std::string& filename) {
 	directX12_ = directX12;
 
-	transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
-	cameraTransform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,-10.0f} };
 	CreateMaterialResource();
 	CreateTransformationMatrixResource();
 	CreateDirectionalLightResource();
 
-	const char* groupName = "Model";
+	/*const char* groupName = "Model";
 	GlobalVariables::GetInstance()->CreateGroup(groupName);
 	GlobalVariables::GetInstance()->AddItem(groupName, "Translate", transform.translate);
 	GlobalVariables::GetInstance()->AddItem(groupName, "Scale", transform.scale);
 	GlobalVariables::GetInstance()->AddItem(groupName, "Rotate", transform.rotate);
 
-	ApplyGlobalVariables();
+	ApplyGlobalVariables();*/
 
 	InitializePosition(filename);
 }
 
 void Model::ApplyGlobalVariables() {
-	const char* groupName = "Model";
+	/*const char* groupName = "Model";
 	transform.translate = GlobalVariables::GetInstance()->GetVector3Value(groupName, "Translate");
 	transform.scale = GlobalVariables::GetInstance()->GetVector3Value(groupName, "Scale");
-	transform.rotate = GlobalVariables::GetInstance()->GetVector3Value(groupName, "Rotate");
+	transform.rotate = GlobalVariables::GetInstance()->GetVector3Value(groupName, "Rotate");*/
 }
 
-void Model::Update(Vector4& color, const Transform& cameraTransform, DirectionalLight& direcionalLight) {
+void Model::Update(Vector4& color, const Transform& transform, const Transform& cameraTransform, DirectionalLight& direcionalLight) {
 
-	//transform.translate = transform_.translate;
-	//transform.rotate = transform_.rotate;
-	//transform.scale = transform_.scale;
-
-	ApplyGlobalVariables();
-
-	if (Input::GetInstance()->PushKey(DIK_W)) {
-		transform.translate.y += 0.1f;
-	}
-	if (Input::GetInstance()->PushKey(DIK_S)) {
-		transform.translate.y -= 0.1f;
-	}
-	if (Input::GetInstance()->PushKey(DIK_A)) {
-		transform.translate.x -= 0.1f;
-	}
-	if (Input::GetInstance()->PushKey(DIK_D)) {
-		transform.translate.x += 0.1f;
-	}
-
-	GlobalVariables::GetInstance()->SetValue("Model", "Translate", transform.translate);
+	/*GlobalVariables::GetInstance()->SetValue("Model", "Translate", transform.translate);*/
 	/*if (Input::GetInstance()->PushKey(DIK_S)) {
 		transform.translate.z += 0.1f;
 	}*/

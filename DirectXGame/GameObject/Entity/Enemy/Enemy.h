@@ -5,9 +5,8 @@
 #include "../../../Math/Vector4.h"
 #include "../../../Base/Input/Input.h"
 #include "../../../Object/Model/Model.h"
-#include "Bullet/Bullet.h"
 
-class Player
+class Enemy
 {
 public:
 	void Initialize(DirectX12* directX12, const std::string& filename);
@@ -23,8 +22,11 @@ public:
 	void Draw();
 
 	Transform GetTransform() { return transform_; }
-	Transform GetBulletTransform() { return bulletTransform_; }
 	void SetTransform(Transform transform) { transform_ = transform; }
+
+	void SetLife(int a) { Life = a; }
+	void SetIsAlive(bool a) { isAlive = a; }
+	int GetLife() { return Life; }
 
 private:
 	Input* input_ = nullptr;
@@ -33,14 +35,10 @@ private:
 	Transform transform_;
 	std::unique_ptr<Model> model_;
 
-	Transform reticleTransform_;
-	std::unique_ptr<Model> reticleModel_;
 
-	Transform bulletTransform_;
-	std::unique_ptr<Model> bulletModel_;
-
-	bool isSee = false;
-	Vector3 velocity;
+	bool isAlive = true;
+	int Life = 5;
+	int kMaxLife = 5;
 	//std::unique_ptr<Bullet> bullet_;
 
 	const int kBulletMaxCoolTime = 30;

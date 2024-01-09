@@ -1,4 +1,5 @@
 #pragma once
+
 struct Vector4 final {
 	float x;
 	float y;
@@ -14,3 +15,4 @@ struct Vector2 final {
 	float x;
 	float y;
 };
+

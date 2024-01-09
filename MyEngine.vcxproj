@@ -88,8 +88,11 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DirectXGame\GameObject\Entity\Player\Bullet\Bullet.cpp" />
+    <ClCompile Include="DirectXGame\Math\Vector3.cpp" />
     <ClCompile Include="DirectXGame\Object\Camera\Camera.cpp" />
     <ClCompile Include="DirectXGame\Base\DirextX12\DirectX12.cpp" />
+    <ClCompile Include="DirectXGame\GameObject\Entity\Enemy\Enemy.cpp" />
     <ClCompile Include="externals\imgui\imgui.cpp" />
     <ClCompile Include="externals\imgui\imgui_demo.cpp" />
     <ClCompile Include="externals\imgui\imgui_draw.cpp" />
@@ -130,8 +133,10 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DirectXGame\GameObject\Entity\Player\Bullet\Bullet.h" />
     <ClInclude Include="DirectXGame\Object\Camera\Camera.h" />
     <ClInclude Include="DirectXGame\Base\DirextX12\DirectX12.h" />
+    <ClInclude Include="DirectXGame\GameObject\Entity\Enemy\Enemy.h" />
     <ClInclude Include="externals\imgui\imconfig.h" />
     <ClInclude Include="externals\imgui\imgui.h" />
     <ClInclude Include="externals\imgui\imgui_impl_dx12.h" />

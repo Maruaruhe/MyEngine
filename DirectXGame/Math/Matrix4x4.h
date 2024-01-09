@@ -40,3 +40,19 @@ Matrix4x4 MakeViewportMatrix(float left, float top, float width, float height, f
 
 float InverseNum(const Matrix4x4& m, int a, int b, int c, int d, int e, int f, int g, int h);
 float InverseNum2(const Matrix4x4& m, int a, int b, int c, int d, int e, int f);
+
+Vector3 Add(Vector3 v1, Vector3 v2);
+Vector3 Subtract(Vector3 v1, Vector3 v2);
+
+Vector3 TransformNormal(const Vector3& velocity, const Matrix4x4& matrix);
+Vector3 MultiplyVectorMatrix(const Vector3& velocity, const Matrix4x4& matrix);
+
+Vector3 Cross(const Vector3& vector1, const Vector3& vector2);
+
+Vector3 Normalize(const Vector3& v);
+
+float Length(const Vector3& v);
+
+Vector3 Normalize(const Vector3& v);
+
+float Length(const Vector3& v);

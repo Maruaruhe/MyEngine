@@ -44,7 +44,7 @@ public:
 
 	void CreateDirectionalLightResource();
 
-	void Update(Vector4& color, const Transform& transform_, DirectionalLight& directionalLight);
+	void Update(Vector4& color, const Transform& transform, const Transform& transform_, DirectionalLight& directionalLight);
 
 	void Draw();
 
@@ -54,9 +54,6 @@ private:
 	DirectX12* directX12_;
 	Input* input_;
 	ModelData modelData;
-
-	Transform transform;
-	Transform cameraTransform;
 
 	//頂点リソース用のヒープの設定
 	D3D12_HEAP_PROPERTIES uploadHeapProperties;

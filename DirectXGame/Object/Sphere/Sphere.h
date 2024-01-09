@@ -33,9 +33,11 @@ public:
 
 	void CreateDirectionalLightResource();
 
-	void Update(Vector4& color, Transform& transform_, DirectionalLight& directionalLight);
+	void Update(Vector4& color, Transform& transform_, const Transform& cameraTransform, DirectionalLight& directionalLight);
 
 	void Draw();
+
+	void SetPosition(Vector3& position) { transform.translate = position; }
 private:
 	DirectX12* directX12_;
 
@@ -63,7 +65,6 @@ private:
 	TransformationMatrix* transformationMatrix;
 	//Matrix4x4* wvpData;
 
-	Transform transform_;
 	//Matrix4x4 worldMatrix_;
 
 	DirectionalLight* directionalLight_;
