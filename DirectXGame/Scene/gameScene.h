@@ -46,6 +46,7 @@ private:
 
 	DirectX12* directX12_ = nullptr;
 	WindowsAPI* windowsAPI_ = nullptr;
+	Camera* camera_ = nullptr;
 
 	GraphicsRenderer* graphicsRenderer_ = new GraphicsRenderer;
 	Input* input_ = new Input;
@@ -53,9 +54,8 @@ private:
 	Sprite* sprite = new Sprite;
 	//Texture* texture_ = new Texture;
 	Sphere* sphere = new Sphere;
-	//Model* model = new Model;
+
 	std::unique_ptr<Model> model;
-	Camera* camera = new Camera;
 
 	DirectionalLight light;
 

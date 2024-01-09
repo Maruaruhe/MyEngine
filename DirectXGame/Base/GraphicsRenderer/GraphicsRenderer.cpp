@@ -1,14 +1,15 @@
 #include "GraphicsRenderer.h"
 #include <assert.h>
 
-void GraphicsRenderer::Initialize(DirectX12* directX12) {
+void GraphicsRenderer::Initialize() {
+	directX12_ = DirectX12::GetInstance();
 	InitializeDXC();
-	MakeRootSignature(directX12);
+	MakeRootSignature(directX12_);
 	SetInputLayout();
 	SetBlendState();
 	SetRasterizerState();
 	ShaderCompile();
-	MakePSO(directX12);
+	MakePSO(directX12_);
 }
 
 void GraphicsRenderer::InitializeDXC() {

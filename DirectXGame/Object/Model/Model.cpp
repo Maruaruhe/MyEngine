@@ -83,11 +83,11 @@ void Model::InitializePosition(const std::string& filename) {
 	std::memcpy(vertexData, modelData.vertices.data(), sizeof(VertexData) * modelData.vertices.size());
 }
 
-void Model::Initialize(DirectX12* directX12, const std::string& filename) {
-	directX12_ = directX12;
+void Model::Initialize(const std::string& filename) {
+	directX12_ = DirectX12::GetInstance();
+	camera_ = Camera::GetInstance();
 
 	transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
-	cameraTransform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,-10.0f} };
 	CreateMaterialResource();
 	CreateTransformationMatrixResource();
 	CreateDirectionalLightResource();
@@ -110,7 +110,7 @@ void Model::ApplyGlobalVariables() {
 	transform.rotate = GlobalVariables::GetInstance()->GetVector3Value(groupName, "Rotate");
 }
 
-void Model::Update(Vector4& color, const Transform& cameraTransform, DirectionalLight& direcionalLight) {
+void Model::Update(Vector4& color, DirectionalLight& direcionalLight) {
 
 	//transform.translate = transform_.translate;
 	//transform.rotate = transform_.rotate;
@@ -139,7 +139,7 @@ void Model::Update(Vector4& color, const Transform& cameraTransform, Directional
 
 	materialData_->uvTransform = MakeIdentity4x4();
 	transformationMatrix->World = MakeAffineMatrix(transform.scale, transform.rotate, transform.translate);
-	Matrix4x4 cameraMatrix = MakeAffineMatrix(cameraTransform.scale, cameraTransform.rotate, cameraTransform.translate);
+	Matrix4x4 cameraMatrix = MakeAffineMatrix(camera_->GetTransform().scale, camera_->GetTransform().rotate, camera_->GetTransform().translate);
 	Matrix4x4 viewMatrix = Inverse(cameraMatrix);
 	Matrix4x4 projectionMatrix = MakePerspectiveFovMatrix(0.45f, float(kClientWidth) / float(kClientHeight), 0.1f, 100.0f);
 	Matrix4x4 worldViewProjectionMatrix = Multiply(transformationMatrix->World, Multiply(viewMatrix, projectionMatrix));

@@ -19,7 +19,7 @@
 class GraphicsRenderer
 {
 public:
-	void Initialize(DirectX12* directX12);
+	void Initialize();
 
 	void InitializeDXC();
 
@@ -48,6 +48,7 @@ public:
 
 	void Release();
 private:
+	DirectX12* directX12_;
 	HRESULT hr;
 	Microsoft::WRL::ComPtr<ID3D12Device> device;
 	//InitializeDXC

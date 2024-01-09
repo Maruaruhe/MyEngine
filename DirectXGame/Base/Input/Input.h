@@ -15,7 +15,7 @@ public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(WindowsAPI* winAPI);
+	void Initialize();
 	/// <summary>
 	/// 更新
 	/// </summary>
@@ -30,7 +30,7 @@ public:
 	bool TriggerKey(BYTE keyNumber);
 
 private:
-	WindowsAPI* winAPI_ = nullptr;
+	WindowsAPI* windowsAPI_ = nullptr;
 
 	template <class Type> using ComPtr = Microsoft::WRL::ComPtr<Type>;
 

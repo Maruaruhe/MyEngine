@@ -11,6 +11,7 @@
 #include "../Light/Lighting.h"
 
 #include "../../Base/Input/Input.h"
+#include "../Camera/Camera.h"
 
 #pragma comment(lib,"dxcompiler.lib")
 
@@ -24,7 +25,7 @@ class Model
 public:
 	ModelData LoadObjFile(const std::string& directoryPath, const std::string& filename);
 
-	void Initialize(DirectX12* directX12, const std::string& filename);
+	void Initialize(const std::string& filename);
 
 	void InitializePosition(const std::string& filename);
 
@@ -44,7 +45,7 @@ public:
 
 	void CreateDirectionalLightResource();
 
-	void Update(Vector4& color, const Transform& cameraTransform_, DirectionalLight& directionalLight);
+	void Update(Vector4& color, DirectionalLight& directionalLight);
 
 	void Draw();
 
@@ -53,10 +54,11 @@ public:
 private:
 	DirectX12* directX12_;
 	Input* input_;
+	Camera* camera_;
+
 	ModelData modelData;
 
 	Transform transform;
-	Transform cameraTransform;
 
 	//頂点リソース用のヒープの設定
 	D3D12_HEAP_PROPERTIES uploadHeapProperties;

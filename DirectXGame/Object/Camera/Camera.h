@@ -6,6 +6,8 @@
 class Camera
 {
 public:
+	static Camera* GetInstance();
+
 	void Initialize();
 	void Update();
 	Matrix4x4 MakeWVPMatrix(Transform& transform);

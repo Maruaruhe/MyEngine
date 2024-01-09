@@ -24,7 +24,7 @@ public:
 
 	static DirectX12* GetInstance();
 
-	void Init(WindowsAPI* windowsAPI);
+	void Initialzie();
 
 	void DXGIFactory();
 

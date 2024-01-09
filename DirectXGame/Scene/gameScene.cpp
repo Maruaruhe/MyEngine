@@ -11,21 +11,23 @@ void GameScene::Initialize()
 	VariableInit();
 	directX12_ = DirectX12::GetInstance();
 	windowsAPI_ = WindowsAPI::GetInstance();
-	directX12_->Init(windowsAPI_);
+	camera_ = Camera::GetInstance();
+	camera_->Initialize();
+
+	directX12_->Initialzie();
 	colorVolume[0] = 1.0f;
 	colorVolume[1] = 1.0f;
 	colorVolume[2] = 1.0f;
 
-	graphicsRenderer_->Initialize(directX12_);
+	graphicsRenderer_->Initialize();
 
-	Input::GetInstance()->Initialize(windowsAPI_);
+	Input::GetInstance()->Initialize();
 
 	sprite->Initialize(directX12_, spriteData);
 	sphere->Initialize(directX12_);
 
 	model = std::make_unique<Model>();
-	model->Initialize(directX12_, "ghostPori");
-	camera->Initialize();
+	model->Initialize("ghostPori");
 
 	graphicsRenderer_->ViewportScissor();
 
@@ -43,7 +45,7 @@ void GameScene::Update() {
 	ImGui::Begin("s");
 	ImGui::ColorEdit3("TriangleColor", colorVolume);
 	ImGui::SliderFloat3("TriangleColor", colorVolume, 0.0f, 1.0f);
-	camera->Update();
+	camera_->Update();
 	ImGui::SliderFloat3("lightcolor", &light.color.x, 0.0f, 1.0f);
 	ImGui::SliderFloat3("light", &light.direction.x, -1.0f, 1.0f);
 	ImGui::End();
@@ -55,7 +57,7 @@ void GameScene::Update() {
 
 	sprite->Update(color,transform);
 	sphere->Update(color, transform, light);
-	model->Update(color, camera->GetTransform(), light);
+	model->Update(color, light);
 
 	ImGui::Render();
 }

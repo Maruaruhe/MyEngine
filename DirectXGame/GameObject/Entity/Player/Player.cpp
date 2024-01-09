@@ -12,7 +12,7 @@ void Player::Initialize() {
 
 void Player::Update(Vector4& color, const Transform& transform_, DirectionalLight& directionalLight) {
 	Move();
-	model_->Update(color, transform_, directionalLight);
+	model_->Update(color, directionalLight);
 }
 
 void Player::Move() {
