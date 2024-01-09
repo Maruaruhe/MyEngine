@@ -12,6 +12,8 @@ class WindowsAPI
 {
 public:
 
+	WindowsAPI* GetInstance();
+
 	void Init();
 
 	void WindowClass();

@@ -42,6 +42,8 @@ private:
 	SpriteData spriteData;
 
 	DirectX12* directX12_ = new DirectX12;
+
+
 	GraphicsRenderer* graphicsRenderer_ = new GraphicsRenderer;
 	Input* input_ = new Input;
 	Triangle** triangle_ = new Triangle * [TRIANGLECOUNT];

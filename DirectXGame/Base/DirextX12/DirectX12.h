@@ -21,6 +21,7 @@ class Texture;
 class DirectX12
 {
 public:
+	DirectX12* GetInstance();
 
 	void Init(WindowsAPI* windowsAPI);
 

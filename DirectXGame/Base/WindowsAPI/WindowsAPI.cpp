@@ -1,6 +1,9 @@
 #include "WindowsAPI.h"
 
-
+WindowsAPI* WindowsAPI::GetInstance() {
+	static WindowsAPI instance;
+	return &instance;
+}
 
 void WindowsAPI::Init() {
 	timeBeginPeriod(1);
