@@ -12,7 +12,7 @@ class WindowsAPI
 {
 public:
 
-	WindowsAPI* GetInstance();
+	static WindowsAPI* GetInstance();
 
 	void Init();
 

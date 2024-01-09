@@ -7,11 +7,11 @@ DirectX12* DirectX12::GetInstance() {
 	return &instance;
 }
 
-void DirectX12::Init(WindowsAPI* windowsAPI) {
+void DirectX12::Init() {
 	InitializeFixFPS();
 
-	windowsAPI_ = windowsAPI;
-	windowsAPI->Init();
+	windowsAPI_ = WindowsAPI::GetInstance();
+	windowsAPI_->Init();
 	DXGIFactory();
 	Adapter();
 	D3D12Device();

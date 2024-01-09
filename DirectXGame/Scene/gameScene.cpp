@@ -1,6 +1,6 @@
 #include "gameScene.h"
 
-void GameScene::Initialize(DirectX12* directX12, WindowsAPI* windowsAPI)
+void GameScene::Initialize()
 {
 	//light->Initialize();
 	light.color = { 1.0f,1.0f,1.0f,1.0f };
@@ -9,15 +9,16 @@ void GameScene::Initialize(DirectX12* directX12, WindowsAPI* windowsAPI)
 
 
 	VariableInit();
-	directX12_ = directX12;
-	directX12_->Init(windowsAPI);
+	directX12_ = DirectX12::GetInstance();
+	directX12_->Init();
+	windowsAPI_ = WindowsAPI::GetInstance();
 	colorVolume[0] = 1.0f;
 	colorVolume[1] = 1.0f;
 	colorVolume[2] = 1.0f;
 
-	graphicsRenderer_->Initialize(directX12);
+	graphicsRenderer_->Initialize(directX12_);
 
-	Input::GetInstance()->Initialize(windowsAPI);
+	Input::GetInstance()->Initialize(windowsAPI_);
 
 	sprite->Initialize(directX12_, spriteData);
 	sphere->Initialize(directX12_);

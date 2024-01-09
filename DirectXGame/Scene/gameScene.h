@@ -27,7 +27,7 @@ class Camera;
 class GameScene
 {
 public:
-	void Initialize(DirectX12* directX12, WindowsAPI* windowsAPI);
+	void Initialize();
 	void Update();
 	void Release();
 
@@ -41,7 +41,8 @@ private:
 	TriangleData triangleData[TRIANGLECOUNT];
 	SpriteData spriteData;
 
-	DirectX12* directX12_ = new DirectX12;
+	DirectX12* directX12_ = nullptr;
+	WindowsAPI* windowsAPI_ = nullptr;
 
 
 	GraphicsRenderer* graphicsRenderer_ = new GraphicsRenderer;
