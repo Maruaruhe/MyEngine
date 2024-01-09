@@ -116,13 +116,23 @@ void Model::Update(Vector4& color, const Transform& transform_, DirectionalLight
 	//transform.rotate = transform_.rotate;
 	//transform.scale = transform_.scale;
 
+	ApplyGlobalVariables();
 
 	if (Input::GetInstance()->PushKey(DIK_W)) {
 		transform.translate.y += 0.1f;
 	}
 	if (Input::GetInstance()->PushKey(DIK_S)) {
-		transform.translate.z += 0.1f;
+		transform.translate.y -= 0.1f;
 	}
+	if (Input::GetInstance()->PushKey(DIK_A)) {
+		transform.translate.x -= 0.1f;
+	}
+	if (Input::GetInstance()->PushKey(DIK_D)) {
+		transform.translate.x += 0.1f;
+	}
+	/*if (Input::GetInstance()->PushKey(DIK_S)) {
+		transform.translate.z += 0.1f;
+	}*/
 
 
 	materialData_->uvTransform = MakeIdentity4x4();
