@@ -11,7 +11,13 @@
 class Sprite
 {
 public:
-	void Initialize(SpriteData spriteData);
+	void Initialize(Vector3 leftTop,Vector3 rightBot);
+
+	void Update(Vector4& color, const Transform& transform_);
+
+	void Draw();
+
+private:
 
 	void SetPosition(Vector2 LB, Vector2 LT, Vector2 RB, Vector2 RT);
 	VertexData GetPosition() { return vertexData[0], vertexData[1], vertexData[2], vertexData[3]; }
@@ -29,10 +35,6 @@ public:
 	void CreateTransformationMatrixResource();
 
 	void CreateIndexResource();
-
-	void Update(Vector4& color, const Transform& transform_);
-
-	void Draw();
 private:
 	DirectX12* directX12 = nullptr;;
 

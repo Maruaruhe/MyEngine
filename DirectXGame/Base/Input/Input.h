@@ -41,5 +41,10 @@ private:
 	//全キーの状態
 	BYTE key[256] = {};
 	BYTE preKey[256] = {};
+
+	Input() = default;
+	~Input() = default;
+	Input(Input&) = delete;
+	Input& operator=(Input&) = delete;
 };
 

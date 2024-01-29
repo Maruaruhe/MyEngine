@@ -6,9 +6,6 @@ GameManager* GameManager::GetInstance() {
 }
 
 GameManager::GameManager() {
-	sceneArr[TITLE] = std::make_unique<TitleScene>();
-	sceneArr[INGAME] = std::make_unique<GameScene>();
-
 	directX12 = DirectX12::GetInstance();
 	windowsAPI = WindowsAPI::GetInstance();
 
@@ -16,7 +13,12 @@ GameManager::GameManager() {
 	graphicsRenderer_->Initialize();
 	graphicsRenderer_->ViewportScissor();
 
-	currentSceneNo = TITLE;
+	Input::GetInstance()->Initialize();
+
+
+	sceneArr[TITLE] = std::make_unique<TitleScene>();
+	sceneArr[INGAME] = std::make_unique<GameScene>();
+	sceneArr[CLEAR] = std::make_unique<ClearScene>();
 }
 
 GameManager::~GameManager() {
@@ -24,16 +26,15 @@ GameManager::~GameManager() {
 }
 
 void GameManager::Initialize() {
-
+	
 }
 
 void GameManager::Run() {
 
 	CoInitializeEx(0, COINIT_MULTITHREADED);
 	//インスタンス
-	//GameManager::GetInstance()->Initialize();
+	GameManager::GetInstance()->Initialize();
 	GlobalVariables::GetInstance()->LoadFiles();
-	sceneArr[currentSceneNo]->Initialize();
 
 	//メインループ
 	MSG msg{};
@@ -43,6 +44,7 @@ void GameManager::Run() {
 			DispatchMessage(&msg);
 		}
 		else {
+			Input::GetInstance()->Update();
 			//シーンのチェック
 			prevSceneNo = currentSceneNo;
 			currentSceneNo = sceneArr[currentSceneNo]->GetSceneNo();
@@ -54,6 +56,7 @@ void GameManager::Run() {
 
 			BeginFrame();
 			sceneArr[currentSceneNo]->Update();
+			ImGui::Render();
 			sceneArr[currentSceneNo]->Draw();
 			EndFrame();
 		}

@@ -1,6 +1,6 @@
 #include "Sprite.h"
 
-void Sprite::Initialize(SpriteData spriteData) {
+void Sprite::Initialize(Vector3 leftTop, Vector3 rightBot) {
 	directX12 = DirectX12::GetInstance();
 	transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
 	cameraTransform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,-5.0f} };
@@ -19,34 +19,28 @@ void Sprite::Initialize(SpriteData spriteData) {
 
 	vertexData = nullptr;
 	vertexResource->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
-	//左下
-	vertexData[0].position = spriteData.LeftBot.position;
-	vertexData[0].texcoord = spriteData.LeftBot.texcoord;
-	vertexData[0].normal = { 0.0f,0.0f,-1.0f };
-	//上									   
-	vertexData[1].position = spriteData.LeftTop.position;
-	vertexData[1].texcoord = spriteData.LeftTop.texcoord;
+	//左上									   
+	vertexData[1].position = { leftTop.x, leftTop.y, leftTop.z, 0 };
+	vertexData[1].texcoord = { 0.0f,0.0f };
 	vertexData[1].normal = { 0.0f,0.0f,-1.0f };
-	//右下								
-	vertexData[2].position = spriteData.RightBot.position;
-	vertexData[2].texcoord = spriteData.RightBot.texcoord;
-	vertexData[2].normal = { 0.0f,0.0f,-1.0f };
-
-	vertexData[3].position = spriteData.RightTop.position;
-	vertexData[3].texcoord = spriteData.RightTop.texcoord;
+	//左下
+	vertexData[0].position = { leftTop.x, rightBot.y, leftTop.z, 0 };
+	vertexData[0].texcoord = { 0.0f,1.0f };
+	vertexData[0].normal = { 0.0f,0.0f,-1.0f };
+	//右上
+	vertexData[3].position = { rightBot.x,leftTop.y,rightBot.z,0 };
+	vertexData[3].texcoord = { 1.0f, 0.0f };
 	vertexData[3].normal = { 0.0f,0.0f,-1.0f };
+	//右下								
+	vertexData[2].position = { rightBot.x,rightBot.y,rightBot.z,0 };
+	vertexData[2].texcoord = { 1.0f,1.0f };
+	vertexData[2].normal = { 0.0f,0.0f,-1.0f };
 }
-//void Sprite::SetPosition(Vector2 LB, Vector2 LT, Vector2 RB, Vector2 RT) {
-//	vertexData[0].position = {0,0,0,0};
-//	//vertexData[1].position = { LT.x,LT.y,0,0 };
-//	//vertexData[2].position = { RB.x,RB.y,0,0 };
-//	//vertexData[3].position = { RT.x,RT.y,0,0 };
-//}
 
 void Sprite::Update(Vector4& color, const Transform& transform_) {
-	ImGui::DragFloat2("uvTranslate", &uvTransform.translate.x, 0.01f, -10.0f, 10.0f);
+	/*ImGui::DragFloat2("uvTranslate", &uvTransform.translate.x, 0.01f, -10.0f, 10.0f);
 	ImGui::DragFloat2("uvScale", &uvTransform.scale.x, 0.01f, -10.0f, 10.0f);
-	ImGui::SliderAngle("ucRotate", &uvTransform.rotate.z);
+	ImGui::SliderAngle("ucRotate", &uvTransform.rotate.z);*/
 
 	transform.translate = transform_.translate;
 	transform.rotate = transform_.rotate;
@@ -144,6 +138,4 @@ void Sprite::DataResource() {
 }
 
 void Sprite::Release() {
-	//vertexResource->Release();
-	//materialResource_->Release();
 }

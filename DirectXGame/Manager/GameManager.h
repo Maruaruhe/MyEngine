@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include "../Base/GlobalVariables/GlobalVariables.h"
 #include "../Base/DirextX12/DirectX12.h"
 #include "../Base/WindowsAPI/WindowsAPI.h"
 #include "../Base/GraphicsRenderer/GraphicsRenderer.h"
@@ -8,6 +9,7 @@
 #include "../Scene/IScene.h"
 #include	"../Scene/GameScene.h"
 #include	"../Scene/TitleScene.h"
+#include "../Scene/ClearScene.h"
 
 class DirectX12;
 class WindowsAPI;
@@ -25,7 +27,7 @@ private:
 	GraphicsRenderer* graphicsRenderer_ = new GraphicsRenderer;
 
 	//Scene
-	std::unique_ptr<IScene> sceneArr[4];
+	std::unique_ptr<IScene> sceneArr[3];
 
 	int currentSceneNo;
 	int prevSceneNo;

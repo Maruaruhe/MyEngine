@@ -2,17 +2,18 @@
 
 void TitleScene::Initialize(){
 	input = Input::GetInstance();
-	input->Initialize();
+	sprite.Initialize({-640,-360,0},{640,360,0});
+	camera.Initialize();
 }
 
 void TitleScene::Update(){
-	input->Update();
-
-	if (input->PushKey(DIK_SPACE)) {
+	if (input->TriggerKey(DIK_SPACE)) {
 		sceneNo = INGAME;
 	}
+	Vector4 a = { 1,1,1,1 };
+	sprite.Update(a,camera.GetTransform());
 }
 
 void TitleScene::Draw() {
-
+	sprite.Draw();
 }
