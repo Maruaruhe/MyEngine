@@ -53,7 +53,7 @@ private:
 	//Triangle** triangle_ = new Triangle * [TRIANGLECOUNT];
 	Sprite* sprite = new Sprite;
 	////Texture* texture_ = new Texture;
-	//Sphere* sphere = new Sphere;
+	Sphere* sphere = new Sphere;
 	//Model* model = new Model;
 	Camera* camera = new Camera;
 
