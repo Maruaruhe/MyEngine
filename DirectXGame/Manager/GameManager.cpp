@@ -17,7 +17,6 @@ GameManager::GameManager() {
 	graphicsRenderer_->ViewportScissor();
 
 	currentSceneNo = TITLE;
-
 }
 
 GameManager::~GameManager() {
@@ -34,7 +33,7 @@ void GameManager::Run() {
 	//インスタンス
 	//GameManager::GetInstance()->Initialize();
 	GlobalVariables::GetInstance()->LoadFiles();
-	sceneArr[INGAME]->Initialize();
+	sceneArr[currentSceneNo]->Initialize();
 
 	//メインループ
 	MSG msg{};
@@ -54,8 +53,8 @@ void GameManager::Run() {
 			}
 
 			BeginFrame();
-			sceneArr[INGAME]->Update();
-			sceneArr[INGAME]->Draw();
+			sceneArr[currentSceneNo]->Update();
+			sceneArr[currentSceneNo]->Draw();
 			EndFrame();
 		}
 	}
