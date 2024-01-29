@@ -9,6 +9,10 @@
 #include	"../Scene/GameScene.h"
 #include	"../Scene/TitleScene.h"
 
+class DirectX12;
+class WindowsAPI;
+class GraphicsRenderer;
+
 class GameManager
 {
 public:

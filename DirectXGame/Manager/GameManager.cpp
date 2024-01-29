@@ -8,6 +8,7 @@ GameManager* GameManager::GetInstance() {
 GameManager::GameManager() {
 	sceneArr[TITLE] = std::make_unique<TitleScene>();
 	sceneArr[INGAME] = std::make_unique<GameScene>();
+
 	directX12 = DirectX12::GetInstance();
 	windowsAPI = WindowsAPI::GetInstance();
 

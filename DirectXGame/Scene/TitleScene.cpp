@@ -13,7 +13,3 @@ void TitleScene::Update(){
 void TitleScene::Draw() {
 
 }
-
-void TitleScene::BeginFrame(){}
-void TitleScene::EndFrame(){}
-void TitleScene::Final(){}
