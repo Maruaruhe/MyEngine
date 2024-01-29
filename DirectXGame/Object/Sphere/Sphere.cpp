@@ -113,7 +113,7 @@ void Sphere::Initialize() {
 	InitializePosition();
 }
 
-void Sphere::Update(Vector4& color, Transform& transform, const Transform& cameraTransform, DirectionalLight& direcionalLight) {
+void Sphere::Update(Vector4& color, const Transform& cameraTransform, DirectionalLight& direcionalLight) {
 	materialData_->uvTransform = MakeIdentity4x4();
 	transformationMatrix->World = MakeAffineMatrix(transform.scale, transform.rotate, transform.translate);
 	Matrix4x4 cameraMatrix = MakeAffineMatrix(cameraTransform.scale, cameraTransform.rotate, cameraTransform.translate);

@@ -9,9 +9,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	GameScene* gameScene = new GameScene;
 
-	WindowsAPI* windowsAPI = new WindowsAPI;
-	DirectX12* directX12 = new DirectX12;
-
 
 	gameScene->Initialize();
 	//いろいろ

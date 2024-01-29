@@ -27,7 +27,7 @@ void GameScene::Initialize()
 	player_->Initialize("ghostPori");
 	enemy_->Initialize("ghostPori");
 
-	sphere->Initialize();
+	//sphere->Initialize();
 
 	graphicsRenderer_->ViewportScissor();
 
@@ -45,8 +45,7 @@ void GameScene::Update() {
 	player_->Update(color, camera->GetTransform(), light);
 	Vector4 eColor = { 0.0f,0.0f,0.0f,1.0f };
 	enemy_->Update(eColor, camera->GetTransform(), light);
-	Vector3 a = { 1,1,1 };
-	sphere->Update(color, { 1,1,1 }, camera->GetTransform(), light);
+	//sphere->Update(color, camera->GetTransform(), light);
 	isCollsion();
 	ImGui::Render();
 }
@@ -86,7 +85,7 @@ void GameScene::Draw() {
 	player_->Draw();
 	enemy_->Draw();
 
-	sphere->Draw();
+	//sphere->Draw();
 }
 
 void GameScene::VariableInit() {
