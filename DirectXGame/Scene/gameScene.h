@@ -16,6 +16,8 @@
 #include "../GameObject/Entity/Player/Player.h"
 #include "../GameObject/Entity/Enemy/Enemy.h"
 
+#include "IScene.h"
+
 #define TRIANGLECOUNT 2
 
 class DirectX12;
@@ -27,18 +29,18 @@ class Lighting;
 class Input;
 class Camera;
 
-class GameScene
+class GameScene : public IScene
 {
 public:
-	void Initialize();
-	void Update();
+	void Initialize() override;
+	void Update() override;
 	void isCollsion();
 	void Release();
 
-	void BeginFrame();
-	void EndFrame();
-	void Final();
-	void Draw();
+	void BeginFrame() override;
+	void EndFrame() override;
+	void Final() override;
+	void Draw() override;
 
 	void VariableInit();
 private:
@@ -47,28 +49,20 @@ private:
 
 	DirectX12* directX12_ = nullptr;
 	WindowsAPI* windowsAPI_ = nullptr;
+	Input* input_ = nullptr;
 
 	GraphicsRenderer* graphicsRenderer_ = new GraphicsRenderer;
-	Input* input_;
-	//Triangle** triangle_ = new Triangle * [TRIANGLECOUNT];
-	Sprite* sprite = new Sprite;
-	////Texture* texture_ = new Texture;
-	Sphere* sphere = new Sphere;
-	//Model* model = new Model;
-	Camera* camera = new Camera;
+
+	//Sprite* sprite = new Sprite;
+	//Sphere* sphere = new Sphere;
 
 	std::unique_ptr<Player> player_;
 	std::unique_ptr<Enemy> enemy_;
+
+	std::unique_ptr<Camera> camera;
 
 	DirectionalLight light;
 
 	float colorVolume[3];
 	Transform transform;
-
-	enum Scene {
-		title,
-		inGame,
-		End
-	};
-	Scene scene = inGame;
 };

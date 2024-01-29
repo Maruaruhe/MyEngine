@@ -168,7 +168,7 @@ private:
 	//FenceのSignalを待つためのイベントを作成する
 	HANDLE fenceEvent;
 
-	Microsoft::WRL::ComPtr<IDXGIDebug1> debug;
+
 
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> srvDescriptorHeap;
 

@@ -1,4 +1,4 @@
-#include "gameScene.h"
+#include "GameScene.h"
 
 void GameScene::Initialize()
 {
@@ -11,6 +11,7 @@ void GameScene::Initialize()
 	directX12_ = DirectX12::GetInstance();
 	windowsAPI_ = WindowsAPI::GetInstance();
 	directX12_->Initialize();
+	//graphicsRenderer_ = new GraphicsRenderer();
 	colorVolume[0] = 1.0f;
 	colorVolume[1] = 1.0f;
 	colorVolume[2] = 1.0f;
@@ -19,13 +20,13 @@ void GameScene::Initialize()
 
 	Input::GetInstance()->Initialize();
 
-	camera->Initialize();
-
 	player_ = std::make_unique<Player>();
 	enemy_ = std::make_unique<Enemy>();
+	camera = std::make_unique<Camera>();
 
 	player_->Initialize("ghostPori");
 	enemy_->Initialize("ghostPori");
+	camera->Initialize();
 
 	//sphere->Initialize();
 
@@ -78,9 +79,9 @@ void GameScene::EndFrame() {
 }
 
 void GameScene::Final() {
+	directX12_->Finalize();
+	windowsAPI_->Finalize();
 	directX12_->ResourceLeakCheck();
-	//directX12_->Finalize();
-	//windowsAPI_->Finalize();
 }
 
 void GameScene::Draw() {
