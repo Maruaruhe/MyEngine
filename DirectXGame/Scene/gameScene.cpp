@@ -38,7 +38,7 @@ void GameScene::Initialize()
 
 void GameScene::Update() {
 	Input::GetInstance()->Update();
-	GlobalVariables::GetInstance()->Update();
+	//GlobalVariables::GetInstance()->Update();
 
 	Vector4 color = {colorVolume[0],colorVolume[1],colorVolume[2],1.0f};
 
@@ -79,6 +79,8 @@ void GameScene::EndFrame() {
 
 void GameScene::Final() {
 	directX12_->ResourceLeakCheck();
+	//directX12_->Finalize();
+	//windowsAPI_->Finalize();
 }
 
 void GameScene::Draw() {

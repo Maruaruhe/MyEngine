@@ -48,7 +48,7 @@ public:
 
 	void Release();
 private:
-	DirectX12* directX12;
+	DirectX12* directX12 = nullptr;
 	HRESULT hr;
 	Microsoft::WRL::ComPtr<ID3D12Device> device;
 	//InitializeDXC

@@ -15,7 +15,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 
 	//初期化
-
+	
 
 	//メインループ
 	MSG msg{};
@@ -33,5 +33,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	}
 	gameScene->Final();
 	CoUninitialize();
+
 	return 0;
 }

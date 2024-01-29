@@ -45,8 +45,8 @@ private:
 	TriangleData triangleData[TRIANGLECOUNT];
 	SpriteData spriteData;
 
-	DirectX12* directX12_ = new DirectX12;
-	WindowsAPI* windowsAPI_ = new WindowsAPI;
+	DirectX12* directX12_ = nullptr;
+	WindowsAPI* windowsAPI_ = nullptr;
 
 	GraphicsRenderer* graphicsRenderer_ = new GraphicsRenderer;
 	Input* input_;

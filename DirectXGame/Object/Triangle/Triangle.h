@@ -29,7 +29,7 @@ public:
 
 	void Draw();
 private:
-	DirectX12* directX12;
+	DirectX12* directX12 = nullptr;
 
 	Transform transform;
 	Transform cameraTransform;

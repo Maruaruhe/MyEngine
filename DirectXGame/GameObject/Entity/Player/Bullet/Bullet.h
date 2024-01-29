@@ -25,7 +25,6 @@ public:
 	bool GetIsAlive() { return isDead_; }
 
 private:
-	DirectX12* directX12_;
 
 	Transform transform_;
 	std::unique_ptr<Model> model_;

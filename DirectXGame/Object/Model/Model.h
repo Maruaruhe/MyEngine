@@ -51,8 +51,8 @@ public:
 	MaterialData LoadMaterialTemplateFile(const std::string& directoryPath, const std::string& filename);
 
 private:
-	DirectX12* directX12;
-	Input* input_;
+	DirectX12* directX12 = nullptr;
+	Input* input_ = nullptr;
 	ModelData modelData;
 
 	//頂点リソース用のヒープの設定

@@ -39,7 +39,7 @@ public:
 
 	void SetPosition(Vector3& position) { transform.translate = position; }
 private:
-	DirectX12* directX12;
+	DirectX12* directX12 = nullptr;
 
 	Transform transform;
 	Transform cameraTransform;

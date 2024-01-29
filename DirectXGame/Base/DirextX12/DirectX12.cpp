@@ -1,10 +1,15 @@
 #include "DirectX12.h"
 #include "../Log/Log.h"
 #include "../../Object/Texture/Texture.h"
+DirectX12* DirectX12::instance = nullptr;
 
 DirectX12* DirectX12::GetInstance() {
-	static DirectX12 instance;
-	return &instance;
+	//static DirectX12 instance;
+	//return &instance;
+	if (instance == nullptr) {
+		instance = new DirectX12;
+	}
+	return instance;
 }
 
 void DirectX12::Initialize() {
@@ -434,4 +439,9 @@ void DirectX12::UpdataFixFPS() {
 		}
 	}
 	reference_ = std::chrono::steady_clock::now();
+}
+
+void DirectX12::Finalize() {
+	delete instance;
+	instance = nullptr;
 }

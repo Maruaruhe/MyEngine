@@ -92,6 +92,8 @@ public:
 
 	void NextFlameCommandList();
 
+	void Finalize();
+
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> GetSrvDescriptorHeap() { return srvDescriptorHeap; }
 
 
@@ -103,7 +105,9 @@ public:
 	D3D12_CPU_DESCRIPTOR_HANDLE GetCPUDescriptorHandle(ID3D12DescriptorHeap* descriptorHeap, uint32_t descriptorSize, uint32_t index);
 	D3D12_GPU_DESCRIPTOR_HANDLE GetGPUDescriptorHandle(ID3D12DescriptorHeap* descriptorHeap, uint32_t descriptorSize, uint32_t index);
 private:
-	WindowsAPI* windowsAPI_;
+	static DirectX12* instance;
+
+	WindowsAPI* windowsAPI_ = nullptr;
 	Texture* texture;
 
 	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU;
@@ -176,5 +180,10 @@ private:
 	uint32_t descriptorSizeDSV;
 
 	std::chrono::steady_clock::time_point reference_;
+
+	DirectX12() = default;
+	~DirectX12() = default;
+	DirectX12(DirectX12&) = delete;
+	DirectX12& operator=(DirectX12&) = delete;
 };
 

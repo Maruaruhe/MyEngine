@@ -25,7 +25,10 @@ public:
 	HWND GetHwnd() const { return hwnd; }
 	HINSTANCE GetHInstance() { return wc.hInstance; }
 
+	void Finalize();
+
 private:
+	static WindowsAPI* instance;
 	//ウインドウクラスの設定
 	WNDCLASS wc{};
 
@@ -33,6 +36,11 @@ private:
 	RECT wrc;
 
 	HWND hwnd = {};
+
+	WindowsAPI() = default;
+	~WindowsAPI() = default;
+	WindowsAPI(WindowsAPI&) = delete;
+	WindowsAPI& operator=(WindowsAPI&) = delete;
 };
 
 
