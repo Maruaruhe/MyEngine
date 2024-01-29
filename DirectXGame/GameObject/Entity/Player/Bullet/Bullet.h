@@ -9,7 +9,7 @@
 class Bullet
 {
 public:
-	void Initialize(DirectX12* directX12, const std::string& filename, Vector3& position, Vector3& velocity);
+	void Initialize(const std::string& filename, Vector3& position, Vector3& velocity);
 
 	void Update(Vector4& color, const Transform& cameraTransform, DirectionalLight& directionalLight);
 

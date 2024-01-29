@@ -11,6 +11,7 @@ static const int32_t kClientHeight = 720;
 class WindowsAPI
 {
 public:
+	static WindowsAPI* GetInstance();
 
 	void Init();
 

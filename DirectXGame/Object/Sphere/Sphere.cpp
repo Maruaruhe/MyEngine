@@ -12,39 +12,6 @@ void Sphere::InitializePosition() {
 				uint32_t start = (latIndex * kSubdivision + lonIndex) * 6;
 				float lon = lonIndex * kLonEvery;
 
-				//1
-				//spData[start].first.Left_.position.x = cos(lat) * cos(lon);
-				//spData[start].first.Left_.position.y = sin(lat);
-				//spData[start].first.Left_.position.z = cos(lat) * sin(lon);
-				//spData[start].first.Left_.position.w = 1.0f;
-
-				//spData[start].first.Top_.position.x = cos(lat + kLatEvery) * cos(lon);
-				//spData[start].first.Top_.position.y = sin(lat + kLatEvery);
-				//spData[start].first.Top_.position.z = cos(lat + kLatEvery) * cos(lat + kLatEvery) * sin(lon);
-				//spData[start].first.Top_.position.w = 1.0f;
-
-				//spData[start].first.Right_.position.x = cos(lat) * cos(lon + kLonEvery);
-				//spData[start].first.Right_.position.y = sin(lat);
-				//spData[start].first.Right_.position.z = cos(lat) * sin(lon + kLonEvery);
-				//spData[start].first.Right_.position.w = 1.0f;
-
-				////2
-				//spData[start].second.Left_.position.x = cos(lat + kLatEvery) * cos(lon);
-				//spData[start].second.Left_.position.y = sin(lat + kLatEvery);
-				//spData[start].second.Left_.position.z = cos(lat + kLatEvery) * cos(lat + kLatEvery) * sin(lon);
-				//spData[start].second.Left_.position.w = 1.0f;
-
-				//spData[start].second.Top_.position.x = cos(lat + kLatEvery) * cos(lon + kLonEvery);
-				//spData[start].second.Top_.position.y = sin(lat + kLatEvery);
-				//spData[start].second.Top_.position.z = cos(lat + kLatEvery) * sin(lon + kLonEvery);
-				//spData[start].second.Top_.position.w = 1.0f;
-
-				//spData[start].second.Right_.position.x = cos(lat) * cos(lon + kLonEvery);
-				//spData[start].second.Right_.position.y = sin(lat);
-				//spData[start].second.Right_.position.z = cos(lat) * sin(lon + kLonEvery);
-				//spData[start].second.Right_.position.w = 1.0f;
-
-				//
 				vertexData[start].position.x = cos(lat) * cos(lon);
 				vertexData[start].position.y = sin(lat);
 				vertexData[start].position.z = cos(lat) * sin(lon);
@@ -129,8 +96,8 @@ void Sphere::InitializePosition() {
 		}
 }
 
-void Sphere::Initialize(DirectX12* directX12) {
-	directX12_ = directX12;
+void Sphere::Initialize() {
+	directX12 = DirectX12::GetInstance();
 	transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
 	cameraTransform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,-10.0f} };
 	CreateVertexResource();
@@ -163,23 +130,23 @@ void Sphere::Update(Vector4& color, Transform& transform, const Transform& camer
 }
 
 void Sphere ::Draw() {
-	directX12_->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView);	//VBVを設定
+	directX12->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView);	//VBVを設定
 	//形状を設定。PSOに設定しているものとはまた別。同じものを設定すると考えておけばよい
-	directX12_->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	directX12_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
+	directX12->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	directX12->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
 
 	//directX12_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResourceSprite->GetGPUVirtualAddress());
 	//wvp用のCBufferの場所を設定
-	directX12_->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
+	directX12->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
 
-	directX12_->GetCommandList()->SetGraphicsRootDescriptorTable(2, useMonsterBall ? directX12_->GetSrvHandleGPU2() : directX12_->GetSrvHandleGPU());
-	directX12_->GetCommandList()->SetGraphicsRootConstantBufferView(3, directionalLightResource->GetGPUVirtualAddress());
+	directX12->GetCommandList()->SetGraphicsRootDescriptorTable(2, useMonsterBall ? directX12->GetSrvHandleGPU2() : directX12->GetSrvHandleGPU());
+	directX12->GetCommandList()->SetGraphicsRootConstantBufferView(3, directionalLightResource->GetGPUVirtualAddress());
 	//描画！　（DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
-	directX12_->GetCommandList()->DrawInstanced(1536, 1, 0, 0);
+	directX12->GetCommandList()->DrawInstanced(1536, 1, 0, 0);
 }
 
 void Sphere::CreateVertexResource() {
-	vertexResource = directX12_->CreateBufferResource(directX12_->GetDevice(), sizeof(VertexData) * 1536);
+	vertexResource = directX12->CreateBufferResource(directX12->GetDevice(), sizeof(VertexData) * 1536);
 }
 
 void Sphere::CreateVertexBufferView() {
@@ -193,7 +160,7 @@ void Sphere::CreateVertexBufferView() {
 }
 
 void Sphere::CreateMaterialResource() {
-	materialResource_ = directX12_->CreateBufferResource(directX12_->GetDevice(), sizeof(Material));
+	materialResource_ = directX12->CreateBufferResource(directX12->GetDevice(), sizeof(Material));
 	materialData_ = nullptr;
 	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&materialData_));
 	materialData_->color = Vector4(1.0f, 0.0f, 0.0f, 1.0f);
@@ -204,7 +171,7 @@ void Sphere::CreateMaterialResource() {
 
 void Sphere::CreateTransformationMatrixResource() {
 	//WVP用のリソースを作る。Matrix4x4　1つ分のサイズを用意する
-	wvpResource_ = directX12_->CreateBufferResource(directX12_->GetDevice(), sizeof(TransformationMatrix));
+	wvpResource_ = directX12->CreateBufferResource(directX12->GetDevice(), sizeof(TransformationMatrix));
 	//データを書き込む
 	transformationMatrix = nullptr;
 	//書き込むためのアドレスを取得
@@ -214,7 +181,7 @@ void Sphere::CreateTransformationMatrixResource() {
 }
 
 void Sphere::CreateDirectionalLightResource() {
-	directionalLightResource = directX12_->CreateBufferResource(directX12_->GetDevice(), sizeof(DirectionalLight));
+	directionalLightResource = directX12->CreateBufferResource(directX12->GetDevice(), sizeof(DirectionalLight));
 	directionalLight_ = nullptr;
 	directionalLightResource->Map(0,nullptr, reinterpret_cast<void**>(&directionalLight_));
 }

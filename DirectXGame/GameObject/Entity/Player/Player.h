@@ -10,7 +10,7 @@
 class Player
 {
 public:
-	void Initialize(DirectX12* directX12, const std::string& filename);
+	void Initialize(const std::string& filename);
 
 	void Update(Vector4& color, const Transform& cameraTransform, DirectionalLight& directionalLight);
 
@@ -28,7 +28,6 @@ public:
 
 private:
 	Input* input_ = nullptr;
-	DirectX12* directX12_;
 
 	Transform transform_;
 	std::unique_ptr<Model> model_;

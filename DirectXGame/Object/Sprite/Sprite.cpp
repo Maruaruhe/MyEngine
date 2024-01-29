@@ -1,7 +1,7 @@
 #include "Sprite.h"
 
-void Sprite::Initialize(DirectX12* directX12, SpriteData spriteData) {
-	directX12_ = directX12;
+void Sprite::Initialize(SpriteData spriteData) {
+	directX12 = DirectX12::GetInstance();
 	transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
 	cameraTransform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,-5.0f} };
 	uvTransform = {
@@ -67,24 +67,24 @@ void Sprite::Update(Vector4& color, const Transform& transform_) {
 
 void Sprite::Draw() {
 	if (!isInvisible_) {
-		directX12_->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView);	//VBVを設定
-		directX12_->GetCommandList()->IASetIndexBuffer(&indexBufferView);	//VBVを設定
+		directX12->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView);	//VBVを設定
+		directX12->GetCommandList()->IASetIndexBuffer(&indexBufferView);	//VBVを設定
 		//形状を設定。PSOに設定しているものとはまた別。同じものを設定すると考えておけばよい
-		directX12_->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-		directX12_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
+		directX12->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		directX12->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
 		//directX12_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResourceSprite->GetGPUVirtualAddress());
 		//wvp用のCBufferの場所を設定
-		directX12_->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
+		directX12->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
 
-		directX12_->GetCommandList()->SetGraphicsRootDescriptorTable(2, directX12_->GetSrvHandleGPU());
+		directX12->GetCommandList()->SetGraphicsRootDescriptorTable(2, directX12->GetSrvHandleGPU());
 		//描画！　（DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
 		//directX12_->GetCommandList()->DrawInstanced(6, 1, 0, 0);
-		directX12_->GetCommandList()->DrawIndexedInstanced(6, 1, 0, 0, 0);
+		directX12->GetCommandList()->DrawIndexedInstanced(6, 1, 0, 0, 0);
 	}
 }
 
 void Sprite::CreateVertexResource() {
-	vertexResource = directX12_->CreateBufferResource(directX12_->GetDevice(), sizeof(VertexData) * 6);
+	vertexResource = directX12->CreateBufferResource(directX12->GetDevice(), sizeof(VertexData) * 6);
 }
 
 void Sprite::CreateVertexBufferView() {
@@ -98,7 +98,7 @@ void Sprite::CreateVertexBufferView() {
 }
 
 void Sprite::CreateMaterialResource() {
-	materialResource_ = directX12_->CreateBufferResource(directX12_->GetDevice(), sizeof(Material));
+	materialResource_ = directX12->CreateBufferResource(directX12->GetDevice(), sizeof(Material));
 	materialData_ = nullptr;
 	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&materialData_));
 
@@ -108,7 +108,7 @@ void Sprite::CreateMaterialResource() {
 
 void Sprite::CreateTransformationMatrixResource() {
 	//WVP用のリソースを作る。Matrix4x4　1つ分のサイズを用意する
-	wvpResource_ = directX12_->CreateBufferResource(directX12_->GetDevice(), sizeof(Matrix4x4));
+	wvpResource_ = directX12->CreateBufferResource(directX12->GetDevice(), sizeof(Matrix4x4));
 	//データを書き込む
 	//wvpData = nullptr;
 	transformationMatrix = nullptr;
@@ -121,7 +121,7 @@ void Sprite::CreateTransformationMatrixResource() {
 }
 
 void Sprite::CreateIndexResource() {
-	indexResource = directX12_->CreateBufferResource(directX12_->GetDevice(), sizeof(uint32_t) * 6);
+	indexResource = directX12->CreateBufferResource(directX12->GetDevice(), sizeof(uint32_t) * 6);
 	indexBufferView = {};
 	indexBufferView.BufferLocation = indexResource->GetGPUVirtualAddress();
 	indexBufferView.SizeInBytes = sizeof(uint32_t) * 6;

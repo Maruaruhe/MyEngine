@@ -30,7 +30,7 @@ class Camera;
 class GameScene
 {
 public:
-	void Initialize(DirectX12* directX12, WindowsAPI* windowsAPI);
+	void Initialize();
 	void Update();
 	void isCollsion();
 	void Release();
@@ -45,7 +45,9 @@ private:
 	TriangleData triangleData[TRIANGLECOUNT];
 	SpriteData spriteData;
 
-	DirectX12* directX12_ = new DirectX12;
+	DirectX12* directX12_;
+	WindowsAPI* windowsAPI_;
+
 	GraphicsRenderer* graphicsRenderer_ = new GraphicsRenderer;
 	Input* input_;
 	//Triangle** triangle_ = new Triangle * [TRIANGLECOUNT];

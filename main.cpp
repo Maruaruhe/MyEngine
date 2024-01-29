@@ -13,7 +13,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	DirectX12* directX12 = new DirectX12;
 
 
-	gameScene->Initialize(directX12,windowsAPI);
+	gameScene->Initialize();
 	//いろいろ
 
 

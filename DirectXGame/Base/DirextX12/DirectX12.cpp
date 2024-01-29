@@ -2,11 +2,16 @@
 #include "../Log/Log.h"
 #include "../../Object/Texture/Texture.h"
 
-void DirectX12::Init(WindowsAPI* windowsAPI) {
+DirectX12* DirectX12::GetInstance() {
+	static DirectX12 instance;
+	return &instance;
+}
+
+void DirectX12::Init() {
 	InitializeFixFPS();
 
-	windowsAPI_ = windowsAPI;
-	windowsAPI->Init();
+	windowsAPI_ = WindowsAPI::GetInstance();
+	windowsAPI_->Init();
 	DXGIFactory();
 	Adapter();
 	D3D12Device();

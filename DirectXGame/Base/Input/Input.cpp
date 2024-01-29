@@ -9,13 +9,13 @@ Input* Input::GetInstance() {
 	return &instance;
 }
 
-void Input::Initialize(WindowsAPI* winAPI) {
-	this->winAPI_ = winAPI;
+void Input::Initialize() {
+	winAPI = WindowsAPI::GetInstance();
 
 	HRESULT result;
 	//DiretxInputのインスタンス生成
 	//ComPtr<IDirectInput8> directInput = nullptr;
-	result = DirectInput8Create(winAPI_->GetHInstance(), DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&directInput, nullptr);
+	result = DirectInput8Create(winAPI->GetHInstance(), DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&directInput, nullptr);
 	assert(SUCCEEDED(result));
 	//キーボードデバイス作成
 	//ComPtr<IDirectInputDevice8> keyboard;
@@ -25,7 +25,7 @@ void Input::Initialize(WindowsAPI* winAPI) {
 	result = keyboard->SetDataFormat(&c_dfDIKeyboard);
 	assert(SUCCEEDED(result));
 	//排他制御レベルのリセット
-	result = keyboard->SetCooperativeLevel(winAPI_->GetHwnd(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
+	result = keyboard->SetCooperativeLevel(winAPI->GetHwnd(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
 	assert(SUCCEEDED(result));
 }
 

@@ -11,7 +11,7 @@
 class Triangle
 {
 public:
-	void Initialize(DirectX12* directX12, TriangleData triangleData);
+	void Initialize(TriangleData triangleData);
 
 	void CreateVertexResource();
 
@@ -29,7 +29,7 @@ public:
 
 	void Draw();
 private:
-	DirectX12* directX12_;
+	DirectX12* directX12;
 
 	Transform transform;
 	Transform cameraTransform;

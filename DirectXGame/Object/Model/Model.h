@@ -24,7 +24,7 @@ class Model
 public:
 	ModelData LoadObjFile(const std::string& directoryPath, const std::string& filename);
 
-	void Initialize(DirectX12* directX12, const std::string& filename);
+	void Initialize(const std::string& filename);
 
 	void InitializePosition(const std::string& filename);
 
@@ -51,7 +51,7 @@ public:
 	MaterialData LoadMaterialTemplateFile(const std::string& directoryPath, const std::string& filename);
 
 private:
-	DirectX12* directX12_;
+	DirectX12* directX12;
 	Input* input_;
 	ModelData modelData;
 

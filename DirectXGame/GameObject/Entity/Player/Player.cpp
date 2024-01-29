@@ -1,14 +1,15 @@
 #include "Player.h"
 
-void Player::Initialize(DirectX12* directX12, const std::string& filename) {
+void Player::Initialize(const std::string& filename) {
 	input_ = Input::GetInstance();
+
 	model_ = std::make_unique<Model>();
 	reticleModel_ = std::make_unique<Model>();
 	bulletModel_ = std::make_unique<Model>();
 
-	model_->Initialize(directX12 , filename);
-	reticleModel_->Initialize(directX12 , filename);
-	bulletModel_->Initialize(directX12 , filename);
+	model_->Initialize(filename);
+	reticleModel_->Initialize(filename);
+	bulletModel_->Initialize(filename);
 
 	//bullet_ = std::make_unique<Bullet>();
 
@@ -24,7 +25,6 @@ void Player::Initialize(DirectX12* directX12, const std::string& filename) {
 	bulletTransform_.rotate = { 0.0f,0.0f,0.0f };
 	bulletTransform_.scale = { 0.3f,0.3f,0.3f };
 
-	directX12_ = directX12;
 }
 
 void Player::Update(Vector4& color, const Transform& cameraTransform, DirectionalLight& directionalLight) {

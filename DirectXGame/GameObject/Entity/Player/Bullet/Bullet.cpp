@@ -1,9 +1,9 @@
 #include "Bullet.h"
 
-void Bullet::Initialize(DirectX12* directX12, const std::string& filename, Vector3& position, Vector3& velocity) {
+void Bullet::Initialize(const std::string& filename, Vector3& position, Vector3& velocity) {
 	model_ = std::make_unique<Model>();
 
-	model_->Initialize(directX12, filename);
+	model_->Initialize(filename);
 
 	/*ball_ = std::make_unique<Sphere>();
 	ball_->Initialize(directX12);*/

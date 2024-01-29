@@ -15,7 +15,7 @@
 class Sphere
 {
 public:
-	void Initialize(DirectX12* directX12);
+	void Initialize();
 
 	void InitializePosition();
 
@@ -39,7 +39,7 @@ public:
 
 	void SetPosition(Vector3& position) { transform.translate = position; }
 private:
-	DirectX12* directX12_;
+	DirectX12* directX12;
 
 	Transform transform;
 	Transform cameraTransform;
