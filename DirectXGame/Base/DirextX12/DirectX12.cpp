@@ -7,7 +7,7 @@ DirectX12* DirectX12::GetInstance() {
 	return &instance;
 }
 
-void DirectX12::Init() {
+void DirectX12::Initialize() {
 	InitializeFixFPS();
 
 	windowsAPI_ = WindowsAPI::GetInstance();

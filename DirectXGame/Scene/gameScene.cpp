@@ -10,7 +10,7 @@ void GameScene::Initialize()
 	VariableInit();
 	directX12_ = DirectX12::GetInstance();
 	windowsAPI_ = WindowsAPI::GetInstance();
-	directX12_->Init();
+	directX12_->Initialize();
 	colorVolume[0] = 1.0f;
 	colorVolume[1] = 1.0f;
 	colorVolume[2] = 1.0f;

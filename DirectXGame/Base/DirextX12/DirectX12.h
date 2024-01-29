@@ -23,7 +23,7 @@ class DirectX12
 public:
 	static DirectX12* GetInstance();
 
-	void Init();
+	void Initialize();
 
 	void DXGIFactory();
 
