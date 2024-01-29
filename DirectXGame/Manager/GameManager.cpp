@@ -8,9 +8,22 @@ GameManager* GameManager::GetInstance() {
 GameManager::GameManager() {
 	sceneArr[TITLE] = std::make_unique<TitleScene>();
 	sceneArr[INGAME] = std::make_unique<GameScene>();
+	directX12 = DirectX12::GetInstance();
+	windowsAPI = WindowsAPI::GetInstance();
+
+	directX12->Initialize();
+	graphicsRenderer_->Initialize();
+	graphicsRenderer_->ViewportScissor();
+
+	currentSceneNo = TITLE;
+
 }
 
 GameManager::~GameManager() {
+
+}
+
+void GameManager::Initialize() {
 
 }
 
@@ -18,18 +31,9 @@ void GameManager::Run() {
 
 	CoInitializeEx(0, COINIT_MULTITHREADED);
 	//インスタンス
-
+	//GameManager::GetInstance()->Initialize();
 	GlobalVariables::GetInstance()->LoadFiles();
-
-	//GameScene* gameScene = new GameScene;
-
-
 	sceneArr[INGAME]->Initialize();
-	//いろいろ
-
-
-	//初期化
-
 
 	//メインループ
 	MSG msg{};
@@ -39,13 +43,37 @@ void GameManager::Run() {
 			DispatchMessage(&msg);
 		}
 		else {
-			sceneArr[INGAME]->BeginFrame();
+			//シーンのチェック
+			prevSceneNo = currentSceneNo;
+			currentSceneNo = sceneArr[currentSceneNo]->GetSceneNo();
+
+			//シーンが前フレームと異なったら初期化
+			if (prevSceneNo != currentSceneNo) {
+				sceneArr[currentSceneNo]->Initialize();
+			}
+
+			BeginFrame();
 			sceneArr[INGAME]->Update();
 			sceneArr[INGAME]->Draw();
-			sceneArr[INGAME]->EndFrame();
+			EndFrame();
 		}
 	}
-	sceneArr[INGAME]->Final();
+	Finalize();
 	CoUninitialize();
+}
 
+void GameManager::BeginFrame() {
+	ImGui_ImplDX12_NewFrame();
+	ImGui_ImplWin32_NewFrame();
+	ImGui::NewFrame();
+	directX12->PreDraw();
+	graphicsRenderer_->DecideCommand();
+}
+void GameManager::EndFrame() {
+	directX12->PostDraw();
+}
+void GameManager::Finalize() {
+	directX12->Finalize();
+	windowsAPI->Finalize();
+	directX12->ResourceLeakCheck();
 }

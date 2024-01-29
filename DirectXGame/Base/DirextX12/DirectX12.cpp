@@ -436,7 +436,7 @@ void DirectX12::UpdataFixFPS() {
 
 	if (elapsed < kMinCheckTime) {
 		while (std::chrono::steady_clock::now() - reference_ < kMinTime) {
-			std::this_thread::sleep_for(std::chrono::microseconds(1));
+			//std::this_thread::sleep_for(std::chrono::microseconds(1));
 		}
 	}
 	reference_ = std::chrono::steady_clock::now();

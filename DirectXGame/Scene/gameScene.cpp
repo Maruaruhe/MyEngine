@@ -8,15 +8,10 @@ void GameScene::Initialize()
 
 
 	VariableInit();
-	directX12_ = DirectX12::GetInstance();
-	windowsAPI_ = WindowsAPI::GetInstance();
-	directX12_->Initialize();
-	//graphicsRenderer_ = new GraphicsRenderer();
+
 	colorVolume[0] = 1.0f;
 	colorVolume[1] = 1.0f;
 	colorVolume[2] = 1.0f;
-
-	graphicsRenderer_->Initialize();
 
 	Input::GetInstance()->Initialize();
 
@@ -27,10 +22,6 @@ void GameScene::Initialize()
 	player_->Initialize("ghostPori");
 	enemy_->Initialize("ghostPori");
 	camera->Initialize();
-
-	//sphere->Initialize();
-
-	graphicsRenderer_->ViewportScissor();
 
 	transform.translate = { 0.0f,0.0f,0.0f };
 	transform.rotate = { 0.0f,0.0f,0.0f };
@@ -58,30 +49,6 @@ void GameScene::isCollsion() {
 	if ((dis.x * dis.x + dis.y * dis.y + dis.z * dis.z) <= 2) {
 		enemy_->SetIsAlive(false);
 	}
-}
-
-void GameScene::Release() {
-
-}
-
-
-
-void GameScene::BeginFrame() {
-	ImGui_ImplDX12_NewFrame();
-	ImGui_ImplWin32_NewFrame();
-	ImGui::NewFrame();
-	directX12_->PreDraw();
-	graphicsRenderer_->DecideCommand();
-}
-
-void GameScene::EndFrame() {
-	directX12_->PostDraw();
-}
-
-void GameScene::Final() {
-	directX12_->Finalize();
-	windowsAPI_->Finalize();
-	directX12_->ResourceLeakCheck();
 }
 
 void GameScene::Draw() {
