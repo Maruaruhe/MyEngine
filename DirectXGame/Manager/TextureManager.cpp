@@ -49,9 +49,10 @@ uint32_t TextureManager::GetTextureIndexByFilePath(const std::string& filePath) 
 	return 0;
 }
 
-D3D12_GPU_DESCRIPTOR_HANDLE TextureManager::GetSrvHandleGPU(uint32_t textureIndex) {
-	assert(textureIndex > DirectX12::kMaxSRVCount);
-
-//	TextureData& textureData =
-	//	return textureData.srvHandleGPU;
-}
+//D3D12_GPU_DESCRIPTOR_HANDLE TextureManager::GetSrvHandleGPU(uint32_t textureIndex) {
+//	assert(textureIndex > DirectX12::kMaxSRVCount);
+//
+////	TextureData& textureData =
+//	//	return textureData.srvHandleGPU;
+//
+//}
