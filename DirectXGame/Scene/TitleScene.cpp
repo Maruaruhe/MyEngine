@@ -26,6 +26,6 @@ void TitleScene::Update(){
 }
 
 void TitleScene::Draw() {
-	title.Draw();
+	//title.Draw();
 	black.Draw();
 }

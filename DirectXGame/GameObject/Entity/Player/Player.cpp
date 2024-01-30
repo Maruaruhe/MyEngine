@@ -5,11 +5,9 @@ void Player::Initialize(const std::string& filename) {
 
 	model_ = std::make_unique<Model>();
 	reticleModel_ = std::make_unique<Model>();
-	bulletModel_ = std::make_unique<Model>();
 
 	model_->Initialize(filename);
 	reticleModel_->Initialize(filename);
-	bulletModel_->Initialize(filename);
 
 	transform_.translate = { 0.0f,0.0f,0.0f };
 	transform_.rotate = { 0.0f,0.0f,0.0f };
@@ -19,10 +17,6 @@ void Player::Initialize(const std::string& filename) {
 	reticleTransform_.rotate = { 0.0f,0.0f,0.0f };
 	reticleTransform_.scale = { 0.5f,0.5f,0.5f };
 
-	bulletTransform_.translate = { -10.0f,0.0f,0.0f };
-	bulletTransform_.rotate = { 0.0f,0.0f,0.0f };
-	bulletTransform_.scale = { 0.3f,0.3f,0.3f };
-
 	bulletCoolTime = 30;
 }
 
@@ -31,11 +25,9 @@ void Player::Update(Vector4& color, const Transform& cameraTransform, Directiona
 	Move();
 	ReticleMove();
 	Attack();
-	BulletMove();
 
 	model_->Update(color, transform_,cameraTransform, directionalLight);
 	reticleModel_->Update(color, reticleTransform_,cameraTransform, directionalLight);
-	bulletModel_->Update(color, bulletTransform_,cameraTransform, directionalLight);
 
 	for (Bullet* bullet : bullets) {
 		bullet->Update(color, cameraTransform, directionalLight);
@@ -72,12 +64,6 @@ void Player::ReticleMove() {
 	}
 }
 
-void Player::BulletMove() {
-	if (isSee) {
-		bulletTransform_.translate = Add(bulletTransform_.translate,velocity);
-	}
-}
-
 void Player::Attack() {
 	if (input_->PushKey(DIK_SPACE) && bulletCoolTime <= 0) {
 		isSee = true;
@@ -85,7 +71,6 @@ void Player::Attack() {
 		bulletCoolTime = kBulletMaxCoolTime;
 		velocity = Subtract(reticleTransform_.translate,transform_.translate);
 		velocity = Normalize(velocity);
-		bulletTransform_.translate = transform_.translate;
 
 		Bullet* newBullet = new Bullet();
 		newBullet->Initialize(transform_.translate, velocity);
@@ -103,5 +88,4 @@ void Player::Draw() {
 	for (Bullet* bullet : bullets) {
 		bullet->Draw();
 	}
-	//bulletModel_->Draw();
 }

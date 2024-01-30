@@ -1,11 +1,13 @@
 #pragma once
 #include <iostream>
 #include <memory>
+#include "EnemyState.h"
 
 #include "../../../Math/Vector4.h"
 #include "../../../Base/Input/Input.h"
 #include "../../../Object/Model/Model.h"
 
+class BaseEnemyState;
 class Enemy
 {
 public:
@@ -18,14 +20,19 @@ public:
 	void BulletMove();
 
 	void Attack();
+	void Move(const Vector3& velocity);
 
 	void Draw();
 
+	void ChangeState(BaseEnemyState* newState);
+
 	Transform GetTransform() { return transform_; }
 	void SetTransform(Transform transform) { transform_ = transform; }
+	void SetPosition(Vector3& transform) { transform_.translate = transform; }
 
 	void SetLife(int a) { Life = a; }
 	void SetIsAlive(bool a) { isAlive = a; }
+	bool GetIsAlive() { return isAlive; }
 	int GetLife() { return Life; }
 
 private:
@@ -42,4 +49,6 @@ private:
 
 	const int kBulletMaxCoolTime = 30;
 	int bulletCoolTime = 0;
+
+	BaseEnemyState* state;
 };

@@ -20,7 +20,6 @@ public:
 	std::list<Bullet*> GetBullets() { return bullets; }
 
 	Transform GetTransform() { return transform_; }
-	Transform GetBulletTransform() { return bulletTransform_; }
 	void SetTransform(Transform transform) { transform_ = transform; }
 
 private:
@@ -39,9 +38,6 @@ private:
 
 	Transform reticleTransform_;
 	std::unique_ptr<Model> reticleModel_;
-
-	Transform bulletTransform_;
-	std::unique_ptr<Model> bulletModel_;
 
 	std::list<Bullet*> bullets;
 
