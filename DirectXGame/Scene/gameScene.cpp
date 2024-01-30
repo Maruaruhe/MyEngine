@@ -33,6 +33,19 @@ void GameScene::Update() {
 }
 
 bool GameScene::isCollsion() {
+//	std::list<Bullet*> bullets = player_->GetBullets();
+//	for (Bullet* bullet : bullets) {
+//		Vector3 pPos = bullet->GetPosition();
+//		Vector3 ePos = enemy_->GetTransform().translate;
+//		Vector3 dis = Subtract(pPos, ePos);
+//
+//		if ((dis.x * dis.x + dis.y * dis.y + dis.z * dis.z) <= 2) {
+//			enemy_->SetIsAlive(false);
+//			return true;
+//		}
+//		return false;
+//	}
+//}
 	Vector3 pPos = player_->GetBulletTransform().translate;
 	Vector3 ePos = enemy_->GetTransform().translate;
 	Vector3 dis = Subtract(pPos, ePos);
@@ -42,6 +55,7 @@ bool GameScene::isCollsion() {
 	}
 	return false;
 }
+
 
 void GameScene::Draw() {
 	player_->Draw();

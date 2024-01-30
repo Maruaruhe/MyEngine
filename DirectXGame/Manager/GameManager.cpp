@@ -35,6 +35,7 @@ void GameManager::Run() {
 	//インスタンス
 	GameManager::GetInstance()->Initialize();
 	GlobalVariables::GetInstance()->LoadFiles();
+	TextureManager::GetInstance()->Initialize();
 
 	//メインループ
 	MSG msg{};

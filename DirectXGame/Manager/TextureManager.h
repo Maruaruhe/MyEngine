@@ -10,12 +10,33 @@ class TextureManager
 {
 public:
 	static TextureManager* GetInstance();
-	void LoadTexture(uint32_t index);
 
+	void Initialize();
+	void LoadTexture(const std::string& filePath);
+
+	uint32_t GetTextureIndexByFilePath(const std::string& filePath);
+	D3D12_GPU_DESCRIPTOR_HANDLE GetSrvHandleGPU(uint32_t textureIndex);
 private:
 
-	static const size_t kMaxSRVCount = 2056;
-	std::array<Microsoft::WRL::ComPtr<ID3D12Resource>, kMaxSRVCount> textureBuffers_;
+	struct TextureData{
+		std::string filePath;
+		DirectX::TexMetadata metaData;
+		Microsoft::WRL::ComPtr<ID3D12Resource> resource;
+		D3D12_CPU_DESCRIPTOR_HANDLE srvHandleCPU;
+		D3D12_GPU_DESCRIPTOR_HANDLE srvHandleGPU;
+	};
+
+	static uint32_t kSRVIndexTop;
+
+	std::vector<TextureData> textureDatas;
+
+	//static const size_t kMaxSRVCount = 2056;
+	//std::array<Microsoft::WRL::ComPtr<ID3D12Resource>, kMaxSRVCount> textureBuffers_;
+
+	TextureManager() = default;
+	~TextureManager() = default;
+	TextureManager(TextureManager&) = delete;
+	TextureManager& operator=(TextureManager&) = delete;
 
 };
 

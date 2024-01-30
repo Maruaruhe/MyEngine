@@ -6,18 +6,14 @@ void Player::Initialize(const std::string& filename) {
 	model_ = std::make_unique<Model>();
 	reticleModel_ = std::make_unique<Model>();
 	bulletModel_ = std::make_unique<Model>();
-	bullet = std::make_unique<Sphere>();
 
 	model_->Initialize(filename);
 	reticleModel_->Initialize(filename);
 	bulletModel_->Initialize(filename);
-	bullet->Initialize();
-
-	//bullet_ = std::make_unique<Bullet>();
 
 	transform_.translate = { 0.0f,0.0f,0.0f };
 	transform_.rotate = { 0.0f,0.0f,0.0f };
-	transform_.scale = { 1.0f,1.0f,1.0f };
+	transform_.scale = { 0.3f,0.3f,0.3f };
 	
 	reticleTransform_.translate = { 0.0f,0.0f,25.0f };
 	reticleTransform_.rotate = { 0.0f,0.0f,0.0f };
@@ -26,13 +22,12 @@ void Player::Initialize(const std::string& filename) {
 	bulletTransform_.translate = { -10.0f,0.0f,0.0f };
 	bulletTransform_.rotate = { 0.0f,0.0f,0.0f };
 	bulletTransform_.scale = { 0.3f,0.3f,0.3f };
-	
-	bu.translate = { -10.0f,0.0f,0.0f };
-	bu.rotate = { 0.0f,0.0f,0.0f };
-	bu.scale = { 0.3f,0.3f,0.3f };
+
+	bulletCoolTime = 30;
 }
 
 void Player::Update(Vector4& color, const Transform& cameraTransform, DirectionalLight& directionalLight) {
+
 	Move();
 	ReticleMove();
 	Attack();
@@ -41,59 +36,61 @@ void Player::Update(Vector4& color, const Transform& cameraTransform, Directiona
 	model_->Update(color, transform_,cameraTransform, directionalLight);
 	reticleModel_->Update(color, reticleTransform_,cameraTransform, directionalLight);
 	bulletModel_->Update(color, bulletTransform_,cameraTransform, directionalLight);
-	bullet->Update(color,bu,cameraTransform,directionalLight);
 
-	//bullet_->Update(color,cameraTransform,directionalLight);
+	for (Bullet* bullet : bullets) {
+		bullet->Update(color, cameraTransform, directionalLight);
+	}
 }
 
 void Player::Move() {
 	if (input_->PushKey(DIK_W)) {
-		transform_.translate.y += 0.03f;
+		transform_.translate.y += speed/2;
 	}
 	if (input_->PushKey(DIK_S)) {
-		transform_.translate.y -= 0.03f;
+		transform_.translate.y -= speed/2;
 	}
 	if (input_->PushKey(DIK_A)) {
-		transform_.translate.x -= 0.03f;
+		transform_.translate.x -= speed/2;
 	}
 	if (input_->PushKey(DIK_D)) {
-		transform_.translate.x += 0.03f;
+		transform_.translate.x += speed/2;
 	}
 }
 
 void Player::ReticleMove() {
 	if (input_->PushKey(DIK_UP)) {
-		reticleTransform_.translate.y += 0.03f;
+		reticleTransform_.translate.y += speed;
 	}
 	if (input_->PushKey(DIK_DOWN)) {
-		reticleTransform_.translate.y -= 0.03f;
+		reticleTransform_.translate.y -= speed;
 	}
 	if (input_->PushKey(DIK_LEFT)) {
-		reticleTransform_.translate.x -= 0.03f;
+		reticleTransform_.translate.x -= speed;
 	}
 	if (input_->PushKey(DIK_RIGHT)) {
-		reticleTransform_.translate.x += 0.03f;
+		reticleTransform_.translate.x += speed;
 	}
 }
 
 void Player::BulletMove() {
 	if (isSee) {
 		bulletTransform_.translate = Add(bulletTransform_.translate,velocity);
-		bu.translate = Add(bulletTransform_.translate,velocity);
 	}
 }
 
 void Player::Attack() {
-	if (input_->TriggerKey(DIK_SPACE) && bulletCoolTime <= 0) {
+	if (input_->PushKey(DIK_SPACE) && bulletCoolTime <= 0) {
 		isSee = true;
-		//bullet_->SetIsAlive(true);
+
 		bulletCoolTime = kBulletMaxCoolTime;
 		velocity = Subtract(reticleTransform_.translate,transform_.translate);
 		velocity = Normalize(velocity);
 		bulletTransform_.translate = transform_.translate;
-		bu.translate = transform_.translate;
-		//bullet_->Initialize(directX12_, "ghostPori", transform_.translate, velocity);
-		//bullets_.push_back(newBullet);
+
+		Bullet* newBullet = new Bullet();
+		newBullet->Initialize(transform_.translate, velocity);
+		newBullet->SetIsAlive(true);
+		bullets.push_back(newBullet);
 	}
 	if (bulletCoolTime > 0) {
 		bulletCoolTime--;
@@ -103,9 +100,8 @@ void Player::Attack() {
 void Player::Draw() {
 	model_->Draw();
 	reticleModel_->Draw();
+	for (Bullet* bullet : bullets) {
+		bullet->Draw();
+	}
 	//bulletModel_->Draw();
-	bullet->Draw();
-	/*if (bullet_->GetIsAlive()) {
-		bullet_->Draw();
-	}*/
 }

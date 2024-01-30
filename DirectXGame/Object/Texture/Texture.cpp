@@ -12,6 +12,7 @@ DirectX::ScratchImage Texture::LoadTexture(const std::string& filePath) {
 
 	return mipImages;
 }
+
 Microsoft::WRL::ComPtr<ID3D12Resource> Texture::CreateTextureResource(Microsoft::WRL::ComPtr<ID3D12Device> device, const DirectX::TexMetadata& metadata) {
 	//metadataを基にResourceの設定
 	D3D12_RESOURCE_DESC resourceDesc{};

@@ -3,13 +3,12 @@
 #include <memory>
 
 #include "../../../../Math/Vector4.h"
-#include "../../../../Object/Model/Model.h"
 #include "../../../../Object/Sphere/Sphere.h"
 
 class Bullet
 {
 public:
-	void Initialize(const std::string& filename, Vector3& position, Vector3& velocity);
+	void Initialize(Vector3& position, Vector3& velocity);
 
 	void Update(Vector4& color, const Transform& cameraTransform, DirectionalLight& directionalLight);
 
@@ -17,19 +16,23 @@ public:
 
 	void Draw();
 
-	Transform GetTransform() { return transform_; }
-	void SetTransform(Transform transform) { transform_ = transform; }
-	void SetPosition(Vector3& position) { transform_.translate = position; }
+	Transform GetTransform() { return transform; }
+	Vector3 GetPosition() { return transform.translate; }
+	void SetTransform(Transform transform) { transform = transform; }
+	void SetPosition(Vector3& position) { transform.translate = position; }
 
-	void SetIsAlive(bool a) { isDead_ = a; }
-	bool GetIsAlive() { return isDead_; }
+	void SetIsAlive(bool a) { isActive = a; }
+
+	bool GetIsActive() { return isActive; }
 
 private:
+	bool isActive = true;
 
-	Transform transform_;
-	std::unique_ptr<Model> model_;
-	//std::unique_ptr<Sphere> ball_;
+	Transform transform;
+	Sphere bullet;
 
-	bool isDead_ = false;
-	Vector3 velocity_;
+	Vector3 velocity;
+
+	int deathTimer = lifeTime;
+	const int lifeTime = 60 * 1;
 };

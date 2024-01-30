@@ -1,11 +1,11 @@
 #pragma once
 #include <iostream>
 #include <memory>
+#include <list>
 
 #include "../../../Math/Vector4.h"
 #include "../../../Base/Input/Input.h"
 #include "../../../Object/Model/Model.h"
-#include "../../../Object/Sphere/Sphere.h"
 #include "Bullet/Bullet.h"
 
 class Player
@@ -15,17 +15,21 @@ public:
 
 	void Update(Vector4& color, const Transform& cameraTransform, DirectionalLight& directionalLight);
 
+	void Draw();
+
+	std::list<Bullet*> GetBullets() { return bullets; }
+
+	Transform GetTransform() { return transform_; }
+	Transform GetBulletTransform() { return bulletTransform_; }
+	void SetTransform(Transform transform) { transform_ = transform; }
+
+private:
+
 	void Move();
 	void ReticleMove();
 	void BulletMove();
 
 	void Attack();
-
-	void Draw();
-
-	Transform GetTransform() { return transform_; }
-	Transform GetBulletTransform() { return bulletTransform_; }
-	void SetTransform(Transform transform) { transform_ = transform; }
 
 private:
 	Input* input_ = nullptr;
@@ -39,13 +43,12 @@ private:
 	Transform bulletTransform_;
 	std::unique_ptr<Model> bulletModel_;
 
-	Transform bu;
-	std::unique_ptr<Sphere> bullet;
+	std::list<Bullet*> bullets;
 
 	bool isSee = false;
 	Vector3 velocity;
-	//std::unique_ptr<Bullet> bullet_;
+	const float speed = 0.1f;
 
 	const int kBulletMaxCoolTime = 30;
-	int bulletCoolTime = 0;
+	int bulletCoolTime = 30;
 };
