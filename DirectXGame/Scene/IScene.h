@@ -1,4 +1,5 @@
 #pragma once
+#include "../Base/Input/Input.h"
 
 enum SCENE {
 	TITLE = 0,

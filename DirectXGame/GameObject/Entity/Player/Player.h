@@ -5,6 +5,7 @@
 #include "../../../Math/Vector4.h"
 #include "../../../Base/Input/Input.h"
 #include "../../../Object/Model/Model.h"
+#include "../../../Object/Sphere/Sphere.h"
 #include "Bullet/Bullet.h"
 
 class Player
@@ -37,6 +38,9 @@ private:
 
 	Transform bulletTransform_;
 	std::unique_ptr<Model> bulletModel_;
+
+	Transform bu;
+	std::unique_ptr<Sphere> bullet;
 
 	bool isSee = false;
 	Vector3 velocity;

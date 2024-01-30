@@ -11,11 +11,13 @@
 class Sprite
 {
 public:
-	void Initialize(Vector3 leftTop,Vector3 rightBot);
+	void Initialize(Vector2 leftTop,Vector2 rightBot);
 
-	void Update(Vector4& color, const Transform& transform_);
+	void Update();
 
 	void Draw();
+
+	void SetPosition(Vector2 translate);
 
 private:
 
@@ -39,7 +41,6 @@ private:
 	DirectX12* directX12 = nullptr;;
 
 	Transform transform;
-	Transform cameraTransform;
 	Transform uvTransform;
 
 	//頂点リソース用のヒープの設定
@@ -69,8 +70,6 @@ private:
 	D3D12_INDEX_BUFFER_VIEW indexBufferView;
 	uint32_t* indexData;
 
-	Transform transform_;
-	//Matrix4x4 worldMatrix_;
 	bool isInvisible_;
 
 	const int32_t kClientWidth = 1280;

@@ -3,7 +3,6 @@
 #include "../Base/Input/Input.h"
 
 #include "../Object/Sprite/Sprite.h"
-#include "../Object/Camera/Camera.h"
 
 class TitleScene : public IScene
 {
@@ -14,8 +13,11 @@ public:
 
 private:
 	Input* input = nullptr;
-	Sprite sprite;
+	Sprite black;
+	Sprite title;
 
-	Camera camera;
+	int scroll;
+	const int scrollSpeed = 8;
+	bool isScroll;
 };
 

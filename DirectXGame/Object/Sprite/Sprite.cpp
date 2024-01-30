@@ -1,14 +1,15 @@
 #include "Sprite.h"
 
-void Sprite::Initialize(Vector3 leftTop, Vector3 rightBot) {
+void Sprite::Initialize(Vector2 leftTop, Vector2 rightBot) {
 	directX12 = DirectX12::GetInstance();
 	transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
-	cameraTransform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,-5.0f} };
+
 	uvTransform = {
 		{1.0f,1.0f,1.0f},
 		{0.0f,0.0f,0.0f},
 		{0.0f,0.0f,0.0f},
 	};
+
 	isInvisible_ = false;
 	CreateVertexResource();
 	CreateMaterialResource();
@@ -20,38 +21,35 @@ void Sprite::Initialize(Vector3 leftTop, Vector3 rightBot) {
 	vertexData = nullptr;
 	vertexResource->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
 	//左上									   
-	vertexData[1].position = { leftTop.x, leftTop.y, leftTop.z, 0 };
+	vertexData[1].position = { leftTop.x, leftTop.y, 0.0f, 1.0f };
 	vertexData[1].texcoord = { 0.0f,0.0f };
 	vertexData[1].normal = { 0.0f,0.0f,-1.0f };
 	//左下
-	vertexData[0].position = { leftTop.x, rightBot.y, leftTop.z, 0 };
+	vertexData[0].position = { leftTop.x, rightBot.y, 0.0f, 1.0f };
 	vertexData[0].texcoord = { 0.0f,1.0f };
 	vertexData[0].normal = { 0.0f,0.0f,-1.0f };
 	//右上
-	vertexData[3].position = { rightBot.x,leftTop.y,rightBot.z,0 };
+	vertexData[3].position = { rightBot.x,leftTop.y, 0.0f, 1.0f };
 	vertexData[3].texcoord = { 1.0f, 0.0f };
 	vertexData[3].normal = { 0.0f,0.0f,-1.0f };
 	//右下								
-	vertexData[2].position = { rightBot.x,rightBot.y,rightBot.z,0 };
+	vertexData[2].position = { rightBot.x,rightBot.y, 0.0f, 1.0f };
 	vertexData[2].texcoord = { 1.0f,1.0f };
 	vertexData[2].normal = { 0.0f,0.0f,-1.0f };
 }
 
-void Sprite::Update(Vector4& color, const Transform& transform_) {
+void Sprite::Update() {
 	/*ImGui::DragFloat2("uvTranslate", &uvTransform.translate.x, 0.01f, -10.0f, 10.0f);
 	ImGui::DragFloat2("uvScale", &uvTransform.scale.x, 0.01f, -10.0f, 10.0f);
 	ImGui::SliderAngle("ucRotate", &uvTransform.rotate.z);*/
 
-	transform.translate = transform_.translate;
-	transform.rotate = transform_.rotate;
-	transform.scale = transform_.scale;
 	materialData_->uvTransform = MakeIdentity4x4();
 	transformationMatrix->World = MakeAffineMatrix(transform.scale, transform.rotate, transform.translate);
 	Matrix4x4 viewMatrix = MakeIdentity4x4();
 	Matrix4x4 projectionMatrix = MakeOrthographicMatrix(0.0f, 0.0f, float(kCliantWidth), float(kClientHeight), 0.0f, 100.0f);
 	Matrix4x4 worldViewProjectionMatrix = Multiply(transformationMatrix->World, Multiply(viewMatrix, projectionMatrix));
 	transformationMatrix->WVP = worldViewProjectionMatrix;
-	materialData_->color = color;
+	materialData_->color = { 1.0f,1.0f,1.0f,1.0f };
 
 	Matrix4x4 uvTransformMatrix = MakeScaleMatrix(uvTransform.scale);
 	uvTransformMatrix = Multiply(uvTransformMatrix, MakeRotateZMatrix(uvTransform.rotate.z));
@@ -70,7 +68,7 @@ void Sprite::Draw() {
 		//wvp用のCBufferの場所を設定
 		directX12->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
 
-		directX12->GetCommandList()->SetGraphicsRootDescriptorTable(2, directX12->GetSrvHandleGPU());
+		directX12->GetCommandList()->SetGraphicsRootDescriptorTable(2, directX12->GetSrvHandleGPU2());
 		//描画！　（DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
 		//directX12_->GetCommandList()->DrawInstanced(6, 1, 0, 0);
 		directX12->GetCommandList()->DrawIndexedInstanced(6, 1, 0, 0, 0);
@@ -138,4 +136,9 @@ void Sprite::DataResource() {
 }
 
 void Sprite::Release() {
+}
+
+void Sprite::SetPosition(Vector2 translate) {
+	transform.translate.x = translate.x;
+	transform.translate.y = translate.y;
 }

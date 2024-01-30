@@ -113,7 +113,7 @@ void Sphere::Initialize() {
 	InitializePosition();
 }
 
-void Sphere::Update(Vector4& color, const Transform& cameraTransform, DirectionalLight& direcionalLight) {
+void Sphere::Update(Vector4& color, const Transform& transform, const Transform& cameraTransform, DirectionalLight& direcionalLight) {
 	materialData_->uvTransform = MakeIdentity4x4();
 	transformationMatrix->World = MakeAffineMatrix(transform.scale, transform.rotate, transform.translate);
 	Matrix4x4 cameraMatrix = MakeAffineMatrix(cameraTransform.scale, cameraTransform.rotate, cameraTransform.translate);
@@ -126,7 +126,7 @@ void Sphere::Update(Vector4& color, const Transform& cameraTransform, Directiona
 	directionalLight_->direction = direcionalLight.direction;
 	directionalLight_->intensity = direcionalLight.intensity;
 
-	ImGui::Checkbox("useMonsterBall", &useMonsterBall);
+	//ImGui::Checkbox("useMonsterBall", &useMonsterBall);
 }
 
 void Sphere ::Draw() {

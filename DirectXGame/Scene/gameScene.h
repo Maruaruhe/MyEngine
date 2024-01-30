@@ -14,11 +14,11 @@
 #include "../GameObject/Entity/Player/Player.h"
 #include "../GameObject/Entity/Enemy/Enemy.h"
 
-class Texture;
-class Sphere;
-class Lighting;
-class Input;
-class Camera;
+//class Texture;
+//class Sphere;
+//class Lighting;
+//class Input;
+//class Camera;
 
 class GameScene : public IScene
 {
@@ -29,7 +29,7 @@ public:
 
 	void Draw() override;
 private:
-	Input* input_ = nullptr;
+	Input* input = nullptr;
 
 	std::unique_ptr<Player> player_;
 	std::unique_ptr<Enemy> enemy_;
@@ -39,5 +39,4 @@ private:
 	DirectionalLight light;
 
 	float colorVolume[3];
-	Transform transform;
 };

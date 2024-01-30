@@ -7,8 +7,8 @@
 #include "../Base/GraphicsRenderer/GraphicsRenderer.h"
 
 #include "../Scene/IScene.h"
-#include	"../Scene/GameScene.h"
 #include	"../Scene/TitleScene.h"
+#include	"../Scene/GameScene.h"
 #include "../Scene/ClearScene.h"
 
 class DirectX12;

@@ -2,7 +2,7 @@
 
 void GameScene::Initialize()
 {
-	input_ = Input::GetInstance();
+	input = Input::GetInstance();
 	light.color = { 1.0f,1.0f,1.0f,1.0f };
 	light.direction = { 0.0f,-1.0f,0.0f };
 	light.intensity = 1.0f;
@@ -18,10 +18,6 @@ void GameScene::Initialize()
 	player_->Initialize("ghostPori");
 	enemy_->Initialize("ghostPori");
 	camera->Initialize();
-
-	transform.translate = { 0.0f,0.0f,0.0f };
-	transform.rotate = { 0.0f,0.0f,0.0f };
-	transform.scale = { 1.0f,1.0f,1.0f };
 }
 
 void GameScene::Update() {
