@@ -13,9 +13,11 @@ void GameScene::Initialize()
 
 	player_ = std::make_unique<Player>();
 	camera = std::make_unique<Camera>();
+	//skydome = std::make_unique<Skydome>();
 
 	player_->Initialize("ghostPori");
 	camera->Initialize();
+	//skydome->Initialize("skydoo");
 
 	LoadEnemyPopDate();
 	UpdateEnemyPopCommands();
@@ -44,7 +46,6 @@ void GameScene::Update() {
 }
 
 void GameScene::isCollsion() {
-	//Vector3 pPos = player_->GetBulletTransform().translate;
 	std::list<Bullet*> bullets = player_->GetBullets();
 	for (Enemy* enemy : enemies_) {
 		for (Bullet* bullet : bullets) {
@@ -64,10 +65,11 @@ void GameScene::Draw() {
 	for (Enemy* enemy : enemies_) {
 		enemy->Draw();
 	}
+
+	//skydome->Draw();
 }
 
 void GameScene::LoadEnemyPopDate() {
-
 	std::ifstream file;
 	file.open("./Resources/enemyPop.csv");
 	assert(file.is_open());
@@ -97,7 +99,6 @@ void GameScene::UpdateEnemyPopCommands() {
 			float z = (float)std::atof(word.c_str());
 
 			spawnEnemy(Vector3(x, y, z));
-			//break;
 		}
 	}
 }
@@ -117,5 +118,5 @@ bool GameScene::checkEnemyAlive() {
 			return true;
 		}
 	}
-		return false;
+	return false;
 }

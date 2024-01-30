@@ -13,6 +13,7 @@
 
 #include "../GameObject/Entity/Player/Player.h"
 #include "../GameObject/Entity/Enemy/Enemy.h"
+#include "../GameObject/Skydome/Skydome.h"
 
 //class Texture;
 //class Sphere;
@@ -42,6 +43,8 @@ private:
 	std::list<Enemy*> enemies_;
 
 	std::unique_ptr<Camera> camera;
+
+	std::unique_ptr<Skydome> skydome;
 
 	DirectionalLight light;
 
