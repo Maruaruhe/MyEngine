@@ -11,7 +11,7 @@
 class Player
 {
 public:
-	void Initialize(const std::string& filename);
+	void Initialize();
 
 	void Update(Vector4& color, const Transform& cameraTransform, DirectionalLight& directionalLight);
 
@@ -34,7 +34,12 @@ private:
 	Input* input_ = nullptr;
 
 	Transform transform_;
-	std::unique_ptr<Model> model_;
+	Transform armTransform_;
+
+	std::unique_ptr<Model> body;
+	std::unique_ptr<Model> head;
+	std::unique_ptr<Model> left;
+	std::unique_ptr<Model> right;
 
 	Transform reticleTransform_;
 	std::unique_ptr<Model> reticleModel_;

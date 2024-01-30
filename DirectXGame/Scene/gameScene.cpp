@@ -15,7 +15,7 @@ void GameScene::Initialize()
 	camera = std::make_unique<Camera>();
 	//skydome = std::make_unique<Skydome>();
 
-	player_->Initialize("ghostPori");
+	player_->Initialize();
 	camera->Initialize();
 	//skydome->Initialize("skydoo");
 

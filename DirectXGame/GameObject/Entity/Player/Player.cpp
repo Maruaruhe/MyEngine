@@ -1,17 +1,28 @@
 #include "Player.h"
 
-void Player::Initialize(const std::string& filename) {
+void Player::Initialize() {
 	input_ = Input::GetInstance();
 
-	model_ = std::make_unique<Model>();
 	reticleModel_ = std::make_unique<Model>();
 
-	model_->Initialize(filename);
-	reticleModel_->Initialize(filename);
+	reticleModel_->Initialize("ghostPori");
+
+	body = std::make_unique<Model>();
+	head = std::make_unique<Model>();
+	left = std::make_unique<Model>();
+	right = std::make_unique<Model>();
+
+	body->Initialize("body");
+	head->Initialize("head");
+	left->Initialize("left");
+	right->Initialize("right");
+
 
 	transform_.translate = { 0.0f,0.0f,0.0f };
 	transform_.rotate = { 0.0f,0.0f,0.0f };
-	transform_.scale = { 0.3f,0.3f,0.3f };
+	transform_.scale = { 0.1f,0.1f,0.1f };
+
+	armTransform_ = transform_;
 	
 	reticleTransform_.translate = { 0.0f,0.0f,25.0f };
 	reticleTransform_.rotate = { 0.0f,0.0f,0.0f };
@@ -26,8 +37,16 @@ void Player::Update(Vector4& color, const Transform& cameraTransform, Directiona
 	ReticleMove();
 	Attack();
 
-	model_->Update(color, transform_,cameraTransform, directionalLight);
 	reticleModel_->Update(color, reticleTransform_,cameraTransform, directionalLight);
+	
+	armTransform_.translate = transform_.translate;
+	armTransform_.rotate.x += 0.02f;
+
+	body->Update(color, transform_, cameraTransform, directionalLight);
+	head->Update(color, transform_, cameraTransform, directionalLight);
+	left->Update(color, armTransform_, cameraTransform, directionalLight);
+	right->Update(color, armTransform_, cameraTransform, directionalLight);
+
 
 	for (Bullet* bullet : bullets) {
 		bullet->Update(color, cameraTransform, directionalLight);
@@ -83,8 +102,13 @@ void Player::Attack() {
 }
 
 void Player::Draw() {
-	model_->Draw();
 	reticleModel_->Draw();
+
+	body->Draw();
+	head->Draw();
+	left->Draw();
+	right->Draw();
+
 	for (Bullet* bullet : bullets) {
 		bullet->Draw();
 	}
