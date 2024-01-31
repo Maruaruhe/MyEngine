@@ -21,6 +21,8 @@ void ClearScene::Update() {
 	light.intensity = 1.0f;
 	Vector4 a = { 1,1,1,1 };
 
+	trans.rotate.y += 0.02f;
+
 	sphere.Update(a, trans, camera->GetTransform(), light);
 }
 
