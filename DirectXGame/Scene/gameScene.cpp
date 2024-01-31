@@ -48,7 +48,7 @@ void GameScene::isCollsion() {
 			Vector3 pPos = bullet->GetPosition();
 			Vector3 ePos = enemy->GetTransform().translate;
 			Vector3 dis = Subtract(pPos, ePos);
-			if ((dis.x * dis.x + dis.y * dis.y + dis.z * dis.z) <= 2) {
+			if ((dis.x * dis.x + dis.y * dis.y + dis.z * dis.z) <= 1.5) {
 				enemy->SetIsAlive(false);
 			}
 		}
