@@ -38,14 +38,17 @@ void Player::Update(Vector4& color, const Transform& cameraTransform, Directiona
 	Attack();
 
 	reticleModel_->Update(color, reticleTransform_,cameraTransform, directionalLight);
+
+	transform_.rotate.y += 0.02f;
 	
 	armTransform_.translate = transform_.translate;
 	armTransform_.rotate.x += 0.02f;
 
-	body->Update(color, transform_, cameraTransform, directionalLight);
-	head->Update(color, transform_, cameraTransform, directionalLight);
-	left->Update(color, armTransform_, cameraTransform, directionalLight);
-	right->Update(color, armTransform_, cameraTransform, directionalLight);
+	Vector4 black = { 0,0,0,0 };
+	body->Update(black, transform_, cameraTransform, directionalLight);
+	head->Update(black, transform_, cameraTransform, directionalLight);
+	left->Update(black, armTransform_, cameraTransform, directionalLight);
+	right->Update(black, armTransform_, cameraTransform, directionalLight);
 
 
 	for (Bullet* bullet : bullets) {
