@@ -5,14 +5,15 @@ void Bullet::Initialize(Vector3& position, Vector3& velocity) {
 
 	isActive = true;
 	transform.translate = position;
-	transform.rotate = { 0.0f,0.0f,0.0f };
-	transform.scale = { 0.3f,0.3f,2.0f };
+	transform.rotate = { 0.0f,4.7f,0.0f };
+	transform.scale = { 0.3f,0.3f,0.3f };
 
 	this->velocity = velocity;
 }
 
 void Bullet::Update(Vector4& color, const Transform& cameraTransform, DirectionalLight& directionalLight) {
 	Move();
+	transform.rotate.y += 0.25f;
 	bullet.Update(color, transform, cameraTransform, directionalLight);
 	if (--deathTimer <= 0) {
 		isActive = false;

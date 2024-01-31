@@ -5,7 +5,7 @@ void Player::Initialize() {
 
 	reticleModel_ = std::make_unique<Model>();
 
-	reticleModel_->Initialize("ghostPori");
+	reticleModel_->Initialize("reticle");
 
 	body = std::make_unique<Model>();
 	head = std::make_unique<Model>();
@@ -26,7 +26,7 @@ void Player::Initialize() {
 	
 	reticleTransform_.translate = { 0.0f,0.0f,25.0f };
 	reticleTransform_.rotate = { 0.0f,0.0f,0.0f };
-	reticleTransform_.scale = { 0.5f,0.5f,0.5f };
+	reticleTransform_.scale = { 0.25f,0.25f,0.25f };
 
 	bulletCoolTime = 30;
 }
