@@ -1,6 +1,15 @@
 #include "WindowsAPI.h"
 
+WindowsAPI* WindowsAPI::instance = nullptr;
 
+WindowsAPI* WindowsAPI::GetInstance() {
+	//static WindowsAPI instance;
+	//return &instance;
+	if (instance == nullptr) {
+		instance = new WindowsAPI;
+	}
+	return instance;
+}
 
 void WindowsAPI::Init() {
 	timeBeginPeriod(1);
@@ -36,7 +45,7 @@ void WindowsAPI::WindowClass() {
 	//ウインドウプロシージャ	
 	wc.lpfnWndProc = WindowProc;
 	//ウインドウクラス名（なんでもいい）
-	wc.lpszClassName = L"メンバ変数";
+	wc.lpszClassName = L"SimpleShooter";
 	//インスタンスハンドル
 	wc.hInstance = GetModuleHandle(nullptr);
 	//カーソル
@@ -55,7 +64,7 @@ void WindowsAPI::WindowCreate() {
 	//ウインドウの生成
 	hwnd = CreateWindow(
 		wc.lpszClassName,		//利用するクラス名
-		L"メンバ変数",			//タイトルバーの文字
+		L"SimpleShooter",			//タイトルバーの文字
 		WS_OVERLAPPEDWINDOW,	//よく見るウインドウスタイル
 		CW_USEDEFAULT,			//表示X座標（Windowsに任せる）
 		CW_USEDEFAULT,			//表示Y座標（Windowsに任せる）
@@ -72,3 +81,9 @@ void WindowsAPI::WindowCreate() {
 	ShowWindow(hwnd, SW_SHOW);
 }
 
+
+
+void WindowsAPI::Finalize() {
+	delete instance;
+	instance = nullptr;
+}

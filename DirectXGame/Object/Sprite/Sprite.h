@@ -11,7 +11,15 @@
 class Sprite
 {
 public:
-	void Initialize(DirectX12* directX12, SpriteData spriteData);
+	void Initialize(Vector2 leftTop,Vector2 rightBot);
+
+	void Update();
+
+	void Draw();
+
+	void SetPosition(Vector2 translate);
+
+private:
 
 	void SetPosition(Vector2 LB, Vector2 LT, Vector2 RB, Vector2 RT);
 	VertexData GetPosition() { return vertexData[0], vertexData[1], vertexData[2], vertexData[3]; }
@@ -29,15 +37,10 @@ public:
 	void CreateTransformationMatrixResource();
 
 	void CreateIndexResource();
-
-	void Update(Vector4& color, const Transform& transform_);
-
-	void Draw();
 private:
-	DirectX12* directX12_;
+	DirectX12* directX12 = nullptr;;
 
 	Transform transform;
-	Transform cameraTransform;
 	Transform uvTransform;
 
 	//頂点リソース用のヒープの設定
@@ -67,8 +70,6 @@ private:
 	D3D12_INDEX_BUFFER_VIEW indexBufferView;
 	uint32_t* indexData;
 
-	Transform transform_;
-	//Matrix4x4 worldMatrix_;
 	bool isInvisible_;
 
 	const int32_t kClientWidth = 1280;

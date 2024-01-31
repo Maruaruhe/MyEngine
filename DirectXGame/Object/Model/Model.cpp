@@ -71,7 +71,7 @@ ModelData Model::LoadObjFile(const std::string& directoryPath, const std::string
 }
 void Model::InitializePosition(const std::string& filename) {
 	modelData = LoadObjFile("Resources",filename);
-	vertexResource = directX12_->CreateBufferResource(directX12_->GetDevice(), sizeof(VertexData) * modelData.vertices.size());
+	vertexResource = directX12->CreateBufferResource(directX12->GetDevice(), sizeof(VertexData) * modelData.vertices.size());
 
 	vertexBufferView = {};
 	vertexBufferView.BufferLocation = vertexResource->GetGPUVirtualAddress();
@@ -83,55 +83,34 @@ void Model::InitializePosition(const std::string& filename) {
 	std::memcpy(vertexData, modelData.vertices.data(), sizeof(VertexData) * modelData.vertices.size());
 }
 
-void Model::Initialize(DirectX12* directX12, const std::string& filename) {
-	directX12_ = directX12;
+void Model::Initialize(const std::string& filename) {
+	directX12 = DirectX12::GetInstance();
 
-	transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
-	cameraTransform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,-10.0f} };
 	CreateMaterialResource();
 	CreateTransformationMatrixResource();
 	CreateDirectionalLightResource();
 
-	const char* groupName = "Model";
+	/*const char* groupName = "Model";
 	GlobalVariables::GetInstance()->CreateGroup(groupName);
 	GlobalVariables::GetInstance()->AddItem(groupName, "Translate", transform.translate);
 	GlobalVariables::GetInstance()->AddItem(groupName, "Scale", transform.scale);
 	GlobalVariables::GetInstance()->AddItem(groupName, "Rotate", transform.rotate);
 
-	ApplyGlobalVariables();
+	ApplyGlobalVariables();*/
 
 	InitializePosition(filename);
 }
 
 void Model::ApplyGlobalVariables() {
-	const char* groupName = "Model";
+	/*const char* groupName = "Model";
 	transform.translate = GlobalVariables::GetInstance()->GetVector3Value(groupName, "Translate");
 	transform.scale = GlobalVariables::GetInstance()->GetVector3Value(groupName, "Scale");
-	transform.rotate = GlobalVariables::GetInstance()->GetVector3Value(groupName, "Rotate");
+	transform.rotate = GlobalVariables::GetInstance()->GetVector3Value(groupName, "Rotate");*/
 }
 
-void Model::Update(Vector4& color, const Transform& cameraTransform, DirectionalLight& direcionalLight) {
+void Model::Update(Vector4& color, const Transform& transform, const Transform& cameraTransform, DirectionalLight& direcionalLight) {
 
-	//transform.translate = transform_.translate;
-	//transform.rotate = transform_.rotate;
-	//transform.scale = transform_.scale;
-
-	ApplyGlobalVariables();
-
-	if (Input::GetInstance()->PushKey(DIK_W)) {
-		transform.translate.y += 0.1f;
-	}
-	if (Input::GetInstance()->PushKey(DIK_S)) {
-		transform.translate.y -= 0.1f;
-	}
-	if (Input::GetInstance()->PushKey(DIK_A)) {
-		transform.translate.x -= 0.1f;
-	}
-	if (Input::GetInstance()->PushKey(DIK_D)) {
-		transform.translate.x += 0.1f;
-	}
-
-	GlobalVariables::GetInstance()->SetValue("Model", "Translate", transform.translate);
+	/*GlobalVariables::GetInstance()->SetValue("Model", "Translate", transform.translate);*/
 	/*if (Input::GetInstance()->PushKey(DIK_S)) {
 		transform.translate.z += 0.1f;
 	}*/
@@ -151,24 +130,24 @@ void Model::Update(Vector4& color, const Transform& cameraTransform, Directional
 }
 
 void Model::Draw() {
-	directX12_->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView);	//VBVを設定
+	directX12->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView);	//VBVを設定
 	//形状を設定。PSOに設定しているものとはまた別。同じものを設定すると考えておけばよい
-	directX12_->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	directX12_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
+	directX12->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	directX12->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
 
 	//directX12_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResourceSprite->GetGPUVirtualAddress());
 	//wvp用のCBufferの場所を設定
-	directX12_->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
+	directX12->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
 
 	//koko
-	directX12_->GetCommandList()->SetGraphicsRootDescriptorTable(2, directX12_->GetSrvHandleGPU2());
+	directX12->GetCommandList()->SetGraphicsRootDescriptorTable(2, directX12->GetSrvHandleGPU2());
 	//directX12_->GetCommandList()->SetGraphicsRootConstantBufferView(3, directionalLightResource->GetGPUVirtualAddress());
 	//描画！　（DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
-	directX12_->GetCommandList()->DrawInstanced(UINT(modelData.vertices.size()), 1, 0, 0);
+	directX12->GetCommandList()->DrawInstanced(UINT(modelData.vertices.size()), 1, 0, 0);
 }
 
 void Model::CreateMaterialResource() {
-	materialResource_ = directX12_->CreateBufferResource(directX12_->GetDevice(), sizeof(Material));
+	materialResource_ = directX12->CreateBufferResource(directX12->GetDevice(), sizeof(Material));
 	materialData_ = nullptr;
 	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&materialData_));
 	materialData_->color = Vector4(1.0f, 0.0f, 0.0f, 1.0f);
@@ -177,7 +156,7 @@ void Model::CreateMaterialResource() {
 
 void Model::CreateTransformationMatrixResource() {
 	//WVP用のリソースを作る。Matrix4x4　1つ分のサイズを用意する
-	wvpResource_ = directX12_->CreateBufferResource(directX12_->GetDevice(), sizeof(TransformationMatrix));
+	wvpResource_ = directX12->CreateBufferResource(directX12->GetDevice(), sizeof(TransformationMatrix));
 	//データを書き込む
 	transformationMatrix = nullptr;
 	//書き込むためのアドレスを取得
@@ -187,7 +166,7 @@ void Model::CreateTransformationMatrixResource() {
 }
 
 void Model::CreateDirectionalLightResource() {
-	directionalLightResource = directX12_->CreateBufferResource(directX12_->GetDevice(), sizeof(DirectionalLight));
+	directionalLightResource = directX12->CreateBufferResource(directX12->GetDevice(), sizeof(DirectionalLight));
 	directionalLight_ = nullptr;
 	directionalLightResource->Map(0, nullptr, reinterpret_cast<void**>(&directionalLight_));
 }

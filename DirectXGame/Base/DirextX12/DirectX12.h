@@ -21,8 +21,9 @@ class Texture;
 class DirectX12
 {
 public:
+	static DirectX12* GetInstance();
 
-	void Init(WindowsAPI* windowsAPI);
+	void Initialize();
 
 	void DXGIFactory();
 
@@ -91,6 +92,8 @@ public:
 
 	void NextFlameCommandList();
 
+	void Finalize();
+
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> GetSrvDescriptorHeap() { return srvDescriptorHeap; }
 
 
@@ -101,8 +104,12 @@ public:
 
 	D3D12_CPU_DESCRIPTOR_HANDLE GetCPUDescriptorHandle(ID3D12DescriptorHeap* descriptorHeap, uint32_t descriptorSize, uint32_t index);
 	D3D12_GPU_DESCRIPTOR_HANDLE GetGPUDescriptorHandle(ID3D12DescriptorHeap* descriptorHeap, uint32_t descriptorSize, uint32_t index);
+
+	static const uint32_t kMaxSRVCount = 512;
 private:
-	WindowsAPI* windowsAPI_;
+	static DirectX12* instance;
+
+	WindowsAPI* windowsAPI_ = nullptr;
 	Texture* texture;
 
 	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU;
@@ -163,7 +170,7 @@ private:
 	//FenceのSignalを待つためのイベントを作成する
 	HANDLE fenceEvent;
 
-	Microsoft::WRL::ComPtr<IDXGIDebug1> debug;
+
 
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> srvDescriptorHeap;
 
@@ -175,5 +182,10 @@ private:
 	uint32_t descriptorSizeDSV;
 
 	std::chrono::steady_clock::time_point reference_;
+
+	DirectX12() = default;
+	~DirectX12() = default;
+	DirectX12(DirectX12&) = delete;
+	DirectX12& operator=(DirectX12&) = delete;
 };
 

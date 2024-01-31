@@ -1,12 +1,22 @@
 #include "DirectX12.h"
 #include "../Log/Log.h"
 #include "../../Object/Texture/Texture.h"
+DirectX12* DirectX12::instance = nullptr;
 
-void DirectX12::Init(WindowsAPI* windowsAPI) {
+DirectX12* DirectX12::GetInstance() {
+	//static DirectX12 instance;
+	//return &instance;
+	if (instance == nullptr) {
+		instance = new DirectX12;
+	}
+	return instance;
+}
+
+void DirectX12::Initialize() {
 	InitializeFixFPS();
 
-	windowsAPI_ = windowsAPI;
-	windowsAPI->Init();
+	windowsAPI_ = WindowsAPI::GetInstance();
+	windowsAPI_->Init();
 	DXGIFactory();
 	Adapter();
 	D3D12Device();
@@ -128,7 +138,7 @@ void DirectX12::DescriptorHeap() {
 	rtvDescriptorHeap = CreateDescriptorHeap(device, D3D12_DESCRIPTOR_HEAP_TYPE_RTV, 2, false);
 	rtvDescriptorHeapDesc = {};
 
-	srvDescriptorHeap = CreateDescriptorHeap(device, D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, 128, true);
+	srvDescriptorHeap = CreateDescriptorHeap(device, D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, kMaxSRVCount, true);
 
 	rtvDescriptorHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
 	rtvDescriptorHeapDesc.NumDescriptors = 2;
@@ -154,7 +164,8 @@ void DirectX12::DescriptorHeap() {
 	rtvHandle[1].ptr = rtvHandle[0].ptr + device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
 
 	device->CreateRenderTargetView(swapChainResource[1].Get(), &rtvDesc, rtvHandle[1]);
-	//
+	//kokomadeoke
+
 	DirectX::ScratchImage mipImages = texture->LoadTexture("Resources/uvChecker.png");
 	const DirectX::TexMetadata& metadata = mipImages.GetMetadata();
 	Microsoft::WRL::ComPtr<ID3D12Resource> textureResource = texture->CreateTextureResource(device, metadata);
@@ -193,7 +204,7 @@ void DirectX12::DescriptorHeap() {
 	depthStencilDesc.DepthEnable = true;
 	depthStencilDesc.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
 	depthStencilDesc.DepthFunc = D3D12_COMPARISON_FUNC_LESS_EQUAL;
-
+	//
 	D3D12_CPU_DESCRIPTOR_HANDLE textureSrvHandleCPU = srvDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
 	textureSrvHandleGPU = srvDescriptorHeap->GetGPUDescriptorHandleForHeapStart();
 
@@ -203,7 +214,7 @@ void DirectX12::DescriptorHeap() {
 	device->CreateShaderResourceView(textureResource.Get(), &srvDesc, textureSrvHandleCPU);
 
 
-
+	//
 	D3D12_CPU_DESCRIPTOR_HANDLE textureSrvHandleCPU2 = GetCPUDescriptorHandle(srvDescriptorHeap.Get(), descriptorSizeSRV, 2);
 	textureSrvHandleGPU2 = GetGPUDescriptorHandle(srvDescriptorHeap.Get(), descriptorSizeSRV, 2);
 
@@ -327,6 +338,7 @@ void DirectX12::Signal() {
 
 
 void DirectX12::ResourceLeakCheck() {
+	IDXGIDebug1* debug;
 	if (SUCCEEDED(DXGIGetDebugInterface1(0, IID_PPV_ARGS(&debug)))) {
 		debug->ReportLiveObjects(DXGI_DEBUG_ALL, DXGI_DEBUG_RLO_ALL);
 		debug->ReportLiveObjects(DXGI_DEBUG_APP, DXGI_DEBUG_RLO_ALL);
@@ -425,8 +437,13 @@ void DirectX12::UpdataFixFPS() {
 
 	if (elapsed < kMinCheckTime) {
 		while (std::chrono::steady_clock::now() - reference_ < kMinTime) {
-			std::this_thread::sleep_for(std::chrono::microseconds(1));
+			//std::this_thread::sleep_for(std::chrono::microseconds(1));
 		}
 	}
 	reference_ = std::chrono::steady_clock::now();
+}
+
+void DirectX12::Finalize() {
+	delete instance;
+	instance = nullptr;
 }

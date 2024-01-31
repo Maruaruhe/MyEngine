@@ -1,14 +1,15 @@
 #include "GraphicsRenderer.h"
 #include <assert.h>
 
-void GraphicsRenderer::Initialize(DirectX12* directX12) {
+void GraphicsRenderer::Initialize() {
+	directX12 = DirectX12::GetInstance();
 	InitializeDXC();
-	MakeRootSignature(directX12);
+	MakeRootSignature();
 	SetInputLayout();
 	SetBlendState();
 	SetRasterizerState();
 	ShaderCompile();
-	MakePSO(directX12);
+	MakePSO();
 }
 
 void GraphicsRenderer::InitializeDXC() {
@@ -88,7 +89,7 @@ IDxcBlob* GraphicsRenderer::CompileShader(
 	return shaderBlob;
 }
 
-void GraphicsRenderer::DecideCommand(DirectX12* directX12) {
+void GraphicsRenderer::DecideCommand() {
 	directX12->GetCommandList()->RSSetViewports(1, &viewport);
 	directX12->GetCommandList()->RSSetScissorRects(1, &scissorRect);
 	directX12->GetCommandList()->SetGraphicsRootSignature(rootSignature.Get());
@@ -100,7 +101,7 @@ void GraphicsRenderer::DecideCommand(DirectX12* directX12) {
 //	assert(SUCCEEDED(hr));
 //}
 
-void GraphicsRenderer::MakeRootSignature(DirectX12* directX12) {
+void GraphicsRenderer::MakeRootSignature() {
 	descriptionRootSignature = {};
 	descriptionRootSignature.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
 
@@ -193,7 +194,7 @@ void GraphicsRenderer::ShaderCompile() {
 	pixelShaderBlob = CompileShader(L"Object3D.PS.hlsl", L"ps_6_0", dxcUtils, dxcCompiler, includeHandler);
 	assert(pixelShaderBlob != nullptr);
 }
-void GraphicsRenderer::MakePSO(DirectX12* directX12) {
+void GraphicsRenderer::MakePSO() {
 	//PSOを生成する-----------------------------------------------------------------------------------------------
 	graphicsPipelineStateDesc = {};
 	graphicsPipelineStateDesc.pRootSignature = rootSignature.Get();
@@ -216,7 +217,7 @@ void GraphicsRenderer::MakePSO(DirectX12* directX12) {
 }
 
 //これ
-void GraphicsRenderer::MakeVertexResource(DirectX12* directX12) {
+void GraphicsRenderer::MakeVertexResource() {
 	//VertexResourceを生成する--------------------------------------------------------------------------------
 	//頂点リソース用のヒープの作成の設定
 	uploadHeapProperties = {};

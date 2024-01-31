@@ -15,7 +15,7 @@
 class Sphere
 {
 public:
-	void Initialize(DirectX12* directX12);
+	void Initialize();
 
 	void InitializePosition();
 
@@ -33,11 +33,13 @@ public:
 
 	void CreateDirectionalLightResource();
 
-	void Update(Vector4& color, Transform& transform_, DirectionalLight& directionalLight);
+	void Update(Vector4& color, const Transform& transform, const Transform& cameraTransform, DirectionalLight& directionalLight);
 
 	void Draw();
+
+	void SetPosition(Vector3& position) { transform.translate = position; }
 private:
-	DirectX12* directX12_;
+	DirectX12* directX12 = nullptr;
 
 	Transform transform;
 	Transform cameraTransform;
@@ -63,7 +65,6 @@ private:
 	TransformationMatrix* transformationMatrix;
 	//Matrix4x4* wvpData;
 
-	Transform transform_;
 	//Matrix4x4 worldMatrix_;
 
 	DirectionalLight* directionalLight_;

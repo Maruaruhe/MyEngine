@@ -19,7 +19,7 @@
 class GraphicsRenderer
 {
 public:
-	void Initialize(DirectX12* directX12);
+	void Initialize();
 
 	void InitializeDXC();
 
@@ -30,17 +30,17 @@ public:
 		IDxcCompiler3* dxcCompiler,
 		IDxcIncludeHandler* includeHandler
 	);
-	void DecideCommand(DirectX12* directX12);
+	void DecideCommand();
 	//void CloseCommand(DirectX12* directX12);
 
-	void MakeRootSignature(DirectX12* directX12);
+	void MakeRootSignature();
 	void SetInputLayout();
 	void SetBlendState();
 	void SetRasterizerState();
 	void ShaderCompile();
-	void MakePSO(DirectX12* directX12);
+	void MakePSO();
 	//
-	void MakeVertexResource(DirectX12* directX12);
+	void MakeVertexResource();
 
 	void MakeVertexBufferView();
 	void DateResource(Vector2* leftBot, Vector2* midTop, Vector2* rightBot);
@@ -48,6 +48,7 @@ public:
 
 	void Release();
 private:
+	DirectX12* directX12 = nullptr;
 	HRESULT hr;
 	Microsoft::WRL::ComPtr<ID3D12Device> device;
 	//InitializeDXC

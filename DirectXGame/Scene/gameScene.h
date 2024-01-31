@@ -1,59 +1,54 @@
 #pragma once
-#include "../Base/DirextX12/DirectX12.h"
-#include "../Base/GraphicsRenderer/GraphicsRenderer.h"
-#include "../Base/WindowsAPI/WindowsAPI.h"
+#include "IScene.h"
+
+#include "../Base/Input/Input.h"
+
 #include "../Object/Triangle/Triangle.h"
-#include "../Base/ImGui/ImGuiWND.h"
 #include "../Object/Texture/Texture.h"
 #include "../Object/Sphere/Sphere.h"
 #include "../Object/Light/Lighting.h"
 #include "../Object/Sprite/Sprite.h"
 #include "../Object/Model/Model.h"
-#include "../Base/Input/Input.h"
 #include "../Object/Camera/Camera.h"
-#include "../Base/GlobalVariables/GlobalVariables.h"
 
-#define TRIANGLECOUNT 2
+#include "../GameObject/Entity/Player/Player.h"
+#include "../GameObject/Entity/Enemy/Enemy.h"
+#include "../GameObject/Skydome/Skydome.h"
 
-class DirectX12;
-class GraphicsRenderer;
-class WindowsAPI;
-class Texture;
-class Sphere;
-class Lighting;
-class Input;
-class Camera;
+//class Texture;
+//class Sphere;
+//class Lighting;
+//class Input;
+//class Camera;
 
-class GameScene
+class GameScene : public IScene
 {
 public:
-	void Initialize(DirectX12* directX12, WindowsAPI* windowsAPI);
-	void Update();
-	void Release();
+	void Initialize() override;
+	void Update() override;
+	void isCollsion();
 
-	void BeginFrame();
-	void EndFrame();
-	void Final();
-	void Draw();
-
-	void VariableInit();
+	void Draw() override;
 private:
-	TriangleData triangleData[TRIANGLECOUNT];
-	SpriteData spriteData;
+	void LoadEnemyPopDate();
+	void UpdateEnemyPopCommands();
 
-	DirectX12* directX12_ = new DirectX12;
-	GraphicsRenderer* graphicsRenderer_ = new GraphicsRenderer;
-	Input* input_ = new Input;
-	Triangle** triangle_ = new Triangle * [TRIANGLECOUNT];
-	Sprite* sprite = new Sprite;
-	//Texture* texture_ = new Texture;
-	Sphere* sphere = new Sphere;
-	Model* model = new Model;
-	Camera* camera = new Camera;
+	void spawnEnemy(Vector3 pos);
+
+	bool checkEnemyAlive();
+private:
+	Input* input = nullptr;
+
+	std::unique_ptr<Player> player_;
+	std::list<Enemy*> enemies_;
+
+	std::unique_ptr<Camera> camera;
+
+	std::unique_ptr<Skydome> skydome;
 
 	DirectionalLight light;
 
 	float colorVolume[3];
-	Transform transform;
-};
 
+	std::stringstream enemyPopCommands;
+};

@@ -24,7 +24,7 @@ class Model
 public:
 	ModelData LoadObjFile(const std::string& directoryPath, const std::string& filename);
 
-	void Initialize(DirectX12* directX12, const std::string& filename);
+	void Initialize(const std::string& filename);
 
 	void InitializePosition(const std::string& filename);
 
@@ -44,19 +44,16 @@ public:
 
 	void CreateDirectionalLightResource();
 
-	void Update(Vector4& color, const Transform& transform_, DirectionalLight& directionalLight);
+	void Update(Vector4& color, const Transform& transform, const Transform& transform_, DirectionalLight& directionalLight);
 
 	void Draw();
 
 	MaterialData LoadMaterialTemplateFile(const std::string& directoryPath, const std::string& filename);
 
 private:
-	DirectX12* directX12_;
-	Input* input_;
+	DirectX12* directX12 = nullptr;
+	Input* input_ = nullptr;
 	ModelData modelData;
-
-	Transform transform;
-	Transform cameraTransform;
 
 	//頂点リソース用のヒープの設定
 	D3D12_HEAP_PROPERTIES uploadHeapProperties;

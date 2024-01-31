@@ -15,7 +15,7 @@ public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(WindowsAPI* winAPI);
+	void Initialize();
 	/// <summary>
 	/// 更新
 	/// </summary>
@@ -30,7 +30,7 @@ public:
 	bool TriggerKey(BYTE keyNumber);
 
 private:
-	WindowsAPI* winAPI_ = nullptr;
+	WindowsAPI* winAPI = nullptr;
 
 	template <class Type> using ComPtr = Microsoft::WRL::ComPtr<Type>;
 
@@ -41,5 +41,10 @@ private:
 	//全キーの状態
 	BYTE key[256] = {};
 	BYTE preKey[256] = {};
+
+	Input() = default;
+	~Input() = default;
+	Input(Input&) = delete;
+	Input& operator=(Input&) = delete;
 };
 

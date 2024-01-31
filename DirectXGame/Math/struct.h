@@ -16,10 +16,8 @@ struct TriangleData
 };
 
 struct SpriteData {
-	VertexData LeftBot;
 	VertexData LeftTop;
 	VertexData RightBot;
-	VertexData RightTop;
 };
 
 struct Material {
