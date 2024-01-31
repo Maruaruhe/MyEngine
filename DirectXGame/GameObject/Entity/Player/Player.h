@@ -3,8 +3,10 @@
 #include <memory>
 #include <list>
 
-#include "../../../Math/Vector4.h"
 #include "../../../Base/Input/Input.h"
+#include "../../../Base/GlobalVariables/GlobalVariables.h"
+
+#include "../../../Math/Vector4.h"
 #include "../../../Object/Model/Model.h"
 #include "Bullet/Bullet.h"
 
@@ -26,7 +28,8 @@ private:
 
 	void Move();
 	void ReticleMove();
-	void BulletMove();
+
+	void ApplyGlobalVariables();
 
 	void Attack();
 

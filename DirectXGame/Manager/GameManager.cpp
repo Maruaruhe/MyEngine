@@ -56,6 +56,7 @@ void GameManager::Run() {
 			}
 
 			BeginFrame();
+			GlobalVariables::GetInstance()->Update();
 			sceneArr[currentSceneNo]->Update();
 			ImGui::Render();
 			sceneArr[currentSceneNo]->Draw();

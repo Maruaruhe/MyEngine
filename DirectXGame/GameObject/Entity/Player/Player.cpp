@@ -29,10 +29,25 @@ void Player::Initialize() {
 	reticleTransform_.scale = { 0.25f,0.25f,0.25f };
 
 	bulletCoolTime = 30;
+
+	const char* groupName = "Player";
+	GlobalVariables::GetInstance()->CreateGroup(groupName);
+	GlobalVariables::GetInstance()->AddItem(groupName, "Translate", transform_.translate);
+	GlobalVariables::GetInstance()->AddItem(groupName, "Scale", transform_.scale);
+	GlobalVariables::GetInstance()->AddItem(groupName, "Rotate", transform_.rotate);
+
+	ApplyGlobalVariables();
+}
+
+void Player::ApplyGlobalVariables() {
+	const char* groupName = "Player";
+	transform_.translate = GlobalVariables::GetInstance()->GetVector3Value(groupName, "Translate");
+	transform_.scale = GlobalVariables::GetInstance()->GetVector3Value(groupName, "Scale");
+	transform_.rotate = GlobalVariables::GetInstance()->GetVector3Value(groupName, "Rotate");
 }
 
 void Player::Update(Vector4& color, const Transform& cameraTransform, DirectionalLight& directionalLight) {
-
+	ApplyGlobalVariables();
 	Move();
 	ReticleMove();
 	Attack();
