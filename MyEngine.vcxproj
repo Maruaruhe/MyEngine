@@ -120,7 +120,6 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="DirectXGame\Base\GraphicsRenderer\GraphicsRenderer.cpp" />
     <ClCompile Include="DirectXGame\Base\WindowsAPI\WindowsAPI.cpp" />
     <ClCompile Include="DirectXGame\Manager\TextureManager.cpp" />
-    <ClCompile Include="DirectXGame\GameObject\Entity\Player\Player.cpp" />
     <ClCompile Include="DirectXGame\Scene\TitleScene.cpp" />
     <ClCompile Include="DirectXGame\GameObject\Skydome\Skydome.cpp" />
   </ItemGroup>
@@ -171,7 +170,6 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="DirectXGame\Math\Vector4.h" />
     <ClInclude Include="DirectXGame\Base\WindowsAPI\WindowsAPI.h" />
     <ClInclude Include="DirectXGame\Manager\TextureManager.h" />
-    <ClInclude Include="DirectXGame\GameObject\Entity\Player\Player.h" />
     <ClInclude Include="DirectXGame\Scene\IScene.h" />
     <ClInclude Include="DirectXGame\Manager\GameManager.h" />
     <ClInclude Include="DirectXGame\Scene\TitleScene.h" />

@@ -96,9 +96,6 @@
     <ClCompile Include="DirectXGame\Manager\TextureManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Class\GameObject\Entity\Player\Player.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="DirectXGame\GameObject\Entity\Player\Bullet\Bullet.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -214,9 +211,6 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Manager\TextureManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Class\GameObject\Entity\Player\Player.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\GameObject\Entity\Player\Bullet\Bullet.h">
