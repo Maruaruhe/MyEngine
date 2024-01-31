@@ -49,12 +49,16 @@ void Player::ApplyGlobalVariables() {
 void Player::Update(Vector4& color, const Transform& cameraTransform, DirectionalLight& directionalLight) {
 	ApplyGlobalVariables();
 	Move();
+	GlobalVariables::GetInstance()->SetValue("Player", "Translate", transform_.translate);
+
 	ReticleMove();
 	Attack();
 
 	reticleModel_->Update(color, reticleTransform_, cameraTransform, directionalLight);
 
 	transform_.rotate.y += 0.02f;
+
+	GlobalVariables::GetInstance()->SetValue("Player", "Rotate", transform_.rotate);
 
 	armTransform_.translate = transform_.translate;
 	armTransform_.rotate.x += 0.02f;
