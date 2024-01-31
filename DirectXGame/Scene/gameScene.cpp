@@ -39,10 +39,6 @@ void GameScene::Update() {
 	if (!checkEnemyAlive()) {
 		sceneNo = CLEAR;
 	}
-
-	if (input->PushKey(DIK_Q)) {
-		sceneNo = CLEAR;
-	}
 }
 
 void GameScene::isCollsion() {
