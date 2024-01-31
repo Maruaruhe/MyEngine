@@ -30,9 +30,6 @@ void GameScene::Update() {
 
 	Vector4 color = {colorVolume[0],colorVolume[1],colorVolume[2],1.0f};
 
-	ImGui::Begin("a");
-	ImGui::End();
-
 	player_->Update(color, camera->GetTransform(), light);
 	Vector4 eColor = { 0.0f,0.0f,0.0f,1.0f };
 	for (Enemy* enemy : enemies_) {
