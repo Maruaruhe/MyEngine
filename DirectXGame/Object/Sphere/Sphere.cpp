@@ -186,6 +186,12 @@ void Sphere::CreateDirectionalLightResource() {
 	directionalLightResource->Map(0,nullptr, reinterpret_cast<void**>(&directionalLight_));
 }
 
+void Sphere::CreateCameraForGPUResource() {
+	cameraForGPUResource = directX12->CreateBufferResource(directX12->GetDevice(), sizeof(CameraForGPU));
+	cameraForGPU = nullptr;
+	cameraForGPUResource->Map(0, nullptr, reinterpret_cast<void**>(&cameraForGPU));
+}
+
 void Sphere::DataResource() {
 	//書き込むためのアドレスを取得
 	vertexResource->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));

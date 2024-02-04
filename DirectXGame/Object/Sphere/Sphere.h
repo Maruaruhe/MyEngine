@@ -33,6 +33,8 @@ public:
 
 	void CreateDirectionalLightResource();
 
+	void CreateCameraForGPUResource();
+
 	void Update(Vector4& color, const Transform& transform, const Transform& cameraTransform, DirectionalLight& directionalLight);
 
 	void Draw();
@@ -69,6 +71,9 @@ private:
 
 	DirectionalLight* directionalLight_;
 	Microsoft::WRL::ComPtr<ID3D12Resource> directionalLightResource;
+
+	CameraForGPU* cameraForGPU;
+	Microsoft::WRL::ComPtr<ID3D12Resource> cameraForGPUResource;
 
 	const int32_t kClientWidth = 1280;
 	const int32_t kClientHeight = 720;

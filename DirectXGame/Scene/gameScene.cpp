@@ -13,11 +13,9 @@ void GameScene::Initialize()
 
 	player_ = std::make_unique<Player>();
 	camera = std::make_unique<Camera>();
-	//skydome = std::make_unique<Skydome>();
 
 	player_->Initialize();
 	camera->Initialize();
-	//skydome->Initialize("skydoo");
 
 	LoadEnemyPopDate();
 	UpdateEnemyPopCommands();
@@ -65,8 +63,6 @@ void GameScene::Draw() {
 	for (Enemy* enemy : enemies_) {
 		enemy->Draw();
 	}
-
-	//skydome->Draw();
 }
 
 void GameScene::LoadEnemyPopDate() {
