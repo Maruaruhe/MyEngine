@@ -6,6 +6,8 @@
 #include "../Base/DirextX12/DirectX12.h"
 #include "../Base/Log/Log.h"
 
+#include "../Object/Texture/Texture.h"
+
 class TextureManager
 {
 public:
@@ -13,9 +15,15 @@ public:
 
 	void Initialize();
 	void LoadTexture(const std::string& filePath);
+	void Finalize();
 
 	uint32_t GetTextureIndexByFilePath(const std::string& filePath);
 	D3D12_GPU_DESCRIPTOR_HANDLE GetSrvHandleGPU(uint32_t textureIndex);
+
+private:
+	DirectX::ScratchImage CreatemipImages(const std::string& filePath);
+	Microsoft::WRL::ComPtr<ID3D12Resource> CreateResource(DirectX::TexMetadata metadata);
+
 private:
 
 	struct TextureData{

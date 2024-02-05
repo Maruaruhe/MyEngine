@@ -6,12 +6,14 @@
 #include "../../Math/struct.h"	
 #include <wrl.h>
 
+#include "../../Manager/TextureManager.h"
+
 #pragma comment(lib,"dxcompiler.lib")
 
 class Sprite
 {
 public:
-	void Initialize(Vector2 leftTop,Vector2 rightBot);
+	void Initialize(Vector2 leftTop,Vector2 rightBot, std::string textureFilePath);
 
 	void Update();
 
@@ -20,8 +22,6 @@ public:
 	void SetPosition(Vector2 translate);
 
 private:
-
-	void SetPosition(Vector2 LB, Vector2 LT, Vector2 RB, Vector2 RT);
 	VertexData GetPosition() { return vertexData[0], vertexData[1], vertexData[2], vertexData[3]; }
 
 	void CreateVertexResource();
@@ -75,6 +75,7 @@ private:
 	const int32_t kClientWidth = 1280;
 	const int32_t kClientHeight = 720;
 
+	uint32_t textureIndex = 0;
 };
 
 
