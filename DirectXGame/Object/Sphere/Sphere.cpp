@@ -128,8 +128,6 @@ void Sphere::Update(Vector4& color, const Transform& transform, const Transform&
 	directionalLight_->intensity = direcionalLight.intensity;
 
 	cameraForGPU->worldPosition = cameraFor.worldPosition;
-
-	//ImGui::Checkbox("useMonsterBall", &useMonsterBall);
 }
 
 void Sphere ::Draw() {
