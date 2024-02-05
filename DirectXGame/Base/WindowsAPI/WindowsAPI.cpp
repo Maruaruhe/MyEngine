@@ -64,7 +64,7 @@ void WindowsAPI::WindowCreate() {
 	//ウインドウの生成
 	hwnd = CreateWindow(
 		wc.lpszClassName,		//利用するクラス名
-		L"SimpleShooter",			//タイトルバーの文字
+		L"CG3",			//タイトルバーの文字
 		WS_OVERLAPPEDWINDOW,	//よく見るウインドウスタイル
 		CW_USEDEFAULT,			//表示X座標（Windowsに任せる）
 		CW_USEDEFAULT,			//表示Y座標（Windowsに任せる）
