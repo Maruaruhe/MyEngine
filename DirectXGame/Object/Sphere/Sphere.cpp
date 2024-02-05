@@ -105,6 +105,7 @@ void Sphere::Initialize() {
 	CreateVertexBufferView();
 	CreateTransformationMatrixResource();
 	CreateDirectionalLightResource();
+	CreateCameraForGPUResource();
 	DataResource();
 
 	vertexData = nullptr;
@@ -113,7 +114,7 @@ void Sphere::Initialize() {
 	InitializePosition();
 }
 
-void Sphere::Update(Vector4& color, const Transform& transform, const Transform& cameraTransform, DirectionalLight& direcionalLight) {
+void Sphere::Update(Vector4& color, const Transform& transform, const Transform& cameraTransform, DirectionalLight& direcionalLight, CameraForGPU& cameraFor) {
 	materialData_->uvTransform = MakeIdentity4x4();
 	transformationMatrix->World = MakeAffineMatrix(transform.scale, transform.rotate, transform.translate);
 	Matrix4x4 cameraMatrix = MakeAffineMatrix(cameraTransform.scale, cameraTransform.rotate, cameraTransform.translate);
@@ -126,6 +127,8 @@ void Sphere::Update(Vector4& color, const Transform& transform, const Transform&
 	directionalLight_->direction = direcionalLight.direction;
 	directionalLight_->intensity = direcionalLight.intensity;
 
+	cameraForGPU->worldPosition = cameraFor.worldPosition;
+
 	//ImGui::Checkbox("useMonsterBall", &useMonsterBall);
 }
 
@@ -135,12 +138,12 @@ void Sphere ::Draw() {
 	directX12->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	directX12->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
 
-	//directX12_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResourceSprite->GetGPUVirtualAddress());
 	//wvp用のCBufferの場所を設定
 	directX12->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
 
 	directX12->GetCommandList()->SetGraphicsRootDescriptorTable(2, useMonsterBall ? directX12->GetSrvHandleGPU2() : directX12->GetSrvHandleGPU());
 	directX12->GetCommandList()->SetGraphicsRootConstantBufferView(3, directionalLightResource->GetGPUVirtualAddress());
+	directX12->GetCommandList()->SetGraphicsRootConstantBufferView(4, cameraForGPUResource->GetGPUVirtualAddress());
 	//描画！　（DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
 	directX12->GetCommandList()->DrawInstanced(1536, 1, 0, 0);
 }
@@ -164,6 +167,7 @@ void Sphere::CreateMaterialResource() {
 	materialData_ = nullptr;
 	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&materialData_));
 	materialData_->color = Vector4(1.0f, 0.0f, 0.0f, 1.0f);
+	materialData_->shininess = 40.0f;
 	materialData_->enableLighting = true;
 
 	//materialResourceSprite = directX12_->CreateBufferResource(directX12_->GetDevice(), sizeof(Material));
@@ -190,6 +194,8 @@ void Sphere::CreateCameraForGPUResource() {
 	cameraForGPUResource = directX12->CreateBufferResource(directX12->GetDevice(), sizeof(CameraForGPU));
 	cameraForGPU = nullptr;
 	cameraForGPUResource->Map(0, nullptr, reinterpret_cast<void**>(&cameraForGPU));
+
+	cameraForGPU->worldPosition = { 0.0f,0.0f,-5.0f };
 }
 
 void Sphere::DataResource() {

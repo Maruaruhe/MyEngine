@@ -13,7 +13,7 @@ void Bullet::Initialize(Vector3& position, Vector3& velocity) {
 
 void Bullet::Update(Vector4& color, const Transform& cameraTransform, DirectionalLight& directionalLight) {
 	Move();
-	bullet.Update(color, transform, cameraTransform, directionalLight);
+	//bullet.Update(color, transform, cameraTransform, directionalLight);
 	if (--deathTimer <= 0) {
 		isActive = false;
 	}

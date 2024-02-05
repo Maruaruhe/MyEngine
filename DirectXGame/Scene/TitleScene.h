@@ -22,6 +22,9 @@ private:
 	DirectionalLight light;
 
 	Transform transform;
+	Transform cameraTransform;
 	Vector4 color;
+
+	CameraForGPU cameraFor;
 };
 
