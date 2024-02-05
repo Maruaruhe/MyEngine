@@ -23,7 +23,10 @@ void TitleScene::Initialize(){
 }
 
 void TitleScene::Update(){
-	ImGui::Begin("LIGHT");
+	ImGui::Begin("Sphere");
+	ImGui::DragFloat3("sphereTransform", &transform.translate.x);
+	ImGui::DragFloat3("sphereScale", &transform.scale.x);
+	ImGui::DragFloat3("sphereRotate", &transform.rotate.x);
 	ImGui::SliderFloat3("light.color", &light.color.x,0.0f,1.0f);
 	ImGui::SliderFloat3("light.direction", &light.direction.x,-1.0f,1.0f);
 	light.direction = Normalize(light.direction);
