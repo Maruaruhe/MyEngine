@@ -23,7 +23,7 @@ void TextureManager::LoadTexture(const std::string& filePath) {
 	textureData.resource = CreateResource(textureData.metaData);
 
 	uint32_t srvIndex = static_cast<uint32_t>(textureDatas.size() - 1) + kSRVIndexTop;
-	textureData.srvHandleCPU = 
+	textureData.srvHandleCPU = DirectX12::GetInstance().
 	textureData.srvHandleGPU =
 
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
