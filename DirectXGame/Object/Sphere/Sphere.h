@@ -35,7 +35,7 @@ public:
 
 	void CreateCameraForGPUResource();
 
-	void Update(Vector4& color, const Transform& transform, const Transform& cameraTransform, DirectionalLight& directionalLight, CameraForGPU& camaraFor);
+	void Update(Vector4& color, const Transform& transform, const Transform& cameraTransform, DirectionalLight& directionalLight);
 
 	void Draw();
 

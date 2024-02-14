@@ -114,7 +114,7 @@ void Sphere::Initialize() {
 	InitializePosition();
 }
 
-void Sphere::Update(Vector4& color, const Transform& transform, const Transform& cameraTransform, DirectionalLight& direcionalLight, CameraForGPU& cameraFor) {
+void Sphere::Update(Vector4& color, const Transform& transform, const Transform& cameraTransform, DirectionalLight& direcionalLight) {
 	materialData_->uvTransform = MakeIdentity4x4();
 	transformationMatrix->World = MakeAffineMatrix(transform.scale, transform.rotate, transform.translate);
 	Matrix4x4 cameraMatrix = MakeAffineMatrix(cameraTransform.scale, cameraTransform.rotate, cameraTransform.translate);
@@ -127,7 +127,8 @@ void Sphere::Update(Vector4& color, const Transform& transform, const Transform&
 	directionalLight_->direction = direcionalLight.direction;
 	directionalLight_->intensity = direcionalLight.intensity;
 
-	cameraForGPU->worldPosition = cameraFor.worldPosition;
+	//cameraForGPU->worldPosition = cameraFor.worldPosition;
+	cameraForGPU->worldPosition = cameraTransform.translate;
 
 	//ImGui::Checkbox("useMonsterBall", &useMonsterBall);
 }
@@ -194,8 +195,6 @@ void Sphere::CreateCameraForGPUResource() {
 	cameraForGPUResource = directX12->CreateBufferResource(directX12->GetDevice(), sizeof(CameraForGPU));
 	cameraForGPU = nullptr;
 	cameraForGPUResource->Map(0, nullptr, reinterpret_cast<void**>(&cameraForGPU));
-
-	cameraForGPU->worldPosition = { 0.0f,0.0f,-5.0f };
 }
 
 void Sphere::DataResource() {

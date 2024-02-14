@@ -5,6 +5,7 @@
 #include "../Object/Sprite/Sprite.h"
 #include "../Object/Camera/Camera.h"
 #include "../Object/Sphere/Sphere.h"
+#include "../Object/Model/Model.h"
 #include "../Object/Light/Lighting.h"
 
 class TitleScene : public IScene
@@ -18,6 +19,7 @@ private:
 	Input* input = nullptr;
 
 	Sphere sphere;
+	Model model;
 	Camera camera;
 	DirectionalLight light;
 

@@ -20,6 +20,7 @@ void TitleScene::Initialize(){
 
 	sphere.Initialize();
 	camera.Initialize();
+	model.Initialize("ghostPori");
 }
 
 void TitleScene::Update(){
@@ -30,9 +31,11 @@ void TitleScene::Update(){
 	ImGui::DragFloat("light.intensity", &light.intensity);
 	ImGui::DragFloat3("cameraTransform", &cameraTransform.translate.x);
 	ImGui::End();
-	sphere.Update(color, transform, cameraTransform, light, cameraFor);
+	sphere.Update(color, transform, cameraTransform, light);
+	model.Update(color, transform, cameraTransform, light);
 }
 
 void TitleScene::Draw() {
 	sphere.Draw();
+	//model.Draw();
 }
