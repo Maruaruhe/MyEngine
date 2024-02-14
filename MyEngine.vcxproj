@@ -123,6 +123,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="DirectXGame\GameObject\Entity\Player\Player.cpp" />
     <ClCompile Include="DirectXGame\Scene\TitleScene.cpp" />
     <ClCompile Include="DirectXGame\GameObject\Skydome\Skydome.cpp" />
+    <ClCompile Include="DirectXGame\Scene\TestScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Object3d.PS.hlsl">
@@ -176,6 +177,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="DirectXGame\Manager\GameManager.h" />
     <ClInclude Include="DirectXGame\Scene\TitleScene.h" />
     <ClInclude Include="DirectXGame\GameObject\Skydome\Skydome.h" />
+    <ClInclude Include="DirectXGame\Scene\TestScene.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt" />

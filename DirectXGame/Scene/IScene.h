@@ -2,7 +2,7 @@
 #include "../Base/Input/Input.h"
 
 enum SCENE {
-	NONE = 0,
+	TEST = 0,
 	TITLE = 1,
 	INGAME = 2,
 	CLEAR = 3,
