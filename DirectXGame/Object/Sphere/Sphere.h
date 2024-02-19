@@ -33,16 +33,18 @@ public:
 
 	void CreateDirectionalLightResource();
 
-	void Update(Vector4& color, const Transform& transform, const Transform& cameraTransform, DirectionalLight& directionalLight);
+	void Update();
 
 	void Draw();
 
-	void SetPosition(Vector3& position) { transform.translate = position; }
-private:
-	DirectX12* directX12 = nullptr;
-
+public:
 	Transform transform;
 	Transform cameraTransform;
+	Material materialData;
+	DirectionalLight directionalLight;
+
+private:
+	DirectX12* directX12 = nullptr;
 
 	//頂点リソース用のヒープの設定
 	D3D12_HEAP_PROPERTIES uploadHeapProperties;
@@ -58,7 +60,6 @@ private:
 
 	Microsoft::WRL::ComPtr<ID3D12Resource> materialResource_;
 
-	Material* materialData_;
 
 	Microsoft::WRL::ComPtr<ID3D12Resource> wvpResource_;
 
@@ -67,7 +68,6 @@ private:
 
 	//Matrix4x4 worldMatrix_;
 
-	DirectionalLight* directionalLight_;
 	Microsoft::WRL::ComPtr<ID3D12Resource> directionalLightResource;
 
 	const int32_t kClientWidth = 1280;

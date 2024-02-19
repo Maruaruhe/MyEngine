@@ -9,9 +9,7 @@
 #include "../Base/GraphicsRenderer/GraphicsRenderer.h"
 
 #include "../Scene/IScene.h"
-#include	"../Scene/TitleScene.h"
-#include	"../Scene/GameScene.h"
-#include "../Scene/ClearScene.h"
+#include "../Scene/TestScene.h"
 
 class DirectX12;
 class WindowsAPI;
@@ -29,7 +27,7 @@ private:
 	GraphicsRenderer* graphicsRenderer_ = new GraphicsRenderer;
 
 	//Scene
-	std::unique_ptr<IScene> sceneArr[4];
+	std::unique_ptr<IScene> sceneArr[5];
 
 	int currentSceneNo;
 	int prevSceneNo;

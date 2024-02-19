@@ -15,10 +15,7 @@ GameManager::GameManager() {
 
 	Input::GetInstance()->Initialize();
 
-
-	sceneArr[TITLE] = std::make_unique<TitleScene>();
-	sceneArr[INGAME] = std::make_unique<GameScene>();
-	sceneArr[CLEAR] = std::make_unique<ClearScene>();
+	sceneArr[TEST] = std::make_unique<TestScene>();
 }
 
 GameManager::~GameManager() {

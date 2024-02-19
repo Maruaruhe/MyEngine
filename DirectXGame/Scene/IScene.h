@@ -2,11 +2,11 @@
 #include "../Base/Input/Input.h"
 
 enum SCENE {
-	TEST = 0,
-	TITLE = 1,
-	INGAME = 2,
-	CLEAR = 3,
-	FAULT = 4
+	NONE = 0,
+	TEST = 1,
+	TITLE = 2,
+	INGAME = 3,
+	CLEAR = 4
 };
 
 

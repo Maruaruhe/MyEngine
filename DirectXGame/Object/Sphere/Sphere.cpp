@@ -100,6 +100,7 @@ void Sphere::Initialize() {
 	directX12 = DirectX12::GetInstance();
 	transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
 	cameraTransform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,-10.0f} };
+	materialData.color = { 1.0f,1.0f,1.0f,1.0f };
 	CreateVertexResource();
 	CreateMaterialResource();
 	CreateVertexBufferView();
@@ -113,20 +114,17 @@ void Sphere::Initialize() {
 	InitializePosition();
 }
 
-void Sphere::Update(Vector4& color, const Transform& transform, const Transform& cameraTransform, DirectionalLight& direcionalLight) {
-	materialData_->uvTransform = MakeIdentity4x4();
+void Sphere::Update() {
+	materialData.uvTransform = MakeIdentity4x4();
 	transformationMatrix->World = MakeAffineMatrix(transform.scale, transform.rotate, transform.translate);
 	Matrix4x4 cameraMatrix = MakeAffineMatrix(cameraTransform.scale, cameraTransform.rotate, cameraTransform.translate);
 	Matrix4x4 viewMatrix = Inverse(cameraMatrix);
 	Matrix4x4 projectionMatrix = MakePerspectiveFovMatrix(0.45f, float(kClientWidth) / float(kClientHeight), 0.1f, 100.0f);
 	Matrix4x4 worldViewProjectionMatrix = Multiply(transformationMatrix->World, Multiply(viewMatrix, projectionMatrix));
 	transformationMatrix->WVP = worldViewProjectionMatrix;
-	materialData_->color = color;
-	directionalLight_->color = direcionalLight.color;
-	directionalLight_->direction = direcionalLight.direction;
-	directionalLight_->intensity = direcionalLight.intensity;
-
-	//ImGui::Checkbox("useMonsterBall", &useMonsterBall);
+	//directionalLight_->color = direcionalLight.color;
+	//directionalLight_->direction = direcionalLight.direction;
+	//directionalLight_->intensity = direcionalLight.intensity;
 }
 
 void Sphere ::Draw() {
@@ -161,12 +159,10 @@ void Sphere::CreateVertexBufferView() {
 
 void Sphere::CreateMaterialResource() {
 	materialResource_ = directX12->CreateBufferResource(directX12->GetDevice(), sizeof(Material));
-	materialData_ = nullptr;
-	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&materialData_));
-	materialData_->color = Vector4(1.0f, 0.0f, 0.0f, 1.0f);
-	materialData_->enableLighting = true;
-
-	//materialResourceSprite = directX12_->CreateBufferResource(directX12_->GetDevice(), sizeof(Material));
+	materialData = {};
+	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
+	materialData.color = Vector4(1.0f, 0.0f, 0.0f, 1.0f);
+	materialData.enableLighting = false;
 }
 
 void Sphere::CreateTransformationMatrixResource() {
@@ -182,8 +178,8 @@ void Sphere::CreateTransformationMatrixResource() {
 
 void Sphere::CreateDirectionalLightResource() {
 	directionalLightResource = directX12->CreateBufferResource(directX12->GetDevice(), sizeof(DirectionalLight));
-	directionalLight_ = nullptr;
-	directionalLightResource->Map(0,nullptr, reinterpret_cast<void**>(&directionalLight_));
+	directionalLight = {};
+	directionalLightResource->Map(0,nullptr, reinterpret_cast<void**>(&directionalLight));
 }
 
 void Sphere::DataResource() {

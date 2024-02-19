@@ -6,6 +6,7 @@
 #include "../Object/Sphere/Sphere.h"
 #include "../Object/Light/Lighting.h"
 #include "../Object/Camera/Camera.h"
+#include "../Object/Model/Model.h"
 
 class TestScene : public IScene
 {
@@ -16,16 +17,10 @@ public:
 
 private:
 	Input* input = nullptr;
-	Sprite black;
-	Sprite title;
 
 	Sphere sphere;
-	Transform trans;
+	Model model;
 
 	std::unique_ptr<Camera> camera;
-
-	int scroll;
-	const int scrollSpeed = 8;
-	bool isScroll;
 };
 

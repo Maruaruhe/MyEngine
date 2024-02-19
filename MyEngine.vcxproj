@@ -88,13 +88,9 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="DirectXGame\Scene\ClearScene.cpp" />
-    <ClCompile Include="DirectXGame\GameObject\Entity\Player\Bullet\Bullet.cpp" />
     <ClCompile Include="DirectXGame\Math\Vector3.cpp" />
     <ClCompile Include="DirectXGame\Object\Camera\Camera.cpp" />
     <ClCompile Include="DirectXGame\Base\DirextX12\DirectX12.cpp" />
-    <ClCompile Include="DirectXGame\GameObject\Entity\Enemy\Enemy.cpp" />
-    <ClCompile Include="DirectXGame\GameObject\Entity\Enemy\EnemyState.cpp" />
     <ClCompile Include="externals\imgui\imgui.cpp" />
     <ClCompile Include="externals\imgui\imgui_demo.cpp" />
     <ClCompile Include="externals\imgui\imgui_draw.cpp" />
@@ -116,13 +112,9 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="DirectXGame\Scene\IScene.cpp" />
     <ClCompile Include="DirectXGame\Manager\GameManager.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="DirectXGame\Scene\GameScene.cpp" />
     <ClCompile Include="DirectXGame\Base\GraphicsRenderer\GraphicsRenderer.cpp" />
     <ClCompile Include="DirectXGame\Base\WindowsAPI\WindowsAPI.cpp" />
     <ClCompile Include="DirectXGame\Manager\TextureManager.cpp" />
-    <ClCompile Include="DirectXGame\GameObject\Entity\Player\Player.cpp" />
-    <ClCompile Include="DirectXGame\Scene\TitleScene.cpp" />
-    <ClCompile Include="DirectXGame\GameObject\Skydome\Skydome.cpp" />
     <ClCompile Include="DirectXGame\Scene\TestScene.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -140,12 +132,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DirectXGame\Scene\ClearScene.h" />
-    <ClInclude Include="DirectXGame\GameObject\Entity\Player\Bullet\Bullet.h" />
     <ClInclude Include="DirectXGame\Object\Camera\Camera.h" />
     <ClInclude Include="DirectXGame\Base\DirextX12\DirectX12.h" />
-    <ClInclude Include="DirectXGame\GameObject\Entity\Enemy\Enemy.h" />
-    <ClInclude Include="DirectXGame\GameObject\Entity\Enemy\EnemyState.h" />
     <ClInclude Include="externals\imgui\imconfig.h" />
     <ClInclude Include="externals\imgui\imgui.h" />
     <ClInclude Include="externals\imgui\imgui_impl_dx12.h" />
@@ -167,16 +155,12 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="DirectXGame\Math\TransformationMatrix.h" />
     <ClInclude Include="DirectXGame\Object\Triangle\Triangle.h" />
     <ClInclude Include="DirectXGame\Base\Log\Log.h" />
-    <ClInclude Include="DirectXGame\Scene\GameScene.h" />
     <ClInclude Include="DirectXGame\Base\GraphicsRenderer\GraphicsRenderer.h" />
     <ClInclude Include="DirectXGame\Math\Vector4.h" />
     <ClInclude Include="DirectXGame\Base\WindowsAPI\WindowsAPI.h" />
     <ClInclude Include="DirectXGame\Manager\TextureManager.h" />
-    <ClInclude Include="DirectXGame\GameObject\Entity\Player\Player.h" />
     <ClInclude Include="DirectXGame\Scene\IScene.h" />
     <ClInclude Include="DirectXGame\Manager\GameManager.h" />
-    <ClInclude Include="DirectXGame\Scene\TitleScene.h" />
-    <ClInclude Include="DirectXGame\GameObject\Skydome\Skydome.h" />
     <ClInclude Include="DirectXGame\Scene\TestScene.h" />
   </ItemGroup>
   <ItemGroup>
