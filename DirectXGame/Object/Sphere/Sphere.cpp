@@ -99,7 +99,7 @@ void Sphere::InitializePosition() {
 void Sphere::Initialize() {
 	directX12 = DirectX12::GetInstance();
 	transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
-	cameraTransform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,-10.0f} };
+	cameraTransform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,-5.0f} };
 	materialData.color = { 1.0f,1.0f,1.0f,1.0f };
 	CreateVertexResource();
 	CreateMaterialResource();
@@ -107,6 +107,7 @@ void Sphere::Initialize() {
 	CreateTransformationMatrixResource();
 	CreateDirectionalLightResource();
 	DataResource();
+	materialData.color = { 1.0f,1.0f,1.0f,1.0f };
 
 	vertexData = nullptr;
 	vertexResource->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
@@ -125,6 +126,7 @@ void Sphere::Update() {
 	//directionalLight_->color = direcionalLight.color;
 	//directionalLight_->direction = direcionalLight.direction;
 	//directionalLight_->intensity = direcionalLight.intensity;
+	materialData.color = { 1.0f,1.0f,1.0f,1.0f };
 }
 
 void Sphere ::Draw() {
