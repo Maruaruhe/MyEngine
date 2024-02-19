@@ -40,8 +40,8 @@ public:
 public:
 	Transform transform;
 	Transform cameraTransform;
-	Material materialData;
-	DirectionalLight directionalLight;
+	Material* materialData;
+	DirectionalLight* directionalLight;
 
 private:
 	DirectX12* directX12 = nullptr;
