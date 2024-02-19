@@ -93,32 +93,27 @@ void Model::Initialize(const std::string& filename) {
 	CreateTransformationMatrixResource();
 	CreateDirectionalLightResource();
 
-	/*const char* groupName = "Model";
-	GlobalVariables::GetInstance()->CreateGroup(groupName);
-	GlobalVariables::GetInstance()->AddItem(groupName, "Translate", transform.translate);
-	GlobalVariables::GetInstance()->AddItem(groupName, "Scale", transform.scale);
-	GlobalVariables::GetInstance()->AddItem(groupName, "Rotate", transform.rotate);
-
-	ApplyGlobalVariables();*/
+	//GlobalVariables
+	forg = filename;
+	GlobalVariables::GetInstance()->CreateGroup(forg);
+	GlobalVariables::GetInstance()->AddItem(forg, "Translate", transform.translate);
+	GlobalVariables::GetInstance()->AddItem(forg, "Scale", transform.scale);
+	GlobalVariables::GetInstance()->AddItem(forg, "Rotate", transform.rotate);
+	//
 
 	InitializePosition(filename);
 }
 
 void Model::ApplyGlobalVariables() {
-	/*const char* groupName = "Model";
-	transform.translate = GlobalVariables::GetInstance()->GetVector3Value(groupName, "Translate");
-	transform.scale = GlobalVariables::GetInstance()->GetVector3Value(groupName, "Scale");
-	transform.rotate = GlobalVariables::GetInstance()->GetVector3Value(groupName, "Rotate");*/
+	transform.translate = GlobalVariables::GetInstance()->GetVector3Value(forg, "Translate");
+	transform.scale = GlobalVariables::GetInstance()->GetVector3Value(forg, "Scale");
+	transform.rotate = GlobalVariables::GetInstance()->GetVector3Value(forg, "Rotate");
 }
 
 void Model::Update() {
+	ApplyGlobalVariables();
 
-	/*GlobalVariables::GetInstance()->SetValue("Model", "Translate", transform.translate);*/
-	/*if (Input::GetInstance()->PushKey(DIK_S)) {
-		transform.translate.z += 0.1f;
-	}*/
-
-	materialData->uvTransform = MakeIdentity4x4();
+	material->uvTransform = MakeIdentity4x4();
 	transformationMatrix->World = MakeAffineMatrix(transform.scale, transform.rotate, transform.translate);
 	Matrix4x4 cameraMatrix = MakeAffineMatrix(cameraTransform.scale, cameraTransform.rotate, cameraTransform.translate);
 	Matrix4x4 viewMatrix = Inverse(cameraMatrix);
@@ -146,11 +141,11 @@ void Model::Draw() {
 
 void Model::CreateMaterialResource() {
 	materialResource_ = directX12->CreateBufferResource(directX12->GetDevice(), sizeof(Material));
-	materialData = nullptr;
-	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
+	material = nullptr;
+	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&material));
 
-	materialData->color = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
-	materialData->enableLighting = false;
+	material->color = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
+	material->enableLighting = false;
 }
 
 void Model::CreateTransformationMatrixResource() {

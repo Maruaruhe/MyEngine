@@ -1,6 +1,7 @@
 #pragma once
 #include "IScene.h"
 #include "../Base/Input/Input.h"
+#include "../Base/GlobalVariables/GlobalVariables.h"
 
 #include "../Object/Sprite/Sprite.h"
 #include "../Object/Sphere/Sphere.h"

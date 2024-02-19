@@ -51,7 +51,7 @@ public:
 	MaterialData LoadMaterialTemplateFile(const std::string& directoryPath, const std::string& filename);
 
 public:
-	Material* materialData;
+	Material* material;
 	Transform transform;
 	Transform cameraTransform;
 	DirectionalLight* directionalLight;
@@ -60,6 +60,8 @@ private:
 	DirectX12* directX12 = nullptr;
 	Input* input_ = nullptr;
 	ModelData modelData;
+
+	std::string forg;
 
 	//頂点リソース用のヒープの設定
 	D3D12_HEAP_PROPERTIES uploadHeapProperties;
