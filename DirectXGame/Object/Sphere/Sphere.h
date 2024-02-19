@@ -17,6 +17,11 @@ class Sphere
 public:
 	void Initialize();
 
+	void Update();
+
+	void Draw();
+private:
+
 	void InitializePosition();
 
 	void CreateVertexResource();
@@ -32,10 +37,6 @@ public:
 	void CreateTransformationMatrixResource();
 
 	void CreateDirectionalLightResource();
-
-	void Update();
-
-	void Draw();
 
 public:
 	Transform transform;

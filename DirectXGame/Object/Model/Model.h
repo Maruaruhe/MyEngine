@@ -44,11 +44,17 @@ public:
 
 	void CreateDirectionalLightResource();
 
-	void Update(Vector4& color, const Transform& transform, const Transform& transform_, DirectionalLight& directionalLight);
+	void Update();
 
 	void Draw();
 
 	MaterialData LoadMaterialTemplateFile(const std::string& directoryPath, const std::string& filename);
+
+public:
+	Material* materialData;
+	Transform transform;
+	Transform cameraTransform;
+	DirectionalLight* directionalLight;
 
 private:
 	DirectX12* directX12 = nullptr;
@@ -69,17 +75,13 @@ private:
 
 	Microsoft::WRL::ComPtr<ID3D12Resource> materialResource_;
 
-	Material* materialData_;
 
 	Microsoft::WRL::ComPtr<ID3D12Resource> wvpResource_;
 
 	TransformationMatrix* transformationMatrix;
 	//Matrix4x4* wvpData;
-
-	Transform transform_;
 	//Matrix4x4 worldMatrix_;
 
-	DirectionalLight* directionalLight_;
 	Microsoft::WRL::ComPtr<ID3D12Resource> directionalLightResource;
 
 	const int32_t kClientWidth = 1280;

@@ -100,17 +100,13 @@ void Sphere::Initialize() {
 	directX12 = DirectX12::GetInstance();
 	transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
 	cameraTransform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,-10.0f} };
+
 	CreateVertexResource();
 	CreateMaterialResource();
 	CreateVertexBufferView();
 	CreateTransformationMatrixResource();
 	CreateDirectionalLightResource();
 	DataResource();
-
-	materialData->color = { 1.0f,1.0f,1.0f,1.0f };
-	directionalLight->color = { 1.0f,1.0f,1.0f,1.0f };
-	directionalLight->direction = { 0.0f,-1.0f,0.0f };
-	directionalLight->intensity = 1.0f;
 
 	vertexData = nullptr;
 	vertexResource->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
@@ -134,11 +130,11 @@ void Sphere ::Draw() {
 	directX12->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	directX12->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
 
-	//directX12_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResourceSprite->GetGPUVirtualAddress());
 	//wvp用のCBufferの場所を設定
 	directX12->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
 
-	directX12->GetCommandList()->SetGraphicsRootDescriptorTable(2, useMonsterBall ? directX12->GetSrvHandleGPU2() : directX12->GetSrvHandleGPU());
+	//directX12->GetCommandList()->SetGraphicsRootDescriptorTable(2, useMonsterBall ? directX12->GetSrvHandleGPU2() : directX12->GetSrvHandleGPU());
+	directX12->GetCommandList()->SetGraphicsRootDescriptorTable(2, directX12->GetSrvHandleGPU());
 	directX12->GetCommandList()->SetGraphicsRootConstantBufferView(3, directionalLightResource->GetGPUVirtualAddress());
 	//描画！　（DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
 	directX12->GetCommandList()->DrawInstanced(1536, 1, 0, 0);
@@ -181,6 +177,10 @@ void Sphere::CreateDirectionalLightResource() {
 	directionalLightResource = directX12->CreateBufferResource(directX12->GetDevice(), sizeof(DirectionalLight));
 	directionalLight = nullptr;
 	directionalLightResource->Map(0,nullptr, reinterpret_cast<void**>(&directionalLight));
+
+	directionalLight->color = { 1.0f,1.0f,1.0f,1.0f };
+	directionalLight->direction = { 0.0f,-1.0f,0.0f };
+	directionalLight->intensity = 1.0f;
 }
 
 void Sphere::DataResource() {
