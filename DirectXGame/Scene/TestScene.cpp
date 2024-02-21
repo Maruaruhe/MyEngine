@@ -14,12 +14,14 @@ void TestScene::Initialize() {
 	model.material->enableLighting = true;
 
 	light.Initialize();
+	camera.Initialize();
 }
 
 void TestScene::Update() {
 	GlobalVariables::GetInstance()->Update();
 
 	light.Update();
+	camera.Update();
 
 	sphere.Update();
 

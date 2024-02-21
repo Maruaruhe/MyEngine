@@ -19,11 +19,12 @@ public:
 private:
 	Input* input = nullptr;
 	Lighting light;
+	Camera camera;
 
 	Sphere sphere;
 	Model model;
 	Sprite sprite;
 
-	std::unique_ptr<Camera> camera;
+	//std::unique_ptr<Camera> camera;
 };
 
