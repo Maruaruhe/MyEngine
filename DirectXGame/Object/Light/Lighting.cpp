@@ -1,9 +1,7 @@
 #include "Lighting.h"
 
 void Lighting::Initialize() {
-	directX12 = DirectX12::GetInstance();
-
-	directionalLightResource = directX12->CreateBufferResource(directX12->GetDevice(), sizeof(DirectionalLight));
+	directionalLightResource = DirectX12::GetInstance()->CreateBufferResource(DirectX12::GetInstance()->GetDevice(), sizeof(DirectionalLight));
 	light = nullptr;
 	directionalLightResource->Map(0, nullptr, reinterpret_cast<void**>(&light));
 
@@ -20,5 +18,5 @@ void Lighting::Update() {
 	ImGui::DragFloat("intensity", &light->intensity);
 	ImGui::End();
 
-	directX12->GetCommandList()->SetGraphicsRootConstantBufferView(3, directionalLightResource->GetGPUVirtualAddress());
+	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(3, directionalLightResource->GetGPUVirtualAddress());
 }

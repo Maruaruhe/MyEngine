@@ -22,6 +22,6 @@ public:
 	DirectionalLight* light;
 	Microsoft::WRL::ComPtr<ID3D12Resource> directionalLightResource;
 private:
-	DirectX12* directX12;
+
 };
 
