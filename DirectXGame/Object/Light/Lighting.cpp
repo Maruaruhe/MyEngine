@@ -13,14 +13,13 @@ void Lighting::Initialize() {
 }
 
 void Lighting::Update() {
+	light->direction = Normalize(light->direction);
 
 	ImGui::Begin("Light");
 	ImGui::DragFloat4("color", &light->color.x);
 	ImGui::SliderFloat3("direction", &light->direction.x, -1.0f, 1.0f);
 	ImGui::DragFloat("intensity", &light->intensity);
 	ImGui::End();
-
-	light->direction = Normalize(light->direction);
 
 	directX12->GetCommandList()->SetGraphicsRootConstantBufferView(3, directionalLightResource->GetGPUVirtualAddress());
 }
