@@ -39,9 +39,9 @@ void Sprite::Initialize(Vector2 leftTop, Vector2 rightBot) {
 }
 
 void Sprite::Update() {
-	/*ImGui::DragFloat2("uvTranslate", &uvTransform.translate.x, 0.01f, -10.0f, 10.0f);
-	ImGui::DragFloat2("uvScale", &uvTransform.scale.x, 0.01f, -10.0f, 10.0f);
-	ImGui::SliderAngle("ucRotate", &uvTransform.rotate.z);*/
+	//ImGui::DragFloat2("uvTranslate", &uvTransform.translate.x, 0.01f, -10.0f, 10.0f);
+	//ImGui::DragFloat2("uvScale", &uvTransform.scale.x, 0.01f, -10.0f, 10.0f);
+	//ImGui::SliderAngle("ucRotate", &uvTransform.rotate.z);
 
 	materialData_->uvTransform = MakeIdentity4x4();
 	transformationMatrix->World = MakeAffineMatrix(transform.scale, transform.rotate, transform.translate);
@@ -68,7 +68,7 @@ void Sprite::Draw() {
 		//wvp用のCBufferの場所を設定
 		directX12->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
 
-		directX12->GetCommandList()->SetGraphicsRootDescriptorTable(2, directX12->GetSrvHandleGPU2());
+		directX12->GetCommandList()->SetGraphicsRootDescriptorTable(2, directX12->GetSrvHandleGPU());
 		//描画！　（DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
 		//directX12_->GetCommandList()->DrawInstanced(6, 1, 0, 0);
 		directX12->GetCommandList()->DrawIndexedInstanced(6, 1, 0, 0, 0);
