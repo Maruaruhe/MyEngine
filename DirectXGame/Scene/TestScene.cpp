@@ -12,10 +12,14 @@ void TestScene::Initialize() {
 	sphere.transform.translate = { -1.5f,0.0f,0.0f };
 	model.transform.translate = { 1.5f,0.0f,0.0f };
 	model.material->enableLighting = true;
+
+	light.Initialize();
 }
 
 void TestScene::Update() {
 	GlobalVariables::GetInstance()->Update();
+
+	light.Update();
 
 	sphere.Update();
 

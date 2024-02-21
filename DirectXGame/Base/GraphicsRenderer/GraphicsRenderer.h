@@ -57,7 +57,7 @@ private:
 	IDxcIncludeHandler* includeHandler;
 	//MakeRootSignature
 	D3D12_ROOT_SIGNATURE_DESC descriptionRootSignature{};
-	D3D12_ROOT_PARAMETER rootParameters[4];
+	D3D12_ROOT_PARAMETER rootParameters[5];
 	ID3DBlob* signatureBlob;
 	ID3DBlob* errorBlob;
 	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature;

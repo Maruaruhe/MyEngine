@@ -91,7 +91,6 @@ void Model::Initialize(const std::string& filename) {
 
 	CreateMaterialResource();
 	CreateTransformationMatrixResource();
-	CreateDirectionalLightResource();
 
 	//GlobalVariables
 	forg = filename;
@@ -134,7 +133,6 @@ void Model::Draw() {
 
 	//koko
 	directX12->GetCommandList()->SetGraphicsRootDescriptorTable(2, directX12->GetSrvHandleGPU());
-	//directX12_->GetCommandList()->SetGraphicsRootConstantBufferView(3, directionalLightResource->GetGPUVirtualAddress());
 	//描画！　（DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
 	directX12->GetCommandList()->DrawInstanced(UINT(modelData.vertices.size()), 1, 0, 0);
 }
@@ -146,6 +144,7 @@ void Model::CreateMaterialResource() {
 
 	material->color = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
 	material->enableLighting = false;
+	material->enablePhong = false;
 }
 
 void Model::CreateTransformationMatrixResource() {
@@ -157,16 +156,6 @@ void Model::CreateTransformationMatrixResource() {
 	wvpResource_->Map(0, nullptr, reinterpret_cast<void**>(&transformationMatrix));
 	//単位行列を書き込んでおく
 	transformationMatrix->WVP = MakeIdentity4x4();
-}
-
-void Model::CreateDirectionalLightResource() {
-	directionalLightResource = directX12->CreateBufferResource(directX12->GetDevice(), sizeof(DirectionalLight));
-	directionalLight = nullptr;
-	directionalLightResource->Map(0, nullptr, reinterpret_cast<void**>(&directionalLight));
-
-	directionalLight->color = { 1.0f,1.0f,1.0f,1.0f };
-	directionalLight->direction = { 0.0f,-1.0f,0.0f };
-	directionalLight->intensity = 1.0f;
 }
 
 void Model::Release() {

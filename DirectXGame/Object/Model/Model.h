@@ -42,8 +42,6 @@ public:
 
 	void CreateTransformationMatrixResource();
 
-	void CreateDirectionalLightResource();
-
 	void Update();
 
 	void Draw();
@@ -54,7 +52,6 @@ public:
 	Material* material;
 	Transform transform;
 	Transform cameraTransform;
-	DirectionalLight* directionalLight;
 
 private:
 	DirectX12* directX12 = nullptr;

@@ -105,7 +105,6 @@ void Sphere::Initialize() {
 	CreateMaterialResource();
 	CreateVertexBufferView();
 	CreateTransformationMatrixResource();
-	CreateDirectionalLightResource();
 	DataResource();
 
 	vertexData = nullptr;
@@ -135,7 +134,6 @@ void Sphere ::Draw() {
 
 	//directX12->GetCommandList()->SetGraphicsRootDescriptorTable(2, useMonsterBall ? directX12->GetSrvHandleGPU2() : directX12->GetSrvHandleGPU());
 	directX12->GetCommandList()->SetGraphicsRootDescriptorTable(2, directX12->GetSrvHandleGPU());
-	directX12->GetCommandList()->SetGraphicsRootConstantBufferView(3, directionalLightResource->GetGPUVirtualAddress());
 	//描画！　（DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
 	directX12->GetCommandList()->DrawInstanced(1536, 1, 0, 0);
 }
@@ -160,6 +158,8 @@ void Sphere::CreateMaterialResource() {
 	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
 	materialData->color = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
 	materialData->enableLighting = true;
+	materialData->enablePhong = true;
+	materialData->shininess = 40.0f;
 }
 
 void Sphere::CreateTransformationMatrixResource() {
@@ -171,16 +171,6 @@ void Sphere::CreateTransformationMatrixResource() {
 	wvpResource_->Map(0, nullptr, reinterpret_cast<void**>(&transformationMatrix));
 	//単位行列を書き込んでおく
 	transformationMatrix->WVP = MakeIdentity4x4();
-}
-
-void Sphere::CreateDirectionalLightResource() {
-	directionalLightResource = directX12->CreateBufferResource(directX12->GetDevice(), sizeof(DirectionalLight));
-	directionalLight = nullptr;
-	directionalLightResource->Map(0,nullptr, reinterpret_cast<void**>(&directionalLight));
-
-	directionalLight->color = { 1.0f,1.0f,1.0f,1.0f };
-	directionalLight->direction = { 0.0f,-1.0f,0.0f };
-	directionalLight->intensity = 1.0f;
 }
 
 void Sphere::DataResource() {

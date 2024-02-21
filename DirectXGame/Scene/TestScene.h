@@ -18,6 +18,7 @@ public:
 
 private:
 	Input* input = nullptr;
+	Lighting light;
 
 	Sphere sphere;
 	Model model;

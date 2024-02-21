@@ -1,5 +1,11 @@
 #pragma once
+#include <d3d12.h>
+#include "../../Base/DirextX12/DirectX12.h"
 #include "../../Math/Vector4.h"
+#include "../../Math/Matrix4x4.h"
+#include <wrl.h>
+
+#pragma comment(lib,"d3d12.lib")
 
 struct DirectionalLight {
 	Vector4 color;
@@ -10,9 +16,12 @@ struct DirectionalLight {
 class Lighting
 {
 public:
-	//void Initialize();
+	void Initialize();
+	void Update();
 
+	DirectionalLight* light;
+	Microsoft::WRL::ComPtr<ID3D12Resource> directionalLightResource;
 private:
-	DirectionalLight* directionalLight;
+	DirectX12* directX12;
 };
 
