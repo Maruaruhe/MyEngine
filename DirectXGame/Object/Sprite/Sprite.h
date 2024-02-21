@@ -37,11 +37,15 @@ private:
 	void CreateTransformationMatrixResource();
 
 	void CreateIndexResource();
-private:
-	DirectX12* directX12 = nullptr;;
 
+public:
 	Transform transform;
 	Transform uvTransform;
+
+	Material* materialData_;
+	bool isInvisible_;
+private:
+	DirectX12* directX12 = nullptr;;
 
 	//頂点リソース用のヒープの設定
 	D3D12_HEAP_PROPERTIES uploadHeapProperties;
@@ -59,8 +63,6 @@ private:
 
 	Microsoft::WRL::ComPtr<ID3D12Resource> materialResource_;
 
-	Material* materialData_;
-
 	Microsoft::WRL::ComPtr<ID3D12Resource> wvpResource_;
 
 	TransformationMatrix* transformationMatrix;
@@ -69,8 +71,6 @@ private:
 	Microsoft::WRL::ComPtr<ID3D12Resource> indexResource;
 	D3D12_INDEX_BUFFER_VIEW indexBufferView;
 	uint32_t* indexData;
-
-	bool isInvisible_;
 
 	const int32_t kClientWidth = 1280;
 	const int32_t kClientHeight = 720;
