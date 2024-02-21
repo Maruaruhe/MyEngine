@@ -4,6 +4,7 @@ void Camera::Initialize() {
 }
 
 void Camera::Update() {
+	position.worldPosition = cameraTransform.translate;
 	ImGui::SliderFloat3("translate", &cameraTransform.translate.x, -15, 15);
 	ImGui::SliderFloat3("rotate", &cameraTransform.rotate.x, -3.0f, 3.0f);
 	ImGui::SliderFloat3("scale", &cameraTransform.scale.x, 1.0f, 10.0f);

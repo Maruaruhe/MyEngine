@@ -3,6 +3,10 @@
 #include "../../Base/ImGui/ImGuiWND.h"
 #include "../../Base/Input/Input.h"
 
+struct CameraForGPU {
+	Vector3 worldPosition;
+};
+
 class Camera
 {
 public:
@@ -10,7 +14,7 @@ public:
 	void Update();
 	Matrix4x4 MakeWVPMatrix(Transform& transform);
 
-	Transform GetTransform() { return cameraTransform; }
+	CameraForGPU position;
 private:
 	Transform cameraTransform;
 
