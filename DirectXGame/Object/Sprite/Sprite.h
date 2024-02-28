@@ -20,6 +20,8 @@ public:
 
 	void SetPosition(Vector2 translate);
 
+	void SetTexcoord(Vector2 LT, Vector2 LB, Vector2 RT, Vector2 RB);
+
 private:
 
 	void SetPosition(Vector2 LB, Vector2 LT, Vector2 RB, Vector2 RT);

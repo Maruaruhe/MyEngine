@@ -146,3 +146,14 @@ void Sprite::SetPosition(Vector2 translate) {
 	transform.translate.x = translate.x;
 	transform.translate.y = translate.y;
 }
+
+void Sprite::SetTexcoord(Vector2 LT, Vector2 LB, Vector2 RT, Vector2 RB) {
+	//左上									   
+	vertexData[1].texcoord = { LT };
+	//左下
+	vertexData[0].texcoord = { LB };
+	//右上
+	vertexData[3].texcoord = { RT };
+	//右下								
+	vertexData[2].texcoord = { RB };
+}

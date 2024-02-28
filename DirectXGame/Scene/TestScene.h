@@ -22,6 +22,7 @@ private:
 	Camera camera;
 
 	Sphere sphere;
+	Sprite a;
 	Model model;
 	Sprite sprite;
 

@@ -6,6 +6,8 @@ void TestScene::Initialize() {
 	sphere.Initialize();
 
 	sprite.Initialize({ 0,0 }, { 320,180 } , "Resources/ao.png");
+	a.Initialize({ 320,180 }, { 640,360 }, "Resources/monsterBall.png");
+
 
 	model.Initialize("ghostPori");
 
@@ -26,6 +28,7 @@ void TestScene::Update() {
 	sphere.Update();
 
 	sprite.Update();
+	a.Update();
 
 	model.Update();
 }
@@ -34,6 +37,7 @@ void TestScene::Draw() {
 	sphere.Draw();
 
 	sprite.Draw();
+	a.Draw();
 
 	model.Draw();
 }
