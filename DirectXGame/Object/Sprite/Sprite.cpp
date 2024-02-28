@@ -18,8 +18,8 @@ void Sprite::Initialize(Vector2 leftTop, Vector2 rightBot, std::string textureFi
 	CreateIndexResource();
 	DataResource();
 
-	//TextureManager::GetInstance()->LoadTexture(textureFilePath);
-	//textureIndex = TextureManager::GetInstance()->GetTextureIndexByFilePath(textureFilePath);
+	TextureManager::GetInstance()->LoadTexture(textureFilePath);
+	textureIndex = TextureManager::GetInstance()->GetTextureIndexByFilePath(textureFilePath);
 
 	vertexData = nullptr;
 	vertexResource->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
@@ -71,8 +71,8 @@ void Sprite::Draw() {
 		//wvp用のCBufferの場所を設定
 		directX12->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
 
-		directX12->GetCommandList()->SetGraphicsRootDescriptorTable(2, directX12->GetSrvHandleGPU());s
-		//directX12->GetCommandList()->SetGraphicsRootDescriptorTable(2, TextureManager::GetInstance()->GetSrvHandleGPU(textureIndex));
+		//directX12->GetCommandList()->SetGraphicsRootDescriptorTable(2, directX12->GetSrvHandleGPU());
+		directX12->GetCommandList()->SetGraphicsRootDescriptorTable(2, TextureManager::GetInstance()->GetSrvHandleGPU(textureIndex));
 		//描画！　（DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
 		//directX12_->GetCommandList()->DrawInstanced(6, 1, 0, 0);
 		directX12->GetCommandList()->DrawIndexedInstanced(6, 1, 0, 0, 0);

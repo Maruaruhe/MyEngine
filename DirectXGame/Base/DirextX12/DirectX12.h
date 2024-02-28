@@ -98,7 +98,6 @@ public:
 
 
 	D3D12_GPU_DESCRIPTOR_HANDLE GetSrvHandleGPU() { return textureSrvHandleGPU; }
-	D3D12_GPU_DESCRIPTOR_HANDLE GetSrvHandleGPU2() { return textureSrvHandleGPU2; }
 
 	D3D12_DEPTH_STENCIL_DESC GetDepthStencilDesc() { return depthStencilDesc; }
 
@@ -114,7 +113,6 @@ private:
 	Texture* texture;
 
 	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU;
-	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU2;
 
 	Microsoft::WRL::ComPtr<ID3D12Device> device;
 	Microsoft::WRL::ComPtr<IDXGIFactory7> dxgiFactory;

@@ -6,6 +6,8 @@ GameManager* GameManager::GetInstance() {
 }
 
 GameManager::GameManager() {
+
+	CoInitializeEx(0, COINIT_MULTITHREADED);
 	directX12 = DirectX12::GetInstance();
 	windowsAPI = WindowsAPI::GetInstance();
 
@@ -30,7 +32,6 @@ void GameManager::Initialize() {
 
 void GameManager::Run() {
 
-	CoInitializeEx(0, COINIT_MULTITHREADED);
 	//インスタンス
 	GameManager::GetInstance()->Initialize();
 	GlobalVariables::GetInstance()->LoadFiles();

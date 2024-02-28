@@ -5,7 +5,7 @@ void TestScene::Initialize() {
 
 	sphere.Initialize();
 
-	sprite.Initialize({ 0,0 }, { 320,180 } , "Resources/monsterBall.png");
+	sprite.Initialize({ 0,0 }, { 320,180 } , "Resources/ao.png");
 
 	model.Initialize("ghostPori");
 
