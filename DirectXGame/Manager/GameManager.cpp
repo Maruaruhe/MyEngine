@@ -15,6 +15,8 @@ GameManager::GameManager() {
 
 	Input::GetInstance()->Initialize();
 
+	TextureManager::GetInstance()->Initialize();
+
 	sceneArr[TEST] = std::make_unique<TestScene>();
 }
 

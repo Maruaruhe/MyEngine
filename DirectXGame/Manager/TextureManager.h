@@ -13,9 +13,12 @@ public:
 
 	void Initialize();
 	void LoadTexture(const std::string& filePath);
-
+	Microsoft::WRL::ComPtr<ID3D12Resource> CreateTextureResource(const DirectX::TexMetadata& matadata);
 	uint32_t GetTextureIndexByFilePath(const std::string& filePath);
 	D3D12_GPU_DESCRIPTOR_HANDLE GetSrvHandleGPU(uint32_t textureIndex);
+
+	D3D12_CPU_DESCRIPTOR_HANDLE GetCPUDescriptorHandle(uint32_t index);
+	D3D12_GPU_DESCRIPTOR_HANDLE GetGPUDescriptorHandle(uint32_t index);
 private:
 
 	struct TextureData{
