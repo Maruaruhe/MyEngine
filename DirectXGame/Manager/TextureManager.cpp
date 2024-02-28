@@ -94,7 +94,12 @@ D3D12_GPU_DESCRIPTOR_HANDLE TextureManager::GetGPUDescriptorHandle(uint32_t inde
 }
 
 uint32_t TextureManager::GetTextureIndexByFilePath(const std::string& filePath) {
-	auto it = textureDatas[]
+	auto it = std::find_if(
+		textureDatas.begin(),
+		textureDatas.end(),
+		[&](TextureData& textureData) {return textureData.filePath == filePath; }
+	);
+
 	if ( it != textureDatas.end()) {
 		uint32_t textureIndex = static_cast<uint32_t>(std::distance(textureDatas.begin(), it));
 		return textureIndex;

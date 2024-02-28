@@ -1,5 +1,6 @@
 #pragma once
 #include "../../Base/DirextX12/DirectX12.h"
+#include "../../Manager/TextureManager.h"
 #include <dxcapi.h>
 #include "../../Math/Vector4.h"
 #include "../../Math/Matrix4x4.h"
@@ -11,7 +12,7 @@
 class Sprite
 {
 public:
-	void Initialize(Vector2 leftTop,Vector2 rightBot);
+	void Initialize(Vector2 leftTop,Vector2 rightBot, std::string textureFilePath);
 
 	void Update();
 
@@ -44,6 +45,8 @@ public:
 
 	Material* materialData_;
 	bool isInvisible_;
+
+	uint32_t textureIndex = 0;
 private:
 	DirectX12* directX12 = nullptr;;
 

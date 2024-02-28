@@ -15,6 +15,6 @@ public:
 
 	Microsoft::WRL::ComPtr<ID3D12Resource> CreateDepthStencilTextureResource(Microsoft::WRL::ComPtr<ID3D12Device> device, int32_t width, int32_t height);
 private:
-	//DirectX12* directX12_;
+
 };
 

@@ -1,6 +1,6 @@
 #include "Sprite.h"
 
-void Sprite::Initialize(Vector2 leftTop, Vector2 rightBot) {
+void Sprite::Initialize(Vector2 leftTop, Vector2 rightBot, std::string textureFilePath) {
 	directX12 = DirectX12::GetInstance();
 	transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
 
@@ -17,6 +17,9 @@ void Sprite::Initialize(Vector2 leftTop, Vector2 rightBot) {
 	CreateTransformationMatrixResource();
 	CreateIndexResource();
 	DataResource();
+
+	//TextureManager::GetInstance()->LoadTexture(textureFilePath);
+	//textureIndex = TextureManager::GetInstance()->GetTextureIndexByFilePath(textureFilePath);
 
 	vertexData = nullptr;
 	vertexResource->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
@@ -69,6 +72,7 @@ void Sprite::Draw() {
 		directX12->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
 
 		directX12->GetCommandList()->SetGraphicsRootDescriptorTable(2, directX12->GetSrvHandleGPU());
+		//directX12->GetCommandList()->SetGraphicsRootDescriptorTable(2, TextureManager::GetInstance()->GetSrvHandleGPU(textureIndex));
 		//描画！　（DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
 		//directX12_->GetCommandList()->DrawInstanced(6, 1, 0, 0);
 		directX12->GetCommandList()->DrawIndexedInstanced(6, 1, 0, 0, 0);
