@@ -94,19 +94,18 @@ D3D12_GPU_DESCRIPTOR_HANDLE TextureManager::GetGPUDescriptorHandle(uint32_t inde
 }
 
 uint32_t TextureManager::GetTextureIndexByFilePath(const std::string& filePath) {
-	//auto it = 
-	//if () {
-		//uint32_t textureIndex = static_cast<uint32_t>(std::distance(textureDatas.begin(), it));
-		//return textureIndex;
-	//}
+	auto it = textureDatas[]
+	if ( it != textureDatas.end()) {
+		uint32_t textureIndex = static_cast<uint32_t>(std::distance(textureDatas.begin(), it));
+		return textureIndex;
+	}
 	assert(0);
 	return 0;
 }
 
-//D3D12_GPU_DESCRIPTOR_HANDLE TextureManager::GetSrvHandleGPU(uint32_t textureIndex) {
-//	assert(textureIndex > DirectX12::kMaxSRVCount);
-//
-////	TextureData& textureData =
-//	//	return textureData.srvHandleGPU;
-//
-//}
+D3D12_GPU_DESCRIPTOR_HANDLE TextureManager::GetSrvHandleGPU(uint32_t textureIndex) {
+	assert(textureIndex > DirectX12::kMaxSRVCount);
+
+	TextureData& textureData = textureDatas[textureIndex];
+	return textureData.srvHandleGPU;
+}
