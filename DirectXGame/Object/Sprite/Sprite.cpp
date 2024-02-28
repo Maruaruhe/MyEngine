@@ -71,7 +71,7 @@ void Sprite::Draw() {
 		//wvp用のCBufferの場所を設定
 		directX12->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
 
-		directX12->GetCommandList()->SetGraphicsRootDescriptorTable(2, directX12->GetSrvHandleGPU());
+		directX12->GetCommandList()->SetGraphicsRootDescriptorTable(2, directX12->GetSrvHandleGPU());s
 		//directX12->GetCommandList()->SetGraphicsRootDescriptorTable(2, TextureManager::GetInstance()->GetSrvHandleGPU(textureIndex));
 		//描画！　（DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
 		//directX12_->GetCommandList()->DrawInstanced(6, 1, 0, 0);
