@@ -42,10 +42,6 @@ void Sprite::Initialize(Vector2 leftTop, Vector2 rightBot, std::string textureFi
 }
 
 void Sprite::Update() {
-	//ImGui::DragFloat2("uvTranslate", &uvTransform.translate.x, 0.01f, -10.0f, 10.0f);
-	//ImGui::DragFloat2("uvScale", &uvTransform.scale.x, 0.01f, -10.0f, 10.0f);
-	//ImGui::SliderAngle("ucRotate", &uvTransform.rotate.z);
-
 	materialData_->uvTransform = MakeIdentity4x4();
 	transformationMatrix->World = MakeAffineMatrix(transform.scale, transform.rotate, transform.translate);
 	Matrix4x4 viewMatrix = MakeIdentity4x4();
@@ -67,14 +63,12 @@ void Sprite::Draw() {
 		//形状を設定。PSOに設定しているものとはまた別。同じものを設定すると考えておけばよい
 		directX12->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 		directX12->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
-		//directX12_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResourceSprite->GetGPUVirtualAddress());
 		//wvp用のCBufferの場所を設定
 		directX12->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
 
-		//directX12->GetCommandList()->SetGraphicsRootDescriptorTable(2, directX12->GetSrvHandleGPU());
 		directX12->GetCommandList()->SetGraphicsRootDescriptorTable(2, TextureManager::GetInstance()->GetSrvHandleGPU(textureIndex));
+		
 		//描画！　（DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
-		//directX12_->GetCommandList()->DrawInstanced(6, 1, 0, 0);
 		directX12->GetCommandList()->DrawIndexedInstanced(6, 1, 0, 0, 0);
 	}
 }
