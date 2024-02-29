@@ -49,8 +49,6 @@ public:
 private:
 	uint32_t textureIndex = 0;
 
-	DirectX12* directX12 = nullptr;;
-
 	//頂点リソース用のヒープの設定
 	D3D12_HEAP_PROPERTIES uploadHeapProperties;
 	//頂点リソースの設定

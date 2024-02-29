@@ -24,6 +24,7 @@ private:
 	Sphere sphere;
 	Sprite a;
 	Model model;
+	//Model* model;
 	Sprite sprite;
 
 	//std::unique_ptr<Camera> camera;

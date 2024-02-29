@@ -1,4 +1,5 @@
 #include "TestScene.h"
+#include "../Manager/ModelManager.h"
 
 void TestScene::Initialize() {
 	input = Input::GetInstance();
@@ -11,9 +12,11 @@ void TestScene::Initialize() {
 
 	model.Initialize("ghostPori");
 
+	//ModelManager::GetInstance()->LoadModel("plane.obj");
+
 	sphere.transform.translate = { -1.5f,0.0f,0.0f };
-	model.transform.translate = { 1.5f,0.0f,0.0f };
-	model.material->enableLighting = true;
+	//model.transform.translate = { 1.5f,0.0f,0.0f };
+	//model.material->enableLighting = true;
 
 	light.Initialize();
 	camera.Initialize();
@@ -27,17 +30,17 @@ void TestScene::Update() {
 
 	sphere.Update();
 
-	sprite.Update();
+	//sprite.Update();
 	a.Update();
 
-	model.Update();
+	//model.Update();
 }
 
 void TestScene::Draw() {
 	sphere.Draw();
 
-	sprite.Draw();
+	//sprite.Draw();
 	a.Draw();
 
-	model.Draw();
+	//model.Draw();
 }

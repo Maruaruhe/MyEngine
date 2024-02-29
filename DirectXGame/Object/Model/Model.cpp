@@ -1,6 +1,7 @@
 #include "Model.h"
 #include <assert.h>
 #include "../../Base/GlobalVariables/GlobalVariables.h"
+#include "../../Manager/TextureManager.h"
 
 ModelData Model::LoadObjFile(const std::string& directoryPath, const std::string& filename) {
 	ModelData modelData;
@@ -71,7 +72,7 @@ ModelData Model::LoadObjFile(const std::string& directoryPath, const std::string
 }
 void Model::InitializePosition(const std::string& filename) {
 	modelData = LoadObjFile("Resources",filename);
-	vertexResource = directX12->CreateBufferResource(directX12->GetDevice(), sizeof(VertexData) * modelData.vertices.size());
+	vertexResource = DirectX12::GetInstance()->CreateBufferResource(DirectX12::GetInstance()->GetDevice(), sizeof(VertexData) * modelData.vertices.size());
 
 	vertexBufferView = {};
 	vertexBufferView.BufferLocation = vertexResource->GetGPUVirtualAddress();
@@ -84,10 +85,9 @@ void Model::InitializePosition(const std::string& filename) {
 }
 
 void Model::Initialize(const std::string& filename) {
-	directX12 = DirectX12::GetInstance();
 
 	transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
-	cameraTransform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,-10.0f} };
+	cameraTransform = { {1.0f,1.0f,1.0f},{0.3f,0.0f,0.0f},{0.0f,4.0f,-10.0f} };
 
 	CreateMaterialResource();
 	CreateTransformationMatrixResource();
@@ -101,6 +101,9 @@ void Model::Initialize(const std::string& filename) {
 	//
 
 	InitializePosition(filename);
+
+	TextureManager::GetInstance()->LoadTexture("Resources/uvChecker.png");
+	textureIndex = TextureManager::GetInstance()->GetTextureIndexByFilePath("Resources/uvChecker.png");
 }
 
 void Model::ApplyGlobalVariables() {
@@ -122,23 +125,27 @@ void Model::Update() {
 }
 
 void Model::Draw() {
-	directX12->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView);	//VBVを設定
+	DirectX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView);	//VBVを設定
 	//形状を設定。PSOに設定しているものとはまた別。同じものを設定すると考えておけばよい
-	directX12->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	directX12->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
+	DirectX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
 
 	//directX12_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResourceSprite->GetGPUVirtualAddress());
 	//wvp用のCBufferの場所を設定
-	directX12->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
+	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
 
 	//koko
-	directX12->GetCommandList()->SetGraphicsRootDescriptorTable(2, directX12->GetSrvHandleGPU());
+	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(2, DirectX12::GetInstance()->GetSrvHandleGPU());
 	//描画！　（DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
-	directX12->GetCommandList()->DrawInstanced(UINT(modelData.vertices.size()), 1, 0, 0);
+	DirectX12::GetInstance()->GetCommandList()->DrawInstanced(UINT(modelData.vertices.size()), 1, 0, 0);
+}
+
+void Model::SetModel(const std::string& filePath) {
+
 }
 
 void Model::CreateMaterialResource() {
-	materialResource_ = directX12->CreateBufferResource(directX12->GetDevice(), sizeof(Material));
+	materialResource_ = DirectX12::GetInstance()->CreateBufferResource(DirectX12::GetInstance()->GetDevice(), sizeof(Material));
 	material = nullptr;
 	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&material));
 
@@ -149,19 +156,13 @@ void Model::CreateMaterialResource() {
 
 void Model::CreateTransformationMatrixResource() {
 	//WVP用のリソースを作る。Matrix4x4　1つ分のサイズを用意する
-	wvpResource_ = directX12->CreateBufferResource(directX12->GetDevice(), sizeof(TransformationMatrix));
+	wvpResource_ = DirectX12::GetInstance()->CreateBufferResource(DirectX12::GetInstance()->GetDevice(), sizeof(TransformationMatrix));
 	//データを書き込む
 	transformationMatrix = nullptr;
 	//書き込むためのアドレスを取得
 	wvpResource_->Map(0, nullptr, reinterpret_cast<void**>(&transformationMatrix));
 	//単位行列を書き込んでおく
 	transformationMatrix->WVP = MakeIdentity4x4();
-}
-
-void Model::Release() {
-	//vertexResource->Release();
-	//materialResource_->Release();
-	//directionalLightResource->Release();
 }
 
 MaterialData Model::LoadMaterialTemplateFile(const std::string& directoryPath, const std::string& filename) {

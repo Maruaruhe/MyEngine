@@ -26,37 +26,36 @@ public:
 
 	void Initialize(const std::string& filename);
 
+	void Update();
+
+	void Draw();
+
+	void SetModel(const std::string& filePath);
+
+private:
 	void InitializePosition(const std::string& filename);
 
 	void ApplyGlobalVariables();
-
-	void CreateVertexResource();
-
-	void CreateVertexBufferView();
-
-	void DataResource();
-
-	void Release();
 
 	void CreateMaterialResource();
 
 	void CreateTransformationMatrixResource();
 
-	void Update();
-
-	void Draw();
-
 	MaterialData LoadMaterialTemplateFile(const std::string& directoryPath, const std::string& filename);
 
 public:
-	Material* material;
+	Material* material = nullptr;
 	Transform transform;
 	Transform cameraTransform;
 
 private:
-	DirectX12* directX12 = nullptr;
+	uint32_t textureIndex = 0;
+
+	//DirectX12* directX12 = nullptr;
 	Input* input_ = nullptr;
 	ModelData modelData;
+	TransformationMatrix* transformationMatrix;
+	VertexData* vertexData = nullptr;
 
 	std::string forg;
 
@@ -74,12 +73,7 @@ private:
 
 	Microsoft::WRL::ComPtr<ID3D12Resource> materialResource_;
 
-
 	Microsoft::WRL::ComPtr<ID3D12Resource> wvpResource_;
-
-	TransformationMatrix* transformationMatrix;
-	//Matrix4x4* wvpData;
-	//Matrix4x4 worldMatrix_;
 
 	Microsoft::WRL::ComPtr<ID3D12Resource> directionalLightResource;
 
@@ -89,7 +83,6 @@ private:
 	bool useMonsterBall = true;
 
 private:
-	VertexData* vertexData;
 
 	float num = 0.0625f;
 	const float pi = 3.14f;
