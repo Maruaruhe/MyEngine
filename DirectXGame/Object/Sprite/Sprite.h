@@ -23,8 +23,6 @@ public:
 	void SetTexcoord(Vector2 LT, Vector2 LB, Vector2 RT, Vector2 RB);
 
 private:
-
-	void SetPosition(Vector2 LB, Vector2 LT, Vector2 RB, Vector2 RT);
 	VertexData GetPosition() { return vertexData[0], vertexData[1], vertexData[2], vertexData[3]; }
 
 	void CreateVertexResource();
@@ -41,15 +39,18 @@ private:
 
 	void CreateIndexResource();
 
+	void CreateVertexData(Vector2 leftTop, Vector2 rightBot);
+
 public:
 	Transform transform;
 	Transform uvTransform;
 
 	Material* materialData_;
-	bool isInvisible_;
+	bool isActive;
 
-	uint32_t textureIndex = 0;
 private:
+	uint32_t textureIndex = 0;
+
 	DirectX12* directX12 = nullptr;;
 
 	//頂点リソース用のヒープの設定

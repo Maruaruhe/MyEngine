@@ -10,35 +10,17 @@ void Sprite::Initialize(Vector2 leftTop, Vector2 rightBot, std::string textureFi
 		{0.0f,0.0f,0.0f},
 	};
 
-	isInvisible_ = false;
+	isActive = true;
 	CreateVertexResource();
 	CreateMaterialResource();
 	CreateVertexBufferView();
 	CreateTransformationMatrixResource();
 	CreateIndexResource();
 	DataResource();
+	CreateVertexData(leftTop, rightBot);
 
 	TextureManager::GetInstance()->LoadTexture(textureFilePath);
 	textureIndex = TextureManager::GetInstance()->GetTextureIndexByFilePath(textureFilePath);
-
-	vertexData = nullptr;
-	vertexResource->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
-	//左上									   
-	vertexData[1].position = { leftTop.x, leftTop.y, 0.0f, 1.0f };
-	vertexData[1].texcoord = { 0.0f,0.0f };
-	vertexData[1].normal = { 0.0f,0.0f,-1.0f };
-	//左下
-	vertexData[0].position = { leftTop.x, rightBot.y, 0.0f, 1.0f };
-	vertexData[0].texcoord = { 0.0f,1.0f };
-	vertexData[0].normal = { 0.0f,0.0f,-1.0f };
-	//右上
-	vertexData[3].position = { rightBot.x,leftTop.y, 0.0f, 1.0f };
-	vertexData[3].texcoord = { 1.0f, 0.0f };
-	vertexData[3].normal = { 0.0f,0.0f,-1.0f };
-	//右下								
-	vertexData[2].position = { rightBot.x,rightBot.y, 0.0f, 1.0f };
-	vertexData[2].texcoord = { 1.0f,1.0f };
-	vertexData[2].normal = { 0.0f,0.0f,-1.0f };
 }
 
 void Sprite::Update() {
@@ -57,7 +39,7 @@ void Sprite::Update() {
 }
 
 void Sprite::Draw() {
-	if (!isInvisible_) {
+	if (isActive) {
 		directX12->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView);	//VBVを設定
 		directX12->GetCommandList()->IASetIndexBuffer(&indexBufferView);	//VBVを設定
 		//形状を設定。PSOに設定しているものとはまた別。同じものを設定すると考えておけばよい
@@ -126,6 +108,27 @@ void Sprite::CreateIndexResource() {
 	indexData[3] = 1;
 	indexData[4] = 3;
 	indexData[5] = 2;
+}
+
+void Sprite::CreateVertexData(Vector2 leftTop, Vector2 rightBot) {
+	vertexData = nullptr;
+	vertexResource->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
+	//左上									   
+	vertexData[1].position = { leftTop.x, leftTop.y, 0.0f, 1.0f };
+	vertexData[1].texcoord = { 0.0f,0.0f };
+	vertexData[1].normal = { 0.0f,0.0f,-1.0f };
+	//左下
+	vertexData[0].position = { leftTop.x, rightBot.y, 0.0f, 1.0f };
+	vertexData[0].texcoord = { 0.0f,1.0f };
+	vertexData[0].normal = { 0.0f,0.0f,-1.0f };
+	//右上
+	vertexData[3].position = { rightBot.x,leftTop.y, 0.0f, 1.0f };
+	vertexData[3].texcoord = { 1.0f, 0.0f };
+	vertexData[3].normal = { 0.0f,0.0f,-1.0f };
+	//右下								
+	vertexData[2].position = { rightBot.x,rightBot.y, 0.0f, 1.0f };
+	vertexData[2].texcoord = { 1.0f,1.0f };
+	vertexData[2].normal = { 0.0f,0.0f,-1.0f };
 }
 
 void Sprite::DataResource() {
