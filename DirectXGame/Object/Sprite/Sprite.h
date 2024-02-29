@@ -29,8 +29,6 @@ private:
 
 	void CreateVertexBufferView();
 
-	void DataResource();
-
 	void Release();
 
 	void CreateMaterialResource();

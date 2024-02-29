@@ -16,7 +16,6 @@ void Sprite::Initialize(Vector2 leftTop, Vector2 rightBot, std::string textureFi
 	CreateVertexBufferView();
 	CreateTransformationMatrixResource();
 	CreateIndexResource();
-	DataResource();
 	CreateVertexData(leftTop, rightBot);
 
 	TextureManager::GetInstance()->LoadTexture(textureFilePath);
@@ -129,11 +128,6 @@ void Sprite::CreateVertexData(Vector2 leftTop, Vector2 rightBot) {
 	vertexData[2].position = { rightBot.x,rightBot.y, 0.0f, 1.0f };
 	vertexData[2].texcoord = { 1.0f,1.0f };
 	vertexData[2].normal = { 0.0f,0.0f,-1.0f };
-}
-
-void Sprite::DataResource() {
-	//書き込むためのアドレスを取得
-	vertexResource->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
 }
 
 void Sprite::Release() {
