@@ -9,8 +9,11 @@ void TestScene::Initialize() {
 	sprite.Initialize({ 0,0 }, { 320,180 } , "Resources/ao.png");
 	a.Initialize({ 320,180 }, { 640,360 }, "Resources/monsterBall.png");
 
+	ModelManager::GetInstance()->LoadModel("ghostPori");
+	ModelManager::GetInstance()->LoadModel("axis");
 
 	model.Initialize("ghostPori");
+	modela.Initialize("axis");
 
 	//ModelManager::GetInstance()->LoadModel("plane.obj");
 
@@ -33,7 +36,8 @@ void TestScene::Update() {
 	//sprite.Update();
 	a.Update();
 
-	//model.Update();
+	model.Update();
+	modela.Update();
 }
 
 void TestScene::Draw() {
@@ -42,5 +46,6 @@ void TestScene::Draw() {
 	//sprite.Draw();
 	a.Draw();
 
-	//model.Draw();
+	model.Draw();
+	modela.Draw();
 }

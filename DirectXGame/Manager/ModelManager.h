@@ -17,10 +17,12 @@ public:
 
 	void Initialize();
 	void LoadModel(const std::string& filePath);
-	Model* FindModel(const std::string& filePath);
+	ModelData GetModel(const std::string& filePath);
+	ModelData LoadObjFile(const std::string& directoryPath, const std::string& filename);
+	MaterialData LoadMaterialTemplateFile(const std::string& directoryPath, const std::string& filename);
 
 private:
-	std::map<std::string, std::unique_ptr<Model>> models;
+	std::map<std::string, ModelData> modelDatas;
 
 	ModelManager() = default;
 	~ModelManager() = default;

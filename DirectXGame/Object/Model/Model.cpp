@@ -2,6 +2,7 @@
 #include <assert.h>
 #include "../../Base/GlobalVariables/GlobalVariables.h"
 #include "../../Manager/TextureManager.h"
+#include "../../Manager/ModelManager.h"
 
 ModelData Model::LoadObjFile(const std::string& directoryPath, const std::string& filename) {
 	ModelData modelData;
@@ -70,8 +71,9 @@ ModelData Model::LoadObjFile(const std::string& directoryPath, const std::string
 	}
 	return modelData;
 }
+
 void Model::InitializePosition(const std::string& filename) {
-	modelData = LoadObjFile("Resources",filename);
+	modelData = ModelManager::GetInstance()->GetModel(filename);
 	vertexResource = DirectX12::GetInstance()->CreateBufferResource(DirectX12::GetInstance()->GetDevice(), sizeof(VertexData) * modelData.vertices.size());
 
 	vertexBufferView = {};
@@ -87,7 +89,7 @@ void Model::InitializePosition(const std::string& filename) {
 void Model::Initialize(const std::string& filename) {
 
 	transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
-	cameraTransform = { {1.0f,1.0f,1.0f},{0.3f,0.0f,0.0f},{0.0f,4.0f,-10.0f} };
+	cameraTransform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,-10.0f} };
 
 	CreateMaterialResource();
 	CreateTransformationMatrixResource();
