@@ -146,7 +146,7 @@ void Model::CreateTransformationMatrixResource() {
 	//WVP用のリソースを作る。Matrix4x4　1つ分のサイズを用意する
 	wvpResource_ = directX12->CreateBufferResource(directX12->GetDevice(), sizeof(TransformationMatrix));
 	//データを書き込む
-	//camera->transformationMatrix = nullptr;
+	camera->transformationMatrix = nullptr;
 	//書き込むためのアドレスを取得
 	wvpResource_->Map(0, nullptr, reinterpret_cast<void**>(&camera->transformationMatrix));
 	//単位行列を書き込んでおく
