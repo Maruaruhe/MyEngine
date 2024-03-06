@@ -71,24 +71,16 @@ ModelData Model::LoadObjFile(const std::string& directoryPath, const std::string
 }
 void Model::InitializePosition(const std::string& filename) {
 	modelData = LoadObjFile("Resources",filename);
-	vertexResource = directX12->CreateBufferResource(directX12->GetDevice(), sizeof(VertexData) * modelData.vertices.size());
-
-	vertexBufferView = {};
-	vertexBufferView.BufferLocation = vertexResource->GetGPUVirtualAddress();
-	vertexBufferView.SizeInBytes = UINT(sizeof(VertexData) * modelData.vertices.size());
-	vertexBufferView.StrideInBytes = sizeof(VertexData);
-
-	vertexData = nullptr;
-	vertexResource->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
-	std::memcpy(vertexData, modelData.vertices.data(), sizeof(VertexData) * modelData.vertices.size());
 }
 
 void Model::Initialize(const std::string& filename) {
 	directX12 = DirectX12::GetInstance();
 
 	transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
-	cameraTransform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,-10.0f} };
 
+	modelData = LoadObjFile("Resources", filename);
+
+	CreateVertexBufferView();
 	CreateMaterialResource();
 	CreateTransformationMatrixResource();
 
@@ -99,8 +91,6 @@ void Model::Initialize(const std::string& filename) {
 	GlobalVariables::GetInstance()->AddItem(forg, "Scale", transform.scale);
 	GlobalVariables::GetInstance()->AddItem(forg, "Rotate", transform.rotate);
 	//
-
-	InitializePosition(filename);
 }
 
 void Model::ApplyGlobalVariables() {
@@ -132,6 +122,19 @@ void Model::Draw() {
 	directX12->GetCommandList()->DrawInstanced(UINT(modelData.vertices.size()), 1, 0, 0);
 }
 
+void Model::CreateVertexBufferView() {
+	vertexResource = directX12->CreateBufferResource(directX12->GetDevice(), sizeof(VertexData) * modelData.vertices.size());
+	
+	vertexBufferView = {};
+	vertexBufferView.BufferLocation = vertexResource->GetGPUVirtualAddress();
+	vertexBufferView.SizeInBytes = UINT(sizeof(VertexData) * modelData.vertices.size());
+	vertexBufferView.StrideInBytes = sizeof(VertexData);
+
+	vertexData = nullptr;
+	vertexResource->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
+	std::memcpy(vertexData, modelData.vertices.data(), sizeof(VertexData) * modelData.vertices.size());
+}
+
 void Model::CreateMaterialResource() {
 	materialResource_ = directX12->CreateBufferResource(directX12->GetDevice(), sizeof(Material));
 	material = nullptr;
@@ -151,12 +154,6 @@ void Model::CreateTransformationMatrixResource() {
 	wvpResource_->Map(0, nullptr, reinterpret_cast<void**>(&camera->transformationMatrix));
 	//単位行列を書き込んでおく
 	camera->transformationMatrix->WVP = MakeIdentity4x4();
-}
-
-void Model::Release() {
-	//vertexResource->Release();
-	//materialResource_->Release();
-	//directionalLightResource->Release();
 }
 
 MaterialData Model::LoadMaterialTemplateFile(const std::string& directoryPath, const std::string& filename) {

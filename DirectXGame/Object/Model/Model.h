@@ -31,15 +31,9 @@ public:
 
 	void ApplyGlobalVariables();
 
-	void CreateVertexResource();
+	void CreateMaterialResource();
 
 	void CreateVertexBufferView();
-
-	void DataResource();
-
-	void Release();
-
-	void CreateMaterialResource();
 
 	void CreateTransformationMatrixResource();
 
@@ -47,21 +41,20 @@ public:
 
 	void Draw();
 
+	void SetCamera(Camera* camera) { this->camera = camera; }
+
 	MaterialData LoadMaterialTemplateFile(const std::string& directoryPath, const std::string& filename);
 
 public:
 	Material* material;
 	Transform transform;
-	Transform cameraTransform;
-
-	Camera* camera = nullptr;
 
 private:
 	DirectX12* directX12 = nullptr;
 	Input* input_ = nullptr;
 	ModelData modelData;
+	Camera* camera = nullptr;
 
-	TransformationMatrix* transformationMatrix;
 	std::string forg;
 
 	//頂点リソース用のヒープの設定
