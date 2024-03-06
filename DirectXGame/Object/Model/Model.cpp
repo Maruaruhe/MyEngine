@@ -113,11 +113,7 @@ void Model::Update() {
 	ApplyGlobalVariables();
 
 	material->uvTransform = MakeIdentity4x4();
-	transformationMatrix->World = MakeAffineMatrix(transform.scale, transform.rotate, transform.translate);
-	Matrix4x4 cameraMatrix = MakeAffineMatrix(cameraTransform.scale, cameraTransform.rotate, cameraTransform.translate);
-	Matrix4x4 viewMatrix = Inverse(cameraMatrix);
-	Matrix4x4 projectionMatrix = MakePerspectiveFovMatrix(0.45f, float(kClientWidth) / float(kClientHeight), 0.1f, 100.0f);
-	transformationMatrix->WVP = Multiply(transformationMatrix->World, Multiply(viewMatrix, projectionMatrix));
+	camera->MakeWVPMatrix(transform);
 }
 
 void Model::Draw() {
@@ -150,11 +146,11 @@ void Model::CreateTransformationMatrixResource() {
 	//WVP用のリソースを作る。Matrix4x4　1つ分のサイズを用意する
 	wvpResource_ = directX12->CreateBufferResource(directX12->GetDevice(), sizeof(TransformationMatrix));
 	//データを書き込む
-	transformationMatrix = nullptr;
+	//camera->transformationMatrix = nullptr;
 	//書き込むためのアドレスを取得
-	wvpResource_->Map(0, nullptr, reinterpret_cast<void**>(&transformationMatrix));
+	wvpResource_->Map(0, nullptr, reinterpret_cast<void**>(&camera->transformationMatrix));
 	//単位行列を書き込んでおく
-	transformationMatrix->WVP = MakeIdentity4x4();
+	camera->transformationMatrix->WVP = MakeIdentity4x4();
 }
 
 void Model::Release() {

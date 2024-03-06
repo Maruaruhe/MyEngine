@@ -3,15 +3,18 @@
 void TestScene::Initialize() {
 	input = Input::GetInstance();
 
+	camera = new Camera();
+	camera->Initialize();
+
 	sphere.Initialize();
 
 	TextureManager::GetInstance()->LoadTexture("Resources/ao.png");
 	TextureManager::GetInstance()->LoadTexture("Resources/monsterBall.png");
 
 	sprite.Initialize({ 0,0 }, { 320,180 } , "Resources/ao.png");
-	a.Initialize({ 320,180 }, { 640,360 }, "Resources/monsterBall.png");
+	//a.Initialize({ 320,180 }, { 640,360 }, "Resources/monsterBall.png");
 
-
+	//model.camera = camera;
 	model.Initialize("ghostPori");
 
 	sphere.transform.translate = { -1.5f,0.0f,0.0f };
@@ -19,19 +22,18 @@ void TestScene::Initialize() {
 	model.material->enableLighting = true;
 
 	light.Initialize();
-	camera.Initialize();
 }
 
 void TestScene::Update() {
 	GlobalVariables::GetInstance()->Update();
 
 	light.Update();
-	camera.Update();
+	camera->Update();
 
 	sphere.Update();
 
 	sprite.Update();
-	a.Update();
+	//a.Update();
 
 	model.Update();
 }
@@ -40,7 +42,7 @@ void TestScene::Draw() {
 	sphere.Draw();
 
 	sprite.Draw();
-	a.Draw();
+	//a.Draw();
 
 	model.Draw();
 }

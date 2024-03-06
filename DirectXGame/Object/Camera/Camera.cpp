@@ -22,12 +22,10 @@ void Camera::Update() {
 	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(4, cameraForGPUResource->GetGPUVirtualAddress());
 }
 
-Matrix4x4 Camera::MakeWVPMatrix(Transform& oTransform) {
+void Camera::MakeWVPMatrix(Transform& oTransform) {
 	transformationMatrix->World = MakeAffineMatrix(oTransform.scale, oTransform.rotate, oTransform.translate);
 	Matrix4x4 cameraMatrix = MakeAffineMatrix(transform.scale, transform.rotate, transform.translate);
 	Matrix4x4 viewMatrix = Inverse(cameraMatrix);
 	Matrix4x4 projectionMatrix = MakePerspectiveFovMatrix(horizontalAngle, aspectRatio, nearClip, farClip);
 	transformationMatrix->WVP = Multiply(transformationMatrix->World, Multiply(viewMatrix, projectionMatrix));
-
-	return {};
 }

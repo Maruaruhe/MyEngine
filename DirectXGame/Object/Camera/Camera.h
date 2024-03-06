@@ -20,7 +20,7 @@ class Camera
 public:
 	void Initialize();
 	void Update();
-	Matrix4x4 MakeWVPMatrix(Transform& transform);
+	void MakeWVPMatrix(Transform& transform);
 	TransformationMatrix* GetTransformationMatrix() { return transformationMatrix; }
 
 	CameraForGPU* position;
