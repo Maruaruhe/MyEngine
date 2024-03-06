@@ -7,6 +7,7 @@
 #include <dxcapi.h>
 #include "../../Math/Vector4.h"
 #include "../../Math/Matrix4x4.h"
+#include "../Camera/Camera.h"
 #include "../../Math/struct.h"	
 #include "../Light/Lighting.h"
 
@@ -53,11 +54,14 @@ public:
 	Transform transform;
 	Transform cameraTransform;
 
+	Camera* camera = nullptr;
+
 private:
 	DirectX12* directX12 = nullptr;
 	Input* input_ = nullptr;
 	ModelData modelData;
 
+	TransformationMatrix* transformationMatrix;
 	std::string forg;
 
 	//頂点リソース用のヒープの設定
@@ -77,7 +81,6 @@ private:
 
 	Microsoft::WRL::ComPtr<ID3D12Resource> wvpResource_;
 
-	TransformationMatrix* transformationMatrix;
 	//Matrix4x4* wvpData;
 	//Matrix4x4 worldMatrix_;
 
