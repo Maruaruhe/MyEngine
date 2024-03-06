@@ -20,12 +20,12 @@ class Camera
 public:
 	void Initialize();
 	void Update();
-	void MakeWVPMatrix(Transform& transform);
-	TransformationMatrix* GetTransformationMatrix() { return transformationMatrix; }
+	void MakeWVPMatrix();
 
 	CameraForGPU* position;
 	Transform transform;
-	TransformationMatrix* transformationMatrix;
+
+	Matrix4x4 viewProjectionMatrix;
 private:
 	Microsoft::WRL::ComPtr<ID3D12Resource> cameraForGPUResource;
 

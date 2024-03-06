@@ -53,6 +53,8 @@ private:
 	ModelData modelData;
 	Camera* camera = nullptr;
 
+	TransformationMatrix* transformationMatrix = nullptr;
+
 	std::string forg;
 
 	//頂点リソース用のヒープの設定

@@ -99,7 +99,18 @@ void Model::Update() {
 	ApplyGlobalVariables();
 
 	material->uvTransform = MakeIdentity4x4();
-	camera->MakeWVPMatrix(transform);
+
+	Matrix4x4 worldMatrix = MakeAffineMatrix(transform.scale, transform.rotate, transform.translate);
+	Matrix4x4 worldViewProjectionMatrix;
+	if (camera) {
+		const Matrix4x4& viewprojectionMatrix = camera->viewProjectionMatrix;
+		worldViewProjectionMatrix = Multiply(worldMatrix, viewprojectionMatrix);
+	}
+	else {
+		worldViewProjectionMatrix = worldMatrix;
+	}
+	transformationMatrix->WVP = worldViewProjectionMatrix;
+	transformationMatrix->World = worldMatrix;
 }
 
 void Model::Draw() {
@@ -145,11 +156,11 @@ void Model::CreateTransformationMatrixResource() {
 	//WVP用のリソースを作る。Matrix4x4　1つ分のサイズを用意する
 	wvpResource_ = directX12->CreateBufferResource(directX12->GetDevice(), sizeof(TransformationMatrix));
 	//データを書き込む
-	camera->transformationMatrix = nullptr;
+	transformationMatrix = nullptr;
 	//書き込むためのアドレスを取得
-	wvpResource_->Map(0, nullptr, reinterpret_cast<void**>(&camera->transformationMatrix));
+	wvpResource_->Map(0, nullptr, reinterpret_cast<void**>(&transformationMatrix));
 	//単位行列を書き込んでおく
-	camera->transformationMatrix->WVP = MakeIdentity4x4();
+	transformationMatrix->WVP = MakeIdentity4x4();
 }
 
 MaterialData Model::LoadMaterialTemplateFile(const std::string& directoryPath, const std::string& filename) {

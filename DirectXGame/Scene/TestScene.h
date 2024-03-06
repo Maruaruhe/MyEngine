@@ -19,7 +19,7 @@ public:
 private:
 	Input* input = nullptr;
 	Lighting light;
-	Camera* camera;
+
 	Camera* camera2;
 
 	Sphere sphere;
