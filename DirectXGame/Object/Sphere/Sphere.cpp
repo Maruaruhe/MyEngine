@@ -99,25 +99,18 @@ void Sphere::InitializePosition() {
 void Sphere::Initialize() {
 	directX12 = DirectX12::GetInstance();
 	transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
-	cameraTransform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,-20.0f} };
+	cameraTransform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,-10.0f} };
 
-	CreateVertexResource();
 	CreateMaterialResource();
 	CreateVertexBufferView();
 	CreateTransformationMatrixResource();
-	DataResource();
 
 	InitializePosition();
 }
 
 void Sphere::Update() {
 	materialData->uvTransform = MakeIdentity4x4();
-	transformationMatrix->World = MakeAffineMatrix(transform.scale, transform.rotate, transform.translate);
-	Matrix4x4 cameraMatrix = MakeAffineMatrix(cameraTransform.scale, cameraTransform.rotate, cameraTransform.translate);
-	Matrix4x4 viewMatrix = Inverse(cameraMatrix);
-	Matrix4x4 projectionMatrix = MakePerspectiveFovMatrix(0.45f, float(kClientWidth) / float(kClientHeight), 0.1f, 100.0f);
-	Matrix4x4 worldViewProjectionMatrix = Multiply(transformationMatrix->World, Multiply(viewMatrix, projectionMatrix));
-	transformationMatrix->WVP = worldViewProjectionMatrix;
+	camera->MakeWVPMatrix(transform);
 }
 
 void Sphere ::Draw() {
@@ -135,11 +128,9 @@ void Sphere ::Draw() {
 	directX12->GetCommandList()->DrawInstanced(1536, 1, 0, 0);
 }
 
-void Sphere::CreateVertexResource() {
-	vertexResource = directX12->CreateBufferResource(directX12->GetDevice(), sizeof(VertexData) * 1536);
-}
-
 void Sphere::CreateVertexBufferView() {
+	vertexResource = directX12->CreateBufferResource(directX12->GetDevice(), sizeof(VertexData) * 1536);
+
 	vertexBufferView = {};
 	//リソースの先頭のアドレスから使う
 	vertexBufferView.BufferLocation = vertexResource->GetGPUVirtualAddress();
@@ -149,6 +140,7 @@ void Sphere::CreateVertexBufferView() {
 	vertexBufferView.StrideInBytes = sizeof(VertexData);
 
 	vertexData = nullptr;
+	//書き込むためのアドレスを取得
 	vertexResource->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
 }
 
@@ -166,20 +158,9 @@ void Sphere::CreateTransformationMatrixResource() {
 	//WVP用のリソースを作る。Matrix4x4　1つ分のサイズを用意する
 	wvpResource_ = directX12->CreateBufferResource(directX12->GetDevice(), sizeof(TransformationMatrix));
 	//データを書き込む
-	transformationMatrix = nullptr;
+	camera->transformationMatrix = nullptr;
 	//書き込むためのアドレスを取得
-	wvpResource_->Map(0, nullptr, reinterpret_cast<void**>(&transformationMatrix));
+	wvpResource_->Map(0, nullptr, reinterpret_cast<void**>(&camera->transformationMatrix));
 	//単位行列を書き込んでおく
-	transformationMatrix->WVP = MakeIdentity4x4();
-}
-
-void Sphere::DataResource() {
-	//書き込むためのアドレスを取得
-	vertexResource->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
-}
-
-void Sphere::Release() {
-	/*vertexResource->Release();
-	materialResource_->Release();
-	directionalLightResource->Release();*/
+	camera->transformationMatrix->WVP = MakeIdentity4x4();
 }

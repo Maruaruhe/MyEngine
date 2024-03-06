@@ -28,13 +28,7 @@ private:
 
 	void InitializePosition();
 
-	void CreateVertexResource();
-
 	void CreateVertexBufferView();
-
-	void DataResource();
-
-	void Release();
 
 	void CreateMaterialResource();
 
@@ -48,6 +42,8 @@ public:
 private:
 	DirectX12* directX12 = nullptr;
 	Camera* camera = nullptr;
+
+	TransformationMatrix* transformationMatrix;
 
 	//頂点リソース用のヒープの設定
 	D3D12_HEAP_PROPERTIES uploadHeapProperties;
@@ -65,8 +61,6 @@ private:
 
 
 	Microsoft::WRL::ComPtr<ID3D12Resource> wvpResource_;
-
-	TransformationMatrix* transformationMatrix;
 	//Matrix4x4* wvpData;
 
 	//Matrix4x4 worldMatrix_;

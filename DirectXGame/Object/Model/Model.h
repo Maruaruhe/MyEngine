@@ -23,12 +23,15 @@ struct ModelData {
 class Model
 {
 public:
-	ModelData LoadObjFile(const std::string& directoryPath, const std::string& filename);
-
 	void Initialize(const std::string& filename);
 
-	void InitializePosition(const std::string& filename);
+	void Update();
 
+	void Draw();
+
+	void SetCamera(Camera* camera) { this->camera = camera; }
+
+private:
 	void ApplyGlobalVariables();
 
 	void CreateMaterialResource();
@@ -37,11 +40,7 @@ public:
 
 	void CreateTransformationMatrixResource();
 
-	void Update();
-
-	void Draw();
-
-	void SetCamera(Camera* camera) { this->camera = camera; }
+	ModelData LoadObjFile(const std::string& directoryPath, const std::string& filename);
 
 	MaterialData LoadMaterialTemplateFile(const std::string& directoryPath, const std::string& filename);
 
@@ -51,7 +50,6 @@ public:
 
 private:
 	DirectX12* directX12 = nullptr;
-	Input* input_ = nullptr;
 	ModelData modelData;
 	Camera* camera = nullptr;
 

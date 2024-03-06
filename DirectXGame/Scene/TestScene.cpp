@@ -9,8 +9,8 @@ void TestScene::Initialize() {
 	camera2->Initialize();
 	camera2->transform.translate.z = -10.0f;
 
-	sphere.SetCamera(camera2);
-	sphere.Initialize();
+	//sphere.SetCamera(camera2);
+	//sphere.Initialize();
 
 	TextureManager::GetInstance()->LoadTexture("Resources/ao.png");
 	TextureManager::GetInstance()->LoadTexture("Resources/monsterBall.png");
@@ -20,10 +20,17 @@ void TestScene::Initialize() {
 
 	model.SetCamera(camera2);
 	model.Initialize("ghostPori");
+	
+	//model2.SetCamera(camera2);
+	//model2.Initialize("axis");
 
-	sphere.transform.translate = { -1.5f,0.0f,0.0f };
+	//sphere.transform.translate = { -1.5f,0.0f,0.0f };
+
 	model.transform.translate = { 1.5f,0.0f,0.0f };
 	model.material->enableLighting = true;
+
+	//model2.transform.translate = { -1.5f,0.0f,0.0f };
+	//model2.material->enableLighting = true;
 
 	light.Initialize();
 }
@@ -36,19 +43,21 @@ void TestScene::Update() {
 	camera->Update();
 	camera2->Update();
 
-	sphere.Update();
+	//sphere.Update();
 
 	sprite.Update();
 	//a.Update();
 
 	model.Update();
+//	model2.Update();
 }
 
 void TestScene::Draw() {
-	sphere.Draw();
+	//sphere.Draw();
 
 	sprite.Draw();
 	//a.Draw();
 
 	model.Draw();
+	//model2.Draw();
 }

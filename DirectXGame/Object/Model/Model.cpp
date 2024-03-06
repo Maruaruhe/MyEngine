@@ -69,9 +69,6 @@ ModelData Model::LoadObjFile(const std::string& directoryPath, const std::string
 	}
 	return modelData;
 }
-void Model::InitializePosition(const std::string& filename) {
-	modelData = LoadObjFile("Resources",filename);
-}
 
 void Model::Initialize(const std::string& filename) {
 	directX12 = DirectX12::GetInstance();
