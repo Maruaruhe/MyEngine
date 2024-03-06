@@ -90,7 +90,6 @@ void Model::Initialize(const std::string& filename) {
 	GlobalVariables::GetInstance()->AddItem(forg, "Translate", transform.translate);
 	GlobalVariables::GetInstance()->AddItem(forg, "Scale", transform.scale);
 	GlobalVariables::GetInstance()->AddItem(forg, "Rotate", transform.rotate);
-	//
 }
 
 void Model::ApplyGlobalVariables() {
