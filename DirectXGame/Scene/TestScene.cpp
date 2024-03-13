@@ -32,6 +32,10 @@ void TestScene::Initialize() {
 	sprite.Initialize({ 0,0 }, { 360,180 }, "Resources/ao.png");
 
 
+
+	//p.Initialize("axis");
+	//p.SetCamera(camera2);
+
 	light.Initialize();
 }
 
@@ -47,13 +51,17 @@ void TestScene::Update() {
 	modela.Update();
 
 	sprite.Update();
+
+	//p.Update();
 }
 
 void TestScene::Draw() {
-	sphere.Draw();
+	//sphere.Draw();
 
 	model.Draw();
-	modela.Draw();
+	//modela.Draw();
 
-	sprite.Draw();
+	//sprite.Draw();
+
+	//p.Draw();
 }

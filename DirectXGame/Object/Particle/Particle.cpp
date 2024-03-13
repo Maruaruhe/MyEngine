@@ -20,6 +20,8 @@ void Particle::Initialize(const std::string& filename) {
 	CreateVertexBufferView();
 	CreateTransformationMatrixResource();
 
+	CreateSRV();
+
 	//GlobalVariables
 	forg = filename;
 	GlobalVariables::GetInstance()->CreateGroup(forg);
@@ -69,6 +71,7 @@ void Particle::Draw() {
 
 	//koko
 	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(2, DirectX12::GetInstance()->GetSrvHandleGPU());
+	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(1, srvHandleGPU);
 	//描画！　（DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
 	DirectX12::GetInstance()->GetCommandList()->DrawInstanced(UINT(modelData.vertices.size()), INSTANCECOUNT, 0, 0);
 }
@@ -126,7 +129,7 @@ void Particle::CreateSRV() {
 	srvDesc.Buffer.StructureByteStride = sizeof(TransformationMatrix);
 
 	D3D12_CPU_DESCRIPTOR_HANDLE srvHandleCPU = DirectX12::GetInstance()->GetCPUDescriptorHandle(3);
-	D3D12_GPU_DESCRIPTOR_HANDLE srvHandleGPU = DirectX12::GetInstance()->GetGPUDescriptorHandle(3);
+	srvHandleGPU = DirectX12::GetInstance()->GetGPUDescriptorHandle(3);
 
 	DirectX12::GetInstance()->GetDevice()->CreateShaderResourceView(wvpResource_.Get(), &srvDesc, srvHandleCPU);
 }

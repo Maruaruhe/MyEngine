@@ -75,6 +75,8 @@ private:
 
 	Microsoft::WRL::ComPtr<ID3D12Resource> directionalLightResource;
 
+	D3D12_GPU_DESCRIPTOR_HANDLE srvHandleGPU;
+
 	const int32_t kClientWidth = 1280;
 	const int32_t kClientHeight = 720;
 

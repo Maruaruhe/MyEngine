@@ -8,6 +8,7 @@
 #include "../Object/Light/Lighting.h"
 #include "../Object/Camera/Camera.h"
 #include "../Object/Model/Model.h"
+#include "../Object/Particle/Particle.h"
 
 class TestScene : public IScene
 {
@@ -23,6 +24,8 @@ private:
 	Camera* camera2;
 
 	Sphere sphere;
+
+	Particle p;
 
 	Model model;
 	Model modela;
