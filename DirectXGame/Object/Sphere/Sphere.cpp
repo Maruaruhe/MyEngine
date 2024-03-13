@@ -101,26 +101,27 @@ void Sphere::Initialize() {
 	transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
 	cameraTransform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,-10.0f} };
 
-	CreateVertexResource();
 	CreateMaterialResource();
 	CreateVertexBufferView();
 	CreateTransformationMatrixResource();
-	DataResource();
-
-	vertexData = nullptr;
-	vertexResource->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
 
 	InitializePosition();
 }
 
 void Sphere::Update() {
 	materialData->uvTransform = MakeIdentity4x4();
-	transformationMatrix->World = MakeAffineMatrix(transform.scale, transform.rotate, transform.translate);
-	Matrix4x4 cameraMatrix = MakeAffineMatrix(cameraTransform.scale, cameraTransform.rotate, cameraTransform.translate);
-	Matrix4x4 viewMatrix = Inverse(cameraMatrix);
-	Matrix4x4 projectionMatrix = MakePerspectiveFovMatrix(0.45f, float(kClientWidth) / float(kClientHeight), 0.1f, 100.0f);
-	Matrix4x4 worldViewProjectionMatrix = Multiply(transformationMatrix->World, Multiply(viewMatrix, projectionMatrix));
+
+	Matrix4x4 worldMatrix = MakeAffineMatrix(transform.scale, transform.rotate, transform.translate);
+	Matrix4x4 worldViewProjectionMatrix;
+	if (camera) {
+		const Matrix4x4& viewprojectionMatrix = camera->viewProjectionMatrix;
+		worldViewProjectionMatrix = Multiply(worldMatrix, viewprojectionMatrix);
+	}
+	else {
+		worldViewProjectionMatrix = worldMatrix;
+	}
 	transformationMatrix->WVP = worldViewProjectionMatrix;
+	transformationMatrix->World = worldMatrix;
 }
 
 void Sphere ::Draw() {
@@ -138,11 +139,9 @@ void Sphere ::Draw() {
 	directX12->GetCommandList()->DrawInstanced(1536, 1, 0, 0);
 }
 
-void Sphere::CreateVertexResource() {
-	vertexResource = directX12->CreateBufferResource(directX12->GetDevice(), sizeof(VertexData) * 1536);
-}
-
 void Sphere::CreateVertexBufferView() {
+	vertexResource = directX12->CreateBufferResource(directX12->GetDevice(), sizeof(VertexData) * 1536);
+
 	vertexBufferView = {};
 	//リソースの先頭のアドレスから使う
 	vertexBufferView.BufferLocation = vertexResource->GetGPUVirtualAddress();
@@ -150,6 +149,10 @@ void Sphere::CreateVertexBufferView() {
 	vertexBufferView.SizeInBytes = sizeof(VertexData) * 1536;
 	//1頂点当たりのサイズ
 	vertexBufferView.StrideInBytes = sizeof(VertexData);
+
+	vertexData = nullptr;
+	//書き込むためのアドレスを取得
+	vertexResource->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
 }
 
 void Sphere::CreateMaterialResource() {
@@ -171,15 +174,4 @@ void Sphere::CreateTransformationMatrixResource() {
 	wvpResource_->Map(0, nullptr, reinterpret_cast<void**>(&transformationMatrix));
 	//単位行列を書き込んでおく
 	transformationMatrix->WVP = MakeIdentity4x4();
-}
-
-void Sphere::DataResource() {
-	//書き込むためのアドレスを取得
-	vertexResource->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
-}
-
-void Sphere::Release() {
-	/*vertexResource->Release();
-	materialResource_->Release();
-	directionalLightResource->Release();*/
 }

@@ -5,6 +5,7 @@
 #include <d3d12.h>
 #include "../../Base/DirextX12/DirectX12.h"
 #include "../../Math/Vector4.h"
+#include "../../Math/struct.h"	
 #include "../../Math/Matrix4x4.h"
 #include <wrl.h>
 
@@ -19,15 +20,22 @@ class Camera
 public:
 	void Initialize();
 	void Update();
-	Matrix4x4 MakeWVPMatrix(Transform& transform);
+	void MakeWVPMatrix();
 
 	CameraForGPU* position;
-	Transform cameraTransform;
+	Transform transform;
+
+	Matrix4x4 viewProjectionMatrix;
 private:
 	Microsoft::WRL::ComPtr<ID3D12Resource> cameraForGPUResource;
 
 	const int32_t kClientWidth = 1280;
 	const int32_t kClientHeight = 720;
 
+
+	float horizontalAngle;
+	float aspectRatio;
+	float nearClip;
+	float farClip;
 };
 

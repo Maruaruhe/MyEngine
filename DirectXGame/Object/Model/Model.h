@@ -7,6 +7,7 @@
 #include <dxcapi.h>
 #include "../../Math/Vector4.h"
 #include "../../Math/Matrix4x4.h"
+#include "../Camera/Camera.h"
 #include "../../Math/struct.h"	
 #include "../Light/Lighting.h"
 
@@ -22,12 +23,13 @@ struct ModelData {
 class Model
 {
 public:
-	ModelData LoadObjFile(const std::string& directoryPath, const std::string& filename);
-
 	void Initialize(const std::string& filename);
 
 	void Update();
 
+	void Draw();
+
+	void SetCamera(Camera* camera) { this->camera = camera; }
 	void Draw();
 
 	void SetModel(const std::string& filePath);
@@ -46,7 +48,6 @@ private:
 public:
 	Material* material = nullptr;
 	Transform transform;
-	Transform cameraTransform;
 
 private:
 	uint32_t textureIndex = 0;
@@ -56,6 +57,9 @@ private:
 	ModelData modelData;
 	TransformationMatrix* transformationMatrix;
 	VertexData* vertexData = nullptr;
+	Camera* camera = nullptr;
+
+	TransformationMatrix* transformationMatrix = nullptr;
 
 	std::string forg;
 

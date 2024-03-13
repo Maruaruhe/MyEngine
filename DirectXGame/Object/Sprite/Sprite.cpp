@@ -17,7 +17,6 @@ void Sprite::Initialize(Vector2 leftTop, Vector2 rightBot, std::string textureFi
 	CreateIndexResource();
 	CreateVertexData(leftTop, rightBot);
 
-	TextureManager::GetInstance()->LoadTexture(textureFilePath);
 	textureIndex = TextureManager::GetInstance()->GetTextureIndexByFilePath(textureFilePath);
 }
 
