@@ -15,7 +15,7 @@
 
 #pragma comment(lib,"dxcompiler.lib")
 
-class Model
+class Particle
 {
 public:
 	void Initialize(const std::string& filename);
@@ -38,6 +38,8 @@ private:
 	void CreateTransformationMatrixResource();
 
 	void CreateVertexBufferView();
+
+	void CreateSRV();
 
 public:
 	Material* material = nullptr;

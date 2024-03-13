@@ -1,15 +1,17 @@
-#include "Model.h"
+#include "Particle.h"
 #include <assert.h>
 #include "../../Base/GlobalVariables/GlobalVariables.h"
 #include "../../Manager/TextureManager.h"
 #include "../../Manager/ModelManager.h"
 
-void Model::InitializePosition(const std::string& filename) {
+#define INSTANCECOUNT 10
+
+void Particle::InitializePosition(const std::string& filename) {
 	modelData = ModelManager::GetInstance()->GetModel(filename);
 	vertexResource = DirectX12::GetInstance()->CreateBufferResource(DirectX12::GetInstance()->GetDevice(), sizeof(VertexData) * modelData.vertices.size());
 }
 
-void Model::Initialize(const std::string& filename) {
+void Particle::Initialize(const std::string& filename) {
 
 	transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
 
@@ -31,13 +33,13 @@ void Model::Initialize(const std::string& filename) {
 	textureIndex = TextureManager::GetInstance()->GetTextureIndexByFilePath("Resources/uvChecker.png");
 }
 
-void Model::ApplyGlobalVariables() {
+void Particle::ApplyGlobalVariables() {
 	transform.translate = GlobalVariables::GetInstance()->GetVector3Value(forg, "Translate");
 	transform.scale = GlobalVariables::GetInstance()->GetVector3Value(forg, "Scale");
 	transform.rotate = GlobalVariables::GetInstance()->GetVector3Value(forg, "Rotate");
 }
 
-void Model::Update() {
+void Particle::Update() {
 	ApplyGlobalVariables();
 
 	material->uvTransform = MakeIdentity4x4();
@@ -55,7 +57,7 @@ void Model::Update() {
 	transformationMatrix->World = worldMatrix;
 }
 
-void Model::Draw() {
+void Particle::Draw() {
 	DirectX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView);	//VBVを設定
 	//形状を設定。PSOに設定しているものとはまた別。同じものを設定すると考えておけばよい
 	DirectX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -68,16 +70,16 @@ void Model::Draw() {
 	//koko
 	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(2, DirectX12::GetInstance()->GetSrvHandleGPU());
 	//描画！　（DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
-	DirectX12::GetInstance()->GetCommandList()->DrawInstanced(UINT(modelData.vertices.size()), 1, 0, 0);
+	DirectX12::GetInstance()->GetCommandList()->DrawInstanced(UINT(modelData.vertices.size()), INSTANCECOUNT, 0, 0);
 }
 
-void Model::SetModel(const std::string& filePath) {
+void Particle::SetModel(const std::string& filePath) {
 
 }
 
-void Model::CreateVertexBufferView() {
+void Particle::CreateVertexBufferView() {
 	vertexResource = DirectX12::GetInstance()->CreateBufferResource(DirectX12::GetInstance()->GetDevice(), sizeof(VertexData) * modelData.vertices.size());
-	
+
 	vertexBufferView = {};
 	vertexBufferView.BufferLocation = vertexResource->GetGPUVirtualAddress();
 	vertexBufferView.SizeInBytes = UINT(sizeof(VertexData) * modelData.vertices.size());
@@ -88,7 +90,7 @@ void Model::CreateVertexBufferView() {
 	std::memcpy(vertexData, modelData.vertices.data(), sizeof(VertexData) * modelData.vertices.size());
 }
 
-void Model::CreateMaterialResource() {
+void Particle::CreateMaterialResource() {
 	materialResource_ = DirectX12::GetInstance()->CreateBufferResource(DirectX12::GetInstance()->GetDevice(), sizeof(Material));
 	material = nullptr;
 	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&material));
@@ -98,13 +100,33 @@ void Model::CreateMaterialResource() {
 	material->enablePhong = false;
 }
 
-void Model::CreateTransformationMatrixResource() {
+void Particle::CreateTransformationMatrixResource() {
 	//WVP用のリソースを作る。Matrix4x4　1つ分のサイズを用意する
-	wvpResource_ = DirectX12::GetInstance()->CreateBufferResource(DirectX12::GetInstance()->GetDevice(), sizeof(TransformationMatrix));
+	wvpResource_ = DirectX12::GetInstance()->CreateBufferResource(DirectX12::GetInstance()->GetDevice(), sizeof(TransformationMatrix) * INSTANCECOUNT);
 	//データを書き込む
 	transformationMatrix = nullptr;
 	//書き込むためのアドレスを取得
 	wvpResource_->Map(0, nullptr, reinterpret_cast<void**>(&transformationMatrix));
 	//単位行列を書き込んでおく
-	transformationMatrix->WVP = MakeIdentity4x4();
+	for (uint32_t index = 0; index < INSTANCECOUNT; ++index) {
+		transformationMatrix[index].WVP = MakeIdentity4x4();
+		transformationMatrix[index].World = MakeIdentity4x4();
+	}
+}
+
+void Particle::CreateSRV() {
+	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
+
+	srvDesc.Format = DXGI_FORMAT_UNKNOWN;
+	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_BUFFER;
+	srvDesc.Buffer.FirstElement = 0;
+	srvDesc.Buffer.Flags = D3D12_BUFFER_SRV_FLAG_NONE;
+	srvDesc.Buffer.NumElements = INSTANCECOUNT;
+	srvDesc.Buffer.StructureByteStride = sizeof(TransformationMatrix);
+
+	D3D12_CPU_DESCRIPTOR_HANDLE srvHandleCPU = DirectX12::GetInstance()->GetCPUDescriptorHandle(3);
+	D3D12_GPU_DESCRIPTOR_HANDLE srvHandleGPU = DirectX12::GetInstance()->GetGPUDescriptorHandle(3);
+
+	DirectX12::GetInstance()->GetDevice()->CreateShaderResourceView(wvpResource_.Get(), &srvDesc, srvHandleCPU);
 }
