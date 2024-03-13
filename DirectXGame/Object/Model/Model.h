@@ -30,7 +30,6 @@ public:
 	void Draw();
 
 	void SetCamera(Camera* camera) { this->camera = camera; }
-	void Draw();
 
 	void SetModel(const std::string& filePath);
 
@@ -42,6 +41,8 @@ private:
 	void CreateMaterialResource();
 
 	void CreateTransformationMatrixResource();
+
+	void CreateVertexBufferView();
 
 	MaterialData LoadMaterialTemplateFile(const std::string& directoryPath, const std::string& filename);
 
@@ -55,10 +56,8 @@ private:
 	//DirectX12* directX12 = nullptr;
 	Input* input_ = nullptr;
 	ModelData modelData;
-	TransformationMatrix* transformationMatrix;
 	VertexData* vertexData = nullptr;
 	Camera* camera = nullptr;
-
 	TransformationMatrix* transformationMatrix = nullptr;
 
 	std::string forg;
