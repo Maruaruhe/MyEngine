@@ -13,6 +13,7 @@ void Model::Initialize(const std::string& filename) {
 
 	transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
 
+	InitializePosition(filename);
 	CreateMaterialResource();
 	CreateVertexBufferView();
 	CreateTransformationMatrixResource();
@@ -25,7 +26,6 @@ void Model::Initialize(const std::string& filename) {
 	GlobalVariables::GetInstance()->AddItem(forg, "Rotate", transform.rotate);
 	//
 
-	InitializePosition(filename);
 
 	TextureManager::GetInstance()->LoadTexture("Resources/uvChecker.png");
 	textureIndex = TextureManager::GetInstance()->GetTextureIndexByFilePath("Resources/uvChecker.png");

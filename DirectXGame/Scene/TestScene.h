@@ -23,12 +23,9 @@ private:
 	Camera* camera2;
 
 	Sphere sphere;
-	Sprite a;
-	//Model model;
+
 	Model model;
 	Model modela;
 	Sprite sprite;
-
-	//std::unique_ptr<Camera> camera;
 };
 
