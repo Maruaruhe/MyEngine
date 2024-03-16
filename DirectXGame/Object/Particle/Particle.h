@@ -15,7 +15,7 @@
 
 #pragma comment(lib,"dxcompiler.lib")
 
-class Model
+class Particle
 {
 public:
 	void Initialize(const std::string& filename);

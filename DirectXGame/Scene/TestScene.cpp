@@ -16,16 +16,17 @@ void TestScene::Initialize() {
 
 	ModelManager::GetInstance()->LoadModel("ghostPori");
 	ModelManager::GetInstance()->LoadModel("axis");
+	ModelManager::GetInstance()->LoadModel("plane");
 
-	model.Initialize("ghostPori");
+	p.Initialize("plane");
 	modela.Initialize("axis");
 
-	model.SetCamera(camera2);
+	p.SetCamera(camera2);
 	modela.SetCamera(camera2);
 
 	sphere.transform.translate = { -1.5f,0.0f,0.0f };
-	model.transform.translate = { 1.5f,0.0f,0.0f };
-	model.material->enableLighting = true;
+	p.transform.translate = { 1.5f,0.0f,0.0f };
+	p.material->enableLighting = false;
 	modela.transform.translate = { 1.5f,0.0f,0.0f };
 	modela.material->enableLighting = true;
 
@@ -43,7 +44,7 @@ void TestScene::Update() {
 
 	sphere.Update();
 
-	model.Update();
+	p.Update();
 	modela.Update();
 
 	sprite.Update();
@@ -52,7 +53,7 @@ void TestScene::Update() {
 void TestScene::Draw() {
 	sphere.Draw();
 
-	model.Draw();
+	p.Draw();
 	modela.Draw();
 
 	sprite.Draw();
