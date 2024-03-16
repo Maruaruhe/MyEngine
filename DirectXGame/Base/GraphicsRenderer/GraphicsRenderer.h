@@ -64,7 +64,7 @@ private:
 	ID3DBlob* errorBlob[kNumPSO];
 	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature[kNumPSO];
 	//SetInputLayout
-	D3D12_INPUT_ELEMENT_DESC inputElementDescs[3] = {};
+	D3D12_INPUT_ELEMENT_DESC inputElementDescs[kNumPSO][3] = {};
 	D3D12_INPUT_LAYOUT_DESC inputLayoutDesc[kNumPSO]{};
 	//SetBlendState
 	D3D12_BLEND_DESC blendDesc[kNumPSO]{};

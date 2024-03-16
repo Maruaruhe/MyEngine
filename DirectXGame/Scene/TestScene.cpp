@@ -16,6 +16,7 @@ void TestScene::Initialize() {
 
 	ModelManager::GetInstance()->LoadModel("ghostPori");
 	ModelManager::GetInstance()->LoadModel("axis");
+	ModelManager::GetInstance()->LoadModel("plane");
 
 	model.Initialize("ghostPori");
 	modela.Initialize("axis");
@@ -33,7 +34,7 @@ void TestScene::Initialize() {
 
 
 
-	//p.Initialize("axis");
+	//p.Initialize("plane");
 	//p.SetCamera(camera2);
 
 	light.Initialize();

@@ -98,28 +98,23 @@ void GraphicsRenderer::DecideCommand() {
 	}
 }
 
-//void GraphicsRenderer::CloseCommand(DirectX12* directX12) {
-//	hr = directX12->GetCommandList()->Close();
-//	assert(SUCCEEDED(hr));
-//}
-
 void GraphicsRenderer::MakeRootSignature() {
 	for (int i = 0; i < kNumPSO; i++) {
 		descriptionRootSignature[i] = {};
 		descriptionRootSignature[i].Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
 
-		D3D12_DESCRIPTOR_RANGE descriptorRange[1] = {};
-		descriptorRange[0].BaseShaderRegister = 0;
-		descriptorRange[0].NumDescriptors = 1;
-		descriptorRange[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
-		descriptorRange[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
+		D3D12_DESCRIPTOR_RANGE descriptorRange[kNumPSO][1] = {};
+		descriptorRange[i][0].BaseShaderRegister = 0;
+		descriptorRange[i][0].NumDescriptors = 1;
+		descriptorRange[i][0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
+		descriptorRange[i][0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
 
 		D3D12_DESCRIPTOR_RANGE descriptorRangeForInstancing[1] = {};
 		descriptorRangeForInstancing[0].BaseShaderRegister = 0; //0から始まる
 		descriptorRangeForInstancing[0].NumDescriptors = 1;
 		descriptorRangeForInstancing[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV; //SRVを使う
 		descriptorRangeForInstancing[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
-
+		
 		rootParameters[i][0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
 		rootParameters[i][0].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
 		rootParameters[i][0].Descriptor.ShaderRegister = 0;
@@ -130,8 +125,8 @@ void GraphicsRenderer::MakeRootSignature() {
 
 			rootParameters[i][2].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
 			rootParameters[i][2].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
-			rootParameters[i][2].DescriptorTable.pDescriptorRanges = descriptorRange;
-			rootParameters[i][2].DescriptorTable.NumDescriptorRanges = _countof(descriptorRange);
+			rootParameters[i][2].DescriptorTable.pDescriptorRanges = descriptorRange[i];
+			rootParameters[i][2].DescriptorTable.NumDescriptorRanges = _countof(descriptorRange[i]);
 
 			rootParameters[i][4].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
 			rootParameters[i][4].ShaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX;
@@ -186,25 +181,25 @@ void GraphicsRenderer::MakeRootSignature() {
 }
 
 void GraphicsRenderer::SetInputLayout() {
-
-	inputElementDescs[0].SemanticName = "POSITION";
-	inputElementDescs[0].SemanticIndex = 0;
-	inputElementDescs[0].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
-	inputElementDescs[0].AlignedByteOffset = D3D12_APPEND_ALIGNED_ELEMENT;
-
-	inputElementDescs[1].SemanticName = "TEXCOORD";
-	inputElementDescs[1].SemanticIndex = 0;
-	inputElementDescs[1].Format = DXGI_FORMAT_R32G32_FLOAT;
-	inputElementDescs[1].AlignedByteOffset = D3D12_APPEND_ALIGNED_ELEMENT;
-
-	inputElementDescs[2].SemanticName = "NORMAL";
-	inputElementDescs[2].SemanticIndex = 0;
-	inputElementDescs[2].Format = DXGI_FORMAT_R32G32B32_FLOAT;
-	inputElementDescs[2].AlignedByteOffset = D3D12_APPEND_ALIGNED_ELEMENT;
 	for (int i = 0; i < kNumPSO; i++) {
+	inputElementDescs[i][0].SemanticName = "POSITION";
+	inputElementDescs[i][0].SemanticIndex = 0;
+	inputElementDescs[i][0].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	inputElementDescs[i][0].AlignedByteOffset = D3D12_APPEND_ALIGNED_ELEMENT;
+
+	inputElementDescs[i][1].SemanticName = "TEXCOORD";
+	inputElementDescs[i][1].SemanticIndex = 0;
+	inputElementDescs[i][1].Format = DXGI_FORMAT_R32G32_FLOAT;
+	inputElementDescs[i][1].AlignedByteOffset = D3D12_APPEND_ALIGNED_ELEMENT;
+
+	inputElementDescs[i][2].SemanticName = "NORMAL";
+	inputElementDescs[i][2].SemanticIndex = 0;
+	inputElementDescs[i][2].Format = DXGI_FORMAT_R32G32B32_FLOAT;
+	inputElementDescs[i][2].AlignedByteOffset = D3D12_APPEND_ALIGNED_ELEMENT;
+
 		inputLayoutDesc[i] = {};
-		inputLayoutDesc[i].pInputElementDescs = inputElementDescs;
-		inputLayoutDesc[i].NumElements = _countof(inputElementDescs);
+		inputLayoutDesc[i].pInputElementDescs = inputElementDescs[i];
+		inputLayoutDesc[i].NumElements = _countof(inputElementDescs[i]);
 	}
 }
 void GraphicsRenderer::SetBlendState() {
@@ -234,6 +229,13 @@ void GraphicsRenderer::ShaderCompile() {
 	assert(vertexShaderBlob != nullptr);
 	pixelShaderBlob = CompileShader(L"Object3D.PS.hlsl", L"ps_6_0", dxcUtils, dxcCompiler, includeHandler);
 	assert(pixelShaderBlob != nullptr);
+
+	//Particle
+	particleVertexShaderBlob = CompileShader(L"Particle.VS.hlsl", L"vs_6_0", dxcUtils, dxcCompiler, includeHandler);
+	assert(particleVertexShaderBlob_ != nullptr);
+
+	particlePixelShaderBlob = CompileShader(L"Particle.PS.hlsl", L"ps_6_0", dxcUtils, dxcCompiler, includeHandler);
+	assert(particlePixelShaderBlob_ != nullptr);
 }
 void GraphicsRenderer::MakePSO() {
 	//PSOを生成する-----------------------------------------------------------------------------------------------
