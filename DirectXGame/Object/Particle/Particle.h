@@ -15,6 +15,8 @@
 
 #pragma comment(lib,"dxcompiler.lib")
 
+#define kNumInstance 15
+
 class Particle
 {
 public:
@@ -31,11 +33,11 @@ public:
 private:
 	void InitializePosition(const std::string& filename);
 
-	void ApplyGlobalVariables();
-
 	void CreateMaterialResource();
 
-	void CreateTransformationMatrixResource();
+	void CreateInstance();
+
+	void CreateSRV();
 
 	void CreateVertexBufferView();
 
@@ -43,8 +45,8 @@ private:
 
 public:
 	Material* material = nullptr;
-	Transform transform;
 
+	Transform transforms[kNumInstance];
 private:
 	uint32_t textureIndex = 0;
 
@@ -53,7 +55,13 @@ private:
 	ModelData modelData;
 	VertexData* vertexData = nullptr;
 	Camera* camera = nullptr;
-	TransformationMatrix* transformationMatrix = nullptr;
+
+	TransformationMatrix* instancingData;
+
+	uint32_t descriptorSizeSRV{};
+
+	D3D12_CPU_DESCRIPTOR_HANDLE instancingSrvHandleCPU;
+	D3D12_GPU_DESCRIPTOR_HANDLE instancingSrvHandleGPU;
 
 	std::string forg;
 
@@ -63,6 +71,7 @@ private:
 	D3D12_RESOURCE_DESC vertexResourceDesc;
 	//実際に頂点リソースを作る
 	Microsoft::WRL::ComPtr<ID3D12Resource> vertexResource;
+	Microsoft::WRL::ComPtr<ID3D12Resource> instancingResource;
 
 	//頂点バッファビューを作成する
 	D3D12_VERTEX_BUFFER_VIEW vertexBufferView;

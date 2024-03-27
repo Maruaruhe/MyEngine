@@ -26,7 +26,7 @@ void Camera::Update() {
 
 void Camera::MakeWVPMatrix() {
 	Matrix4x4 cameraMatrix = MakeAffineMatrix(transform.scale, transform.rotate, transform.translate);
-	Matrix4x4 viewMatrix = Inverse(cameraMatrix);
-	Matrix4x4 projectionMatrix = MakePerspectiveFovMatrix(horizontalAngle, aspectRatio, nearClip, farClip);
+	viewMatrix = Inverse(cameraMatrix);
+	projectionMatrix = MakePerspectiveFovMatrix(horizontalAngle, aspectRatio, nearClip, farClip);
 	viewProjectionMatrix = Multiply(viewMatrix, projectionMatrix);
 }

@@ -25,7 +25,7 @@ void TestScene::Initialize() {
 	modela.SetCamera(camera2);
 
 	sphere.transform.translate = { -1.5f,0.0f,0.0f };
-	p.transform.translate = { 1.5f,0.0f,0.0f };
+
 	p.material->enableLighting = false;
 	modela.transform.translate = { 1.5f,0.0f,0.0f };
 	modela.material->enableLighting = true;

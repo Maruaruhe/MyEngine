@@ -25,7 +25,9 @@ public:
 	CameraForGPU* position;
 	Transform transform;
 
-	Matrix4x4 viewProjectionMatrix;
+	Matrix4x4 viewProjectionMatrix; 
+	Matrix4x4 viewMatrix;
+	Matrix4x4 projectionMatrix;
 private:
 	Microsoft::WRL::ComPtr<ID3D12Resource> cameraForGPUResource;
 
