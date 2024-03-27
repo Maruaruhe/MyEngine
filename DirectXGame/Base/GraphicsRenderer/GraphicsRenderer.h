@@ -69,7 +69,7 @@ private:
 	D3D12_INPUT_ELEMENT_DESC inputElementDescs[kNumPSO][3] = {};
 	D3D12_INPUT_LAYOUT_DESC inputLayoutDesc[kNumPSO]{};
 	//SetBlendState
-	D3D12_BLEND_DESC blendDesc[kNumPSO]{};
+	D3D12_BLEND_DESC blendDesc[7]{};
 	//SetRasterizerState
 	D3D12_RASTERIZER_DESC rasterizerDesc[kNumPSO]{};
 	//ShaderCompile
