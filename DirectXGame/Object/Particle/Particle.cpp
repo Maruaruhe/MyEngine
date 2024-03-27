@@ -16,14 +16,15 @@ void Particle::Initialize(const std::string& filename) {
 	InitializePosition(filename);
 	CreateMaterialResource();
 	CreateVertexBufferView();
-	CreateTransformationMatrixResource();
+	CreateInstance();
+	CreateSRV();
 
 	//GlobalVariables
-	forg = filename;
-	GlobalVariables::GetInstance()->CreateGroup(forg);
-	GlobalVariables::GetInstance()->AddItem(forg, "Translate", transform.translate);
-	GlobalVariables::GetInstance()->AddItem(forg, "Scale", transform.scale);
-	GlobalVariables::GetInstance()->AddItem(forg, "Rotate", transform.rotate);
+	//forg = filename;
+	//GlobalVariables::GetInstance()->CreateGroup(forg);
+	//GlobalVariables::GetInstance()->AddItem(forg, "Translate", transform.translate);
+	//GlobalVariables::GetInstance()->AddItem(forg, "Scale", transform.scale);
+	//GlobalVariables::GetInstance()->AddItem(forg, "Rotate", transform.rotate);
 	//
 
 
@@ -32,9 +33,9 @@ void Particle::Initialize(const std::string& filename) {
 }
 
 void Particle::ApplyGlobalVariables() {
-	transform.translate = GlobalVariables::GetInstance()->GetVector3Value(forg, "Translate");
-	transform.scale = GlobalVariables::GetInstance()->GetVector3Value(forg, "Scale");
-	transform.rotate = GlobalVariables::GetInstance()->GetVector3Value(forg, "Rotate");
+	//transform.translate = GlobalVariables::GetInstance()->GetVector3Value(forg, "Translate");
+	//transform.scale = GlobalVariables::GetInstance()->GetVector3Value(forg, "Scale");
+	//transform.rotate = GlobalVariables::GetInstance()->GetVector3Value(forg, "Rotate");
 }
 
 void Particle::Update() {
@@ -42,17 +43,18 @@ void Particle::Update() {
 
 	material->uvTransform = MakeIdentity4x4();
 
-	Matrix4x4 worldMatrix = MakeAffineMatrix(transform.scale, transform.rotate, transform.translate);
-	Matrix4x4 worldViewProjectionMatrix;
 	if (camera) {
-		const Matrix4x4& viewprojectionMatrix = camera->viewProjectionMatrix;
-		worldViewProjectionMatrix = Multiply(worldMatrix, viewprojectionMatrix);
+		for (uint32_t index = 0; index < kNumInstance; ++index) {
+			Matrix4x4 worldMatrix = MakeAffineMatrix(transforms[index].scale, transforms[index].rotate, transforms[index].translate);
+			Matrix4x4 worldViewProjectionMatrix = Multiply(worldMatrix, Multiply(camera->viewMatrix, camera->projectionMatrix));
+			instancingData[index].WVP = worldViewProjectionMatrix;
+			instancingData[index].World = worldMatrix;
+		}
 	}
 	else {
-		worldViewProjectionMatrix = worldMatrix;
+
 	}
-	transformationMatrix->WVP = worldViewProjectionMatrix;
-	transformationMatrix->World = worldMatrix;
+
 }
 
 void Particle::Draw() {
@@ -63,12 +65,13 @@ void Particle::Draw() {
 
 	//directX12_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResourceSprite->GetGPUVirtualAddress());
 	//wvp用のCBufferの場所を設定
-	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
+	//DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
 
 	//koko
+	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(1, instancingSrvHandleGPU);
 	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(2, DirectX12::GetInstance()->GetSrvHandleGPU());
 	//描画！　（DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
-	DirectX12::GetInstance()->GetCommandList()->DrawInstanced(UINT(modelData.vertices.size()), 10, 0, 0);
+	DirectX12::GetInstance()->GetCommandList()->DrawInstanced(UINT(modelData.vertices.size()), kNumInstance, 0, 0);
 }
 
 void Particle::SetModel(const std::string& filePath) {
@@ -98,15 +101,39 @@ void Particle::CreateMaterialResource() {
 	material->enablePhong = false;
 }
 
-void Particle::CreateTransformationMatrixResource() {
-	//WVP用のリソースを作る。Matrix4x4　1つ分のサイズを用意する
-	wvpResource_ = DirectX12::GetInstance()->CreateBufferResource(DirectX12::GetInstance()->GetDevice(), sizeof(TransformationMatrix));
-	//データを書き込む
-	transformationMatrix = nullptr;
-	//書き込むためのアドレスを取得
-	wvpResource_->Map(0, nullptr, reinterpret_cast<void**>(&transformationMatrix));
-	//単位行列を書き込んでおく
-	transformationMatrix->WVP = MakeIdentity4x4();
+void Particle::CreateInstance() {
+	instancingResource = DirectX12::GetInstance()->CreateBufferResource(DirectX12::GetInstance()->GetDevice(), sizeof(TransformationMatrix) * kNumInstance);
+
+	instancingData = nullptr;
+
+	instancingResource->Map(0, nullptr, reinterpret_cast<void**>(&instancingData));
+
+	for (uint32_t index = 0; index < kNumInstance; ++index) {
+		instancingData[index].WVP = MakeIdentity4x4();
+		instancingData[index].World = MakeIdentity4x4();
+	}
+
+	for (uint32_t index = 0; index < kNumInstance; ++index) {
+		transforms[index].scale = { 1.0f,1.0f,1.0f };
+		transforms[index].rotate = { 0.0f,0.0f,0.0f };
+		transforms[index].translate = { index * 0.1f,index * 0.1f ,index * 0.1f };
+	}
+}
+
+void Particle::CreateSRV() {
+	descriptorSizeSRV = DirectX12::GetInstance()->GetDevice()->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+
+	D3D12_SHADER_RESOURCE_VIEW_DESC instancingSrvDesc{};
+	instancingSrvDesc.Format = DXGI_FORMAT_UNKNOWN;
+	instancingSrvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+	instancingSrvDesc.ViewDimension = D3D12_SRV_DIMENSION_BUFFER;
+	instancingSrvDesc.Buffer.FirstElement = 0;
+	instancingSrvDesc.Buffer.Flags = D3D12_BUFFER_SRV_FLAG_NONE;
+	instancingSrvDesc.Buffer.NumElements = kNumInstance;
+	instancingSrvDesc.Buffer.StructureByteStride = sizeof(TransformationMatrix);
+	instancingSrvHandleCPU = DirectX12::GetInstance()->GetCPUDescriptorHandle(3);
+	instancingSrvHandleGPU = DirectX12::GetInstance()->GetGPUDescriptorHandle(3);
+	DirectX12::GetInstance()->GetDevice()->CreateShaderResourceView(instancingResource.Get(), &instancingSrvDesc, instancingSrvHandleCPU);
 }
 
 MaterialData Particle::LoadMaterialTemplateFile(const std::string& directoryPath, const std::string& filename) {
