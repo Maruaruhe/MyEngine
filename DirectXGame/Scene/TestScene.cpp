@@ -51,10 +51,10 @@ void TestScene::Update() {
 }
 
 void TestScene::Draw() {
-	//sphere.Draw();
+	sphere.Draw();
 
 	p.Draw();
-	//modela.Draw();
+	modela.Draw();
 
-	//sprite.Draw();
+	sprite.Draw();
 }

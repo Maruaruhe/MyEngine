@@ -6,7 +6,6 @@
 
 void Particle::InitializePosition(const std::string& filename) {
 	modelData = ModelManager::GetInstance()->GetModel(filename);
-	vertexResource = DirectX12::GetInstance()->CreateBufferResource(DirectX12::GetInstance()->GetDevice(), sizeof(VertexData) * modelData.vertices.size());
 }
 
 void Particle::Initialize(const std::string& filename) {
@@ -24,18 +23,20 @@ void Particle::Initialize(const std::string& filename) {
 void Particle::Update() {
 	material->uvTransform = MakeIdentity4x4();
 
-	if (camera) {
-		const Matrix4x4& viewprojectionMatrix = camera->viewProjectionMatrix;
+	Transform cameraTransform;
+	cameraTransform.translate = { 0,0,-5 };
+	cameraTransform.rotate = {};
+	cameraTransform.scale = {};
 
-		for (uint32_t index = 0; index < kNumInstance; ++index) {
-			Matrix4x4 worldMatrix = MakeAffineMatrix(transforms[index].scale, transforms[index].rotate, transforms[index].translate);
-			Matrix4x4 worldViewProjectionMatrix = Multiply(worldMatrix, Multiply(camera->viewMatrix, camera->projectionMatrix));
-			instancingData[index].WVP = worldViewProjectionMatrix;
-			instancingData[index].World = worldMatrix;
-		}
-	}
-	else {
+	Matrix4x4 cameraMatrix = MakeAffineMatrix(cameraTransform.scale, cameraTransform.rotate, cameraTransform.translate);
+	Matrix4x4 viewMatrix = Inverse(cameraMatrix);
+	Matrix4x4 projectionMatrix = MakePerspectiveFovMatrix(0.45f, float(kClientWidth) / float(kClientHeight), 0.1f, 100.0f);
 
+	for (uint32_t index = 0; index < kNumInstance; ++index) {
+		Matrix4x4 worldMatrix = MakeAffineMatrix(transforms[index].scale, transforms[index].rotate, transforms[index].translate);
+		Matrix4x4 worldViewProjectionMatrix = Multiply(worldMatrix, Multiply(viewMatrix, projectionMatrix));
+		instancingData[index].WVP = worldViewProjectionMatrix;
+		instancingData[index].World = worldMatrix;
 	}
 }
 
@@ -45,12 +46,11 @@ void Particle::Draw() {
 	DirectX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
 
-	//directX12_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResourceSprite->GetGPUVirtualAddress());
 	//wvp用のCBufferの場所を設定
-	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(1, instancingResource->GetGPUVirtualAddress());
+	//DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(1, instancingResource->GetGPUVirtualAddress());
 
 	//koko
-	//DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(1, instancingSrvHandleGPU);
+	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(1, instancingSrvHandleGPU);
 	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(2, DirectX12::GetInstance()->GetSrvHandleGPU());
 	//描画！　（DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
 	DirectX12::GetInstance()->GetCommandList()->DrawInstanced(UINT(modelData.vertices.size()), kNumInstance, 0, 0);

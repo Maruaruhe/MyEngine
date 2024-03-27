@@ -15,7 +15,7 @@
 
 #pragma comment(lib,"dxcompiler.lib")
 
-#define kNumInstance 15
+#define kNumInstance 5
 
 class Particle
 {

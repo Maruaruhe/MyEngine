@@ -16,6 +16,8 @@
 #pragma comment(lib,"dxguid.lib")
 #pragma comment(lib,"dxcompiler.lib")
 
+#define kNumPSO 2
+
 class GraphicsRenderer
 {
 public:
@@ -52,32 +54,33 @@ private:
 	HRESULT hr;
 	Microsoft::WRL::ComPtr<ID3D12Device> device;
 	//InitializeDXC
-	IDxcUtils* dxcUtils =nullptr;
+	IDxcUtils* dxcUtils = nullptr;
 	IDxcCompiler3* dxcCompiler;
 	IDxcIncludeHandler* includeHandler;
 	//MakeRootSignature
-	D3D12_ROOT_SIGNATURE_DESC descriptionRootSignature{};
-	D3D12_ROOT_PARAMETER rootParameters[5];
-	ID3DBlob* signatureBlob;
-	ID3DBlob* errorBlob;
-	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature;
+	D3D12_ROOT_SIGNATURE_DESC descriptionRootSignature[kNumPSO]{};
+	D3D12_ROOT_PARAMETER rootParameters[kNumPSO][5];
+
+	ID3DBlob* signatureBlob[kNumPSO];
+	ID3DBlob* errorBlob[kNumPSO];
+
+	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature[kNumPSO];
 	//SetInputLayout
 	D3D12_INPUT_ELEMENT_DESC inputElementDescs[3] = {};
-	D3D12_INPUT_LAYOUT_DESC inputLayoutDesc{};
+	D3D12_INPUT_LAYOUT_DESC inputLayoutDesc[kNumPSO]{};
 	//SetBlendState
-	D3D12_BLEND_DESC blendDesc{};
+	D3D12_BLEND_DESC blendDesc[kNumPSO]{};
 	//SetRasterizerState
-	D3D12_RASTERIZER_DESC rasterizerDesc{};
+	D3D12_RASTERIZER_DESC rasterizerDesc[kNumPSO]{};
 	//ShaderCompile
 	IDxcBlob* vertexShaderBlob;
 	IDxcBlob* pixelShaderBlob;
 
 	IDxcBlob* particleVertexShaderBlob;
 	IDxcBlob* particlePixelShaderBlob;
-
 	//MakePSO
-	D3D12_GRAPHICS_PIPELINE_STATE_DESC graphicsPipelineStateDesc{};
-	Microsoft::WRL::ComPtr<ID3D12PipelineState> graphicsPipelineState;
+	D3D12_GRAPHICS_PIPELINE_STATE_DESC graphicsPipelineStateDesc[kNumPSO]{};
+	Microsoft::WRL::ComPtr<ID3D12PipelineState> graphicsPipelineState[kNumPSO];
 	//MakeVertexResource
 	D3D12_HEAP_PROPERTIES uploadHeapProperties{};
 	D3D12_RESOURCE_DESC vertexResourceDesc{};
