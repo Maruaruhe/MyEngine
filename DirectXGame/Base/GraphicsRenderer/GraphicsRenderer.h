@@ -71,6 +71,10 @@ private:
 	//ShaderCompile
 	IDxcBlob* vertexShaderBlob;
 	IDxcBlob* pixelShaderBlob;
+
+	IDxcBlob* particleVertexShaderBlob;
+	IDxcBlob* particlePixelShaderBlob;
+
 	//MakePSO
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC graphicsPipelineStateDesc{};
 	Microsoft::WRL::ComPtr<ID3D12PipelineState> graphicsPipelineState;

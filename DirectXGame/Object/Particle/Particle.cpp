@@ -50,7 +50,7 @@ void Particle::Draw() {
 	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(1, instancingResource->GetGPUVirtualAddress());
 
 	//koko
-	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(1, instancingSrvHandleGPU);
+	//DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(1, instancingSrvHandleGPU);
 	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(2, DirectX12::GetInstance()->GetSrvHandleGPU());
 	//描画！　（DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
 	DirectX12::GetInstance()->GetCommandList()->DrawInstanced(UINT(modelData.vertices.size()), kNumInstance, 0, 0);

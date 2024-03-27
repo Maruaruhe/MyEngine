@@ -197,6 +197,11 @@ void GraphicsRenderer::ShaderCompile() {
 	assert(vertexShaderBlob != nullptr);
 	pixelShaderBlob = CompileShader(L"Object3D.PS.hlsl", L"ps_6_0", dxcUtils, dxcCompiler, includeHandler);
 	assert(pixelShaderBlob != nullptr);
+
+	particleVertexShaderBlob = CompileShader(L"Particle.VS.hlsl", L"vs_6_0", dxcUtils, dxcCompiler, includeHandler);
+	assert(vertexShaderBlob != nullptr);
+	particlePixelShaderBlob = CompileShader(L"Particle.PS.hlsl", L"ps_6_0", dxcUtils, dxcCompiler, includeHandler);
+	assert(pixelShaderBlob != nullptr);
 }
 void GraphicsRenderer::MakePSO() {
 	//PSOを生成する-----------------------------------------------------------------------------------------------
