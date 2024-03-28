@@ -146,6 +146,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DirectXGame\Math\MathOperator.h" />
+    <ClInclude Include="DirectXGame\Math\RandomGenerator.h" />
     <ClInclude Include="DirectXGame\Object\Camera\Camera.h" />
     <ClInclude Include="DirectXGame\Base\DirextX12\DirectX12.h" />
     <ClInclude Include="externals\imgui\imconfig.h" />

@@ -7,6 +7,7 @@
 #include <dxcapi.h>
 #include "../../Math/Vector4.h"
 #include "../../Math/Matrix4x4.h"
+#include "../../Math/RandomGenerator.h"
 #include "../Camera/Camera.h"
 #include "../../Math/struct.h"	
 #include "../Light/Lighting.h"
@@ -15,7 +16,13 @@
 
 #pragma comment(lib,"dxcompiler.lib")
 
-#define kNumInstance 10
+#define kNumInstance 20
+
+struct ParticleForGPU {
+	Matrix4x4 WVP;
+	Matrix4x4 World;
+	Vector4 color;
+};
 
 class Particle
 {
@@ -31,6 +38,8 @@ public:
 	void SetModel(const std::string& filePath);
 
 private:
+	ParticleInfo MakeNewParticle();
+
 	void InitializePosition(const std::string& filename);
 
 	void ApplyGlobalVariables();
@@ -47,7 +56,9 @@ private:
 
 public:
 	Material* material = nullptr;
-	Transform transform;
+
+	ParticleInfo particles[kNumInstance];
+	ParticleForGPU* instancingData;
 
 private:
 	uint32_t textureIndex = 0;
@@ -57,10 +68,6 @@ private:
 	ModelData modelData;
 	VertexData* vertexData = nullptr;
 	Camera* camera = nullptr;
-	TransformationMatrix* transformationMatrix = nullptr;
-
-	Transform transforms[kNumInstance];
-	TransformationMatrix* instancingData;
 
 	uint32_t descriptorSizeSRV{};
 
@@ -90,8 +97,6 @@ private:
 
 	const int32_t kClientWidth = 1280;
 	const int32_t kClientHeight = 720;
-
-	bool useMonsterBall = true;
 
 private:
 

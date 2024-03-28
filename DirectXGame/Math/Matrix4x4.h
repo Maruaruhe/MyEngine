@@ -18,6 +18,14 @@ struct Transform {
 	Vector3 translate;
 };
 
+struct ParticleInfo {
+	Transform transform;
+	Vector3 velocity;
+	Vector4 color;
+	float liftTime;
+	float currentTime;
+};
+
 Matrix4x4 Add(const Matrix4x4& m1, const Matrix4x4& m2);
 Matrix4x4 Subtract(const Matrix4x4& m1, const Matrix4x4& m2);
 Matrix4x4 Multiply(const Matrix4x4& m1, const Matrix4x4& m2);

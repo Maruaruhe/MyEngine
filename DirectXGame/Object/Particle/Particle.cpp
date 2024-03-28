@@ -10,9 +10,6 @@ void Particle::InitializePosition(const std::string& filename) {
 }
 
 void Particle::Initialize(const std::string& filename) {
-
-	transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
-
 	InitializePosition(filename);
 	CreateMaterialResource();
 	CreateVertexBufferView();
@@ -44,16 +41,39 @@ void Particle::Update() {
 	material->uvTransform = MakeIdentity4x4();
 
 	if (camera) {
+		uint32_t numInstance = 0;
+
 		for (uint32_t index = 0; index < kNumInstance; ++index) {
-			Matrix4x4 worldMatrix = MakeAffineMatrix(transforms[index].scale, transforms[index].rotate, transforms[index].translate);
+			/*if (particles[index].liftTime <= particles[index].currentTime) {
+				continue;
+			}*/
+
+			particles[index].transform.translate += particles[index].velocity;
+			particles[index].currentTime += 0.01f;
+
+			Matrix4x4 worldMatrix = MakeAffineMatrix(particles[index].transform.scale, particles[index].transform.rotate, particles[index].transform.translate);
 			Matrix4x4 worldViewProjectionMatrix = Multiply(worldMatrix, Multiply(camera->viewMatrix, camera->projectionMatrix));
+
 			instancingData[index].WVP = worldViewProjectionMatrix;
 			instancingData[index].World = worldMatrix;
+			//instancingData[index].color = particles[index].color;
+
+			++numInstance;
 		}
 	}
 	else {
 
 	}
+
+	/*uint32_t numInstance = 0;
+	for (uint32_t index = 0; index < kNumInstance; ++index) {
+		if (particles[index].liftTime <= particles[index].currentTime) {
+			continue;
+		}
+
+		particles[index].transform.translate += particles[index].velocity;
+		particles[index].currentTime += 0.01f;
+	}*/
 
 }
 
@@ -72,6 +92,29 @@ void Particle::Draw() {
 	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(2, DirectX12::GetInstance()->GetSrvHandleGPU());
 	//描画！　（DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
 	DirectX12::GetInstance()->GetCommandList()->DrawInstanced(UINT(modelData.vertices.size()), kNumInstance, 0, 0);
+}
+
+ParticleInfo Particle::MakeNewParticle() {
+	Scope scope = { -0.01f,0.01f };
+	Vector3 r = RandomGenerator::GetInstance()->getRandom({ scope, scope, scope });
+
+	ParticleInfo particleInfo;
+	particleInfo.transform.translate = r;
+	particleInfo.transform.scale = { 1.0f,1.0f,1.0f };
+	particleInfo.transform.rotate = {};
+	particleInfo.velocity = r;
+
+	Scope cScope = { 0.0f,1.00f };
+	Vector3 cR = RandomGenerator::GetInstance()->getRandom({ scope, scope, scope });
+
+	particleInfo.color = { cR.x,cR.y,cR.z,1.0f };
+
+	Scope lScope = { 1.0f,3.0f };
+	float randomLife = RandomGenerator::GetInstance()->getRandom(lScope);
+	particleInfo.liftTime = randomLife;
+	particleInfo.currentTime = 0.0f;
+
+	return particleInfo;
 }
 
 void Particle::SetModel(const std::string& filePath) {
@@ -102,7 +145,7 @@ void Particle::CreateMaterialResource() {
 }
 
 void Particle::CreateInstance() {
-	instancingResource = DirectX12::GetInstance()->CreateBufferResource(DirectX12::GetInstance()->GetDevice(), sizeof(TransformationMatrix) * kNumInstance);
+	instancingResource = DirectX12::GetInstance()->CreateBufferResource(DirectX12::GetInstance()->GetDevice(), sizeof(ParticleForGPU) * kNumInstance);
 
 	instancingData = nullptr;
 
@@ -111,12 +154,22 @@ void Particle::CreateInstance() {
 	for (uint32_t index = 0; index < kNumInstance; ++index) {
 		instancingData[index].WVP = MakeIdentity4x4();
 		instancingData[index].World = MakeIdentity4x4();
+		instancingData[index].color = { 1.0f,1.0f,1.0f,1.0f };
+
+		Scope cScope = { 0.0f,1.00f };
+		Vector3 cR = RandomGenerator::GetInstance()->getRandom({ cScope,cScope ,cScope });
+
+		instancingData[index].color = { cR.x,cR.y,cR.z,1.0f };
 	}
 
 	for (uint32_t index = 0; index < kNumInstance; ++index) {
-		transforms[index].scale = { 1.0f,1.0f,1.0f };
-		transforms[index].rotate = { 0.0f,0.0f,0.0f };
-		transforms[index].translate = { index * 0.1f,index * 0.1f ,index * 0.1f };
+		particles[index].transform.scale = { 1.0f,1.0f,1.0f };
+		particles[index].transform.rotate = { 0.0f,0.0f,0.0f };
+		//transforms[index].transform.translate = { index * 0.1f,index * 0.1f ,index * 0.1f };
+
+		Scope scope = { -0.01f,0.01f };
+		Vector3 r = RandomGenerator::GetInstance()->getRandom({ scope, scope, scope });
+		particles[index].velocity += r;
 	}
 }
 
@@ -130,7 +183,7 @@ void Particle::CreateSRV() {
 	instancingSrvDesc.Buffer.FirstElement = 0;
 	instancingSrvDesc.Buffer.Flags = D3D12_BUFFER_SRV_FLAG_NONE;
 	instancingSrvDesc.Buffer.NumElements = kNumInstance;
-	instancingSrvDesc.Buffer.StructureByteStride = sizeof(TransformationMatrix);
+	instancingSrvDesc.Buffer.StructureByteStride = sizeof(ParticleForGPU);
 	instancingSrvHandleCPU = DirectX12::GetInstance()->GetCPUDescriptorHandle(3);
 	instancingSrvHandleGPU = DirectX12::GetInstance()->GetGPUDescriptorHandle(3);
 	DirectX12::GetInstance()->GetDevice()->CreateShaderResourceView(instancingResource.Get(), &instancingSrvDesc, instancingSrvHandleCPU);
