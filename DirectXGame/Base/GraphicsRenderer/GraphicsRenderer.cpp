@@ -101,13 +101,13 @@ IDxcBlob* GraphicsRenderer::CompileShader(
 void GraphicsRenderer::DecideCommand() {
 	directX12->GetCommandList()->RSSetViewports(1, &viewport);
 	directX12->GetCommandList()->RSSetScissorRects(1, &scissorRect);
-	//directX12->GetCommandList()->SetGraphicsRootSignature(rootSignature.Get());
-	//directX12->GetCommandList()->SetPipelineState(graphicsPipelineState.Get());
+	directX12->GetCommandList()->SetGraphicsRootSignature(rootSignature.Get());
+	directX12->GetCommandList()->SetPipelineState(graphicsPipelineState.Get());
 }
 
 void GraphicsRenderer::SetRootSignatureAndPSO(int n) {
-	directX12->GetCommandList()->SetGraphicsRootSignature(rootSignature.Get());
-	directX12->GetCommandList()->SetPipelineState(graphicsPipelineState.Get());
+	//directX12->GetCommandList()->SetGraphicsRootSignature(rootSignature.Get());
+	//directX12->GetCommandList()->SetPipelineState(graphicsPipelineState.Get());
 }
 
 //void GraphicsRenderer::CloseCommand(DirectX12* directX12) {
