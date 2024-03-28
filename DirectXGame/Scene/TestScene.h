@@ -23,13 +23,9 @@ private:
 
 	Camera* camera2;
 
-	Sphere sphere;
-
 	Model model;
 	Model modela;
 
 	Particle p;
-
-	Sprite sprite;
 };
 

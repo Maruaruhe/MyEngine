@@ -1,4 +1,5 @@
 #include "Sprite.h"
+#include "../../Base/GraphicsRenderer/GraphicsRenderer.h"
 
 void Sprite::Initialize(Vector2 leftTop, Vector2 rightBot, std::string textureFilePath) {
 	transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
@@ -42,6 +43,8 @@ void Sprite::Draw() {
 		//形状を設定。PSOに設定しているものとはまた別。同じものを設定すると考えておけばよい
 		DirectX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 		DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
+
+		GraphicsRenderer::GetInstance()->SetRootSignatureAndPSO(false);
 		//wvp用のCBufferの場所を設定
 		DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
 

@@ -7,7 +7,7 @@
 #include <numbers>
 
 void Particle::InitializePosition(const std::string& filename) {
-	modelData = ModelManager::GetInstance()->GetModel(filename);
+	modelData = ModelManager::GetInstance()->GetModel("plane");
 	vertexResource = DirectX12::GetInstance()->CreateBufferResource(DirectX12::GetInstance()->GetDevice(), sizeof(VertexData) * modelData.vertices.size());
 }
 
