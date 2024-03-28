@@ -52,8 +52,8 @@ void TestScene::Update() {
 void TestScene::Draw() {
 	//sphere.Draw();
 
-	p.Draw();
-	//modela.Draw();
+	modela.Draw();
 
 	//sprite.Draw();
+	p.Draw();
 }

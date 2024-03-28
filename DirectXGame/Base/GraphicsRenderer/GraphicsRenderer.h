@@ -36,13 +36,17 @@ public:
 	//void CloseCommand(DirectX12* directX12);
 
 	void MakeRootSignature();
+	void MakeRootSignatureForParticle();
+
+
 	void SetInputLayout();
 	void SetBlendState();
 	void SetRasterizerState();
 	void ShaderCompile();
 	void MakePSO();
+	void MakePSOForParticle();
 
-	void SetRootSignatureAndPSO(int n);
+	void SetRootSignatureAndPSO(bool n);
 	//
 	void MakeVertexResource();
 
@@ -62,9 +66,17 @@ private:
 	//MakeRootSignature
 	D3D12_ROOT_SIGNATURE_DESC descriptionRootSignature{};
 	D3D12_ROOT_PARAMETER rootParameters[5];
+	//MakeRootSignature
+	D3D12_ROOT_SIGNATURE_DESC descriptionRootSignatureForParticle{};
+	D3D12_ROOT_PARAMETER rootParametersForParticle[5];
+
+
 	ID3DBlob* signatureBlob;
 	ID3DBlob* errorBlob;
+
+
 	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature;
+	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignatureForParticle;
 	//SetInputLayout
 	D3D12_INPUT_ELEMENT_DESC inputElementDescs[3] = {};
 	D3D12_INPUT_LAYOUT_DESC inputLayoutDesc{};
@@ -81,6 +93,11 @@ private:
 	//MakePSO
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC graphicsPipelineStateDesc{};
 	Microsoft::WRL::ComPtr<ID3D12PipelineState> graphicsPipelineState;
+
+	D3D12_GRAPHICS_PIPELINE_STATE_DESC graphicsPipelineStateDescForParticle{};
+	Microsoft::WRL::ComPtr<ID3D12PipelineState> graphicsPipelineStateForParticle;
+
+
 	//MakeVertexResource
 	D3D12_HEAP_PROPERTIES uploadHeapProperties{};
 	D3D12_RESOURCE_DESC vertexResourceDesc{};

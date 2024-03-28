@@ -12,11 +12,14 @@ void GraphicsRenderer::Initialize() {
 	directX12 = DirectX12::GetInstance();
 	InitializeDXC();
 	MakeRootSignature();
+	MakeRootSignatureForParticle();
+
 	SetInputLayout();
 	SetBlendState();
 	SetRasterizerState();
 	ShaderCompile();
 	MakePSO();
+	MakePSOForParticle();
 
 	ViewportScissor();
 }
@@ -101,19 +104,21 @@ IDxcBlob* GraphicsRenderer::CompileShader(
 void GraphicsRenderer::DecideCommand() {
 	directX12->GetCommandList()->RSSetViewports(1, &viewport);
 	directX12->GetCommandList()->RSSetScissorRects(1, &scissorRect);
-	directX12->GetCommandList()->SetGraphicsRootSignature(rootSignature.Get());
-	directX12->GetCommandList()->SetPipelineState(graphicsPipelineState.Get());
-}
-
-void GraphicsRenderer::SetRootSignatureAndPSO(int n) {
 	//directX12->GetCommandList()->SetGraphicsRootSignature(rootSignature.Get());
 	//directX12->GetCommandList()->SetPipelineState(graphicsPipelineState.Get());
 }
 
-//void GraphicsRenderer::CloseCommand(DirectX12* directX12) {
-//	hr = directX12->GetCommandList()->Close();
-//	assert(SUCCEEDED(hr));
-//}
+void GraphicsRenderer::SetRootSignatureAndPSO(bool n) {
+	if (n) {
+	    directX12->GetCommandList()->SetGraphicsRootSignature(rootSignatureForParticle.Get());
+		directX12->GetCommandList()->SetPipelineState(graphicsPipelineStateForParticle.Get());
+	}
+	else {
+		directX12->GetCommandList()->SetGraphicsRootSignature(rootSignature.Get());
+		directX12->GetCommandList()->SetPipelineState(graphicsPipelineState.Get());
+	}
+}
+
 
 void GraphicsRenderer::MakeRootSignature() {
 	descriptionRootSignature = {};
@@ -125,26 +130,15 @@ void GraphicsRenderer::MakeRootSignature() {
 	descriptorRange[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
 	descriptorRange[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
 
-	D3D12_DESCRIPTOR_RANGE descriptorRangeForInstancing[1] = {};
-	descriptorRangeForInstancing[0].BaseShaderRegister = 0; //0から始まる
-	descriptorRangeForInstancing[0].NumDescriptors = 1;
-	descriptorRangeForInstancing[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV; //SRVを使う
-	descriptorRangeForInstancing[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
-
 	rootParameters[0] = {};
 	rootParameters[1] = {};
 	rootParameters[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
 	rootParameters[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
 	rootParameters[0].Descriptor.ShaderRegister = 0;
 
-	//rootParameters[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
-	//rootParameters[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX;
-	//rootParameters[1].Descriptor.ShaderRegister = 0;
-
-	rootParameters[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
+	rootParameters[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
 	rootParameters[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX;
-	rootParameters[1].DescriptorTable.pDescriptorRanges = descriptorRangeForInstancing;
-	rootParameters[1].DescriptorTable.NumDescriptorRanges = _countof(descriptorRangeForInstancing);
+	rootParameters[1].Descriptor.ShaderRegister = 0;
 
 	rootParameters[2].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
 	rootParameters[2].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;	
@@ -187,6 +181,74 @@ void GraphicsRenderer::MakeRootSignature() {
 	assert(SUCCEEDED(hr));
 }
 
+void GraphicsRenderer::MakeRootSignatureForParticle() {
+	descriptionRootSignatureForParticle = {};
+	descriptionRootSignatureForParticle.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
+
+	D3D12_DESCRIPTOR_RANGE descriptorRange[1] = {};
+	descriptorRange[0].BaseShaderRegister = 0;
+	descriptorRange[0].NumDescriptors = 1;
+	descriptorRange[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
+	descriptorRange[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
+
+	D3D12_DESCRIPTOR_RANGE descriptorRangeForInstancing[1] = {};
+	descriptorRangeForInstancing[0].BaseShaderRegister = 0; //0から始まる
+	descriptorRangeForInstancing[0].NumDescriptors = 1;
+	descriptorRangeForInstancing[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV; //SRVを使う
+	descriptorRangeForInstancing[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
+
+	rootParametersForParticle[0] = {};
+	rootParametersForParticle[1] = {};
+	rootParametersForParticle[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
+	rootParametersForParticle[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+	rootParametersForParticle[0].Descriptor.ShaderRegister = 0;
+
+	rootParametersForParticle[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
+	rootParametersForParticle[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX;
+	rootParametersForParticle[1].DescriptorTable.pDescriptorRanges = descriptorRangeForInstancing;
+	rootParametersForParticle[1].DescriptorTable.NumDescriptorRanges = _countof(descriptorRangeForInstancing);
+			
+	rootParametersForParticle[2].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
+	rootParametersForParticle[2].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+	rootParametersForParticle[2].DescriptorTable.pDescriptorRanges = descriptorRange;
+	rootParametersForParticle[2].DescriptorTable.NumDescriptorRanges = _countof(descriptorRange);
+			
+	rootParametersForParticle[3].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
+	rootParametersForParticle[3].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+	rootParametersForParticle[3].Descriptor.ShaderRegister = 1;
+
+	rootParametersForParticle[4].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
+	rootParametersForParticle[4].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+	rootParametersForParticle[4].Descriptor.ShaderRegister = 2;
+
+	descriptionRootSignatureForParticle.pParameters = rootParametersForParticle;
+	descriptionRootSignatureForParticle.NumParameters = _countof(rootParametersForParticle);
+
+	D3D12_STATIC_SAMPLER_DESC staticSamplers[1] = {};
+	staticSamplers[0].Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR;
+	staticSamplers[0].AddressU = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+	staticSamplers[0].AddressV = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+	staticSamplers[0].AddressW = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+	staticSamplers[0].ComparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
+	staticSamplers[0].MaxLOD = D3D12_FLOAT32_MAX;
+	staticSamplers[0].ShaderRegister = 0;
+	staticSamplers[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+
+	descriptionRootSignatureForParticle.pStaticSamplers = staticSamplers;
+	descriptionRootSignatureForParticle.NumStaticSamplers = _countof(staticSamplers);
+
+	signatureBlob = nullptr;
+	errorBlob = nullptr;
+	hr = D3D12SerializeRootSignature(&descriptionRootSignatureForParticle, D3D_ROOT_SIGNATURE_VERSION_1, &signatureBlob, &errorBlob);
+	if (FAILED(hr)) {
+		LogText(reinterpret_cast<char*>(errorBlob->GetBufferPointer()));
+		assert(false);
+	}
+	rootSignatureForParticle = nullptr;
+	hr = directX12->GetDevice()->CreateRootSignature(0, signatureBlob->GetBufferPointer(), signatureBlob->GetBufferSize(), IID_PPV_ARGS(&rootSignatureForParticle));
+	assert(SUCCEEDED(hr));
+}
+
 void GraphicsRenderer::SetInputLayout() {
 
 	inputElementDescs[0].SemanticName = "POSITION";
@@ -218,9 +280,9 @@ void GraphicsRenderer::SetRasterizerState() {
 	rasterizerDesc.FillMode = D3D12_FILL_MODE_SOLID;
 }
 void GraphicsRenderer::ShaderCompile() {
-	vertexShaderBlob = CompileShader(L"Particle.VS.hlsl", L"vs_6_0", dxcUtils, dxcCompiler, includeHandler);
+	vertexShaderBlob = CompileShader(L"Object3d.VS.hlsl", L"vs_6_0", dxcUtils, dxcCompiler, includeHandler);
 	assert(vertexShaderBlob != nullptr);
-	pixelShaderBlob = CompileShader(L"Particle.PS.hlsl", L"ps_6_0", dxcUtils, dxcCompiler, includeHandler);
+	pixelShaderBlob = CompileShader(L"Object3d.PS.hlsl", L"ps_6_0", dxcUtils, dxcCompiler, includeHandler);
 	assert(pixelShaderBlob != nullptr);
 	
 	particleVertexShaderBlob = CompileShader(L"Particle.VS.hlsl", L"vs_6_0", dxcUtils, dxcCompiler, includeHandler);
@@ -247,6 +309,27 @@ void GraphicsRenderer::MakePSO() {
 
 	graphicsPipelineState = nullptr;
 	hr = directX12->GetDevice()->CreateGraphicsPipelineState(&graphicsPipelineStateDesc, IID_PPV_ARGS(&graphicsPipelineState));
+	assert((SUCCEEDED(hr)));
+}
+void GraphicsRenderer::MakePSOForParticle() {
+	//PSOを生成する-----------------------------------------------------------------------------------------------
+	graphicsPipelineStateDescForParticle = {};
+	graphicsPipelineStateDescForParticle.pRootSignature = rootSignatureForParticle.Get();
+	graphicsPipelineStateDescForParticle.InputLayout = inputLayoutDesc;
+	graphicsPipelineStateDescForParticle.VS = { particleVertexShaderBlob->GetBufferPointer(),particleVertexShaderBlob->GetBufferSize() };
+	graphicsPipelineStateDescForParticle.PS = { particlePixelShaderBlob->GetBufferPointer(),particlePixelShaderBlob->GetBufferSize() };
+	graphicsPipelineStateDescForParticle.BlendState = blendDesc;
+	graphicsPipelineStateDescForParticle.RasterizerState = rasterizerDesc;
+	graphicsPipelineStateDescForParticle.NumRenderTargets = 1;
+	graphicsPipelineStateDescForParticle.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+	graphicsPipelineStateDescForParticle.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
+	graphicsPipelineStateDescForParticle.SampleDesc.Count = 1;
+	graphicsPipelineStateDescForParticle.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
+	graphicsPipelineStateDescForParticle.DepthStencilState = directX12->GetDepthStencilDesc();
+	graphicsPipelineStateDescForParticle.DSVFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
+
+	graphicsPipelineStateForParticle = nullptr;
+	hr = directX12->GetDevice()->CreateGraphicsPipelineState(&graphicsPipelineStateDescForParticle, IID_PPV_ARGS(&graphicsPipelineStateForParticle));
 	assert((SUCCEEDED(hr)));
 }
 

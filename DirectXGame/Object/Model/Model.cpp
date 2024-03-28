@@ -1,6 +1,7 @@
 #include "Model.h"
 #include <assert.h>
 #include "../../Base/GlobalVariables/GlobalVariables.h"
+#include "../../Base/GraphicsRenderer/GraphicsRenderer.h"
 #include "../../Manager/TextureManager.h"
 #include "../../Manager/ModelManager.h"
 
@@ -60,6 +61,8 @@ void Model::Draw() {
 	//形状を設定。PSOに設定しているものとはまた別。同じものを設定すると考えておけばよい
 	DirectX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
+
+	GraphicsRenderer::GetInstance()->SetRootSignatureAndPSO(false);
 
 	//directX12_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResourceSprite->GetGPUVirtualAddress());
 	//wvp用のCBufferの場所を設定
