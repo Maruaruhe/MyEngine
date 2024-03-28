@@ -4,9 +4,10 @@
 enum SCENE {
 	NONE = 0,
 	TEST = 1,
-	TITLE = 2,
-	INGAME = 3,
-	CLEAR = 4
+	SUBTEST = 2,
+	TITLE = 3,
+	INGAME = 4,
+	CLEAR = 5
 };
 
 

@@ -21,6 +21,7 @@ GameManager::GameManager() {
 	ModelManager::GetInstance()->Initialize();
 
 	sceneArr[TEST] = std::make_unique<TestScene>();
+	sceneArr[SUBTEST] = std::make_unique<SubTestScene>();
 }
 
 GameManager::~GameManager() {

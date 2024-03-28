@@ -118,6 +118,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="DirectXGame\Scene\TestScene.cpp" />
     <ClCompile Include="DirectXGame\Manager\ModelManager.cpp" />
     <ClCompile Include="DirectXGame\Object\Particle\Particle.cpp" />
+    <ClCompile Include="DirectXGame\Scene\SubTestScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Object3d.PS.hlsl">
@@ -180,6 +181,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="DirectXGame\Scene\TestScene.h" />
     <ClInclude Include="DirectXGame\Manager\ModelManager.h" />
     <ClInclude Include="DirectXGame\Object\Particle\Particle.h" />
+    <ClInclude Include="DirectXGame\Scene\SubTestScene.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt" />

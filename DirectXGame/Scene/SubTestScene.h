@@ -10,7 +10,7 @@
 #include "../Object/Model/Model.h"
 #include "../Object/Particle/Particle.h"
 
-class TestScene : public IScene
+class SubTestScene : public IScene
 {
 public:
 	void Initialize() override;
@@ -19,6 +19,6 @@ public:
 
 private:
 	Input* input = nullptr;
-	Sprite title;
+	Sprite ingame;
 };
 

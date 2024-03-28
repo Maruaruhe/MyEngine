@@ -11,6 +11,7 @@
 
 #include "../Scene/IScene.h"
 #include "../Scene/TestScene.h"
+#include "../Scene/SubTestScene.h"
 
 class DirectX12;
 class WindowsAPI;
@@ -28,7 +29,7 @@ private:
 	GraphicsRenderer* graphicsRenderer_ = new GraphicsRenderer;
 
 	//Scene
-	std::unique_ptr<IScene> sceneArr[5];
+	std::unique_ptr<IScene> sceneArr[6];
 
 	int currentSceneNo;
 	int prevSceneNo;
