@@ -1,6 +1,13 @@
 #include "GraphicsRenderer.h"
 #include <assert.h>
 
+GraphicsRenderer* GraphicsRenderer::GetInstance() {
+	static GraphicsRenderer instance;
+
+	return &instance;
+}
+
+
 void GraphicsRenderer::Initialize() {
 	directX12 = DirectX12::GetInstance();
 	InitializeDXC();
@@ -10,6 +17,8 @@ void GraphicsRenderer::Initialize() {
 	SetRasterizerState();
 	ShaderCompile();
 	MakePSO();
+
+	ViewportScissor();
 }
 
 void GraphicsRenderer::InitializeDXC() {
@@ -92,6 +101,11 @@ IDxcBlob* GraphicsRenderer::CompileShader(
 void GraphicsRenderer::DecideCommand() {
 	directX12->GetCommandList()->RSSetViewports(1, &viewport);
 	directX12->GetCommandList()->RSSetScissorRects(1, &scissorRect);
+	//directX12->GetCommandList()->SetGraphicsRootSignature(rootSignature.Get());
+	//directX12->GetCommandList()->SetPipelineState(graphicsPipelineState.Get());
+}
+
+void GraphicsRenderer::SetRootSignatureAndPSO(int n) {
 	directX12->GetCommandList()->SetGraphicsRootSignature(rootSignature.Get());
 	directX12->GetCommandList()->SetPipelineState(graphicsPipelineState.Get());
 }

@@ -10,10 +10,10 @@ GameManager::GameManager() {
 	CoInitializeEx(0, COINIT_MULTITHREADED);
 	directX12 = DirectX12::GetInstance();
 	windowsAPI = WindowsAPI::GetInstance();
+	graphicsRenderer_ = GraphicsRenderer::GetInstance();
 
 	directX12->Initialize();
 	graphicsRenderer_->Initialize();
-	graphicsRenderer_->ViewportScissor();
 
 	Input::GetInstance()->Initialize();
 

@@ -24,8 +24,7 @@ private:
 	//
 	DirectX12* directX12 = nullptr;
 	WindowsAPI* windowsAPI = nullptr;
-
-	GraphicsRenderer* graphicsRenderer_ = new GraphicsRenderer;
+	GraphicsRenderer* graphicsRenderer_ = nullptr;
 
 	//Scene
 	std::unique_ptr<IScene> sceneArr[5];

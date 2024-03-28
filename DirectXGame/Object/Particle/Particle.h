@@ -5,6 +5,7 @@
 #include <vector>
 #include <list>
 #include "../../Base/DirextX12/DirectX12.h"
+#include "../../Base/GraphicsRenderer/GraphicsRenderer.h"
 #include <dxcapi.h>
 #include "../../Math/Vector4.h"
 #include "../../Math/Matrix4x4.h"

@@ -16,9 +16,13 @@
 #pragma comment(lib,"dxguid.lib")
 #pragma comment(lib,"dxcompiler.lib")
 
+#define MAXPSO 2
+
 class GraphicsRenderer
 {
 public:
+	static GraphicsRenderer* GetInstance();
+
 	void Initialize();
 
 	void InitializeDXC();
@@ -39,6 +43,8 @@ public:
 	void SetRasterizerState();
 	void ShaderCompile();
 	void MakePSO();
+
+	void SetRootSignatureAndPSO(int n);
 	//
 	void MakeVertexResource();
 
@@ -56,14 +62,15 @@ private:
 	IDxcCompiler3* dxcCompiler;
 	IDxcIncludeHandler* includeHandler;
 	//MakeRootSignature
-	D3D12_ROOT_SIGNATURE_DESC descriptionRootSignature{};
+	D3D12_ROOT_SIGNATURE_DESC descriptionRootSignature[MAXPSO]{};
 	D3D12_ROOT_PARAMETER rootParameters[5];
-	ID3DBlob* signatureBlob;
-	ID3DBlob* errorBlob;
-	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature;
+	ID3DBlob* signatureBlob[MAXPSO];
+	ID3DBlob* errorBlob[MAXPSO];
+
+	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature[MAXPSO];
 	//SetInputLayout
 	D3D12_INPUT_ELEMENT_DESC inputElementDescs[3] = {};
-	D3D12_INPUT_LAYOUT_DESC inputLayoutDesc{};
+	D3D12_INPUT_LAYOUT_DESC inputLayoutDesc[MAXPSO]{};
 	//SetBlendState
 	D3D12_BLEND_DESC blendDesc{};
 	//SetRasterizerState
@@ -91,5 +98,10 @@ private:
 
 	const int32_t kClientWidth = 1280;
 	const int32_t kClientHeight = 720;
+
+	GraphicsRenderer() = default;
+	~GraphicsRenderer() = default;
+	GraphicsRenderer(GraphicsRenderer&) = delete;
+	GraphicsRenderer& operator=(GraphicsRenderer&) = delete;
 };
 

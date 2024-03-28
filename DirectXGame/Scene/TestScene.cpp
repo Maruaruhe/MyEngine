@@ -32,13 +32,13 @@ void TestScene::Initialize() {
 	sprite.Initialize({ 0,0 }, { 360,180 }, "Resources/ao.png");
 
 
-	light.Initialize();
+//	light.Initialize();
 }
 
 void TestScene::Update() {
 	GlobalVariables::GetInstance()->Update();
 
-	light.Update();
+//	light.Update();
 	camera2->Update();
 
 	sphere.Update();

@@ -22,10 +22,6 @@ void Particle::Initialize(const std::string& filename) {
 	emitter.frequency = 0.5f;
 	emitter.frequencyTime = 0.0f;
 
-	//particles.push_back(MakeNewParticle());
-	//particles.push_back(MakeNewParticle());
-	//particles.push_back(MakeNewParticle());
-
 	TextureManager::GetInstance()->LoadTexture("Resources/uvChecker.png");
 	textureIndex = TextureManager::GetInstance()->GetTextureIndexByFilePath("Resources/uvChecker.png");
 }
@@ -80,7 +76,7 @@ void Particle::Draw() {
 	//directX12_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResourceSprite->GetGPUVirtualAddress());
 	//wvp用のCBufferの場所を設定
 	//DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
-
+	GraphicsRenderer::GetInstance()->SetRootSignatureAndPSO(0);
 	//koko
 	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(1, instancingSrvHandleGPU);
 	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(2, DirectX12::GetInstance()->GetSrvHandleGPU());

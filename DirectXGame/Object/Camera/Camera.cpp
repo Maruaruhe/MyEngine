@@ -1,4 +1,6 @@
 #include "Camera.h"
+#include "../../Base/GraphicsRenderer/GraphicsRenderer.h"
+
 void Camera::Initialize() {
 	transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,-5.0f} };
 	horizontalAngle = 0.45f;
@@ -21,6 +23,7 @@ void Camera::Update() {
 
 	MakeWVPMatrix();
 
+	GraphicsRenderer::GetInstance()->SetRootSignatureAndPSO(0);
 	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(4, cameraForGPUResource->GetGPUVirtualAddress());
 }
 
