@@ -16,6 +16,25 @@ void Camera::Initialize() {
 }
 
 void Camera::Update() {
+	if (input->PushKey(DIK_W)) {
+		transform.translate.z += 0.1f;
+	}
+	if (input->PushKey(DIK_S)) {
+		transform.translate.z -= 0.1f;
+	}
+	if (input->PushKey(DIK_A)) {
+		transform.translate.x -= 0.1f;
+	}
+	if (input->PushKey(DIK_D)) {
+		transform.translate.x += 0.1f;
+	}
+	if (input->PushKey(DIK_Q)) {
+		transform.translate.y += 0.1f;
+	}
+	if (input->PushKey(DIK_E)) {
+		transform.translate.y -= 0.1f;
+	}
+
 	position->worldPosition = transform.translate;
 	ImGui::Begin("Camera");
 	ImGui::SliderFloat3("translate", &transform.translate.x, -15, 15);
