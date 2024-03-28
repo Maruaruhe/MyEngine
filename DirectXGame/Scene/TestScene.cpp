@@ -8,9 +8,6 @@ void TestScene::Initialize() {
 	camera2->Initialize();
 	camera2->transform.translate.z = -10.0f;
 
-	TextureManager::GetInstance()->LoadTexture("Resources/ao.png");
-	TextureManager::GetInstance()->LoadTexture("Resources/monsterBall.png");
-
 	ModelManager::GetInstance()->LoadModel("ghostPori");
 	ModelManager::GetInstance()->LoadModel("axis");
 	ModelManager::GetInstance()->LoadModel("plane");
@@ -43,6 +40,10 @@ void TestScene::Update() {
 	p.Update();
 	modela.Update();
 	model.Update();
+
+	if (input->TriggerKey(DIK_SPACE)) {
+		sceneNo = SUBTEST;
+	}
 
 }
 

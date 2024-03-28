@@ -164,11 +164,11 @@ void Particle::CreateInstance() {
 	for (uint32_t index = 0; index < kNumInstance; ++index) {
 		particles[index].transform.scale = { 1.0f,1.0f,1.0f };
 		particles[index].transform.rotate = { 0.0f,0.0f,0.0f };
-		//transforms[index].transform.translate = { index 0.1f,index * 0.1f ,index * 0.1f };
+		particles[index].transform.translate = {};
 
 		Scope scope = { -0.01f,0.01f };
 		Vector3 r = RandomGenerator::GetInstance()->getRandom({ scope, scope, scope });
-		particles[index].velocity += r;
+		particles[index].velocity = r;
 	}
 }
 
