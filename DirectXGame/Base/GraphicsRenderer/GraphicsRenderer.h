@@ -16,8 +16,6 @@
 #pragma comment(lib,"dxguid.lib")
 #pragma comment(lib,"dxcompiler.lib")
 
-#define MAXPSO 2
-
 class GraphicsRenderer
 {
 public:
@@ -62,15 +60,14 @@ private:
 	IDxcCompiler3* dxcCompiler;
 	IDxcIncludeHandler* includeHandler;
 	//MakeRootSignature
-	D3D12_ROOT_SIGNATURE_DESC descriptionRootSignature[MAXPSO]{};
+	D3D12_ROOT_SIGNATURE_DESC descriptionRootSignature{};
 	D3D12_ROOT_PARAMETER rootParameters[5];
-	ID3DBlob* signatureBlob[MAXPSO];
-	ID3DBlob* errorBlob[MAXPSO];
-
-	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature[MAXPSO];
+	ID3DBlob* signatureBlob;
+	ID3DBlob* errorBlob;
+	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature;
 	//SetInputLayout
 	D3D12_INPUT_ELEMENT_DESC inputElementDescs[3] = {};
-	D3D12_INPUT_LAYOUT_DESC inputLayoutDesc[MAXPSO]{};
+	D3D12_INPUT_LAYOUT_DESC inputLayoutDesc{};
 	//SetBlendState
 	D3D12_BLEND_DESC blendDesc{};
 	//SetRasterizerState
