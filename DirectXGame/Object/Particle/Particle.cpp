@@ -4,6 +4,8 @@
 #include "../../Manager/TextureManager.h"
 #include "../../Manager/ModelManager.h"
 
+#include <numbers>
+
 void Particle::InitializePosition(const std::string& filename) {
 	modelData = ModelManager::GetInstance()->GetModel(filename);
 	vertexResource = DirectX12::GetInstance()->CreateBufferResource(DirectX12::GetInstance()->GetDevice(), sizeof(VertexData) * modelData.vertices.size());
@@ -41,6 +43,14 @@ void Particle::Update() {
 	material->uvTransform = MakeIdentity4x4();
 
 	if (camera) {
+
+		Matrix4x4 backToFrontMatrix = MakeRotateYMatrix(std::numbers::pi_v<float>);
+			Matrix4x4 billboardMatrix = Multiply(backToFrontMatrix, camera->cameraMatrix);
+			billboardMatrix.m[3][0] = 0.0f;
+			billboardMatrix.m[3][1] = 0.0f;
+			billboardMatrix.m[3][2] = 0.0f;
+
+
 		uint32_t numInstance = 0;
 
 		for (uint32_t index = 0; index < kNumInstance; ++index) {
@@ -51,12 +61,16 @@ void Particle::Update() {
 			particles[index].transform.translate += particles[index].velocity;
 			particles[index].currentTime += 0.01f;
 
-			Matrix4x4 worldMatrix = MakeAffineMatrix(particles[index].transform.scale, particles[index].transform.rotate, particles[index].transform.translate);
+			Matrix4x4 scaleMatrix = MakeScaleMatrix(particles[index].transform.scale);
+			Matrix4x4 translateMatrix = MakeTranslateMatrix(particles[index].transform.translate);
+
+			Matrix4x4 worldMatrix = scaleMatrix * billboardMatrix * translateMatrix;
 			Matrix4x4 worldViewProjectionMatrix = Multiply(worldMatrix, Multiply(camera->viewMatrix, camera->projectionMatrix));
 
 			instancingData[index].WVP = worldViewProjectionMatrix;
 			instancingData[index].World = worldMatrix;
 			//instancingData[index].color = particles[index].color;
+
 
 			++numInstance;
 		}
