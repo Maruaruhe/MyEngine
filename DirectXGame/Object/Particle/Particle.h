@@ -3,6 +3,7 @@
 #include <sstream>
 #include <stdint.h>
 #include <vector>
+#include <list>
 #include "../../Base/DirextX12/DirectX12.h"
 #include <dxcapi.h>
 #include "../../Math/Vector4.h"
@@ -16,12 +17,19 @@
 
 #pragma comment(lib,"dxcompiler.lib")
 
-#define kNumInstance 20
+#define kNumInstance 50
 
 struct ParticleForGPU {
 	Matrix4x4 WVP;
 	Matrix4x4 World;
 	Vector4 color;
+};
+
+struct Emitter {
+	Transform transform;
+	uint32_t count;
+	float frequency;
+	float frequencyTime;
 };
 
 class Particle
@@ -40,6 +48,8 @@ public:
 private:
 	ParticleInfo MakeNewParticle();
 
+	std::list<ParticleInfo> Emit(const Emitter& emitter);
+
 	void InitializePosition(const std::string& filename);
 
 	void ApplyGlobalVariables();
@@ -57,11 +67,14 @@ private:
 public:
 	Material* material = nullptr;
 
-	ParticleInfo particles[kNumInstance];
+	//ParticleInfo particles[kNumInstance];
+	std::list<ParticleInfo> particles;
+
 	ParticleForGPU* instancingData;
 
 private:
 	uint32_t textureIndex = 0;
+	Emitter emitter{};
 
 	//DirectX12* directX12 = nullptr;
 	Input* input_ = nullptr;

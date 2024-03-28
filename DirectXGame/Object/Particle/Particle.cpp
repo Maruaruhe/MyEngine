@@ -18,28 +18,19 @@ void Particle::Initialize(const std::string& filename) {
 	CreateInstance();
 	CreateSRV();
 
-	//GlobalVariables
-	//forg = filename;
-	//GlobalVariables::GetInstance()->CreateGroup(forg);
-	//GlobalVariables::GetInstance()->AddItem(forg, "Translate", transform.translate);
-	//GlobalVariables::GetInstance()->AddItem(forg, "Scale", transform.scale);
-	//GlobalVariables::GetInstance()->AddItem(forg, "Rotate", transform.rotate);
-	//
+	emitter.count = 3;
+	emitter.frequency = 0.5f;
+	emitter.frequencyTime = 0.0f;
 
+	particles.push_back(MakeNewParticle());
+	particles.push_back(MakeNewParticle());
+	particles.push_back(MakeNewParticle());
 
 	TextureManager::GetInstance()->LoadTexture("Resources/uvChecker.png");
 	textureIndex = TextureManager::GetInstance()->GetTextureIndexByFilePath("Resources/uvChecker.png");
 }
 
-void Particle::ApplyGlobalVariables() {
-	//transform.translate = GlobalVariables::GetInstance()->GetVector3Value(forg, "Translate");
-	//transform.scale = GlobalVariables::GetInstance()->GetVector3Value(forg, "Scale");
-	//transform.rotate = GlobalVariables::GetInstance()->GetVector3Value(forg, "Rotate");
-}
-
 void Particle::Update() {
-	ApplyGlobalVariables();
-
 	material->uvTransform = MakeIdentity4x4();
 
 	if (camera) {
@@ -53,42 +44,36 @@ void Particle::Update() {
 
 		uint32_t numInstance = 0;
 
-		for (uint32_t index = 0; index < kNumInstance; ++index) {
-			/*if (particles[index].liftTime <= particles[index].currentTime) {
+		for (std::list<ParticleInfo>::iterator particleIterator = particles.begin(); particleIterator != particles.end();) {
+		/*	if ((*particleIterator).liftTime <= (*particleIterator).currentTime) {
+				particleIterator = particles.erase(particleIterator);
 				continue;
 			}*/
 
-			particles[index].transform.translate += particles[index].velocity;
-			particles[index].currentTime += 0.01f;
+			if (numInstance < kNumInstance) {
+				(*particleIterator).transform.translate += (*particleIterator).velocity;
+				(*particleIterator).currentTime += 0.01f;
 
-			Matrix4x4 scaleMatrix = MakeScaleMatrix(particles[index].transform.scale);
-			Matrix4x4 translateMatrix = MakeTranslateMatrix(particles[index].transform.translate);
+				Matrix4x4 scaleMatrix = MakeScaleMatrix((*particleIterator).transform.scale);
+				Matrix4x4 translateMatrix = MakeTranslateMatrix((*particleIterator).transform.translate);
 
-			Matrix4x4 worldMatrix = scaleMatrix * billboardMatrix * translateMatrix;
-			Matrix4x4 worldViewProjectionMatrix = Multiply(worldMatrix, Multiply(camera->viewMatrix, camera->projectionMatrix));
+				Matrix4x4 worldMatrix = scaleMatrix * billboardMatrix * translateMatrix;
+				Matrix4x4 worldViewProjectionMatrix = Multiply(worldMatrix, Multiply(camera->viewMatrix, camera->projectionMatrix));
 
-			instancingData[index].WVP = worldViewProjectionMatrix;
-			instancingData[index].World = worldMatrix;
-			//instancingData[index].color = particles[index].color;
+				instancingData[numInstance].WVP = worldViewProjectionMatrix;
+				instancingData[numInstance].World = worldMatrix;
+				//instancingData[index].color = particles[index].color;
 
 
-			++numInstance;
+				++numInstance;
+			}
+
+			++particleIterator;
 		}
 	}
 	else {
 
 	}
-
-	/*uint32_t numInstance = 0;
-	for (uint32_t index = 0; index < kNumInstance; ++index) {
-		if (particles[index].liftTime <= particles[index].currentTime) {
-			continue;
-		}
-
-		particles[index].transform.translate += particles[index].velocity;
-		particles[index].currentTime += 0.01f;
-	}*/
-
 }
 
 void Particle::Draw() {
@@ -129,6 +114,15 @@ ParticleInfo Particle::MakeNewParticle() {
 	particleInfo.currentTime = 0.0f;
 
 	return particleInfo;
+}
+
+std::list<ParticleInfo> Particle::Emit(const Emitter& emitter){
+
+	std::list<ParticleInfo> particles;
+	for (uint32_t count = 0; count < emitter.count; ++count) {
+		particles.push_back(MakeNewParticle());
+	}
+	return particles;
 }
 
 void Particle::SetModel(const std::string& filePath) {
@@ -174,16 +168,6 @@ void Particle::CreateInstance() {
 		Vector3 cR = RandomGenerator::GetInstance()->getRandom({ cScope,cScope ,cScope });
 
 		instancingData[index].color = { cR.x,cR.y,cR.z,1.0f };
-	}
-
-	for (uint32_t index = 0; index < kNumInstance; ++index) {
-		particles[index].transform.scale = { 1.0f,1.0f,1.0f };
-		particles[index].transform.rotate = { 0.0f,0.0f,0.0f };
-		//transforms[index].transform.translate = { index * 0.1f,index * 0.1f ,index * 0.1f };
-
-		Scope scope = { -0.01f,0.01f };
-		Vector3 r = RandomGenerator::GetInstance()->getRandom({ scope, scope, scope });
-		particles[index].velocity += r;
 	}
 }
 
