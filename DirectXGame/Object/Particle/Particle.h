@@ -67,8 +67,8 @@ private:
 public:
 	Material* material = nullptr;
 
-	//ParticleInfo particles[kNumInstance];
-	std::list<ParticleInfo> particles;
+	ParticleInfo particles[kNumInstance];
+	//std::list<ParticleInfo> particles;
 
 	ParticleForGPU* instancingData;
 

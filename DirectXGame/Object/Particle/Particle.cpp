@@ -22,9 +22,9 @@ void Particle::Initialize(const std::string& filename) {
 	emitter.frequency = 0.5f;
 	emitter.frequencyTime = 0.0f;
 
-	particles.push_back(MakeNewParticle());
-	particles.push_back(MakeNewParticle());
-	particles.push_back(MakeNewParticle());
+	//particles.push_back(MakeNewParticle());
+	//particles.push_back(MakeNewParticle());
+	//particles.push_back(MakeNewParticle());
 
 	TextureManager::GetInstance()->LoadTexture("Resources/uvChecker.png");
 	textureIndex = TextureManager::GetInstance()->GetTextureIndexByFilePath("Resources/uvChecker.png");
@@ -36,39 +36,34 @@ void Particle::Update() {
 	if (camera) {
 
 		Matrix4x4 backToFrontMatrix = MakeRotateYMatrix(std::numbers::pi_v<float>);
-			Matrix4x4 billboardMatrix = Multiply(backToFrontMatrix, camera->cameraMatrix);
-			billboardMatrix.m[3][0] = 0.0f;
-			billboardMatrix.m[3][1] = 0.0f;
-			billboardMatrix.m[3][2] = 0.0f;
+		Matrix4x4 billboardMatrix = Multiply(backToFrontMatrix, camera->cameraMatrix);
+		billboardMatrix.m[3][0] = 0.0f;
+		billboardMatrix.m[3][1] = 0.0f;
+		billboardMatrix.m[3][2] = 0.0f;
 
 
 		uint32_t numInstance = 0;
 
-		for (std::list<ParticleInfo>::iterator particleIterator = particles.begin(); particleIterator != particles.end();) {
-		/*	if ((*particleIterator).liftTime <= (*particleIterator).currentTime) {
-				particleIterator = particles.erase(particleIterator);
-				continue;
-			}*/
+		for (uint32_t index = 0; index < kNumInstance; ++index) {
+			/// if (particles[index].liftTime <= particles[index].currentTime) {
+			//	continue;
+			//} /
 
-			if (numInstance < kNumInstance) {
-				(*particleIterator).transform.translate += (*particleIterator).velocity;
-				(*particleIterator).currentTime += 0.01f;
+			particles[index].transform.translate += particles[index].velocity;
+			particles[index].currentTime += 0.01f;
 
-				Matrix4x4 scaleMatrix = MakeScaleMatrix((*particleIterator).transform.scale);
-				Matrix4x4 translateMatrix = MakeTranslateMatrix((*particleIterator).transform.translate);
+			Matrix4x4 scaleMatrix = MakeScaleMatrix(particles[index].transform.scale);
+			Matrix4x4 translateMatrix = MakeTranslateMatrix(particles[index].transform.translate);
 
-				Matrix4x4 worldMatrix = scaleMatrix * billboardMatrix * translateMatrix;
-				Matrix4x4 worldViewProjectionMatrix = Multiply(worldMatrix, Multiply(camera->viewMatrix, camera->projectionMatrix));
+			Matrix4x4 worldMatrix = scaleMatrix * billboardMatrix * translateMatrix;
+			Matrix4x4 worldViewProjectionMatrix = Multiply(worldMatrix, Multiply(camera->viewMatrix, camera->projectionMatrix));
 
-				instancingData[numInstance].WVP = worldViewProjectionMatrix;
-				instancingData[numInstance].World = worldMatrix;
-				//instancingData[index].color = particles[index].color;
+			instancingData[index].WVP = worldViewProjectionMatrix;
+			instancingData[index].World = worldMatrix;
+			//instancingData[index].color = particles[index].color;
 
 
-				++numInstance;
-			}
-
-			++particleIterator;
+			++numInstance;
 		}
 	}
 	else {
@@ -168,6 +163,16 @@ void Particle::CreateInstance() {
 		Vector3 cR = RandomGenerator::GetInstance()->getRandom({ cScope,cScope ,cScope });
 
 		instancingData[index].color = { cR.x,cR.y,cR.z,1.0f };
+	}
+
+	for (uint32_t index = 0; index < kNumInstance; ++index) {
+		particles[index].transform.scale = { 1.0f,1.0f,1.0f };
+		particles[index].transform.rotate = { 0.0f,0.0f,0.0f };
+		//transforms[index].transform.translate = { index 0.1f,index * 0.1f ,index * 0.1f };
+
+		Scope scope = { -0.01f,0.01f };
+		Vector3 r = RandomGenerator::GetInstance()->getRandom({ scope, scope, scope });
+		particles[index].velocity += r;
 	}
 }
 
