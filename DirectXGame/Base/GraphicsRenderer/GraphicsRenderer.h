@@ -29,8 +29,8 @@ public:
 		const std::wstring& filepath,
 		const wchar_t* profile,
 		IDxcUtils* dxcUtiles,
-		IDxcCompiler3* dxcCompiler,
-		IDxcIncludeHandler* includeHandler
+		//IDxcCompiler3* dxcCompiler,
+		//IDxcIncludeHandler* includeHandler
 	);
 	void DecideCommand();
 	//void CloseCommand(DirectX12* directX12);

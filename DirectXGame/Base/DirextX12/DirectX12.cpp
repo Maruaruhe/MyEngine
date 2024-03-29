@@ -335,7 +335,7 @@ void DirectX12::Release() {
 	CloseWindow(windowsAPI_->GetHwnd());
 }
 
-Microsoft::WRL::ComPtr<ID3D12Resource> DirectX12::CreateBufferResource(Microsoft::WRL::ComPtr<ID3D12Device> device, size_t sizeInBytes) {
+Microsoft::WRL::ComPtr<ID3D12Resource> DirectX12::CreateBufferResource(size_t sizeInBytes) {
 
 	HRESULT hr;
 	//VertexResourceを生成する--------------------------------------------------------------------------------
@@ -362,7 +362,7 @@ Microsoft::WRL::ComPtr<ID3D12Resource> DirectX12::CreateBufferResource(Microsoft
 	return Resource;
 }
 
-Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> DirectX12::CreateDescriptorHeap(Microsoft::WRL::ComPtr<ID3D12Device> device, D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible) {
+Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> DirectX12::CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible) {
 	ID3D12DescriptorHeap* descriptorHeap = nullptr;
 	D3D12_DESCRIPTOR_HEAP_DESC descriptorHeapDesc{};
 	descriptorHeapDesc.Type = heapType;

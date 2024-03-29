@@ -24,7 +24,7 @@ public:
 
 	void Draw();
 
-	void SetCamera(Camera* camera) { this->camera = camera; }
+	void SetCamera(Camera* Tcamera) { this->camera = Tcamera; }
 
 	void SetModel(const std::string& filePath);
 

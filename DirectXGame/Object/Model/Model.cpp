@@ -74,10 +74,6 @@ void Model::Draw() {
 	DirectX12::GetInstance()->GetCommandList()->DrawInstanced(UINT(modelData.vertices.size()), 1, 0, 0);
 }
 
-void Model::SetModel(const std::string& filePath) {
-
-}
-
 void Model::CreateVertexBufferView() {
 	vertexResource = DirectX12::GetInstance()->CreateBufferResource(DirectX12::GetInstance()->GetDevice(), sizeof(VertexData) * modelData.vertices.size());
 	

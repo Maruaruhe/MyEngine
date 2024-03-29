@@ -43,7 +43,7 @@ void TextureManager::LoadTexture(const std::string& filePath) {
 
 	for (size_t mipLevel = 0; mipLevel < textureData.metaData.mipLevels; ++mipLevel) {
 		const DirectX::Image* img = mipImages.GetImage(mipLevel, 0, 0);
-		HRESULT hr = textureData.resource->WriteToSubresource(
+		hr = textureData.resource->WriteToSubresource(
 			UINT(mipLevel),
 			nullptr,
 			img->pixels,

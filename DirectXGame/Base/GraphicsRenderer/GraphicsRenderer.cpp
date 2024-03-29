@@ -43,15 +43,15 @@ IDxcBlob* GraphicsRenderer::CompileShader(
 	const std::wstring& filePath,
 	const wchar_t* profile,
 	IDxcUtils* dxcUtiles,
-	IDxcCompiler3* dxcCompiler,
-	IDxcIncludeHandler* includeHandler
+	//IDxcCompiler3* dxcCompiler,
+	//IDxcIncludeHandler* includeHandler
 ) {
 	//1.hlslファイルを読む---------------------------------------------------------------------------------------------------------
 	//これからシェーダーをコンパイルする旨をログに出す
 	LogText(ConvertString(std::format(L"Begin CompilerShader, path:{}, profile:{}\n", filePath, profile)));
 	//hlslファイルを読む
 	IDxcBlobEncoding* shaderSource = nullptr;
-	HRESULT hr = dxcUtiles->LoadFile(filePath.c_str(), nullptr, &shaderSource);
+    hr = dxcUtiles->LoadFile(filePath.c_str(), nullptr, &shaderSource);
 	//読めなかったら止める
 	assert(SUCCEEDED(hr));
 	//読み込んだファイルの内容を設定する

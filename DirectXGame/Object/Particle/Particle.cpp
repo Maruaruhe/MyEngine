@@ -148,10 +148,6 @@ std::list<ParticleInfo> Particle::Emit(const Emitter& emitter) {
 	return particless;
 }
 
-void Particle::SetModel(const std::string& filePath) {
-
-}
-
 void Particle::CreateVertexBufferView() {
 	vertexResource = DirectX12::GetInstance()->CreateBufferResource(DirectX12::GetInstance()->GetDevice(), sizeof(VertexData) * modelData.vertices.size());
 

@@ -50,7 +50,7 @@ void Triangle::Draw() {
 }
 
 void Triangle::CreateVertexResource() {
-	vertexResource = directX12->CreateBufferResource(directX12->GetDevice(), sizeof(VertexData) * 6);
+	vertexResource = directX12->CreateBufferResource(sizeof(VertexData) * 6);
 }
 
 void Triangle::CreateVertexBufferView() {
@@ -64,7 +64,7 @@ void Triangle::CreateVertexBufferView() {
 }
 
 void Triangle::CreateMaterialResource() {
-	materialResource_ = directX12->CreateBufferResource(directX12->GetDevice(), sizeof(Material));
+	materialResource_ = directX12->CreateBufferResource(sizeof(Material));
 	materialData_ = nullptr;
 	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&materialData_));
 	materialData_->color = Vector4(1.0f, 0.0f, 0.0f, 1.0f);
@@ -73,7 +73,7 @@ void Triangle::CreateMaterialResource() {
 
 void Triangle::CreateTransformationMatrixResource() {
 	//WVP用のリソースを作る。Matrix4x4　1つ分のサイズを用意する
-	wvpResource_ = directX12->CreateBufferResource(directX12->GetDevice(), sizeof(Matrix4x4));
+	wvpResource_ = directX12->CreateBufferResource(sizeof(Matrix4x4));
 	//データを書き込む
 	transformationMatrix = nullptr;
 	//書き込むためのアドレスを取得

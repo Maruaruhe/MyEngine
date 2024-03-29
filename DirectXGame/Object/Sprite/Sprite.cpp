@@ -81,7 +81,7 @@ void Sprite::CreateMaterialResource() {
 
 void Sprite::CreateTransformationMatrixResource() {
 	//WVP用のリソースを作る。Matrix4x4　1つ分のサイズを用意する
-	wvpResource_ = DirectX12::GetInstance()->CreateBufferResource(DirectX12::GetInstance()->GetDevice(), sizeof(Matrix4x4));
+	wvpResource_ = DirectX12::GetInstance()->CreateBufferResource(sizeof(Matrix4x4));
 	//データを書き込む
 	//wvpData = nullptr;
 	transformationMatrix = nullptr;
@@ -94,7 +94,7 @@ void Sprite::CreateTransformationMatrixResource() {
 }
 
 void Sprite::CreateIndexResource() {
-	indexResource = DirectX12::GetInstance()->CreateBufferResource(DirectX12::GetInstance()->GetDevice(), sizeof(uint32_t) * 6);
+	indexResource = DirectX12::GetInstance()->CreateBufferResource(sizeof(uint32_t) * 6);
 	indexBufferView = {};
 	indexBufferView.BufferLocation = indexResource->GetGPUVirtualAddress();
 	indexBufferView.SizeInBytes = sizeof(uint32_t) * 6;
