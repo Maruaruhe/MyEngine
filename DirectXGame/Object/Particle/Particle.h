@@ -17,7 +17,7 @@
 
 #pragma comment(lib,"dxcompiler.lib")
 
-#define kNumInstance 50
+#define kNumInstance 100
 
 struct ParticleForGPU {
 	Matrix4x4 WVP;

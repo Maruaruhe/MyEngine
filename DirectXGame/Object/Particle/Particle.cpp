@@ -19,12 +19,8 @@ void Particle::Initialize(const std::string& filename) {
 	CreateSRV();
 
 	emitter.count = 3;
-	emitter.frequency = 0.5f;
+	emitter.frequency = 60.0f;
 	emitter.frequencyTime = 0.0f;
-
-	particles.push_back(MakeNewParticle());
-	particles.push_back(MakeNewParticle());
-	particles.push_back(MakeNewParticle());
 
 	TextureManager::GetInstance()->LoadTexture("Resources/uvChecker.png");
 	textureIndex = TextureManager::GetInstance()->GetTextureIndexByFilePath("Resources/uvChecker.png");
@@ -32,6 +28,19 @@ void Particle::Initialize(const std::string& filename) {
 
 void Particle::Update() {
 	material->uvTransform = MakeIdentity4x4();
+
+	ImGui::Begin("Particle");
+	if (ImGui::Button("Add Particle")) {
+		particles.splice(particles.end(), Emit(emitter));
+	}
+	ImGui::DragFloat3("EmitterTranslate", &emitter.transform.translate.x, 0.01f, -100.0f, 100.0f);
+	ImGui::End();
+
+	emitter.frequencyTime += 1.0f;
+	if (emitter.frequency <= emitter.frequencyTime) {
+		particles.splice(particles.end(), Emit(emitter));
+		emitter.frequencyTime -= emitter.frequency;
+	}
 
 	if (camera) {
 
@@ -47,11 +56,16 @@ void Particle::Update() {
 		for (std::list<ParticleInfo>::iterator particleIterator = particles.begin(); particleIterator != particles.end();) {
 		    if ((*particleIterator).liftTime <= (*particleIterator).currentTime) {
 				particleIterator = particles.erase(particleIterator);
+				continue;
 			}
+
 
 			if (numInstance < kNumInstance) {
 				(*particleIterator).transform.translate += (*particleIterator).velocity;
-				(*particleIterator).currentTime += 0.01f;
+				(*particleIterator).currentTime += 0.1f;
+
+				//float alpha = 1.0f - (*particleIterator).currentTime / (*particleIterator).liftTime;
+				float alpha = 1.0f - 0.8f;
 
 				Matrix4x4 scaleMatrix = MakeScaleMatrix((*particleIterator).transform.scale);
 				Matrix4x4 translateMatrix = MakeTranslateMatrix((*particleIterator).transform.translate);
@@ -61,6 +75,7 @@ void Particle::Update() {
 
 				instancingData[numInstance].WVP = worldViewProjectionMatrix;
 				instancingData[numInstance].World = worldMatrix;
+				instancingData[numInstance].color.w = alpha;
 				//instancingData[index].color = particles[index].color;
 
 
@@ -97,7 +112,7 @@ ParticleInfo Particle::MakeNewParticle() {
 	Vector3 r = RandomGenerator::GetInstance()->getRandom({ scope, scope, scope });
 
 	ParticleInfo particleInfo;
-	particleInfo.transform.translate = r;
+	particleInfo.transform.translate = r + emitter.transform.translate;
 	particleInfo.transform.scale = { 1.0f,1.0f,1.0f };
 	particleInfo.transform.rotate = {};
 	particleInfo.velocity = r;
@@ -107,7 +122,7 @@ ParticleInfo Particle::MakeNewParticle() {
 
 	particleInfo.color = { cR.x,cR.y,cR.z,1.0f };
 
-	Scope lScope = { 1.0f,3.0f };
+	Scope lScope = { 6.0f,18.0f };
 	float randomLife = RandomGenerator::GetInstance()->getRandom(lScope);
 	particleInfo.liftTime = randomLife;
 	particleInfo.currentTime = 0.0f;
@@ -117,7 +132,7 @@ ParticleInfo Particle::MakeNewParticle() {
 
 std::list<ParticleInfo> Particle::Emit(const Emitter& emitter){
 
-	std::list<ParticleInfo> particles;
+	//std::list<ParticleInfo> particles;
 	for (uint32_t count = 0; count < emitter.count; ++count) {
 		particles.push_back(MakeNewParticle());
 	}
