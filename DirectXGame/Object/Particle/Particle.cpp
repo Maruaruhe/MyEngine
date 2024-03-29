@@ -1,13 +1,14 @@
 #include "Particle.h"
 #include <assert.h>
 #include "../../Base/GlobalVariables/GlobalVariables.h"
+#include "../../Base/GraphicsRenderer/GraphicsRenderer.h"
 #include "../../Manager/TextureManager.h"
 #include "../../Manager/ModelManager.h"
 
 #include <numbers>
 
 void Particle::InitializePosition(const std::string& filename) {
-	modelData = ModelManager::GetInstance()->GetModel("plane");
+	modelData = ModelManager::GetInstance()->GetModel(filename);
 	vertexResource = DirectX12::GetInstance()->CreateBufferResource(DirectX12::GetInstance()->GetDevice(), sizeof(VertexData) * modelData.vertices.size());
 }
 
@@ -19,7 +20,7 @@ void Particle::Initialize(const std::string& filename) {
 	CreateSRV();
 
 	emitter.count = 3;
-	emitter.frequency = 0.5f;
+	emitter.frequency = 60.0f;
 	emitter.frequencyTime = 0.0f;
 
 	TextureManager::GetInstance()->LoadTexture("Resources/uvChecker.png");
@@ -28,6 +29,21 @@ void Particle::Initialize(const std::string& filename) {
 
 void Particle::Update() {
 	material->uvTransform = MakeIdentity4x4();
+
+	ImGui::Begin("Particle");
+	if (ImGui::Button("Add Particle")) {
+		particles.splice(particles.end(), Emit(emitter));
+	}
+	ImGui::DragFloat3("EmitterTranslate", &emitter.transform.translate.x, 0.01f, -100.0f, 100.0f);
+	ImGui::Text("ListSize %d", particles.size());
+	ImGui::Text("instanceNum %d", numInstance);
+	ImGui::End();
+
+	emitter.frequencyTime += 1.0f;
+	if (emitter.frequency <= emitter.frequencyTime) {
+		particles.splice(particles.end(), Emit(emitter));
+		emitter.frequencyTime -= emitter.frequency;
+	}
 
 	if (camera) {
 
@@ -38,28 +54,43 @@ void Particle::Update() {
 		billboardMatrix.m[3][2] = 0.0f;
 
 
-		uint32_t numInstance = 0;
+		numInstance = 0;
 
-		for (uint32_t index = 0; index < kNumInstance; ++index) {
-			/// if (particles[index].liftTime <= particles[index].currentTime) {
-			//	continue;
-			//} /
-
-			particles[index].transform.translate += particles[index].velocity;
-			particles[index].currentTime += 0.01f;
-
-			Matrix4x4 scaleMatrix = MakeScaleMatrix(particles[index].transform.scale);
-			Matrix4x4 translateMatrix = MakeTranslateMatrix(particles[index].transform.translate);
-
-			Matrix4x4 worldMatrix = scaleMatrix * billboardMatrix * translateMatrix;
-			Matrix4x4 worldViewProjectionMatrix = Multiply(worldMatrix, Multiply(camera->viewMatrix, camera->projectionMatrix));
-
-			instancingData[index].WVP = worldViewProjectionMatrix;
-			instancingData[index].World = worldMatrix;
-			//instancingData[index].color = particles[index].color;
+		for (std::list<ParticleInfo>::iterator particleIterator = particles.begin(); particleIterator != particles.end();) {
+			if ((*particleIterator).liftTime <= (*particleIterator).currentTime) {
+				particleIterator = particles.erase(particleIterator);
+				continue;
+			}
 
 
-			++numInstance;
+			if (numInstance < kNumInstance) {
+				(*particleIterator).transform.translate += (*particleIterator).velocity;
+				(*particleIterator).currentTime += 0.1f;
+
+				float alpha = 1.0f - (*particleIterator).currentTime / (*particleIterator).liftTime;
+				(*particleIterator).color.w = alpha;
+
+				Matrix4x4 scaleMatrix = MakeScaleMatrix((*particleIterator).transform.scale);
+				Matrix4x4 translateMatrix = MakeTranslateMatrix((*particleIterator).transform.translate);
+
+				Matrix4x4 worldMatrix = scaleMatrix * billboardMatrix * translateMatrix;
+				Matrix4x4 worldViewProjectionMatrix = Multiply(worldMatrix, Multiply(camera->viewMatrix, camera->projectionMatrix));
+
+				instancingData[numInstance].WVP = worldViewProjectionMatrix;
+				instancingData[numInstance].World = worldMatrix;
+
+				instancingData[numInstance].color = (*particleIterator).color;
+				//instancingData[numInstance].color = { 0.0f,1.0f,1.0f,1.0f };
+				instancingData[numInstance].color.w = (*particleIterator).color.w;
+
+				ImGui::DragFloat4("ALPHA", &(*particleIterator).color.x);
+				//instancingData[index].color = particles[index].color;
+
+
+				++numInstance;
+			}
+
+			++particleIterator;
 		}
 	}
 	else {
@@ -73,15 +104,17 @@ void Particle::Draw() {
 	DirectX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
 
+	GraphicsRenderer::GetInstance()->SetRootSignatureAndPSO(true);
+
 	//directX12_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResourceSprite->GetGPUVirtualAddress());
 	//wvp用のCBufferの場所を設定
 	//DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
-	GraphicsRenderer::GetInstance()->SetRootSignatureAndPSO(true);
+
 	//koko
 	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(1, instancingSrvHandleGPU);
-	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(2, DirectX12::GetInstance()->GetSrvHandleGPU());
+	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(2, TextureManager::GetInstance()->GetSrvHandleGPU(textureIndex));
 	//描画！　（DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
-	DirectX12::GetInstance()->GetCommandList()->DrawInstanced(UINT(modelData.vertices.size()), kNumInstance, 0, 0);
+	DirectX12::GetInstance()->GetCommandList()->DrawInstanced(UINT(modelData.vertices.size()), numInstance, 0, 0);
 }
 
 ParticleInfo Particle::MakeNewParticle() {
@@ -89,17 +122,17 @@ ParticleInfo Particle::MakeNewParticle() {
 	Vector3 r = RandomGenerator::GetInstance()->getRandom({ scope, scope, scope });
 
 	ParticleInfo particleInfo;
-	particleInfo.transform.translate = r;
+	particleInfo.transform.translate = r + emitter.transform.translate;
 	particleInfo.transform.scale = { 1.0f,1.0f,1.0f };
 	particleInfo.transform.rotate = {};
 	particleInfo.velocity = r;
 
-	Scope cScope = { 0.0f,1.00f };
-	Vector3 cR = RandomGenerator::GetInstance()->getRandom({ scope, scope, scope });
+	Scope color = { 0,255 };
+	ScopeVec4 colorVec4 = { color,color,color,{255,255} };
 
-	particleInfo.color = { cR.x,cR.y,cR.z,1.0f };
+	particleInfo.color = RandomGenerator::getColorRandom(colorVec4);
 
-	Scope lScope = { 1.0f,3.0f };
+	Scope lScope = { 6.0f,18.0f };
 	float randomLife = RandomGenerator::GetInstance()->getRandom(lScope);
 	particleInfo.liftTime = randomLife;
 	particleInfo.currentTime = 0.0f;
@@ -107,13 +140,12 @@ ParticleInfo Particle::MakeNewParticle() {
 	return particleInfo;
 }
 
-std::list<ParticleInfo> Particle::Emit(const Emitter& emitter){
-
-	std::list<ParticleInfo> particles;
+std::list<ParticleInfo> Particle::Emit(const Emitter& emitter) {
+	std::list<ParticleInfo> particless;
 	for (uint32_t count = 0; count < emitter.count; ++count) {
-		particles.push_back(MakeNewParticle());
+		particless.push_back(MakeNewParticle());
 	}
-	return particles;
+	return particless;
 }
 
 void Particle::SetModel(const std::string& filePath) {
@@ -153,22 +185,6 @@ void Particle::CreateInstance() {
 	for (uint32_t index = 0; index < kNumInstance; ++index) {
 		instancingData[index].WVP = MakeIdentity4x4();
 		instancingData[index].World = MakeIdentity4x4();
-		instancingData[index].color = { 1.0f,1.0f,1.0f,1.0f };
-
-		Scope cScope = { 0.0f,1.00f };
-		Vector3 cR = RandomGenerator::GetInstance()->getRandom({ cScope,cScope ,cScope });
-
-		instancingData[index].color = { cR.x,cR.y,cR.z,1.0f };
-	}
-
-	for (uint32_t index = 0; index < kNumInstance; ++index) {
-		particles[index].transform.scale = { 1.0f,1.0f,1.0f };
-		particles[index].transform.rotate = { 0.0f,0.0f,0.0f };
-		particles[index].transform.translate = {};
-
-		Scope scope = { -0.01f,0.01f };
-		Vector3 r = RandomGenerator::GetInstance()->getRandom({ scope, scope, scope });
-		particles[index].velocity = r;
 	}
 }
 

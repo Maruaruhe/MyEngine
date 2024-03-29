@@ -15,7 +15,10 @@ void GraphicsRenderer::Initialize() {
 	MakeRootSignatureForParticle();
 
 	SetInputLayout();
+
 	SetBlendState();
+	SetBlendStateForParticle();
+
 	SetRasterizerState();
 	ShaderCompile();
 	MakePSO();
@@ -274,6 +277,20 @@ void GraphicsRenderer::SetBlendState() {
 	blendDesc = {};
 	blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
 }
+
+void GraphicsRenderer::SetBlendStateForParticle() {
+	blendDescForParticle = {};
+	blendDescForParticle.RenderTarget[0].RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
+	blendDescForParticle.RenderTarget[0].BlendEnable = true;
+	blendDescForParticle.RenderTarget[0].SrcBlend = D3D12_BLEND_SRC_ALPHA;
+	blendDescForParticle.RenderTarget[0].BlendOp = D3D12_BLEND_OP_ADD;
+	blendDescForParticle.RenderTarget[0].DestBlend = D3D12_BLEND_INV_SRC_ALPHA;
+	blendDescForParticle.RenderTarget[0].SrcBlendAlpha = D3D12_BLEND_ONE;
+	blendDescForParticle.RenderTarget[0].BlendOpAlpha = D3D12_BLEND_OP_ADD;
+	blendDescForParticle.RenderTarget[0].DestBlendAlpha = D3D12_BLEND_ZERO;
+}
+
+
 void GraphicsRenderer::SetRasterizerState() {
 	rasterizerDesc = {};
 	rasterizerDesc.CullMode = D3D12_CULL_MODE_BACK;
@@ -318,7 +335,7 @@ void GraphicsRenderer::MakePSOForParticle() {
 	graphicsPipelineStateDescForParticle.InputLayout = inputLayoutDesc;
 	graphicsPipelineStateDescForParticle.VS = { particleVertexShaderBlob->GetBufferPointer(),particleVertexShaderBlob->GetBufferSize() };
 	graphicsPipelineStateDescForParticle.PS = { particlePixelShaderBlob->GetBufferPointer(),particlePixelShaderBlob->GetBufferSize() };
-	graphicsPipelineStateDescForParticle.BlendState = blendDesc;
+	graphicsPipelineStateDescForParticle.BlendState = blendDescForParticle;
 	graphicsPipelineStateDescForParticle.RasterizerState = rasterizerDesc;
 	graphicsPipelineStateDescForParticle.NumRenderTargets = 1;
 	graphicsPipelineStateDescForParticle.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;

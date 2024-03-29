@@ -41,6 +41,7 @@ public:
 
 	void SetInputLayout();
 	void SetBlendState();
+	void SetBlendStateForParticle();
 	void SetRasterizerState();
 	void ShaderCompile();
 	void MakePSO();
@@ -82,6 +83,7 @@ private:
 	D3D12_INPUT_LAYOUT_DESC inputLayoutDesc{};
 	//SetBlendState
 	D3D12_BLEND_DESC blendDesc{};
+	D3D12_BLEND_DESC blendDescForParticle{};
 	//SetRasterizerState
 	D3D12_RASTERIZER_DESC rasterizerDesc{};
 	//ShaderCompile

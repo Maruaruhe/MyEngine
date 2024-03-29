@@ -5,7 +5,6 @@
 #include <vector>
 #include <list>
 #include "../../Base/DirextX12/DirectX12.h"
-#include "../../Base/GraphicsRenderer/GraphicsRenderer.h"
 #include <dxcapi.h>
 #include "../../Math/Vector4.h"
 #include "../../Math/Matrix4x4.h"
@@ -18,7 +17,7 @@
 
 #pragma comment(lib,"dxcompiler.lib")
 
-#define kNumInstance 50
+#define kNumInstance 100
 
 struct ParticleForGPU {
 	Matrix4x4 WVP;
@@ -68,14 +67,17 @@ private:
 public:
 	Material* material = nullptr;
 
-	ParticleInfo particles[kNumInstance];
-	//std::list<ParticleInfo> particles;
+	//ParticleInfo particles[kNumInstance];
+	std::list<ParticleInfo> particles;
 
 	ParticleForGPU* instancingData;
 
 private:
 	uint32_t textureIndex = 0;
 	Emitter emitter{};
+
+	uint32_t numInstance = 0;
+
 
 	//DirectX12* directX12 = nullptr;
 	Input* input_ = nullptr;
