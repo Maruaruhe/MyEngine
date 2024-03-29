@@ -76,6 +76,9 @@ private:
 	uint32_t textureIndex = 0;
 	Emitter emitter{};
 
+	uint32_t numInstance = 0;
+
+
 	//DirectX12* directX12 = nullptr;
 	Input* input_ = nullptr;
 	ModelData modelData;

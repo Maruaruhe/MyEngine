@@ -42,13 +42,12 @@ void Particle::Update() {
 			billboardMatrix.m[3][2] = 0.0f;
 
 
-		uint32_t numInstance = 0;
+		numInstance = 0;
 
 		for (std::list<ParticleInfo>::iterator particleIterator = particles.begin(); particleIterator != particles.end();) {
-		/*	if ((*particleIterator).liftTime <= (*particleIterator).currentTime) {
+		    if ((*particleIterator).liftTime <= (*particleIterator).currentTime) {
 				particleIterator = particles.erase(particleIterator);
-				continue;
-			}*/
+			}
 
 			if (numInstance < kNumInstance) {
 				(*particleIterator).transform.translate += (*particleIterator).velocity;
@@ -90,7 +89,7 @@ void Particle::Draw() {
 	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(1, instancingSrvHandleGPU);
 	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(2, DirectX12::GetInstance()->GetSrvHandleGPU());
 	//描画！　（DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
-	DirectX12::GetInstance()->GetCommandList()->DrawInstanced(UINT(modelData.vertices.size()), kNumInstance, 0, 0);
+	DirectX12::GetInstance()->GetCommandList()->DrawInstanced(UINT(modelData.vertices.size()), numInstance, 0, 0);
 }
 
 ParticleInfo Particle::MakeNewParticle() {
