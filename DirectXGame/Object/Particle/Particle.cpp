@@ -22,8 +22,8 @@ void Particle::Initialize(const std::string& filename) {
 	emitter.frequency = 60.0f;
 	emitter.frequencyTime = 0.0f;
 
-	TextureManager::GetInstance()->LoadTexture("Resources/uvChecker.png");
-	textureIndex = TextureManager::GetInstance()->GetTextureIndexByFilePath("Resources/uvChecker.png");
+	TextureManager::GetInstance()->LoadTexture("Resources/ccc.png");
+	textureIndex = TextureManager::GetInstance()->GetTextureIndexByFilePath("Resources/ccc.png");
 }
 
 void Particle::Update() {
@@ -64,8 +64,8 @@ void Particle::Update() {
 				(*particleIterator).transform.translate += (*particleIterator).velocity;
 				(*particleIterator).currentTime += 0.1f;
 
-				//float alpha = 1.0f - (*particleIterator).currentTime / (*particleIterator).liftTime;
-				float alpha = 1.0f - 0.8f;
+				float alpha = 1.0f - (*particleIterator).currentTime / (*particleIterator).liftTime;
+				(*particleIterator).color.w = alpha;
 
 				Matrix4x4 scaleMatrix = MakeScaleMatrix((*particleIterator).transform.scale);
 				Matrix4x4 translateMatrix = MakeTranslateMatrix((*particleIterator).transform.translate);
@@ -75,7 +75,9 @@ void Particle::Update() {
 
 				instancingData[numInstance].WVP = worldViewProjectionMatrix;
 				instancingData[numInstance].World = worldMatrix;
-				instancingData[numInstance].color.w = alpha;
+				instancingData[numInstance].color.w = (*particleIterator).color.w;
+
+				ImGui::DragFloat("ALPHA", &(*particleIterator).color.w);
 				//instancingData[index].color = particles[index].color;
 
 
@@ -102,7 +104,7 @@ void Particle::Draw() {
 
 	//koko
 	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(1, instancingSrvHandleGPU);
-	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(2, DirectX12::GetInstance()->GetSrvHandleGPU());
+	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(2, TextureManager::GetInstance()->GetSrvHandleGPU(textureIndex));
 	//描画！　（DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
 	DirectX12::GetInstance()->GetCommandList()->DrawInstanced(UINT(modelData.vertices.size()), numInstance, 0, 0);
 }
@@ -131,12 +133,11 @@ ParticleInfo Particle::MakeNewParticle() {
 }
 
 std::list<ParticleInfo> Particle::Emit(const Emitter& emitter){
-
-	//std::list<ParticleInfo> particles;
+	std::list<ParticleInfo> particless;
 	for (uint32_t count = 0; count < emitter.count; ++count) {
-		particles.push_back(MakeNewParticle());
+		particless.push_back(MakeNewParticle());
 	}
-	return particles;
+	return particless;
 }
 
 void Particle::SetModel(const std::string& filePath) {
