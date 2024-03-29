@@ -149,7 +149,7 @@ std::list<ParticleInfo> Particle::Emit(const Emitter& emitter) {
 }
 
 void Particle::CreateVertexBufferView() {
-	vertexResource = DirectX12::GetInstance()->CreateBufferResource(DirectX12::GetInstance()->GetDevice(), sizeof(VertexData) * modelData.vertices.size());
+	vertexResource = DirectX12::GetInstance()->CreateBufferResource(sizeof(VertexData) * modelData.vertices.size());
 
 	vertexBufferView = {};
 	vertexBufferView.BufferLocation = vertexResource->GetGPUVirtualAddress();
@@ -162,7 +162,7 @@ void Particle::CreateVertexBufferView() {
 }
 
 void Particle::CreateMaterialResource() {
-	materialResource_ = DirectX12::GetInstance()->CreateBufferResource(DirectX12::GetInstance()->GetDevice(), sizeof(Material));
+	materialResource_ = DirectX12::GetInstance()->CreateBufferResource(sizeof(Material));
 	material = nullptr;
 	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&material));
 
@@ -172,7 +172,7 @@ void Particle::CreateMaterialResource() {
 }
 
 void Particle::CreateInstance() {
-	instancingResource = DirectX12::GetInstance()->CreateBufferResource(DirectX12::GetInstance()->GetDevice(), sizeof(ParticleForGPU) * kNumInstance);
+	instancingResource = DirectX12::GetInstance()->CreateBufferResource(sizeof(ParticleForGPU) * kNumInstance);
 
 	instancingData = nullptr;
 

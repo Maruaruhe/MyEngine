@@ -7,7 +7,7 @@
 
 void Model::InitializePosition(const std::string& filename) {
 	modelData = ModelManager::GetInstance()->GetModel(filename);
-	vertexResource = DirectX12::GetInstance()->CreateBufferResource(DirectX12::GetInstance()->GetDevice(), sizeof(VertexData) * modelData.vertices.size());
+	vertexResource = DirectX12::GetInstance()->CreateBufferResource(sizeof(VertexData) * modelData.vertices.size());
 }
 
 void Model::Initialize(const std::string& filename) {
@@ -75,7 +75,7 @@ void Model::Draw() {
 }
 
 void Model::CreateVertexBufferView() {
-	vertexResource = DirectX12::GetInstance()->CreateBufferResource(DirectX12::GetInstance()->GetDevice(), sizeof(VertexData) * modelData.vertices.size());
+	vertexResource = DirectX12::GetInstance()->CreateBufferResource(sizeof(VertexData) * modelData.vertices.size());
 	
 	vertexBufferView = {};
 	vertexBufferView.BufferLocation = vertexResource->GetGPUVirtualAddress();
@@ -88,7 +88,7 @@ void Model::CreateVertexBufferView() {
 }
 
 void Model::CreateMaterialResource() {
-	materialResource_ = DirectX12::GetInstance()->CreateBufferResource(DirectX12::GetInstance()->GetDevice(), sizeof(Material));
+	materialResource_ = DirectX12::GetInstance()->CreateBufferResource(sizeof(Material));
 	material = nullptr;
 	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&material));
 
@@ -99,7 +99,7 @@ void Model::CreateMaterialResource() {
 
 void Model::CreateTransformationMatrixResource() {
 	//WVP用のリソースを作る。Matrix4x4　1つ分のサイズを用意する
-	wvpResource_ = DirectX12::GetInstance()->CreateBufferResource(DirectX12::GetInstance()->GetDevice(), sizeof(TransformationMatrix));
+	wvpResource_ = DirectX12::GetInstance()->CreateBufferResource(sizeof(TransformationMatrix));
 	//データを書き込む
 	transformationMatrix = nullptr;
 	//書き込むためのアドレスを取得
