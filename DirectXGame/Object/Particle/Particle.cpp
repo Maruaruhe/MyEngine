@@ -34,6 +34,8 @@ void Particle::Update() {
 		particles.splice(particles.end(), Emit(emitter));
 	}
 	ImGui::DragFloat3("EmitterTranslate", &emitter.transform.translate.x, 0.01f, -100.0f, 100.0f);
+	ImGui::Text("ListSize %d", particles.size());
+	ImGui::Text("instanceNum %d", numInstance);
 	ImGui::End();
 
 	emitter.frequencyTime += 1.0f;
@@ -75,9 +77,12 @@ void Particle::Update() {
 
 				instancingData[numInstance].WVP = worldViewProjectionMatrix;
 				instancingData[numInstance].World = worldMatrix;
+
+				instancingData[numInstance].color = (*particleIterator).color;
+				//instancingData[numInstance].color = { 0.0f,1.0f,1.0f,1.0f };
 				instancingData[numInstance].color.w = (*particleIterator).color.w;
 
-				ImGui::DragFloat("ALPHA", &(*particleIterator).color.w);
+				ImGui::DragFloat4("ALPHA", &(*particleIterator).color.x);
 				//instancingData[index].color = particles[index].color;
 
 
@@ -119,10 +124,10 @@ ParticleInfo Particle::MakeNewParticle() {
 	particleInfo.transform.rotate = {};
 	particleInfo.velocity = r;
 
-	Scope cScope = { 0.0f,1.00f };
-	Vector3 cR = RandomGenerator::GetInstance()->getRandom({ scope, scope, scope });
+	Scope color = { 0,255 };
+	ScopeVec4 colorVec4 = { color,color,color,{255,255} };
 
-	particleInfo.color = { cR.x,cR.y,cR.z,1.0f };
+	particleInfo.color = RandomGenerator::getColorRandom(colorVec4);
 
 	Scope lScope = { 6.0f,18.0f };
 	float randomLife = RandomGenerator::GetInstance()->getRandom(lScope);
@@ -177,12 +182,6 @@ void Particle::CreateInstance() {
 	for (uint32_t index = 0; index < kNumInstance; ++index) {
 		instancingData[index].WVP = MakeIdentity4x4();
 		instancingData[index].World = MakeIdentity4x4();
-		instancingData[index].color = { 1.0f,1.0f,1.0f,1.0f };
-
-		Scope cScope = { 0.0f,1.00f };
-		Vector3 cR = RandomGenerator::GetInstance()->getRandom({ cScope,cScope ,cScope });
-
-		instancingData[index].color = { cR.x,cR.y,cR.z,1.0f };
 	}
 }
 
