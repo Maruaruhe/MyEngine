@@ -26,6 +26,8 @@ private:
 	Model model;
 	Model modela;
 
+	Sprite sprite;
+
 	Particle p;
 };
 

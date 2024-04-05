@@ -27,6 +27,8 @@ void TestScene::Initialize() {
 	model.transform.translate = { 1.5f,0.0f,0.0f };
 	model.material->enableLighting = true;
 
+	TextureManager::GetInstance()->LoadTexture("Resources/ao.png");
+	sprite.Initialize({ 0,0 }, { 320,180 }, "Resources/ao.png");
 
 //	light.Initialize();
 }
@@ -41,6 +43,8 @@ void TestScene::Update() {
 	modela.Update();
 	model.Update();
 
+	sprite.Update();
+
 	if (input->TriggerKey(DIK_SPACE)) {
 		sceneNo = SUBTEST;
 	}
@@ -52,4 +56,6 @@ void TestScene::Draw() {
 	model.Draw();
 
 	p.Draw();
+
+	sprite.Draw();
 }
