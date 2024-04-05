@@ -140,7 +140,7 @@ void Sphere ::Draw() {
 }
 
 void Sphere::CreateVertexBufferView() {
-	vertexResource = directX12->CreateBufferResource(directX12->GetDevice(), sizeof(VertexData) * 1536);
+	vertexResource = directX12->CreateBufferResource(sizeof(VertexData) * 1536);
 
 	vertexBufferView = {};
 	//リソースの先頭のアドレスから使う
@@ -156,7 +156,7 @@ void Sphere::CreateVertexBufferView() {
 }
 
 void Sphere::CreateMaterialResource() {
-	materialResource_ = directX12->CreateBufferResource(directX12->GetDevice(), sizeof(Material));
+	materialResource_ = directX12->CreateBufferResource(sizeof(Material));
 	materialData = nullptr;
 	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
 	materialData->color = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
@@ -167,7 +167,7 @@ void Sphere::CreateMaterialResource() {
 
 void Sphere::CreateTransformationMatrixResource() {
 	//WVP用のリソースを作る。Matrix4x4　1つ分のサイズを用意する
-	wvpResource_ = directX12->CreateBufferResource(directX12->GetDevice(), sizeof(TransformationMatrix));
+	wvpResource_ = directX12->CreateBufferResource(sizeof(TransformationMatrix));
 	//データを書き込む
 	transformationMatrix = nullptr;
 	//書き込むためのアドレスを取得

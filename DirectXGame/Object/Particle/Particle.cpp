@@ -9,7 +9,7 @@
 
 void Particle::InitializePosition(const std::string& filename) {
 	modelData = ModelManager::GetInstance()->GetModel(filename);
-	vertexResource = DirectX12::GetInstance()->CreateBufferResource(DirectX12::GetInstance()->GetDevice(), sizeof(VertexData) * modelData.vertices.size());
+	vertexResource = DirectX12::GetInstance()->CreateBufferResource(sizeof(VertexData) * modelData.vertices.size());
 }
 
 void Particle::Initialize(const std::string& filename) {

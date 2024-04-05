@@ -43,8 +43,8 @@ IDxcBlob* GraphicsRenderer::CompileShader(
 	const std::wstring& filePath,
 	const wchar_t* profile,
 	IDxcUtils* dxcUtiles,
-	//IDxcCompiler3* dxcCompiler,
-	//IDxcIncludeHandler* includeHandler
+	IDxcCompiler3* dxcCompiler,
+	IDxcIncludeHandler* includeHandler
 ) {
 	//1.hlslファイルを読む---------------------------------------------------------------------------------------------------------
 	//これからシェーダーをコンパイルする旨をログに出す

@@ -57,7 +57,7 @@ void Sprite::Draw() {
 }
 
 void Sprite::CreateVertexResource() {
-	vertexResource = DirectX12::GetInstance()->CreateBufferResource(DirectX12::GetInstance()->GetDevice(), sizeof(VertexData) * 6);
+	vertexResource = DirectX12::GetInstance()->CreateBufferResource(sizeof(VertexData) * 6);
 }
 
 void Sprite::CreateVertexBufferView() {
@@ -71,7 +71,7 @@ void Sprite::CreateVertexBufferView() {
 }
 
 void Sprite::CreateMaterialResource() {
-	materialResource_ = DirectX12::GetInstance()->CreateBufferResource(DirectX12::GetInstance()->GetDevice(), sizeof(Material));
+	materialResource_ = DirectX12::GetInstance()->CreateBufferResource(sizeof(Material));
 	materialData_ = nullptr;
 	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&materialData_));
 

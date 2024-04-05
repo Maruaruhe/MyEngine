@@ -1,7 +1,7 @@
 #include "Lighting.h"
 
 void Lighting::Initialize() {
-	directionalLightResource = DirectX12::GetInstance()->CreateBufferResource(DirectX12::GetInstance()->GetDevice(), sizeof(DirectionalLight));
+	directionalLightResource = DirectX12::GetInstance()->CreateBufferResource(sizeof(DirectionalLight));
 	light = nullptr;
 	directionalLightResource->Map(0, nullptr, reinterpret_cast<void**>(&light));
 

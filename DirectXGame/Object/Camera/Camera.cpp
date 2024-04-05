@@ -10,7 +10,7 @@ void Camera::Initialize() {
 	nearClip = 0.1f;
 	farClip = 100.0f;
 
-	cameraForGPUResource = DirectX12::GetInstance()->CreateBufferResource(DirectX12::GetInstance()->GetDevice(), sizeof(CameraForGPU));
+	cameraForGPUResource = DirectX12::GetInstance()->CreateBufferResource(sizeof(CameraForGPU));
 	position = nullptr;
 	cameraForGPUResource->Map(0, nullptr, reinterpret_cast<void**>(&position));
 }
