@@ -47,7 +47,6 @@ void Camera::Update() {
 	Matrix4x4 wM = MakeRotateXYZMatrix(transform.rotate);
 	move = {
 		move.x * wM.m[0][0] + move.z * wM.m[2][0],
-		//move.x * wM.m[0][1] + move.y * wM.m[2][1],
 		0,
 		move.x * wM.m[0][2] + move.z * wM.m[2][2]
 
