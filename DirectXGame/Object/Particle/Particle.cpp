@@ -7,13 +7,13 @@
 
 #include <numbers>
 
-void Particle::InitializePosition(const std::string& filename) {
-	modelData = ModelManager::GetInstance()->GetModel(filename);
+void Particle::InitializePosition() {
+	modelData = ModelManager::GetInstance()->GetModel("plane");
 	vertexResource = DirectX12::GetInstance()->CreateBufferResource(sizeof(VertexData) * modelData.vertices.size());
 }
 
 void Particle::Initialize(const std::string& filename) {
-	InitializePosition(filename);
+	InitializePosition();
 	CreateMaterialResource();
 	CreateVertexBufferView();
 	CreateInstance();
@@ -23,8 +23,8 @@ void Particle::Initialize(const std::string& filename) {
 	emitter.frequency = 60.0f;
 	emitter.frequencyTime = 0.0f;
 
-	TextureManager::GetInstance()->LoadTexture("Resources/uvChecker.png");
-	textureIndex = TextureManager::GetInstance()->GetTextureIndexByFilePath("Resources/uvChecker.png");
+	TextureManager::GetInstance()->LoadTexture(filename);
+	textureIndex = TextureManager::GetInstance()->GetTextureIndexByFilePath(filename);
 }
 
 void Particle::Update() {

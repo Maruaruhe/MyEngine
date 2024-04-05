@@ -50,7 +50,7 @@ private:
 
 	std::list<ParticleInfo> Emit(const Emitter& emitter);
 
-	void InitializePosition(const std::string& filename);
+	void InitializePosition();
 
 	void ApplyGlobalVariables();
 

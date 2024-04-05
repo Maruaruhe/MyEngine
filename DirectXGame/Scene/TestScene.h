@@ -27,5 +27,6 @@ private:
 	Model modela;
 
 	Particle p;
+	Particle p1;
 };
 
