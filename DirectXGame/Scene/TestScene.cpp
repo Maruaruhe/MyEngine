@@ -12,7 +12,7 @@ void TestScene::Initialize() {
 	ModelManager::GetInstance()->LoadModel("axis");
 	ModelManager::GetInstance()->LoadModel("plane");
 
-	p.Initialize("Resources/ao.png");
+	//p.Initialize("Resources/ao.png");
 	//p1.Initialize("Resources/uvChecker.png");
 
 	modela.Initialize("axis");
@@ -33,13 +33,13 @@ void TestScene::Initialize() {
 	//model.material->enableLighting = true;
 
 
-//	light.Initialize();
+	light.Initialize();
 }
 
 void TestScene::Update() {
 	GlobalVariables::GetInstance()->Update();
 
-//	light.Update();
+	light.Update();
 	camera2->Update();
 
 	//p.Update();
