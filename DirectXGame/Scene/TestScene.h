@@ -23,9 +23,8 @@ private:
 
 	Camera* camera2;
 
-	Model model;
 	Model modela;
 
-	//Particle p;
+	Particle p;
 };
 

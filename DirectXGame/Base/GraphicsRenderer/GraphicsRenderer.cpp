@@ -107,6 +107,8 @@ IDxcBlob* GraphicsRenderer::CompileShader(
 void GraphicsRenderer::DecideCommand() {
 	directX12->GetCommandList()->RSSetViewports(1, &viewport);
 	directX12->GetCommandList()->RSSetScissorRects(1, &scissorRect);
+	directX12->GetCommandList()->SetGraphicsRootSignature(rootSignature.Get());
+	directX12->GetCommandList()->SetPipelineState(graphicsPipelineState.Get());
 }
 
 void GraphicsRenderer::SetRootSignatureAndPSO(bool n) {
@@ -340,7 +342,7 @@ void GraphicsRenderer::MakePSOForParticle() {
 	graphicsPipelineStateDescForParticle.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
 	graphicsPipelineStateDescForParticle.SampleDesc.Count = 1;
 	graphicsPipelineStateDescForParticle.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
-	graphicsPipelineStateDescForParticle.DepthStencilState = directX12->GetDepthStencilDesc();
+	graphicsPipelineStateDescForParticle.DepthStencilState = directX12->GetDepthStencilDescForParticle();
 	graphicsPipelineStateDescForParticle.DSVFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
 
 	graphicsPipelineStateForParticle = nullptr;
