@@ -8,22 +8,20 @@ void TestScene::Initialize() {
 	camera2->Initialize();
 	camera2->transform.translate.z = -10.0f;
 
-	ModelManager::GetInstance()->LoadModel("ghostPori");
-	ModelManager::GetInstance()->LoadModel("axis");
-	ModelManager::GetInstance()->LoadModel("plane");
-
-	p.Initialize("Resources/ao.png");
-	p.SetCamera(camera2);
-	p.material->enableLighting = false;
-
-	modela.Initialize("axis");
-
-	modela.SetCamera(camera2);
-	
-	modela.transform.translate = { 1.5f,0.0f,0.0f };
-	modela.material->enableLighting = true;
-
 	light.Initialize();
+
+	player = std::make_unique<Player>();
+	player->Initialize("ghostPori");
+	player->model->SetCamera(camera2);
+
+	enemy = std::make_unique<Enemy>();
+	enemy->Initialize("axis",player.get(), {0,0,20});
+	enemy->model->SetCamera(camera2);
+	enemy->ResetTime();
+
+	skydome = std::make_unique<Skydome>();
+	skydome->Initialize("skydome");
+	skydome->model->SetCamera(camera2);
 }
 
 void TestScene::Update() {
@@ -32,19 +30,69 @@ void TestScene::Update() {
 	light.Update();
 	camera2->Update();
 
-	p.Update();
+	player->Update();
+	enemy->Update();
+	skydome->Update();
 
-
-	modela.Update();
-
-	if (input->TriggerKey(DIK_SPACE)) {
-		sceneNo = SUBTEST;
-	}
-
+	CheckAllCollision();
 }
 
 void TestScene::Draw() {
-	modela.Draw();
 
-	p.Draw();
+	player->Draw();
+	enemy->Draw();
+	skydome->Draw();
+
+}
+
+void TestScene::CheckAllCollision() {
+	Vector3 posA, posB;
+
+	const std::list<Bullet*>& playerBullets_ = player->GetBullets();
+	const std::list<EnemyBullet*>& enemyBullets_ = enemy->GetBullets();
+
+#pragma region 自キャラと敵弾の当たり判定
+	posA = player->model->transform.translate;
+
+	for (EnemyBullet* bullet : enemyBullets_) {
+		posB = bullet->GetWorldPosition();
+
+		Vector3 distance = Subtract(posA, posB);
+		if (std::pow(distance.x, 2) + std::pow(distance.y, 2) + std::pow(distance.z, 2) <= 2 * 2) {
+			player->OnCollision();
+			bullet->OnCollision();
+		}
+	}
+#pragma endregion
+
+#pragma region 自弾と敵キャラの当たり判定
+		posA = enemy->GetWorldPosition();
+
+		for (Bullet* bullet : playerBullets_) {
+			posB = bullet->GetWorldPosition();
+
+			Vector3 distance = Subtract(posA, posB);
+			if (std::pow(distance.x, 2) + std::pow(distance.y, 2) + std::pow(distance.z, 2) <=
+				2 * 2) {
+				enemy->OnCollision();
+				bullet->OnCollision();
+			}
+		}
+#pragma endregion
+
+#pragma region 自弾と敵弾の当たり判定
+	for (Bullet* playerBullet : playerBullets_) {
+		for (EnemyBullet* eBullet : enemyBullets_) {
+			posA = playerBullet->GetWorldPosition();
+			posB = eBullet->GetWorldPosition();
+
+			Vector3 distance = Subtract(posA, posB);
+			if (std::pow(distance.x, 2) + std::pow(distance.y, 2) + std::pow(distance.z, 2) <=
+				2 * 2) {
+				playerBullet->OnCollision();
+				eBullet->OnCollision();
+			}
+		}
+	}
+#pragma endregion
 }
