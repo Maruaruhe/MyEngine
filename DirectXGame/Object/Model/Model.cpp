@@ -13,6 +13,7 @@ void Model::InitializePosition(const std::string& filename) {
 void Model::Initialize(const std::string& filename) {
 
 	transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
+	isParent = false;
 
 	InitializePosition(filename);
 	CreateMaterialResource();
@@ -46,6 +47,9 @@ void Model::Update() {
 	Matrix4x4 worldMatrix = MakeAffineMatrix(transform.scale, transform.rotate, transform.translate);
 	Matrix4x4 worldViewProjectionMatrix;
 	if (camera) {
+		if (isParent) {
+			worldMatrix = Multiply(worldMatrix, camera->cameraMatrix);
+		}
 		const Matrix4x4& viewprojectionMatrix = camera->viewProjectionMatrix;
 		worldViewProjectionMatrix = Multiply(worldMatrix, viewprojectionMatrix);
 	}

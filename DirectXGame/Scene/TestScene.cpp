@@ -12,7 +12,9 @@ void TestScene::Initialize() {
 
 	player = std::make_unique<Player>();
 	player->Initialize("ghostPori");
+	player->model->transform.translate.z = 15.0f;
 	player->model->SetCamera(camera2);
+	player->model->isParent = true;
 
 	enemy = std::make_unique<Enemy>();
 	enemy->Initialize("axis",player.get(), {0,0,20});

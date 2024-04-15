@@ -7,7 +7,7 @@ void Reticle::Initialize() {
 	model = std::make_unique<Model>();
 	model->Initialize("bullet");
 
-	model->transform.translate.z = 15.0f;
+	model->transform.translate.z = 35.0f;
 }
 
 void Reticle::Update() {

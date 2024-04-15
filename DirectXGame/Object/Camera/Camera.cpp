@@ -18,6 +18,7 @@ void Camera::Initialize() {
 void Camera::Update() {
 	Vector3 move{};
 
+	transform.translate.z -= 0.01f;
 	/*if (input->PushKey(DIK_UP)) {
 		transform.rotate.x -= 0.03f;
 	}

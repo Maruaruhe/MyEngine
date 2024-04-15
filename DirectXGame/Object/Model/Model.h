@@ -45,7 +45,7 @@ private:
 public:
 	Material* material = nullptr;
 	Transform transform;
-
+	bool isParent;
 private:
 	uint32_t textureIndex = 0;
 

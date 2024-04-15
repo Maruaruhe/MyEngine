@@ -16,6 +16,7 @@ void EnemyBullet::Initialize(const Vector3& pos, const Vector3& velo, Camera* ca
 	double dis = std::sqrt(pow(velo.x, 2) + pow(velo.z, 2));
 	model.transform.rotate.x = std::atan2(-velo.y, float(dis));
 	velocity = velo;
+	model.Update();
 }
 
 void EnemyBullet::Update() {
