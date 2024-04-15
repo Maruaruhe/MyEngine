@@ -24,6 +24,10 @@ public:
 
 	void Draw();
 
+	Vector3 GetWorldPosition(){
+		return { worldMatrix.m[3][0],worldMatrix.m[3][1] ,worldMatrix.m[3][2] };
+	}
+
 	void SetCamera(Camera* Tcamera) { this->camera = Tcamera; }
 	Camera* GetCamera() { return camera; }
 
@@ -48,6 +52,8 @@ public:
 	bool isParent;
 private:
 	uint32_t textureIndex = 0;
+
+	Matrix4x4 worldMatrix;
 
 	//DirectX12* directX12 = nullptr;
 	Input* input_ = nullptr;

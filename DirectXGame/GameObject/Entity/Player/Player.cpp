@@ -20,6 +20,7 @@ void Player::Initialize(const std::string& filename) {
 void Player::Update() {
 	camera = model->GetCamera();
 	reticle->model->SetCamera(camera);
+	reticle->model->isParent = true;
 
 	bullets.remove_if([](Bullet* bullet) {
 		if (bullet->isDead()) {
@@ -80,7 +81,7 @@ void Player::Shoot() {
 		Vector3 velocity = reticle->model->transform.translate - model->transform.translate;
 		velocity = Normalize(velocity) / 3.0f;
 		Bullet* newBullet = new Bullet();
-		newBullet->Initialize(model->transform.translate, velocity,model->GetCamera());
+		newBullet->Initialize(model->GetWorldPosition(), velocity, model->GetCamera());
 		bullets.push_back(newBullet);
 	}
 }

@@ -44,7 +44,7 @@ void Model::Update() {
 
 	material->uvTransform = MakeIdentity4x4();
 
-	Matrix4x4 worldMatrix = MakeAffineMatrix(transform.scale, transform.rotate, transform.translate);
+	worldMatrix = MakeAffineMatrix(transform.scale, transform.rotate, transform.translate);
 	Matrix4x4 worldViewProjectionMatrix;
 	if (camera) {
 		if (isParent) {
