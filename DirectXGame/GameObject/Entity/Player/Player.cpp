@@ -78,7 +78,7 @@ void Player::Move() {
 void Player::Shoot() {
 	if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
 		const float kBulletSpeed = 1.0f;
-		Vector3 velocity = reticle->model->transform.translate - model->transform.translate;
+		Vector3 velocity = reticle->model->GetWorldPosition() - model->GetWorldPosition();
 		velocity = Normalize(velocity) / 3.0f;
 		Bullet* newBullet = new Bullet();
 		newBullet->Initialize(model->GetWorldPosition(), velocity, model->GetCamera());

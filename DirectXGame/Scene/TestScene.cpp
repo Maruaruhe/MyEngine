@@ -11,7 +11,7 @@ void TestScene::Initialize() {
 	light.Initialize();
 
 	player = std::make_unique<Player>();
-	player->Initialize("ghostPori");
+	player->Initialize("ghostsuperkyon");
 	player->model->transform.translate.z = 15.0f;
 	player->model->SetCamera(camera2);
 	player->model->isParent = true;
