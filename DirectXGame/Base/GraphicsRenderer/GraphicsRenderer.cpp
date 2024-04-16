@@ -374,27 +374,6 @@ void GraphicsRenderer::MakeVertexResource() {
 	assert(SUCCEEDED(hr));
 }
 
-//kore
-void GraphicsRenderer::MakeVertexBufferView() {
-	vertexBufferView = {};
-	vertexBufferView.BufferLocation = vertexResource->GetGPUVirtualAddress();
-	vertexBufferView.SizeInBytes = sizeof(Vector4) * 3;
-	vertexBufferView.StrideInBytes = sizeof(Vector4);
-}
-
-//kore
-void GraphicsRenderer::DateResource(Vector2* leftBot, Vector2* midTop, Vector2* rightBot) {
-	vertexDate = nullptr;
-	//wakeru
-	vertexResource->Map(0, nullptr, reinterpret_cast<void**>(&vertexDate));
-	//
-	//LeftBottom
-	vertexDate[0] = { leftBot->x,leftBot->y	,0.0f,1.0f };
-	//MiddleTop
-	vertexDate[1] = { midTop->x,midTop->y,0.0f,1.0f };
-	//RightBottom
-	vertexDate[2] = { rightBot->x,rightBot->y,0.0f,1.0f };
-}
 void GraphicsRenderer::ViewportScissor() {
 	viewport = {};
 	viewport.Width = float(kClientWidth);
