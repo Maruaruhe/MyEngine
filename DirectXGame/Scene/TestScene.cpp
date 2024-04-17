@@ -24,6 +24,9 @@ void TestScene::Initialize() {
 	skydome = std::make_unique<Skydome>();
 	skydome->Initialize("skydome");
 	skydome->model->SetCamera(camera2);
+
+	sprite = std::make_unique<Sprite>();
+	sprite->Initialize({ 0,0 }, {320,180}, "Resources/ao.png");
 }
 
 void TestScene::Update() {
@@ -35,6 +38,7 @@ void TestScene::Update() {
 	player->Update();
 	enemy->Update();
 	skydome->Update();
+	sprite->Update();
 
 	CheckAllCollision();
 }
@@ -44,7 +48,7 @@ void TestScene::Draw() {
 	player->Draw();
 	enemy->Draw();
 	skydome->Draw();
-
+	sprite->Draw();
 }
 
 void TestScene::CheckAllCollision() {
