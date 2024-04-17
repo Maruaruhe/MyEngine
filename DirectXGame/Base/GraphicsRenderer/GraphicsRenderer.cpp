@@ -350,30 +350,6 @@ void GraphicsRenderer::MakePSOForParticle() {
 	assert((SUCCEEDED(hr)));
 }
 
-//これ
-void GraphicsRenderer::MakeVertexResource() {
-	//VertexResourceを生成する--------------------------------------------------------------------------------
-	//頂点リソース用のヒープの作成の設定
-	uploadHeapProperties = {};
-	uploadHeapProperties.Type = D3D12_HEAP_TYPE_UPLOAD;
-	//頂点リソースの設定
-	vertexResourceDesc = {};
-	//バッファリソース。テクスチャの場合はまた別の設定をする
-	vertexResourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-	vertexResourceDesc.Width = sizeof(Vector4) * 3;
-	//バッファの場合はこれらは１にする決まり
-	vertexResourceDesc.Height = 1;
-	vertexResourceDesc.DepthOrArraySize = 1;
-	vertexResourceDesc.MipLevels = 1;
-	vertexResourceDesc.SampleDesc.Count = 1;
-	//バッファの場合はこれにする決まり
-	vertexResourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
-	//実際に頂点リソースを作る
-	vertexResource = nullptr;
-	hr = directX12->GetDevice()->CreateCommittedResource(&uploadHeapProperties, D3D12_HEAP_FLAG_NONE, &vertexResourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&vertexResource));
-	assert(SUCCEEDED(hr));
-}
-
 void GraphicsRenderer::ViewportScissor() {
 	viewport = {};
 	viewport.Width = float(kClientWidth);

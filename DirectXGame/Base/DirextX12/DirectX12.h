@@ -69,6 +69,8 @@ public:
 
 	void PushImGuiDrawCommand();
 
+	Microsoft::WRL::ComPtr<ID3D12Resource> CreateRenderTextureResource(DXGI_FORMAT format,const Vector4& clearColor);
+
 	Microsoft::WRL::ComPtr<ID3D12Resource> CreateBufferResource(size_t sizeInBytes);
 
 
@@ -88,6 +90,7 @@ public:
 	void CreateDSVParticle();
 
 	void RTV();
+	void CreateRTVForRenderTexture();
 
 	void CommandKick();
 

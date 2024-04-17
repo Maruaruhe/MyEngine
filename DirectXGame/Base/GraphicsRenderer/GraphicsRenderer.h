@@ -48,11 +48,7 @@ public:
 	void MakePSOForParticle();
 
 	void SetRootSignatureAndPSO(bool n);
-	//
-	void MakeVertexResource();
 
-	void MakeVertexBufferView();
-	void DateResource(Vector2* leftBot, Vector2* midTop, Vector2* rightBot);
 	void ViewportScissor();
 
 	void Release();
