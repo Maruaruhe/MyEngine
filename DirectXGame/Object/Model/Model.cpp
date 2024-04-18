@@ -42,10 +42,6 @@ void Model::ApplyGlobalVariables() {
 }
 
 void Model::Update() {
-	//GlobalVariables::GetInstance()->SetValue(forg, "Translate", transform.translate);
-	//GlobalVariables::GetInstance()->SetValue(forg, "Scale", transform.scale);
-	//GlobalVariables::GetInstance()->SetValue(forg, "Rotate", transform.rotate);
-
 	material->uvTransform = MakeIdentity4x4();
 
 	worldMatrix = MakeAffineMatrix(transform.scale, transform.rotate, transform.translate);
