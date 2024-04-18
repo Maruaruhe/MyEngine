@@ -5,6 +5,8 @@
 #include "../../Manager/TextureManager.h"
 #include "../../Manager/ModelManager.h"
 
+#include "../../Math/MathOperator.h"
+
 void Model::InitializePosition(const std::string& filename) {
 	modelData = ModelManager::GetInstance()->GetModel(filename);
 	vertexResource = DirectX12::GetInstance()->CreateBufferResource(sizeof(VertexData) * modelData.vertices.size());
@@ -42,6 +44,8 @@ void Model::ApplyGlobalVariables() {
 }
 
 void Model::Update() {
+	ApplyGlobalVariables();
+
 	material->uvTransform = MakeIdentity4x4();
 
 	worldMatrix = MakeAffineMatrix(transform.scale, transform.rotate, transform.translate);
@@ -56,8 +60,10 @@ void Model::Update() {
 	else {
 		worldViewProjectionMatrix = worldMatrix;
 	}
-	transformationMatrix->WVP = worldViewProjectionMatrix;
-	transformationMatrix->World = worldMatrix;
+	transformationMatrix->WVP = modelData.rootNode.localMatrix * worldMatrix * camera->viewProjectionMatrix;
+	transformationMatrix->World = modelData.rootNode.localMatrix * worldMatrix;
+	//transformationMatrix->WVP = worldViewProjectionMatrix;
+	//transformationMatrix->World = worldMatrix;
 }
 
 void Model::Draw() {

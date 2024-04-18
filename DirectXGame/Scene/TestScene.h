@@ -28,9 +28,6 @@ private:
 
 	Camera* camera2;
 
-	std::unique_ptr<Player> player;
-	std::unique_ptr<Enemy> enemy;
-	std::unique_ptr<Skydome> skydome;
-	std::unique_ptr<Sprite> sprite;
+	Model model;
 };
 
