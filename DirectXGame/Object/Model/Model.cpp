@@ -26,6 +26,8 @@ void Model::Initialize(const std::string& filename) {
 	GlobalVariables::GetInstance()->AddItem(forg, "Translate", transform.translate);
 	GlobalVariables::GetInstance()->AddItem(forg, "Scale", transform.scale);
 	GlobalVariables::GetInstance()->AddItem(forg, "Rotate", transform.rotate);
+
+	ApplyGlobalVariables();
 	//
 
 
@@ -40,7 +42,9 @@ void Model::ApplyGlobalVariables() {
 }
 
 void Model::Update() {
-	//ApplyGlobalVariables();
+	//GlobalVariables::GetInstance()->SetValue(forg, "Translate", transform.translate);
+	//GlobalVariables::GetInstance()->SetValue(forg, "Scale", transform.scale);
+	//GlobalVariables::GetInstance()->SetValue(forg, "Rotate", transform.rotate);
 
 	material->uvTransform = MakeIdentity4x4();
 
