@@ -172,27 +172,6 @@ ModelData ModelManager::LoadModelFile(const std::string& directoryPath, const st
 //	return modelData;
 //}
 
-MaterialData ModelManager::LoadMaterialTemplateFile(const std::string& directoryPath, const std::string& filename) {
-	MaterialData materialData;
-	std::string line;
-	std::ifstream file(directoryPath + "/" + filename);
-	assert(file.is_open());
-
-	while (std::getline(file, line)) {
-		std::string identifier;
-		std::istringstream s(line);
-		s >> identifier;
-
-		if (identifier == "map_Kd") {
-			std::string textureFilename;
-			s >> textureFilename;
-
-			materialData.textureFilePath = directoryPath + "/" + textureFilename;
-		}
-	}
-	return materialData;
-}
-
 void ModelManager::LoadModel(const std::string& filePath) {
 	//読み込み済みモデルを検索
 	if (modelDatas.contains(filePath)) {
