@@ -60,12 +60,10 @@ void Model::Update() {
 	else {
 		worldViewProjectionMatrix = worldMatrix;
 	}
-	transformationMatrix->WVP = Multiply(Multiply(modelData.rootNode.localMatrix , worldMatrix), camera->viewProjectionMatrix);
-	transformationMatrix->World = Multiply(modelData.rootNode.localMatrix, worldMatrix);
-	//transformationMatrix->WVP = modelData.rootNode.localMatrix * worldMatrix * camera->viewProjectionMatrix;
-	//transformationMatrix->World = modelData.rootNode.localMatrix * worldMatrix;
-	//transformationMatrix->WVP = worldViewProjectionMatrix;
-	//transformationMatrix->World = worldMatrix;
+	//transformationMatrix->WVP = Multiply(Multiply(modelData.rootNode.localMatrix , worldMatrix), camera->viewProjectionMatrix);
+	//transformationMatrix->World = Multiply(modelData.rootNode.localMatrix, worldMatrix);
+	transformationMatrix->WVP = worldViewProjectionMatrix;
+	transformationMatrix->World = worldMatrix;
 }
 
 void Model::Draw() {

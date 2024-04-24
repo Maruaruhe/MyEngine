@@ -10,8 +10,8 @@ void TestScene::Initialize() {
 
 	light.Initialize();
 
-	ModelManager::GetInstance()->LoadModel("GLTFPlane");
-	model.Initialize("GLTFPlane");
+	ModelManager::GetInstance()->LoadModel("axis");
+	model.Initialize("axis");
 	model.SetCamera(camera2);
 }
 
