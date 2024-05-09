@@ -98,6 +98,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DirectXGame\Object\Animation\Animation.cpp" />
     <ClCompile Include="DirectXGame\GameObject\Entity\Player\Bullet\Bullet.cpp" />
     <ClCompile Include="DirectXGame\Math\Vector3.cpp" />
     <ClCompile Include="DirectXGame\Object\Camera\Camera.cpp" />
@@ -164,6 +165,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DirectXGame\Object\Animation\Animation.h" />
     <ClInclude Include="DirectXGame\GameObject\Entity\Player\Bullet\Bullet.h" />
     <ClInclude Include="DirectXGame\Math\MathOperator.h" />
     <ClInclude Include="DirectXGame\Math\RandomGenerator.h" />

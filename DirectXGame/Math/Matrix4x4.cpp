@@ -1,4 +1,5 @@
 #include "Matrix4x4.h"
+#include "MathOperator.h"
 
 Matrix4x4 Add(const Matrix4x4& m1, const Matrix4x4& m2) {
 	return{
@@ -473,4 +474,8 @@ Vector3 Normalize(const Vector3& v) {
 float Length(const Vector3& v) {
 	float num = { sqrtf(v.x * v.x + v.y * v.y + v.z * v.z) };
 	return num;
+}
+
+Vector3 Lerp(const Vector3& start, const Vector3& end, const float t) {
+	return start + t * (end - start);
 }

@@ -65,3 +65,5 @@ float Length(const Vector3& v);
 Vector3 Normalize(const Vector3& v);
 
 float Length(const Vector3& v);
+
+Vector3 Lerp(const Vector3& start, const Vector3& end, const float t);
