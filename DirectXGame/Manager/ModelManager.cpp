@@ -179,7 +179,7 @@ void ModelManager::LoadModel(const std::string& filePath) {
 	}
 
 	ModelData modelData;
-	modelData = LoadObjFile("Resources", filePath);
+	modelData = LoadModelFile("Resources", filePath);
 
 	modelDatas.insert(std::make_pair(filePath, std::move(modelData)));
 }
