@@ -479,3 +479,20 @@ float Length(const Vector3& v) {
 Vector3 Lerp(const Vector3& start, const Vector3& end, const float t) {
 	return start + t * (end - start);
 }
+Quartenion Slerp(const Quartenion& q0, const Quartenion& q1, float t) {
+	Quartenion q = q0;
+	float dot = Dot(q0, q1);
+	if (dot < 0.0f) {
+		q = -q;
+		dot = -dot;
+	}
+	constexpr float EPSILON = 0.0001f;
+	if (dot >= 1.0f - EPSILON) {
+		return (1.0f - t) * q + t * q0;
+	}
+	float theta = std::acos(dot);
+	float sinTheta = 1.0f / std::sin(theta);
+	float scale1 = std::sin((1.0f - t) * theta) * sinTheta;
+	float scale2 = std::sin(t * theta) * sinTheta;
+	return (q * scale1) + (q1 * scale2);
+}
