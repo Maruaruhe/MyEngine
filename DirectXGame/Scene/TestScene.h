@@ -8,6 +8,7 @@
 #include "../Object/Light/Lighting.h"
 #include "../Object/Camera/Camera.h"
 #include "../Object/Model/Model.h"
+#include "../Object/Anime/Anime.h"
 #include "../Object/Particle/Particle.h"
 
 #include "../GameObject/Entity/Player/Player.h"
@@ -28,6 +29,6 @@ private:
 
 	Camera* camera2;
 
-	Model model;
+	Anime model;
 };
 

@@ -479,8 +479,9 @@ float Length(const Vector3& v) {
 Vector3 Lerp(const Vector3& start, const Vector3& end, const float t) {
 	return start + t * (end - start);
 }
-Quartenion Slerp(const Quartenion& q0, const Quartenion& q1, float t) {
-	Quartenion q = q0;
+
+Quaternion Slerp(const Quaternion& q0, const Quaternion& q1, float t) {
+	Quaternion q = q0;
 	float dot = Dot(q0, q1);
 	if (dot < 0.0f) {
 		q = -q;
@@ -495,4 +496,33 @@ Quartenion Slerp(const Quartenion& q0, const Quartenion& q1, float t) {
 	float scale1 = std::sin((1.0f - t) * theta) * sinTheta;
 	float scale2 = std::sin(t * theta) * sinTheta;
 	return (q * scale1) + (q1 * scale2);
+}
+
+float Dot(const Quaternion& q1, const Quaternion& q2) {
+	return (q1.x * q2.x) + (q1.y * q2.y) + (q1.z * q2.z) + (q1.w * q2.w);
+}
+
+Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Quaternion& rotate, const Vector3& translate) {
+
+	Matrix4x4 rotateMatrix = MakeRotateMatrix(rotate);
+
+	Matrix4x4 mat = {
+		scale.x * rotateMatrix.m[0][0],   scale.x * rotateMatrix.m[0][1],   scale.x * rotateMatrix.m[0][2],   0,
+		scale.y * rotateMatrix.m[1][0],   scale.y * rotateMatrix.m[1][1],   scale.y * rotateMatrix.m[1][2],   0,
+		scale.z * rotateMatrix.m[2][0],   scale.z * rotateMatrix.m[2][1],   scale.z * rotateMatrix.m[2][2],   0,
+		translate.x,translate.y,translate.z,1
+	};
+
+	return mat;
+}
+
+Matrix4x4 MakeRotateMatrix(const Quaternion& q) {
+	Matrix4x4 result = {
+		q.w * q.w + q.x * q.x - q.y * q.y - q.z * q.z,  2 * (q.x * q.y + q.w * q.z),  2 * (q.x * q.z - q.w * q.y),0,
+		2 * (q.x * q.y - q.w * q.z),  q.w * q.w - q.x * q.x + q.y * q.y - q.z * q.z,  2 * (q.y * q.z + q.w * q.x),0,
+		2 * (q.x * q.z + q.w * q.y), 2 * (q.y * q.z - q.w * q.x),q.w * q.w - q.x * q.x - q.y * q.y + q.z * q.z,0,
+		0,0,0,1
+	};
+
+	return result;
 }

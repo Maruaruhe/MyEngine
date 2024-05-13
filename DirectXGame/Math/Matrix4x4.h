@@ -67,4 +67,7 @@ Vector3 Normalize(const Vector3& v);
 float Length(const Vector3& v);
 
 Vector3 Lerp(const Vector3& start, const Vector3& end, const float t);
-Quartenion Slerp(const Quartenion& q0, const Quartenion& q1, float t);
+Quaternion Slerp(const Quaternion& q0, const Quaternion& q1, float t);
+float Dot(const Quaternion& q1, const Quaternion& q2);
+Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Quaternion& rotate, const Vector3& translate);
+Matrix4x4 MakeRotateMatrix(const Quaternion& q);

@@ -24,7 +24,7 @@ struct KeyframeVector3 {
 };
 
 struct KeyframeQuartenion {
-	Quartenion value;
+	Quaternion value;
 	float time;
 };
 
@@ -60,4 +60,4 @@ struct Animation {
 
 Animation LoadAnimationFile(const std::string& directoryPath, const std::string& filename);
 Vector3 CalculateValue(const std::vector<KeyframeVector3>& keyframes, float time);
-Quartenion CalculateValue(const std::vector<KeyframeQuartenion>& keyframes, float time);
+Quaternion CalculateValue(const std::vector<KeyframeQuartenion>& keyframes, float time);
