@@ -45,8 +45,8 @@ void Anime::ApplyGlobalVariables() {
 }
 
 void Anime::Update() {
-	DrawMatrix4x4("localMatrix", localMatrix);
-	ApplyGlobalVariables();
+//	DrawMatrix4x4("localMatrix", localMatrix);
+//	ApplyGlobalVariables();
 
 	material->uvTransform = MakeIdentity4x4();
 

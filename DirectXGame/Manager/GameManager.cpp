@@ -56,11 +56,22 @@ void GameManager::Run() {
 			if (prevSceneNo != currentSceneNo) {
 				sceneArr[currentSceneNo]->Initialize();
 			}
+			//directX12->PreDrawForPostEffect();
+		//	graphicsRenderer_->DecideCommand();
+
+		//	sceneArr[currentSceneNo]->Update();
+			//sceneArr[currentSceneNo]->Draw();
+
+			//directX12->PostDrawForPostEffect();
 
 			BeginFrame();
+			directX12->PreDraw();
 			sceneArr[currentSceneNo]->Update();
-			ImGui::Render();
+			graphicsRenderer_->DecideCommand();
+			ImGui::Text("a");
 			sceneArr[currentSceneNo]->Draw();
+			ImGui::Render();
+
 			EndFrame();
 		}
 	}
@@ -72,8 +83,6 @@ void GameManager::BeginFrame() {
 	ImGui_ImplDX12_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
-	directX12->PreDraw();
-	graphicsRenderer_->DecideCommand();
 }
 void GameManager::EndFrame() {
 	directX12->PostDraw();

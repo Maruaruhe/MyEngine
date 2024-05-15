@@ -49,11 +49,11 @@ void Camera::Update() {
 	transform.translate = Add(transform.translate,move);
 
 	position->worldPosition = transform.translate;
-	ImGui::Begin("Camera");
-	ImGui::SliderFloat3("translate", &transform.translate.x, -15, 15);
-	ImGui::SliderFloat3("rotate", &transform.rotate.x, -3.0f, 3.0f);
-	ImGui::SliderFloat3("scale", &transform.scale.x, 1.0f, 10.0f);
-	ImGui::End();
+	//ImGui::Begin("Camera");
+	//ImGui::SliderFloat3("translate", &transform.translate.x, -15, 15);
+	//ImGui::SliderFloat3("rotate", &transform.rotate.x, -3.0f, 3.0f);
+	//ImGui::SliderFloat3("scale", &transform.scale.x, 1.0f, 10.0f);
+	//ImGui::End();
 
 	MakeWVPMatrix();
 

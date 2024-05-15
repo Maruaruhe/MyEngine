@@ -16,7 +16,7 @@ void TestScene::Initialize() {
 }
 
 void TestScene::Update() {
-	GlobalVariables::GetInstance()->Update();
+//	GlobalVariables::GetInstance()->Update();
 
 	light.Update();
 	camera2->Update();

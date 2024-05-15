@@ -54,7 +54,26 @@ void DirectX12::PreDraw() {
 }
 
 void DirectX12::PreDrawForPostEffect() {
+	//BARRIER
+	barrier = {};
+	barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+	barrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
+	barrier.Transition.pResource = renderTextureResource.Get();
+	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT;
+	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET;
 
+	commandList->ResourceBarrier(1, &barrier);
+
+	//OMSetRender
+	D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle = dsvDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
+	commandList->OMSetRenderTargets(1, &rtvHandle[2], false, &dsvHandle);
+
+	//ClearRender
+	float clearColor[] = { 1.0f,0.0f,0.0f,1.0f };
+	commandList->ClearRenderTargetView(rtvHandle[2], clearColor, 0, nullptr);
+
+	//ClearDepth
+	commandList->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 }
 
 void DirectX12::PostDraw() {
@@ -70,7 +89,19 @@ void DirectX12::PostDraw() {
 }
 
 void DirectX12::PostDrawForPostEffect() {
+	////ScreenDisplay
+	//barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;
+	//barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;
+	//commandList->ResourceBarrier(1, &barrier);
 
+	ScreenDisplay();
+	CommandConfirm();
+	CommandKick();
+
+	UpdataFixFPS();
+
+	Signal();
+	NextFlameCommandList();
 }
 
 void DirectX12::DXGIFactory() {
@@ -175,7 +206,7 @@ void DirectX12::DescriptorHeap() {
 
 	rtvHandle[2].ptr =rtvHandle[1].ptr + device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
 	const Vector4 kRenderTargetClearValue{ 1.0f,0.0f,0.0f,1.0f };//aka
-	auto renderTextureResource = CreateRenderTextureResource(kClientWidth, kClientHeight, DXGI_FORMAT_R8G8B8A8_UNORM_SRGB, kRenderTargetClearValue);
+	renderTextureResource = CreateRenderTextureResource(kClientWidth, kClientHeight, DXGI_FORMAT_R8G8B8A8_UNORM_SRGB, kRenderTargetClearValue);
 	device->CreateRenderTargetView(renderTextureResource.Get(), &rtvDesc, rtvHandle[2]);
 
 	//srv

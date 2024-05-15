@@ -195,6 +195,8 @@ private:
 	uint32_t descriptorSizeDSV;
 
 	std::chrono::steady_clock::time_point reference_;
+	Microsoft::WRL::ComPtr<ID3D12Resource> renderTextureResource;
+
 
 	DirectX12() = default;
 	~DirectX12() = default;
