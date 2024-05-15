@@ -43,11 +43,13 @@ public:
 	/// 描画前処理
 	/// </summary>
 	void PreDraw();
+	void PreDrawForPostEffect();
 
 	/// <summary>
 	/// 描画後処理
 	/// </summary>
 	void PostDraw();
+	void PostDrawForPostEffect();
 
 	void Error();
 
@@ -90,7 +92,6 @@ public:
 	void CreateDSVParticle();
 
 	void RTV();
-	void CreateRTVForRenderTexture();
 
 	void CommandKick();
 
@@ -113,6 +114,8 @@ public:
 
 	static const uint32_t kMaxSRVCount = 512;
 	uint32_t GetdescriptorSizeSRV() { return descriptorSizeSRV; }
+
+	Microsoft::WRL::ComPtr<ID3D12Resource> CreateRenderTextureResource(uint32_t width, uint32_t height, DXGI_FORMAT format, const Vector4& color);
 private:
 	static DirectX12* instance;
 
@@ -164,7 +167,7 @@ private:
 	D3D12_CPU_DESCRIPTOR_HANDLE rtvStartHandle;
 
 	//RTVを２つ作るのでディスクリプタ２つ用意
-	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle[2];
+	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle[3];
 
 
 	UINT backBufferIndex;

@@ -53,6 +53,10 @@ void DirectX12::PreDraw() {
 	SetImGuiDescriptorHeap();
 }
 
+void DirectX12::PreDrawForPostEffect() {
+
+}
+
 void DirectX12::PostDraw() {
 	PushImGuiDrawCommand();
 	ScreenDisplay();
@@ -63,6 +67,10 @@ void DirectX12::PostDraw() {
 
 	Signal();
 	NextFlameCommandList();
+}
+
+void DirectX12::PostDrawForPostEffect() {
+
 }
 
 void DirectX12::DXGIFactory() {
@@ -137,11 +145,11 @@ void DirectX12::SwapChain() {
 
 void DirectX12::DescriptorHeap() {
 	//rtv
-	rtvDescriptorHeap = CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE_RTV, 2, false);
+	rtvDescriptorHeap = CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE_RTV, 3, false);
 	rtvDescriptorHeapDesc = {};
 
 	rtvDescriptorHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
-	rtvDescriptorHeapDesc.NumDescriptors = 2;
+	rtvDescriptorHeapDesc.NumDescriptors = 3;
 
 	HRESULT hr = device->CreateDescriptorHeap(&rtvDescriptorHeapDesc, IID_PPV_ARGS(&rtvDescriptorHeap));
 	assert(SUCCEEDED(hr));
@@ -161,31 +169,27 @@ void DirectX12::DescriptorHeap() {
 
 	rtvHandle[0] = rtvStartHandle;
 	device->CreateRenderTargetView(swapChainResource[0].Get(), &rtvDesc, rtvHandle[0]);
+
 	rtvHandle[1].ptr = rtvHandle[0].ptr + device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
-
 	device->CreateRenderTargetView(swapChainResource[1].Get(), &rtvDesc, rtvHandle[1]);
-	//kokomadeoke
 
-	//texture
-	DirectX::ScratchImage mipImages = texture->LoadTexture("Resources/uvChecker.png");
-	const DirectX::TexMetadata& metadata = mipImages.GetMetadata();
-	Microsoft::WRL::ComPtr<ID3D12Resource> textureResource = texture->CreateTextureResource(device, metadata);
-	texture->UploadTextureData(textureResource, mipImages);//kore?
-	//
+	rtvHandle[2].ptr =rtvHandle[1].ptr + device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
+	const Vector4 kRenderTargetClearValue{ 1.0f,0.0f,0.0f,1.0f };//aka
+	auto renderTextureResource = CreateRenderTextureResource(kClientWidth, kClientHeight, DXGI_FORMAT_R8G8B8A8_UNORM_SRGB, kRenderTargetClearValue);
+	device->CreateRenderTargetView(renderTextureResource.Get(), &rtvDesc, rtvHandle[2]);
 
 	//srv
 	srvDescriptorHeap = CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, kMaxSRVCount, true);
 
-	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
-	srvDesc.Format = metadata.format;
-	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
-	srvDesc.Texture2D.MipLevels = UINT(metadata.mipLevels);
-	//
+	/*D3D12_SHADER_RESOURCE_VIEW_DESC renderTextureSrvDesc{};
+	renderTextureSrvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+	renderTextureSrvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+	renderTextureSrvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
+	renderTextureSrvDesc.Texture2D.MipLevels = 1;
+
 	D3D12_CPU_DESCRIPTOR_HANDLE textureSrvHandleCPU = GetCPUDescriptorHandle(1);
 	textureSrvHandleGPU = GetGPUDescriptorHandle(1);
-
-	device->CreateShaderResourceView(textureResource.Get(), &srvDesc, textureSrvHandleCPU);
+	device->CreateShaderResourceView(renderTextureResource.Get(), &renderTextureSrvDesc, textureSrvHandleCPU);*/
 }
 
 void DirectX12::CreateDSV() {
@@ -336,49 +340,6 @@ void DirectX12::Signal() {
 }
 
 
-Microsoft::WRL::ComPtr<ID3D12Resource> DirectX12::CreateRenderTextureResource(DXGI_FORMAT format, const Vector4& clearColor) {
-	Microsoft::WRL::ComPtr<ID3D12Resource> resource;
-
-	D3D12_RESOURCE_DESC resourceDesc;
-	resourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET;
-
-	D3D12_HEAP_PROPERTIES heapProperties{};
-	heapProperties.Type = D3D12_HEAP_TYPE_DEFAULT;
-
-	D3D12_CLEAR_VALUE clearValue;
-	clearValue.Format = format;
-	clearValue.Color[0] = clearColor.x;
-	clearValue.Color[1] = clearColor.y;
-	clearValue.Color[2] = clearColor.z;
-	clearValue.Color[3] = clearColor.w;
-	
-	device->CreateCommittedResource(
-		&heapProperties,
-		D3D12_HEAP_FLAG_NONE,
-		&resourceDesc,
-		D3D12_RESOURCE_STATE_RENDER_TARGET,
-		&clearValue,
-		IID_PPV_ARGS(&resource));
-
-	return resource;
-}
-
-void DirectX12::CreateRTVForRenderTexture() {
-	const Vector4 kRenderTargetClearView{ 1.0f,1.0f,0.0f,1.0f };
-	auto renderTextureResource = CreateRenderTextureResource(DXGI_FORMAT_R8G8B8A8_UNORM_SRGB, kRenderTargetClearView);
-
-	device->CreateRenderTargetView(renderTextureResource.Get(), &rtvDesc, GetCPUDescriptorHandle(2));
-
-	D3D12_SHADER_RESOURCE_VIEW_DESC renderTextureSrvDesc{};
-	renderTextureSrvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
-	renderTextureSrvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-	renderTextureSrvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
-	renderTextureSrvDesc.Texture2D.MipLevels = 1;
-
-	device->CreateShaderResourceView(renderTextureResource.Get(), &renderTextureSrvDesc, GetCPUDescriptorHandle(2));
-}
-
-
 void DirectX12::ResourceLeakCheck() {
 	IDXGIDebug1* debug;
 	if (SUCCEEDED(DXGIGetDebugInterface1(0, IID_PPV_ARGS(&debug)))) {
@@ -477,4 +438,53 @@ void DirectX12::UpdataFixFPS() {
 void DirectX12::Finalize() {
 	delete instance;
 	instance = nullptr;
+}
+
+Microsoft::WRL::ComPtr<ID3D12Resource> DirectX12::CreateRenderTextureResource(uint32_t width, uint32_t height, DXGI_FORMAT format, const Vector4& color) {
+	Microsoft::WRL::ComPtr<ID3D12Resource> resultResource;
+
+	// 頂点リソース用のヒープ設定
+	D3D12_HEAP_PROPERTIES uploadHeapProperties_{};
+	uploadHeapProperties_.Type = D3D12_HEAP_TYPE_CUSTOM; // VRAM上に作る
+	uploadHeapProperties_.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_WRITE_BACK;
+	uploadHeapProperties_.MemoryPoolPreference = D3D12_MEMORY_POOL_L0;
+
+	// バッファリソース。テクスチャの場合はまた別の設定をする
+	D3D12_RESOURCE_DESC resourceDesc{};
+	resourceDesc.Format = format;
+	resourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
+
+	// リソースのサイズ
+	resourceDesc.Width = width;
+	resourceDesc.Height = height;
+
+	resourceDesc.DepthOrArraySize = 1;
+	resourceDesc.MipLevels = 1;
+	resourceDesc.SampleDesc.Count = 1;
+
+	// RenderTargetとして利用可能にする
+	resourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET;
+
+	// ClearValueの設定
+	D3D12_CLEAR_VALUE clearValue{};
+	clearValue.Format = format;
+	clearValue.Color[0] = color.x;
+	clearValue.Color[1] = color.y;
+	clearValue.Color[2] = color.z;
+	clearValue.Color[3] = color.w;
+
+	// 実際に頂点リソースを作る
+	HRESULT hr_;
+	hr_ = device->CreateCommittedResource(
+		&uploadHeapProperties_,
+		D3D12_HEAP_FLAG_NONE,
+		&resourceDesc,
+		D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, // これから描画することを前提としたTextureなのでRederTargetとして使うことから始める
+		&clearValue, // Clear最適地。ClearRederTargetをこの色でClearするようにする。最適化されているので高速である。
+		IID_PPV_ARGS(&resultResource));
+	assert(SUCCEEDED(hr_));
+
+	//CreateResource::GetInstance()->TransfarImage(resultResource);
+
+	return resultResource;
 }
