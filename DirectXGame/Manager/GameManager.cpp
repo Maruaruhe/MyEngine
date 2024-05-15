@@ -66,10 +66,9 @@ void GameManager::Run() {
 
 			BeginFrame();
 			directX12->PreDraw();
-			sceneArr[currentSceneNo]->Update();
 			graphicsRenderer_->DecideCommand();
 			ImGui::Text("a");
-			sceneArr[currentSceneNo]->Draw();
+
 			ImGui::Render();
 
 			EndFrame();
