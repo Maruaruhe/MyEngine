@@ -68,5 +68,4 @@ struct ModelData {
 	std::vector<VertexData> vertices;
 	MaterialData material;
 	Node rootNode;
-	Skelton skelton;
 };

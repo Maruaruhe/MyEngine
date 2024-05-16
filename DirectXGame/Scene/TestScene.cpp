@@ -10,8 +10,8 @@ void TestScene::Initialize() {
 
 	light.Initialize();
 
-	ModelManager::GetInstance()->LoadModel("AnimatedCube");
-	model.Initialize("AnimatedCube");
+	ModelManager::GetInstance()->LoadModel("simpleSkin");
+	model.Initialize("simpleSkin");
 	model.SetCamera(camera2);
 }
 

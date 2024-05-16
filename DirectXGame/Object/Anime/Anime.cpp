@@ -19,6 +19,7 @@ void Anime::Initialize(const std::string& filename) {
 
 	InitializePosition(filename);
 	anime = LoadAnimationFile("Resources/" , filename + ".gltf");
+	skelton = ModelManager::GetInstance()->CreateSkelton(modelData.rootNode);
 	CreateMaterialResource();
 	CreateVertexBufferView();
 	CreateTransformationMatrixResource();
@@ -32,7 +33,6 @@ void Anime::Initialize(const std::string& filename) {
 
 	ApplyGlobalVariables();
 	//
-
 
 	TextureManager::GetInstance()->LoadTexture("Resources/uvChecker.png");
 	textureIndex = TextureManager::GetInstance()->GetTextureIndexByFilePath("Resources/uvChecker.png");
@@ -52,9 +52,12 @@ void Anime::Update() {
 
 	worldMatrix = MakeAffineMatrix(transform.scale, transform.rotate, transform.translate);
 
-	UpdateAnimation();
-	ApplyAnimation(modelData.skelton, anime, animationTime);
-	UpdateSkelton(modelData.skelton);
+	animationTime += 1.0f / 60.0f;
+	animationTime = std::fmod(animationTime, anime.duration);
+
+	//UpdateAnimation();
+	ApplyAnimation(skelton, anime, animationTime);
+	UpdateSkelton(skelton);
 
 	Matrix4x4 worldViewProjectionMatrix;
 	if (camera) {
@@ -63,6 +66,7 @@ void Anime::Update() {
 		}
 		const Matrix4x4& viewprojectionMatrix = camera->viewProjectionMatrix;
 		worldViewProjectionMatrix = localMatrix * worldMatrix * viewprojectionMatrix;
+		//worldViewProjectionMatrix = skelton.joints[0].skeltonSpaceMatrix * worldMatrix * viewprojectionMatrix;
 	}
 	else {
 		worldViewProjectionMatrix = worldMatrix;
@@ -92,8 +96,6 @@ void Anime::Draw() {
 }
 
 void Anime::UpdateAnimation() {
-	animationTime += 1.0f / 60.0f;
-	animationTime = std::fmod(animationTime, anime.duration);
 	NodeAnimation& rootNodeAnimation = anime.nodeAnimations[modelData.rootNode.name];
 	Vector3 translate = CalculateValue(rootNodeAnimation.translate, animationTime);
 	Quaternion rotate = CalculateValue(rootNodeAnimation.rotate, animationTime);
