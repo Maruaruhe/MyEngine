@@ -28,30 +28,11 @@ struct KeyframeQuartenion {
 	float time;
 };
 
-//template <typename tValue>
-//struct Keyframe {
-//	float time;
-//	tValue value;
-//};
-//using KeyframeVector3 = Keyframe<Vector3>;
-//using KeyframeQuartenion = Keyframe<Quartenion>;
-
 struct NodeAnimation {
 	std::vector<KeyframeVector3> translate;
 	std::vector<KeyframeQuartenion> rotate;
 	std::vector<KeyframeVector3> scale;
 };
-
-//template <typename tValue>
-//struct AnimationCurve {
-//	std::vector<Keyframe<tValue>> keyframes:
-//};
-//
-//struct NodeAnimation {
-//	AnimationCurve<Vector3> translate;
-//	AnimationCurve<Quartenion> rotate;
-//	AnimationCurve<Vector3> scale;
-//};
 
 struct Animation {
 	float duration;

@@ -53,12 +53,14 @@ void Anime::Update() {
 	worldMatrix = MakeAffineMatrix(transform.scale, transform.rotate, transform.translate);
 
 	UpdateAnimation();
+	ApplyAnimation(modelData.skelton, anime, animationTime);
+	UpdateSkelton(modelData.skelton);
 
 	Matrix4x4 worldViewProjectionMatrix;
 	if (camera) {
-		/*if (isParent) {
+		if (isParent) {
 			worldMatrix = Multiply(worldMatrix, camera->cameraMatrix);
-		}*/
+		}
 		const Matrix4x4& viewprojectionMatrix = camera->viewProjectionMatrix;
 		worldViewProjectionMatrix = localMatrix * worldMatrix * viewprojectionMatrix;
 	}
@@ -98,6 +100,30 @@ void Anime::UpdateAnimation() {
 	Vector3 scale = CalculateValue(rootNodeAnimation.scale, animationTime);
 
 	localMatrix = MakeAffineMatrix(scale, rotate, translate);
+}
+
+void Anime::UpdateSkelton(Skelton& skelton) {
+	for (Joint& joint : skelton.joints) {
+		joint.localMatrix = MakeAffineMatrix(joint.transform.scale, joint.transform.rotate, joint.transform.translate);
+		if (joint.parent) {
+			joint.skeltonSpaceMatrix = joint.localMatrix * skelton.joints[*joint.parent].skeltonSpaceMatrix;
+		}
+		else {
+			joint.skeltonSpaceMatrix = joint.localMatrix;
+		}
+	}
+}
+
+void Anime::ApplyAnimation(Skelton& skelton, const Animation& animation, float animationTime) {
+	for (Joint& joint : skelton.joints) {
+		//定昇のAnimationがあれば、値の適用を行う。
+		if (auto it = animation.nodeAnimations.find(joint.name); it != animation.nodeAnimations.end()) {
+			const NodeAnimation& rootNodeAnimation = (*it).second;
+			joint.transform.translate = CalculateValue(rootNodeAnimation.translate, animationTime);
+			joint.transform.rotate = CalculateValue(rootNodeAnimation.rotate, animationTime);
+			joint.transform.scale = CalculateValue(rootNodeAnimation.scale, animationTime);
+		}
+	}
 }
 
 void Anime::CreateVertexBufferView() {

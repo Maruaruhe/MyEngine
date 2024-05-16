@@ -18,6 +18,12 @@ struct Transform {
 	Vector3 translate;
 };
 
+struct QuaternionTransform {
+	Vector3 scale;
+	Quaternion rotate;
+	Vector3 translate;
+};
+
 struct ParticleInfo {
 	Transform transform;
 	Vector3 velocity;

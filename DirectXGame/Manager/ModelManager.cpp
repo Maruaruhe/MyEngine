@@ -99,6 +99,7 @@ ModelData ModelManager::LoadModelFile(const std::string& directoryPath, const st
 		}
 	}
 	modelData.rootNode = ReadNode(scene->mRootNode);
+	modelData.skelton = CreateSkelton(modelData.rootNode);
 
 	return modelData;
 }
@@ -221,5 +222,43 @@ Node ModelManager::ReadNode(aiNode* node) {
 	for (uint32_t childIndex = 0; childIndex < node->mNumChildren; ++childIndex) {
 		result.children[childIndex] = ReadNode(node->mChildren[childIndex]);
 	}
+
+	aiVector3D scale, translate;
+	aiQuaternion rotate;
+
+	node->mTransformation.Decompose(scale, rotate, translate);
+	result.transform.scale = { scale.x,scale.y,scale.z };
+	result.transform.rotate = { rotate.x,-rotate.y, -rotate.z, rotate.w };
+	result.transform.translate = { -translate.x,translate.y,translate.z };
+	result.localMatrix = MakeAffineMatrix(result.transform.scale, result.transform.rotate, result.transform.translate);
+
 	return result;
+}
+
+Skelton ModelManager::CreateSkelton(const Node& rootNode) {
+	Skelton skelton;
+	skelton.root = CreateJoint(rootNode, {}, skelton.joints);
+
+	for (const Joint& joint : skelton.joints) {
+		skelton.jointMap.emplace(joint.name, joint.index);
+	}
+	return skelton;
+}
+
+int32_t ModelManager::CreateJoint(const Node& node, const std::optional<int32_t>& parent, std::vector<Joint>& joints) {
+	Joint joint;
+	joint.name = node.name;
+	joint.localMatrix = node.localMatrix;
+	joint.skeltonSpaceMatrix = MakeIdentity4x4();
+	joint.transform = node.transform;
+	joint.index = int32_t(joints.size());
+	joint.parent = parent;
+	joints.push_back(joint);
+
+	for (const Node& child : node.children) {
+		int32_t childIndex = CreateJoint(child, joint.index, joints);
+		joints[joint.index].children.push_back(childIndex);
+	}
+
+	return joint.index;
 }

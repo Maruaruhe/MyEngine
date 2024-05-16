@@ -39,6 +39,8 @@ private:
 	void InitializePosition(const std::string& filename);
 
 	void UpdateAnimation();
+	void UpdateSkelton(Skelton& skelton);
+	void ApplyAnimation(Skelton& skelton, const Animation& animation, float animationTime);
 
 	void ApplyGlobalVariables();
 
@@ -63,6 +65,7 @@ private:
 	Matrix4x4 localMatrix;
 
 	Animation anime;
+	Skelton skelton;
 
 	//DirectX12* directX12 = nullptr;
 	Input* input_ = nullptr;
