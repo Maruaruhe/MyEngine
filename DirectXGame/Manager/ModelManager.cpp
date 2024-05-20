@@ -99,7 +99,6 @@ ModelData ModelManager::LoadModelFile(const std::string& directoryPath, const st
 		}
 	}
 	modelData.rootNode = ReadNode(scene->mRootNode);
-	//modelData.skelton = CreateSkelton(modelData.rootNode);
 
 	return modelData;
 }

@@ -75,6 +75,10 @@ void Anime::Update() {
 	//transformationMatrix->World = Multiply(modelData.rootNode.localMatrix, worldMatrix);
 	transformationMatrix->WVP = worldViewProjectionMatrix;
 	transformationMatrix->World = worldMatrix;
+
+	for (int i = 0; i < jointmodels.size(); i++) {
+		jointmodels[i].Update();
+	}
 }
 
 void Anime::Draw() {
@@ -92,7 +96,11 @@ void Anime::Draw() {
 	//koko
 	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(2, DirectX12::GetInstance()->GetSrvHandleGPU());
 	//描画！　（DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
-	DirectX12::GetInstance()->GetCommandList()->DrawInstanced(UINT(modelData.vertices.size()), 1, 0, 0);
+	DirectX12::GetInstance()->GetCommandList()->DrawIndexedInstanced(UINT(modelData.indices.size()), 1, 0, 0, 0);
+
+	for (int i = 0; i < jointmodels.size(); i++) {
+		jointmodels[i].Draw();
+	}
 }
 
 void Anime::UpdateAnimation() {

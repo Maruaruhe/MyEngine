@@ -97,7 +97,7 @@ private:
 	const int32_t kClientWidth = 1280;
 	const int32_t kClientHeight = 720;
 
-	bool useMonsterBall = true;
+	std::vector<Model> jointmodels;
 
 private:
 

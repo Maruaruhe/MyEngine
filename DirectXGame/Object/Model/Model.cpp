@@ -44,7 +44,7 @@ void Model::ApplyGlobalVariables() {
 }
 
 void Model::Update() {
-	ApplyGlobalVariables();
+	//ApplyGlobalVariables();
 
 	material->uvTransform = MakeIdentity4x4();
 
