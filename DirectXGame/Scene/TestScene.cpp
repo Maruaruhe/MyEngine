@@ -10,8 +10,8 @@ void TestScene::Initialize() {
 
 	light.Initialize();
 
-	ModelManager::GetInstance()->LoadModel("simpleSkin");
-	model.Initialize("simpleSkin");
+	ModelManager::GetInstance()->LoadModel("walk");
+	model.Initialize("walk");
 	model.SetCamera(camera2);
 }
 

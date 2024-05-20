@@ -65,7 +65,7 @@ void Anime::Update() {
 			worldMatrix = Multiply(worldMatrix, camera->cameraMatrix);
 		}
 		const Matrix4x4& viewprojectionMatrix = camera->viewProjectionMatrix;
-		worldViewProjectionMatrix = localMatrix * worldMatrix * viewprojectionMatrix;
+		worldViewProjectionMatrix = worldMatrix * viewprojectionMatrix;
 		//worldViewProjectionMatrix = skelton.joints[0].skeltonSpaceMatrix * worldMatrix * viewprojectionMatrix;
 	}
 	else {
@@ -74,7 +74,7 @@ void Anime::Update() {
 	//transformationMatrix->WVP = Multiply(Multiply(modelData.rootNode.localMatrix , worldMatrix), camera->viewProjectionMatrix);
 	//transformationMatrix->World = Multiply(modelData.rootNode.localMatrix, worldMatrix);
 	transformationMatrix->WVP = worldViewProjectionMatrix;
-	transformationMatrix->World = localMatrix *  worldMatrix;
+	transformationMatrix->World = worldMatrix;
 }
 
 void Anime::Draw() {
