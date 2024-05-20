@@ -23,6 +23,7 @@ void Anime::Initialize(const std::string& filename) {
 	CreateMaterialResource();
 	CreateVertexBufferView();
 	CreateTransformationMatrixResource();
+	CreateIndexResource();
 
 	//GlobalVariables
 	forg = filename;
@@ -79,20 +80,20 @@ void Anime::Update() {
 
 void Anime::Draw() {
 	DirectX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView);	//VBVを設定
+	DirectX12::GetInstance()->GetCommandList()->IASetIndexBuffer(&indexBufferViewSprite);	//
 	//形状を設定。PSOに設定しているものとはまた別。同じものを設定すると考えておけばよい
 	DirectX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
 
 	GraphicsRenderer::GetInstance()->SetRootSignatureAndPSO(false);
 
-	//directX12_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResourceSprite->GetGPUVirtualAddress());
 	//wvp用のCBufferの場所を設定
 	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
 
 	//koko
 	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(2, DirectX12::GetInstance()->GetSrvHandleGPU());
 	//描画！　（DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
-	DirectX12::GetInstance()->GetCommandList()->DrawInstanced(UINT(modelData.vertices.size()), 1, 0, 0);
+	DirectX12::GetInstance()->GetCommandList()->DrawIndexedInstanced(UINT(modelData.indices.size()), 1, 0, 0, 0);
 }
 
 void Anime::UpdateAnimation() {
@@ -160,6 +161,18 @@ void Anime::CreateTransformationMatrixResource() {
 	wvpResource_->Map(0, nullptr, reinterpret_cast<void**>(&transformationMatrix));
 	//単位行列を書き込んでおく
 	transformationMatrix->WVP = MakeIdentity4x4();
+}
+
+void Anime::CreateIndexResource() {
+	indexResource = DirectX12::GetInstance()->CreateBufferResource(sizeof(uint32_t) * modelData.indices.size());
+	indexBufferViewSprite.BufferLocation = indexResource->GetGPUVirtualAddress();
+	indexBufferViewSprite.SizeInBytes = UINT(sizeof(uint32_t) * modelData.indices.size());
+	indexBufferViewSprite.Format = DXGI_FORMAT_R32_UINT;
+
+	uint32_t* mappedIndex = nullptr;
+
+	indexResource->Map(0, nullptr, reinterpret_cast<void**>(&mappedIndex));
+	std::memcpy(mappedIndex, modelData.indices.data(), sizeof(uint32_t) * modelData.indices.size());
 }
 
 MaterialData Anime::LoadMaterialTemplateFile(const std::string& directoryPath, const std::string& filename) {

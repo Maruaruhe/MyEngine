@@ -50,6 +50,8 @@ private:
 
 	void CreateVertexBufferView();
 
+	void CreateIndexResource();
+
 	MaterialData LoadMaterialTemplateFile(const std::string& directoryPath, const std::string& filename);
 
 	void DrawMatrix4x4(const char* title, const Matrix4x4& matrix);
@@ -85,6 +87,7 @@ private:
 
 	//頂点バッファビューを作成する
 	D3D12_VERTEX_BUFFER_VIEW vertexBufferView;
+	D3D12_INDEX_BUFFER_VIEW indexBufferViewSprite;
 
 	//頂点リソースにデータを書き込む
 
@@ -93,6 +96,8 @@ private:
 	Microsoft::WRL::ComPtr<ID3D12Resource> wvpResource_;
 
 	Microsoft::WRL::ComPtr<ID3D12Resource> directionalLightResource;
+
+	Microsoft::WRL::ComPtr<ID3D12Resource> indexResource;
 
 	const int32_t kClientWidth = 1280;
 	const int32_t kClientHeight = 720;
