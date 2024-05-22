@@ -89,22 +89,22 @@ void DirectX12::PostDraw() {
 
 void DirectX12::PostDrawForPostEffect() {
 	//ScreenDisplay
-	//D3D12_RESOURCE_BARRIER renderBarrier{};
-	//renderBarrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
-	//renderBarrier.Transition.pResource = renderTextureResource.Get();
+	D3D12_RESOURCE_BARRIER renderBarrier{};
+	renderBarrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+	renderBarrier.Transition.pResource = renderTextureResource.Get();
 
-	//renderBarrier.Transition.StateBefore = D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE;
-	//renderBarrier.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET;
-	//commandList->ResourceBarrier(1, &renderBarrier);
+	renderBarrier.Transition.StateBefore = D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE;
+	renderBarrier.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET;
+	commandList->ResourceBarrier(1, &renderBarrier);
 
-	ScreenDisplay();
-	CommandConfirm();
-	CommandKick();
+	//ScreenDisplay();
+	//CommandConfirm();
+	//CommandKick();
 
-	UpdataFixFPS();
+	//UpdataFixFPS();
 
-	Signal();
-	NextFlameCommandList();
+	//Signal();
+	//NextFlameCommandList();
 }
 
 void DirectX12::DXGIFactory() {
