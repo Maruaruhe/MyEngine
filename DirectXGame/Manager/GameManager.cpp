@@ -56,13 +56,13 @@ void GameManager::Run() {
 			if (prevSceneNo != currentSceneNo) {
 				sceneArr[currentSceneNo]->Initialize();
 			}
-			//directX12->PreDrawForPostEffect();
-		//	graphicsRenderer_->DecideCommand();
+			directX12->PreDrawForPostEffect();
+			graphicsRenderer_->DecideCommand();
 
-		//	sceneArr[currentSceneNo]->Update();
-			//sceneArr[currentSceneNo]->Draw();
+			sceneArr[currentSceneNo]->Update();
+			sceneArr[currentSceneNo]->Draw();
 
-			//directX12->PostDrawForPostEffect();
+			directX12->PostDrawForPostEffect();
 
 			BeginFrame();
 			directX12->PreDraw();

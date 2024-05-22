@@ -57,10 +57,9 @@ void DirectX12::PreDrawForPostEffect() {
 	//BARRIER
 	barrier = {};
 	barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
-	barrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
 	barrier.Transition.pResource = renderTextureResource.Get();
-	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT;
-	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET;
+	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;
+	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE;
 
 	commandList->ResourceBarrier(1, &barrier);
 
@@ -89,10 +88,14 @@ void DirectX12::PostDraw() {
 }
 
 void DirectX12::PostDrawForPostEffect() {
-	////ScreenDisplay
-	//barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;
-	//barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;
-	//commandList->ResourceBarrier(1, &barrier);
+	//ScreenDisplay
+	//D3D12_RESOURCE_BARRIER renderBarrier{};
+	//renderBarrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+	//renderBarrier.Transition.pResource = renderTextureResource.Get();
+
+	//renderBarrier.Transition.StateBefore = D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE;
+	//renderBarrier.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET;
+	//commandList->ResourceBarrier(1, &renderBarrier);
 
 	ScreenDisplay();
 	CommandConfirm();
@@ -212,7 +215,7 @@ void DirectX12::DescriptorHeap() {
 	//srv
 	srvDescriptorHeap = CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, kMaxSRVCount, true);
 
-	/*D3D12_SHADER_RESOURCE_VIEW_DESC renderTextureSrvDesc{};
+	D3D12_SHADER_RESOURCE_VIEW_DESC renderTextureSrvDesc{};
 	renderTextureSrvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
 	renderTextureSrvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
 	renderTextureSrvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
@@ -220,7 +223,7 @@ void DirectX12::DescriptorHeap() {
 
 	D3D12_CPU_DESCRIPTOR_HANDLE textureSrvHandleCPU = GetCPUDescriptorHandle(1);
 	textureSrvHandleGPU = GetGPUDescriptorHandle(1);
-	device->CreateShaderResourceView(renderTextureResource.Get(), &renderTextureSrvDesc, textureSrvHandleCPU);*/
+	device->CreateShaderResourceView(renderTextureResource.Get(), &renderTextureSrvDesc, textureSrvHandleCPU);
 }
 
 void DirectX12::CreateDSV() {
@@ -476,9 +479,7 @@ Microsoft::WRL::ComPtr<ID3D12Resource> DirectX12::CreateRenderTextureResource(ui
 
 	// 頂点リソース用のヒープ設定
 	D3D12_HEAP_PROPERTIES uploadHeapProperties_{};
-	uploadHeapProperties_.Type = D3D12_HEAP_TYPE_CUSTOM; // VRAM上に作る
-	uploadHeapProperties_.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_WRITE_BACK;
-	uploadHeapProperties_.MemoryPoolPreference = D3D12_MEMORY_POOL_L0;
+	uploadHeapProperties_.Type = D3D12_HEAP_TYPE_DEFAULT; // VRAM上に作る
 
 	// バッファリソース。テクスチャの場合はまた別の設定をする
 	D3D12_RESOURCE_DESC resourceDesc{};
@@ -488,6 +489,7 @@ Microsoft::WRL::ComPtr<ID3D12Resource> DirectX12::CreateRenderTextureResource(ui
 	// リソースのサイズ
 	resourceDesc.Width = width;
 	resourceDesc.Height = height;
+
 
 	resourceDesc.DepthOrArraySize = 1;
 	resourceDesc.MipLevels = 1;
@@ -514,8 +516,6 @@ Microsoft::WRL::ComPtr<ID3D12Resource> DirectX12::CreateRenderTextureResource(ui
 		&clearValue, // Clear最適地。ClearRederTargetをこの色でClearするようにする。最適化されているので高速である。
 		IID_PPV_ARGS(&resultResource));
 	assert(SUCCEEDED(hr_));
-
-	//CreateResource::GetInstance()->TransfarImage(resultResource);
 
 	return resultResource;
 }
