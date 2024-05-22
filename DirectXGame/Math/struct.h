@@ -5,6 +5,8 @@
 #include <optional>
 #include <map>
 
+class Sphere;
+
 struct VertexData {
 	Vector4 position;
 	Vector2 texcoord;
@@ -56,6 +58,7 @@ struct Joint {
 	std::vector<int32_t> children;
 	int32_t index;
 	std::optional<int32_t> parent;
+	std::shared_ptr<Sphere> sphere;
 };
 
 struct Skelton {

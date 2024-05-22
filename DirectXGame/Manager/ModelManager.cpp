@@ -1,4 +1,5 @@
 #include "ModelManager.h"
+#include "../Object/Sphere/Sphere.h"
 
 void ModelManager::Initialize() {
 
@@ -267,6 +268,9 @@ int32_t ModelManager::CreateJoint(const Node& node, const std::optional<int32_t>
 	joint.transform = node.transform;
 	joint.index = int32_t(joints.size());
 	joint.parent = parent;
+	joint.sphere = std::make_shared<Sphere>();
+	joint.sphere->Initialize();
+	joint.sphere->transform.scale = { 0.1f,0.1f,0.1f };
 	joints.push_back(joint);
 
 	for (const Node& child : node.children) {

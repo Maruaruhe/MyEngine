@@ -95,9 +95,8 @@ void Anime::Draw() {
 	//描画！　（DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
 	DirectX12::GetInstance()->GetCommandList()->DrawIndexedInstanced(UINT(modelData.indices.size()), 1, 0, 0, 0);
 
-	for (int i = 0; i < joints.size(); i++) {
-		joints[i].Update();
-		joints[i].Draw();
+	for (Joint& joint : skelton.joints) {
+	//	joint.sphere
 	}
 }
 
@@ -115,6 +114,7 @@ void Anime::UpdateSkelton(Skelton& skelton) {
 		joint.localMatrix = MakeAffineMatrix(joint.transform.scale, joint.transform.rotate, joint.transform.translate);
 		if (joint.parent) {
 			joint.skeltonSpaceMatrix = joint.localMatrix * skelton.joints[*joint.parent].skeltonSpaceMatrix;
+
 		}
 		else {
 			joint.skeltonSpaceMatrix = joint.localMatrix;

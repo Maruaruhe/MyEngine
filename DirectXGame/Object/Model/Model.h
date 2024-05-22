@@ -50,6 +50,8 @@ public:
 	Material* material = nullptr;
 	Transform transform;
 	bool isParent;
+
+	Matrix4x4 localMatrix;
 private:
 	uint32_t textureIndex = 0;
 
