@@ -104,6 +104,8 @@ private:
 
 	bool useMonsterBall = true;
 
+	std::vector<Model> joints;
+
 private:
 
 	float num = 0.0625f;
