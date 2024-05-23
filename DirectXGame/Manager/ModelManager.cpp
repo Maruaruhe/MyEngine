@@ -337,7 +337,7 @@ SkinCluster ModelManager::CreateSkinCluster(const Skelton& skelton, const ModelD
 
 	//InverseBindPoseMatrixの保存領域を作成
 	skinCluster.inverseBindPoseMatrices.resize(skelton.joints.size());
-	std::generate(skinCluster.inverseBindPoseMatrices.begin(), skinCluster.inverseBindPoseMatrices.end(), MakeIdentity4x4());
+	std::generate(skinCluster.inverseBindPoseMatrices.begin(), skinCluster.inverseBindPoseMatrices.end(), MakeIdentity4x4);
 
 	//ModelDataのSkinCluster情報を解析してinfluenceの中身を埋める
 	for (const auto& jointWeight : modelData.skinClusterData) {
