@@ -301,7 +301,7 @@ int32_t ModelManager::CreateJoint(const Node& node, const std::optional<int32_t>
 	return joint.index;
 }
 
-SkinCluster ModelManager::CreateSkinCluster(const Microsoft::WRL::ComPtr<ID3D12Device>& device, const Skelton& skelton, const ModelData& modelData, const Microsoft::WRL::ComPtr<ID3D12DescriptorHeap>& descriptorHeap, uint32_t descriptorSize) {
+SkinCluster ModelManager::CreateSkinCluster(const Skelton& skelton, const ModelData& modelData) {
 	SkinCluster skinCluster;
 
 	//Palette用のResourceを確保
@@ -322,13 +322,42 @@ SkinCluster ModelManager::CreateSkinCluster(const Microsoft::WRL::ComPtr<ID3D12D
 	paletteSrvDesc.Buffer.NumElements = UINT(skelton.joints.size());
 	paletteSrvDesc.Buffer.StructureByteStride = sizeof(WellForGPU);
 	DirectX12::GetInstance()->GetDevice()->CreateShaderResourceView(skinCluster.paletteResource.Get(), &paletteSrvDesc, skinCluster.paletteSrvHandle.first);
+
 	//influence用のResourceを確保
+	skinCluster.influenceResource= DirectX12::GetInstance()->CreateBufferResource(sizeof(VertexInfluence) * modelData.vertices.size());
+	VertexInfluence* mappedInfluence = nullptr;
+	skinCluster.influenceResource->Map(0, nullptr, reinterpret_cast<void**>(&mappedInfluence));
+	std::memset(mappedInfluence, 0, sizeof(VertexInfluence) * modelData.vertices.size());
+	skinCluster.mappedInfluence = { mappedInfluence,modelData.vertices.size() };
 
 	//influence用のVBVを作成
+	skinCluster.influenceBufferView.BufferLocation = skinCluster.influenceResource->GetGPUVirtualAddress();
+	skinCluster.influenceBufferView.SizeInBytes = UINT(sizeof(VertexInfluence) * modelData.vertices.size());
+	skinCluster.influenceBufferView.StrideInBytes = sizeof(VertexInfluence);
 
 	//InverseBindPoseMatrixの保存領域を作成
+	skinCluster.inverseBindPoseMatrices.resize(skelton.joints.size());
+	std::generate(skinCluster.inverseBindPoseMatrices.begin(), skinCluster.inverseBindPoseMatrices.end(), MakeIdentity4x4());
 
 	//ModelDataのSkinCluster情報を解析してinfluenceの中身を埋める
+	for (const auto& jointWeight : modelData.skinClusterData) {
+		auto it = skelton.jointMap.find(jointWeight.first);
+		if (it == skelton.jointMap.end()) {
+			continue;
+		}
+		skinCluster.inverseBindPoseMatrices[(*it).second] = jointWeight.second.inverseBindPoseMatrix;
+		for (const auto& vertexWeight : jointWeight.second.vertexWeights) {
+			auto& currentInfluence = skinCluster.mappedInfluence[vertexWeight.vertexIndex];
+			for (uint32_t index = 0; index < kNumMaxInfluence; ++index) {
+				if (currentInfluence.weights[index] == 0.0f) {
+					currentInfluence.weights[index] = vertexWeight.weight;
+					currentInfluence.jointIndices[index] = (*it).second;
+					break;
+				}
+			}
+		}
+
+	}
 
 	return skinCluster;
 }
