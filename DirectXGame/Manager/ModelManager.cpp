@@ -337,27 +337,27 @@ SkinCluster ModelManager::CreateSkinCluster(const Skelton& skelton, const ModelD
 
 	//InverseBindPoseMatrixの保存領域を作成
 	skinCluster.inverseBindPoseMatrices.resize(skelton.joints.size());
-	std::generate(skinCluster.inverseBindPoseMatrices.begin(), skinCluster.inverseBindPoseMatrices.end(), MakeIdentity4x4());
+	//std::generate(skinCluster.inverseBindPoseMatrices.begin(), skinCluster.inverseBindPoseMatrices.end(), MakeIdentity4x4());
 
-	//ModelDataのSkinCluster情報を解析してinfluenceの中身を埋める
-	for (const auto& jointWeight : modelData.skinClusterData) {
-		auto it = skelton.jointMap.find(jointWeight.first);
-		if (it == skelton.jointMap.end()) {
-			continue;
-		}
-		skinCluster.inverseBindPoseMatrices[(*it).second] = jointWeight.second.inverseBindPoseMatrix;
-		for (const auto& vertexWeight : jointWeight.second.vertexWeights) {
-			auto& currentInfluence = skinCluster.mappedInfluence[vertexWeight.vertexIndex];
-			for (uint32_t index = 0; index < kNumMaxInfluence; ++index) {
-				if (currentInfluence.weights[index] == 0.0f) {
-					currentInfluence.weights[index] = vertexWeight.weight;
-					currentInfluence.jointIndices[index] = (*it).second;
-					break;
-				}
-			}
-		}
+	////ModelDataのSkinCluster情報を解析してinfluenceの中身を埋める
+	//for (const auto& jointWeight : modelData.skinClusterData) {
+	//	auto it = skelton.jointMap.find(jointWeight.first);
+	//	if (it == skelton.jointMap.end()) {
+	//		continue;
+	//	}
+	//	skinCluster.inverseBindPoseMatrices[(*it).second] = jointWeight.second.inverseBindPoseMatrix;
+	//	for (const auto& vertexWeight : jointWeight.second.vertexWeights) {
+	//		auto& currentInfluence = skinCluster.mappedInfluence[vertexWeight.vertexIndex];
+	//		for (uint32_t index = 0; index < kNumMaxInfluence; ++index) {
+	//			if (currentInfluence.weights[index] == 0.0f) {
+	//				currentInfluence.weights[index] = vertexWeight.weight;
+	//				currentInfluence.jointIndices[index] = (*it).second;
+	//				break;
+	//			}
+	//		}
+	//	}
 
-	}
+	//}
 
 	return skinCluster;
 }

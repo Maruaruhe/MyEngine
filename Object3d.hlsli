@@ -12,7 +12,7 @@ struct  VertexShaderInput {
 };
 
 struct PixelShaderOutput {
-	float32_t4 color : SV_TARGET0;
+	float32_t4 color : SV_TARGET0;zz
 };
 
 struct Material
