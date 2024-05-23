@@ -40,6 +40,7 @@ private:
 
 	void UpdateAnimation();
 	void UpdateSkelton(Skelton& skelton);
+	void UpdateSkinCluster(SkinCluster& skinCluster, const Skelton& skelton);
 	void ApplyAnimation(Skelton& skelton, const Animation& animation, float animationTime);
 
 	void ApplyGlobalVariables();
@@ -68,6 +69,7 @@ private:
 
 	Animation anime;
 	Skelton skelton;
+	SkinCluster skinCluster;
 
 	//DirectX12* directX12 = nullptr;
 	Input* input_ = nullptr;

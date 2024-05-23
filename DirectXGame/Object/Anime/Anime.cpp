@@ -20,6 +20,8 @@ void Anime::Initialize(const std::string& filename) {
 	InitializePosition(filename);
 	anime = LoadAnimationFile("Resources/" , filename + ".gltf");
 	skelton = ModelManager::GetInstance()->CreateSkelton(modelData.rootNode);
+	skinCluster = ModelManager::GetInstance()->CreateSkinCluster(skelton, modelData);
+
 	CreateMaterialResource();
 	CreateVertexBufferView();
 	CreateTransformationMatrixResource();
@@ -56,9 +58,9 @@ void Anime::Update() {
 	animationTime += 1.0f / 60.0f;
 	animationTime = std::fmod(animationTime, anime.duration);
 
-	//UpdateAnimation();
 	ApplyAnimation(skelton, anime, animationTime);
 	UpdateSkelton(skelton);
+	UpdateSkinCluster(skinCluster,skelton);
 
 	Matrix4x4 worldViewProjectionMatrix;
 	if (camera) {
@@ -119,6 +121,14 @@ void Anime::UpdateSkelton(Skelton& skelton) {
 		else {
 			joint.skeltonSpaceMatrix = joint.localMatrix;
 		}
+	}
+}
+
+void Anime::UpdateSkinCluster(SkinCluster& skinCluster, const Skelton& skelton) {
+	for (size_t jointIndex = 0; jointIndex < skelton.joints.size(); ++jointIndex) {
+		assert(jointIndex < skinCluster.inverseBindPoseMatrices.size());
+		skinCluster.mappedPalette[jointIndex].skeltonSpaceMatrix = skinCluster.inverseBindPoseMatrices[jointIndex] * skelton.joints[jointIndex].skeltonSpaceMatrix;
+		skinCluster.mappedPalette[jointIndex].skeltonSpaceInverseTransposeMatrix = Transpose(Inverse(skinCluster.mappedPalette[jointIndex].skeltonSpaceMatrix));
 	}
 }
 

@@ -52,6 +52,26 @@ ModelData ModelManager::LoadObjFile(const std::string& directoryPath, const std:
 				}
 			}
 		}
+		//SkinCluster構築用のデータ取得
+		for (uint32_t boneIndex = 0; boneIndex < mesh->mNumBones; ++boneIndex) {
+			//Jointごとの格納領域
+			aiBone* bone = mesh->mBones[boneIndex];
+			std::string jointName = bone->mName.C_Str();
+			JointWeightData& jointWeightData = modelData.skinClusterData[jointName];
+
+			//InverseBindPoseMatrixの抽出
+			aiMatrix4x4 bindPoseMatrixAssimp = bone->mOffsetMatrix.Inverse();
+			aiVector3D scale, translate;
+			aiQuaternion rotate;
+			bindPoseMatrixAssimp.Decompose(scale, rotate, translate);
+			Matrix4x4 bindPoseMatrix = MakeAffineMatrix({ scale.x,scale.y,scale.z }, { rotate.x,-rotate.y,-rotate.z,rotate.w }, { -translate.x,translate.y,translate.z });
+			jointWeightData.inverseBindPoseMatrix = Inverse(bindPoseMatrix);
+
+			//Weight情報を取り出す
+			for (uint32_t weightIndex = 0; weightIndex < bone->mNumWeights; ++weightIndex) {
+				jointWeightData.vertexWeights.push_back({ bone->mWeights[weightIndex].mWeight,bone->mWeights[weightIndex].mVertexId });
+			}
+		}
 	}
 
 	return modelData;
@@ -279,4 +299,36 @@ int32_t ModelManager::CreateJoint(const Node& node, const std::optional<int32_t>
 	}
 
 	return joint.index;
+}
+
+SkinCluster ModelManager::CreateSkinCluster(const Microsoft::WRL::ComPtr<ID3D12Device>& device, const Skelton& skelton, const ModelData& modelData, const Microsoft::WRL::ComPtr<ID3D12DescriptorHeap>& descriptorHeap, uint32_t descriptorSize) {
+	SkinCluster skinCluster;
+
+	//Palette用のResourceを確保
+	skinCluster.paletteResource = DirectX12::GetInstance()->CreateBufferResource(sizeof(WellForGPU) * skelton.joints.size());
+	WellForGPU* mappedPalette = nullptr;
+	skinCluster.paletteResource->Map(0, nullptr, reinterpret_cast<void**>(&mappedPalette));
+	skinCluster.mappedPalette = { mappedPalette,skelton.joints.size() };
+	skinCluster.paletteSrvHandle.first = DirectX12::GetInstance()->GetCPUDescriptorHandle(2);
+	skinCluster.paletteSrvHandle.second = DirectX12::GetInstance()->GetGPUDescriptorHandle(2);
+
+	//Palette用のsrvを作成
+	D3D12_SHADER_RESOURCE_VIEW_DESC paletteSrvDesc{};
+	paletteSrvDesc.Format = DXGI_FORMAT_UNKNOWN;
+	paletteSrvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+	paletteSrvDesc.ViewDimension = D3D12_SRV_DIMENSION_BUFFER;
+	paletteSrvDesc.Buffer.FirstElement = 0;
+	paletteSrvDesc.Buffer.Flags = D3D12_BUFFER_SRV_FLAG_NONE;
+	paletteSrvDesc.Buffer.NumElements = UINT(skelton.joints.size());
+	paletteSrvDesc.Buffer.StructureByteStride = sizeof(WellForGPU);
+	DirectX12::GetInstance()->GetDevice()->CreateShaderResourceView(skinCluster.paletteResource.Get(), &paletteSrvDesc, skinCluster.paletteSrvHandle.first);
+	//influence用のResourceを確保
+
+	//influence用のVBVを作成
+
+	//InverseBindPoseMatrixの保存領域を作成
+
+	//ModelDataのSkinCluster情報を解析してinfluenceの中身を埋める
+
+	return skinCluster;
 }
