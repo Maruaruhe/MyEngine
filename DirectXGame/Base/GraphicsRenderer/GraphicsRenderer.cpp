@@ -306,6 +306,9 @@ void GraphicsRenderer::ShaderCompile() {
 	assert(vertexShaderBlob != nullptr);
 	particlePixelShaderBlob = CompileShader(L"Particle.PS.hlsl", L"ps_6_0", dxcUtils, dxcCompiler, includeHandler);
 	assert(pixelShaderBlob != nullptr);
+
+	//skinningVertexShaderBlob = CompileShader(L"SkinningObject3D.VS.hlsl", L"vs_6_0", dxcUtils, dxcCompiler, includeHandler);
+	//assert(skinningVertexShaderBlob != nullptr);
 }
 void GraphicsRenderer::MakePSO() {
 	//PSOを生成する-----------------------------------------------------------------------------------------------

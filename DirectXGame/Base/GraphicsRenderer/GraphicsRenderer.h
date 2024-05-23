@@ -37,6 +37,7 @@ public:
 
 	void MakeRootSignature();
 	void MakeRootSignatureForParticle();
+	void MakeRootSignatureForSkinning();
 
 
 	void SetInputLayout();
@@ -46,6 +47,7 @@ public:
 	void ShaderCompile();
 	void MakePSO();
 	void MakePSOForParticle();
+	void MakePSOForSkinning();
 
 	void SetRootSignatureAndPSO(bool n);
 
@@ -88,6 +90,8 @@ private:
 
 	Microsoft::WRL::ComPtr<IDxcBlob> particleVertexShaderBlob;
 	Microsoft::WRL::ComPtr<IDxcBlob> particlePixelShaderBlob;
+
+	Microsoft::WRL::ComPtr<IDxcBlob> skinningVertexShaderBlob;
 	//MakePSO
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC graphicsPipelineStateDesc{};
 	Microsoft::WRL::ComPtr<ID3D12PipelineState> graphicsPipelineState;
