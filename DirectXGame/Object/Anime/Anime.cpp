@@ -82,7 +82,7 @@ void Anime::Update() {
 
 void Anime::Draw() {
 	DirectX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView);	//VBVを設定
-	DirectX12::GetInstance()->GetCommandList()->IASetIndexBuffer(&indexBufferViewSprite);	//
+	DirectX12::GetInstance()->GetCommandList()->IASetIndexBuffer(&indexBufferView);	//
 	//形状を設定。PSOに設定しているものとはまた別。同じものを設定すると考えておけばよい
 	DirectX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
@@ -180,9 +180,9 @@ void Anime::CreateTransformationMatrixResource() {
 
 void Anime::CreateIndexResource() {
 	indexResource = DirectX12::GetInstance()->CreateBufferResource(sizeof(uint32_t) * modelData.indices.size());
-	indexBufferViewSprite.BufferLocation = indexResource->GetGPUVirtualAddress();
-	indexBufferViewSprite.SizeInBytes = UINT(sizeof(uint32_t) * modelData.indices.size());
-	indexBufferViewSprite.Format = DXGI_FORMAT_R32_UINT;
+	indexBufferView.BufferLocation = indexResource->GetGPUVirtualAddress();
+	indexBufferView.SizeInBytes = UINT(sizeof(uint32_t) * modelData.indices.size());
+	indexBufferView.Format = DXGI_FORMAT_R32_UINT;
 
 	uint32_t* mappedIndex = nullptr;
 
