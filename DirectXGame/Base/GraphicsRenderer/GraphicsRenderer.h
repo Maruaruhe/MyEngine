@@ -16,6 +16,12 @@
 #pragma comment(lib,"dxguid.lib")
 #pragma comment(lib,"dxcompiler.lib")
 
+enum Type {
+	MODEL = 0,
+	PARTICLE = 1,
+	ANIME = 2
+};
+
 class GraphicsRenderer
 {
 public:
@@ -41,6 +47,8 @@ public:
 
 
 	void SetInputLayout();
+	void SetInputLayoutForSkinning();
+
 	void SetBlendState();
 	void SetBlendStateForParticle();
 	void SetRasterizerState();
@@ -49,7 +57,7 @@ public:
 	void MakePSOForParticle();
 	void MakePSOForSkinning();
 
-	void SetRootSignatureAndPSO(bool n);
+	void SetRootSignatureAndPSO(int n);
 
 	void ViewportScissor();
 
@@ -68,6 +76,9 @@ private:
 	//MakeRootSignature
 	D3D12_ROOT_SIGNATURE_DESC descriptionRootSignatureForParticle{};
 	D3D12_ROOT_PARAMETER rootParametersForParticle[5];
+	//MakeRootSignature
+	D3D12_ROOT_SIGNATURE_DESC descriptionRootSignatureForSkinning{};
+	D3D12_ROOT_PARAMETER rootParametersForSkinning[5];
 
 
 	ID3DBlob* signatureBlob;
@@ -76,9 +87,12 @@ private:
 
 	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature;
 	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignatureForParticle;
+	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignatureForSkinning;
 	//SetInputLayout
 	D3D12_INPUT_ELEMENT_DESC inputElementDescs[3] = {};
+	D3D12_INPUT_ELEMENT_DESC inputElementDescsForSkinning[5] = {};
 	D3D12_INPUT_LAYOUT_DESC inputLayoutDesc{};
+	D3D12_INPUT_LAYOUT_DESC inputLayoutDescForSkinning{};
 	//SetBlendState
 	D3D12_BLEND_DESC blendDesc{};
 	D3D12_BLEND_DESC blendDescForParticle{};
@@ -98,6 +112,9 @@ private:
 
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC graphicsPipelineStateDescForParticle{};
 	Microsoft::WRL::ComPtr<ID3D12PipelineState> graphicsPipelineStateForParticle;
+
+	D3D12_GRAPHICS_PIPELINE_STATE_DESC graphicsPipelineStateDescForSkinning{};
+	Microsoft::WRL::ComPtr<ID3D12PipelineState> graphicsPipelineStateForSkinning;
 
 
 	//MakeVertexResource

@@ -13,8 +13,10 @@ void GraphicsRenderer::Initialize() {
 	InitializeDXC();
 	MakeRootSignature();
 	MakeRootSignatureForParticle();
+	MakeRootSignatureForSkinning();
 
 	SetInputLayout();
+	SetInputLayoutForSkinning();
 
 	SetBlendState();
 	SetBlendStateForParticle();
@@ -23,6 +25,7 @@ void GraphicsRenderer::Initialize() {
 	ShaderCompile();
 	MakePSO();
 	MakePSOForParticle();
+	MakePSOForSkinning();
 
 	ViewportScissor();
 }
@@ -111,14 +114,18 @@ void GraphicsRenderer::DecideCommand() {
 	directX12->GetCommandList()->SetPipelineState(graphicsPipelineState.Get());
 }
 
-void GraphicsRenderer::SetRootSignatureAndPSO(bool n) {
-	if (n) {
+void GraphicsRenderer::SetRootSignatureAndPSO(int n) {
+	if (n == PARTICLE) {
 	    directX12->GetCommandList()->SetGraphicsRootSignature(rootSignatureForParticle.Get());
 		directX12->GetCommandList()->SetPipelineState(graphicsPipelineStateForParticle.Get());
 	}
-	else {
+	else if(n == MODEL) {
 		directX12->GetCommandList()->SetGraphicsRootSignature(rootSignature.Get());
 		directX12->GetCommandList()->SetPipelineState(graphicsPipelineState.Get());
+	}
+	else if (n == ANIME) {
+		directX12->GetCommandList()->SetGraphicsRootSignature(rootSignatureForSkinning.Get());
+		directX12->GetCommandList()->SetPipelineState(graphicsPipelineStateForSkinning.Get());
 	}
 }
 
@@ -252,8 +259,75 @@ void GraphicsRenderer::MakeRootSignatureForParticle() {
 	assert(SUCCEEDED(hr));
 }
 
-void GraphicsRenderer::SetInputLayout() {
+void GraphicsRenderer::MakeRootSignatureForSkinning() {
+	descriptionRootSignatureForSkinning = {};
+	descriptionRootSignatureForSkinning.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
 
+	D3D12_DESCRIPTOR_RANGE descriptorRange[1] = {};
+	descriptorRange[0].BaseShaderRegister = 0;
+	descriptorRange[0].NumDescriptors = 1;
+	descriptorRange[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
+	descriptorRange[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
+
+	D3D12_DESCRIPTOR_RANGE descriptorRangeForInstancing[1] = {};
+	descriptorRangeForInstancing[0].BaseShaderRegister = 0; //0から始まる
+	descriptorRangeForInstancing[0].NumDescriptors = 1;
+	descriptorRangeForInstancing[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV; //SRVを使う
+	descriptorRangeForInstancing[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
+
+	rootParametersForSkinning[0] = {};
+	rootParametersForSkinning[1] = {};
+	rootParametersForSkinning[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
+	rootParametersForSkinning[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+	rootParametersForSkinning[0].Descriptor.ShaderRegister = 0;
+
+	rootParametersForSkinning[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
+	rootParametersForSkinning[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX;
+	rootParametersForSkinning[1].DescriptorTable.pDescriptorRanges = descriptorRangeForInstancing;
+	rootParametersForSkinning[1].DescriptorTable.NumDescriptorRanges = _countof(descriptorRangeForInstancing);
+
+	rootParametersForSkinning[2].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
+	rootParametersForSkinning[2].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+	rootParametersForSkinning[2].DescriptorTable.pDescriptorRanges = descriptorRange;
+	rootParametersForSkinning[2].DescriptorTable.NumDescriptorRanges = _countof(descriptorRange);
+
+	rootParametersForSkinning[3].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
+	rootParametersForSkinning[3].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+	rootParametersForSkinning[3].Descriptor.ShaderRegister = 1;
+								
+	rootParametersForSkinning[4].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
+	rootParametersForSkinning[4].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+	rootParametersForSkinning[4].Descriptor.ShaderRegister = 2;
+
+	descriptionRootSignatureForSkinning.pParameters = rootParametersForSkinning;
+	descriptionRootSignatureForSkinning.NumParameters = _countof(rootParametersForSkinning);
+
+	D3D12_STATIC_SAMPLER_DESC staticSamplers[1] = {};
+	staticSamplers[0].Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR;
+	staticSamplers[0].AddressU = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+	staticSamplers[0].AddressV = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+	staticSamplers[0].AddressW = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+	staticSamplers[0].ComparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
+	staticSamplers[0].MaxLOD = D3D12_FLOAT32_MAX;
+	staticSamplers[0].ShaderRegister = 0;
+	staticSamplers[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+
+	descriptionRootSignatureForSkinning.pStaticSamplers = staticSamplers;
+	descriptionRootSignatureForSkinning.NumStaticSamplers = _countof(staticSamplers);
+
+	signatureBlob = nullptr;
+	errorBlob = nullptr;
+	hr = D3D12SerializeRootSignature(&descriptionRootSignatureForSkinning, D3D_ROOT_SIGNATURE_VERSION_1, &signatureBlob, &errorBlob);
+	if (FAILED(hr)) {
+		LogText(reinterpret_cast<char*>(errorBlob->GetBufferPointer()));
+		assert(false);
+	}
+	rootSignatureForSkinning = nullptr;
+	hr = directX12->GetDevice()->CreateRootSignature(0, signatureBlob->GetBufferPointer(), signatureBlob->GetBufferSize(), IID_PPV_ARGS(&rootSignatureForSkinning));
+	assert(SUCCEEDED(hr));
+}
+
+void GraphicsRenderer::SetInputLayout() {
 	inputElementDescs[0].SemanticName = "POSITION";
 	inputElementDescs[0].SemanticIndex = 0;
 	inputElementDescs[0].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
@@ -273,6 +347,40 @@ void GraphicsRenderer::SetInputLayout() {
 	inputLayoutDesc.pInputElementDescs = inputElementDescs;
 	inputLayoutDesc.NumElements = _countof(inputElementDescs);
 }
+
+void GraphicsRenderer::SetInputLayoutForSkinning() {
+	inputElementDescsForSkinning[0].SemanticName = "POSITION";
+	inputElementDescsForSkinning[0].SemanticIndex = 0;
+	inputElementDescsForSkinning[0].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	inputElementDescsForSkinning[0].AlignedByteOffset = D3D12_APPEND_ALIGNED_ELEMENT;
+
+	inputElementDescsForSkinning[1].SemanticName = "TEXCOORD";
+	inputElementDescsForSkinning[1].SemanticIndex = 0;
+	inputElementDescsForSkinning[1].Format = DXGI_FORMAT_R32G32_FLOAT;
+	inputElementDescsForSkinning[1].AlignedByteOffset = D3D12_APPEND_ALIGNED_ELEMENT;
+
+	inputElementDescsForSkinning[2].SemanticName = "NORMAL";
+	inputElementDescsForSkinning[2].SemanticIndex = 0;
+	inputElementDescsForSkinning[2].Format = DXGI_FORMAT_R32G32B32_FLOAT;
+	inputElementDescsForSkinning[2].AlignedByteOffset = D3D12_APPEND_ALIGNED_ELEMENT;
+
+	inputElementDescsForSkinning[3].SemanticName = "WEIGHT";
+	inputElementDescsForSkinning[3].SemanticIndex = 0;
+	inputElementDescsForSkinning[3].Format = DXGI_FORMAT_R32G32B32_FLOAT;
+	inputElementDescsForSkinning[3].InputSlot = 1;
+	inputElementDescsForSkinning[3].AlignedByteOffset = D3D12_APPEND_ALIGNED_ELEMENT;
+
+	inputElementDescsForSkinning[4].SemanticName = "INDEX";
+	inputElementDescsForSkinning[4].SemanticIndex = 0;
+	inputElementDescsForSkinning[4].Format = DXGI_FORMAT_R32G32B32_FLOAT;
+	inputElementDescsForSkinning[4].InputSlot = 1;
+	inputElementDescsForSkinning[4].AlignedByteOffset = D3D12_APPEND_ALIGNED_ELEMENT;
+
+	inputLayoutDescForSkinning = {};
+	inputLayoutDescForSkinning.pInputElementDescs = inputElementDescsForSkinning;
+	inputLayoutDescForSkinning.NumElements = _countof(inputElementDescsForSkinning);
+}
+
 void GraphicsRenderer::SetBlendState() {
 	blendDesc = {};
 	blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
@@ -296,6 +404,7 @@ void GraphicsRenderer::SetRasterizerState() {
 	rasterizerDesc.CullMode = D3D12_CULL_MODE_BACK;
 	rasterizerDesc.FillMode = D3D12_FILL_MODE_SOLID;
 }
+
 void GraphicsRenderer::ShaderCompile() {
 	vertexShaderBlob = CompileShader(L"Object3d.VS.hlsl", L"vs_6_0", dxcUtils, dxcCompiler, includeHandler);
 	assert(vertexShaderBlob != nullptr);
@@ -307,8 +416,8 @@ void GraphicsRenderer::ShaderCompile() {
 	particlePixelShaderBlob = CompileShader(L"Particle.PS.hlsl", L"ps_6_0", dxcUtils, dxcCompiler, includeHandler);
 	assert(pixelShaderBlob != nullptr);
 
-	//skinningVertexShaderBlob = CompileShader(L"SkinningObject3D.VS.hlsl", L"vs_6_0", dxcUtils, dxcCompiler, includeHandler);
-	//assert(skinningVertexShaderBlob != nullptr);
+	skinningVertexShaderBlob = CompileShader(L"SkinningObject3D.VS.hlsl", L"vs_6_0", dxcUtils, dxcCompiler, includeHandler);
+	assert(skinningVertexShaderBlob != nullptr);
 }
 void GraphicsRenderer::MakePSO() {
 	//PSOを生成する-----------------------------------------------------------------------------------------------
@@ -350,6 +459,27 @@ void GraphicsRenderer::MakePSOForParticle() {
 
 	graphicsPipelineStateForParticle = nullptr;
 	hr = directX12->GetDevice()->CreateGraphicsPipelineState(&graphicsPipelineStateDescForParticle, IID_PPV_ARGS(&graphicsPipelineStateForParticle));
+	assert((SUCCEEDED(hr)));
+}
+void GraphicsRenderer::MakePSOForSkinning() {
+	//PSOを生成する-----------------------------------------------------------------------------------------------
+	graphicsPipelineStateDescForSkinning = {};
+	graphicsPipelineStateDescForSkinning.pRootSignature = rootSignatureForSkinning.Get();
+	graphicsPipelineStateDescForSkinning.InputLayout = inputLayoutDescForSkinning;
+	graphicsPipelineStateDescForSkinning.VS = { skinningVertexShaderBlob->GetBufferPointer(),skinningVertexShaderBlob->GetBufferSize() };
+	graphicsPipelineStateDescForSkinning.PS = { pixelShaderBlob->GetBufferPointer(),pixelShaderBlob->GetBufferSize() };
+	graphicsPipelineStateDescForSkinning.BlendState = blendDesc;
+	graphicsPipelineStateDescForSkinning.RasterizerState = rasterizerDesc;
+	graphicsPipelineStateDescForSkinning.NumRenderTargets = 1;
+	graphicsPipelineStateDescForSkinning.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+	graphicsPipelineStateDescForSkinning.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
+	graphicsPipelineStateDescForSkinning.SampleDesc.Count = 1;
+	graphicsPipelineStateDescForSkinning.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
+	graphicsPipelineStateDescForSkinning.DepthStencilState = directX12->GetDepthStencilDesc();
+	graphicsPipelineStateDescForSkinning.DSVFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
+
+	graphicsPipelineStateForSkinning = nullptr;
+	hr = directX12->GetDevice()->CreateGraphicsPipelineState(&graphicsPipelineStateDescForSkinning, IID_PPV_ARGS(&graphicsPipelineStateForSkinning));
 	assert((SUCCEEDED(hr)));
 }
 

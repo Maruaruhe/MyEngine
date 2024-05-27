@@ -87,7 +87,7 @@ void Anime::Draw() {
 	DirectX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
 
-	GraphicsRenderer::GetInstance()->SetRootSignatureAndPSO(false);
+	GraphicsRenderer::GetInstance()->SetRootSignatureAndPSO(MODEL);
 
 	//wvp用のCBufferの場所を設定
 	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());

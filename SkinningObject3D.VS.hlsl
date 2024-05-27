@@ -6,7 +6,7 @@ struct Well
     float32_t4x4 skeltonSpaceInverseTransposeMatrix;
 };
 
-struct VertexShaderInputA
+struct VertexShaderInput
 {
     float32_t4 position : POSITION0;
     float32_t2 texcoord : TEXCOORD0;
@@ -21,9 +21,17 @@ struct Skinned
     float32_t3 normal;
 };
 
+struct TransformationMatrix
+{
+    float32_t4x4 WVP;
+    float32_t4x4 World;
+    float32_t4x4 WorldInverseTranspose;
+};
+
+ConstantBuffer<TransformationMatrix> gTransformationMatrix : register(b0);
 StructuredBuffer<Well> gMatrixPalette : register(t0);
 
-Skinned Skinning(VertexShaderInputA input)
+Skinned Skinning(VertexShaderInput input)
 {
     Skinned skinned;
     
@@ -42,7 +50,7 @@ Skinned Skinning(VertexShaderInputA input)
     return skinned;
 }
 
-VertexShaderOutput main(VertexShaderInputA input)
+VertexShaderOutput main(VertexShaderInput input)
 {
     VertexShaderOutput output;
     Skinned skinned = Skinning(input);
@@ -50,7 +58,7 @@ VertexShaderOutput main(VertexShaderInputA input)
     output.position = mul(skinned.position, gTransformationMatrix.WVP);
     output.worldPosition = mul(skinned.position, gTransformationMatrix.World).xyz;
     output.texcoord = input.texcoord;
-    output.normal = normalize(mul(skinned.normal, (float32_t3x3) gTransformationMatrix.WorldInverseTranspose));
+    output.normal = normalize(mul(skinned.normal, (float32_t3x3)gTransformationMatrix.WorldInverseTranspose));
     
     return output;
 }
