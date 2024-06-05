@@ -100,7 +100,7 @@ void DirectX12::PreDrawForPostEffect() {
 	//ClearDepth
 	commandList->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
-	//ImGui
+	//描画先の設定?
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descriptorHeaps[] = { srvDescriptorHeap.Get() };
 	commandList->SetDescriptorHeaps(1, descriptorHeaps->GetAddressOf());
 }
