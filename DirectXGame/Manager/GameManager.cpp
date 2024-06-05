@@ -71,7 +71,7 @@ void GameManager::Run() {
 
 			ImGui::Render();
 
-			EndFrame();
+			directX12->PostDraw();
 		}
 	}
 	Finalize();
