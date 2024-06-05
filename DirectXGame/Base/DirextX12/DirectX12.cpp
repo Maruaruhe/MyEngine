@@ -47,10 +47,36 @@ void DirectX12::Initialize() {
 
 
 void DirectX12::PreDraw() {
-	GetBackBuffer();
-	Barrier();
-	RTV();
-	SetImGuiDescriptorHeap();
+	//これから書き込むバックバッファのインデックスを取得
+	backBufferIndex = swapChain->GetCurrentBackBufferIndex();
+
+	//Barrier
+	barrier = {};
+	barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+	barrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
+	barrier.Transition.pResource = swapChainResource[backBufferIndex].Get();
+	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT;
+	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET;
+
+	commandList->ResourceBarrier(1, &barrier);
+
+	//RTV
+	D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle = dsvDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
+	commandList->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
+
+	commandList->OMSetRenderTargets(1, &rtvHandle[backBufferIndex], false, &dsvHandle);
+
+	float clearColor[] = { 0.1f,0.25f,0.5f,1.0f };
+	commandList->ClearRenderTargetView(rtvHandle[backBufferIndex], clearColor, 0, nullptr);
+
+	//ImGui
+	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descriptorHeaps[] = { srvDescriptorHeap.Get() };
+	commandList->SetDescriptorHeaps(1, descriptorHeaps->GetAddressOf());
+
+	//GetBackBuffer();
+	//Barrier();
+	//RTV();
+	//SetImGuiDescriptorHeap();
 }
 
 void DirectX12::PreDrawForPostEffect() {
@@ -73,6 +99,10 @@ void DirectX12::PreDrawForPostEffect() {
 
 	//ClearDepth
 	commandList->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
+
+	//ImGui
+	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descriptorHeaps[] = { srvDescriptorHeap.Get() };
+	commandList->SetDescriptorHeaps(1, descriptorHeaps->GetAddressOf());
 }
 
 void DirectX12::PostDraw() {
