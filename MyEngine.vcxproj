@@ -138,6 +138,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="DirectXGame\GameObject\Entity\TimedCall\TimedCall.cpp" />
     <ClCompile Include="DirectXGame\GameObject\Skydome\Skydome.cpp" />
     <ClCompile Include="DirectXGame\GameObject\Entity\Player\Reticle\Reticle.cpp" />
+    <ClCompile Include="DirectXGame\Base\PostEffect\PostEffect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shaders\PostEffects\CopyImage.PS.hlsl">
@@ -222,6 +223,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="DirectXGame\GameObject\Entity\TimedCall\TimedCall.h" />
     <ClInclude Include="DirectXGame\GameObject\Skydome\Skydome.h" />
     <ClInclude Include="DirectXGame\GameObject\Entity\Player\Reticle\Reticle.h" />
+    <ClInclude Include="DirectXGame\Base\PostEffect\PostEffect.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt" />
