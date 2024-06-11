@@ -15,6 +15,7 @@ void GraphicsRenderer::Initialize() {
 	MakeRootSignatureForParticle();
 	MakeRootSignatureForSkinning();
 
+	//InputElement
 	SetInputLayout();
 	SetInputLayoutForSkinning();
 
@@ -23,6 +24,7 @@ void GraphicsRenderer::Initialize() {
 
 	SetRasterizerState();
 	ShaderCompile();
+
 	MakePSO();
 	MakePSOForParticle();
 	MakePSOForSkinning();
@@ -366,13 +368,13 @@ void GraphicsRenderer::SetInputLayoutForSkinning() {
 
 	inputElementDescsForSkinning[3].SemanticName = "WEIGHT";
 	inputElementDescsForSkinning[3].SemanticIndex = 0;
-	inputElementDescsForSkinning[3].Format = DXGI_FORMAT_R32G32B32_FLOAT;
+	inputElementDescsForSkinning[3].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
 	inputElementDescsForSkinning[3].InputSlot = 1;
 	inputElementDescsForSkinning[3].AlignedByteOffset = D3D12_APPEND_ALIGNED_ELEMENT;
 
 	inputElementDescsForSkinning[4].SemanticName = "INDEX";
 	inputElementDescsForSkinning[4].SemanticIndex = 0;
-	inputElementDescsForSkinning[4].Format = DXGI_FORMAT_R32G32B32_FLOAT;
+	inputElementDescsForSkinning[4].Format = DXGI_FORMAT_R32G32B32A32_SINT;
 	inputElementDescsForSkinning[4].InputSlot = 1;
 	inputElementDescsForSkinning[4].AlignedByteOffset = D3D12_APPEND_ALIGNED_ELEMENT;
 
