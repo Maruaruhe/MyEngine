@@ -1,4 +1,5 @@
 #include "Lighting.h"
+#include "../../Base/GraphicsRenderer/GraphicsRenderer.h"
 
 void Lighting::Initialize() {
 	directionalLightResource = DirectX12::GetInstance()->CreateBufferResource(sizeof(DirectionalLight));
@@ -18,5 +19,6 @@ void Lighting::Update() {
 	//ImGui::DragFloat("intensity", &light->intensity);
 	//ImGui::End();
 
+	GraphicsRenderer::GetInstance()->SetRootSignatureAndPSO(false);
 	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(3, directionalLightResource->GetGPUVirtualAddress());
 }
