@@ -15,6 +15,26 @@
 
 #include "../Object/Model/Model.h"
 
+#include "../Math/struct.h"
+
+struct Joint {
+	QuaternionTransform transform;
+	Matrix4x4 localMatrix;
+	Matrix4x4 skeltonSpaceMatrix;
+	std::string name;
+	std::vector<int32_t> children;
+	int32_t index;
+	std::optional<int32_t> parent;
+	Model model;
+};
+
+struct Skelton {
+	int32_t root;
+	std::map<std::string, int32_t> jointMap;
+	std::vector<Joint> joints;
+};
+
+
 class ModelManager
 {
 public:

@@ -3,7 +3,6 @@
 #include "../../Base/GlobalVariables/GlobalVariables.h"
 #include "../../Base/GraphicsRenderer/GraphicsRenderer.h"
 #include "../../Manager/TextureManager.h"
-#include "../../Manager/ModelManager.h"
 
 #include "../../Math/MathOperator.h"
 
@@ -81,12 +80,13 @@ void Anime::Update() {
 }
 
 void Anime::Draw() {
-	D3D12_VERTEX_BUFFER_VIEW vbvs[2] = {
-		vertexBufferView,
-		skinCluster.influenceBufferView
-	};
+	//D3D12_VERTEX_BUFFER_VIEW vbvs[2] = {
+	//	vertexBufferView,
+	//	skinCluster.influenceBufferView
+	//};
 
-	DirectX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 2, vbvs);	//VBVを設定
+	DirectX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView);	//VBVを設定
+	//DirectX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 2, vbvs);	//VBVを設定
 	DirectX12::GetInstance()->GetCommandList()->IASetIndexBuffer(&indexBufferView);	//
 	//形状を設定。PSOに設定しているものとはまた別。同じものを設定すると考えておけばよい
 	DirectX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -103,7 +103,10 @@ void Anime::Draw() {
 	DirectX12::GetInstance()->GetCommandList()->DrawIndexedInstanced(UINT(modelData.indices.size()), 1, 0, 0, 0);
 
 	for (Joint& joint : skelton.joints) {
-	//	joint.sphere
+		joint.model.SetCamera(camera);
+
+		joint.model.Update();
+		joint.model.Draw();
 	}
 }
 

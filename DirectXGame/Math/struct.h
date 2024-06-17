@@ -7,7 +7,8 @@
 #include <span>
 #include <array>
 
-class Sphere;
+class Model;
+class Anime;
 
 struct VertexData {
 	Vector4 position;
@@ -45,30 +46,6 @@ struct TransformationMatrix {
 	Matrix4x4 World;
 };
 
-struct Node {
-	QuaternionTransform transform;
-	Matrix4x4 localMatrix;
-	std::string name;
-	std::vector<Node> children;
-};
-
-struct Joint {
-	QuaternionTransform transform;
-	Matrix4x4 localMatrix;
-	Matrix4x4 skeltonSpaceMatrix;
-	std::string name;
-	std::vector<int32_t> children;
-	int32_t index;
-	std::optional<int32_t> parent;
-	std::vector<Sphere> sphere;
-};
-
-struct Skelton {
-	int32_t root;
-	std::map<std::string, int32_t> jointMap;
-	std::vector<Joint> joints;
-};
-
 struct VertexWeightData {
 	float weight;
 	uint32_t vertexIndex;
@@ -77,6 +54,13 @@ struct VertexWeightData {
 struct JointWeightData {
 	Matrix4x4 inverseBindPoseMatrix;
 	std::vector<VertexWeightData> vertexWeights;
+};
+
+struct Node {
+	QuaternionTransform transform;
+	Matrix4x4 localMatrix;
+	std::string name;
+	std::vector<Node> children;
 };
 
 struct ModelData {

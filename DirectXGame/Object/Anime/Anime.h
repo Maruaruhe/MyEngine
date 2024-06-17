@@ -15,6 +15,8 @@
 
 #include "../../Base/Input/Input.h"
 
+#include "../../Manager/ModelManager.h"
+
 #pragma comment(lib,"dxcompiler.lib")
 
 class Anime

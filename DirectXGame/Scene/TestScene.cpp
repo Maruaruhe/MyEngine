@@ -11,8 +11,13 @@ void TestScene::Initialize() {
 	light.Initialize();
 
 	ModelManager::GetInstance()->LoadModel("walk");
-	model.Initialize("walk");
-	model.SetCamera(camera2);
+	ModelManager::GetInstance()->LoadModel("GLTFPlane");
+
+	//model.Initialize("walk");
+	//model.SetCamera(camera2);
+
+	a.Initialize("walk");
+	a.SetCamera(camera2);
 }
 
 void TestScene::Update() {
@@ -21,9 +26,11 @@ void TestScene::Update() {
 	light.Update();
 	camera2->Update();
 
-	model.Update();
+	//model.Update();
+	a.Update();
 }
 
 void TestScene::Draw() {
-	model.Draw();
+	//model.Draw();
+	a.Draw();
 }

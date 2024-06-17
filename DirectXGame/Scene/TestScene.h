@@ -30,5 +30,7 @@ private:
 	Camera* camera2;
 
 	Anime model;
+
+	Model a;
 };
 
