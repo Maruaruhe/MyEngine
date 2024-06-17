@@ -60,7 +60,7 @@ struct Joint {
 	std::vector<int32_t> children;
 	int32_t index;
 	std::optional<int32_t> parent;
-	std::shared_ptr<Sphere> sphere;
+	std::vector<Sphere> sphere;
 };
 
 struct Skelton {
