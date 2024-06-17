@@ -203,12 +203,6 @@ void GraphicsRenderer::MakeRootSignatureForParticle() {
 	descriptorRange[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
 	descriptorRange[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
 
-	D3D12_DESCRIPTOR_RANGE descriptorRangeForInstancing[1] = {};
-	descriptorRangeForInstancing[0].BaseShaderRegister = 0; //0から始まる
-	descriptorRangeForInstancing[0].NumDescriptors = 1;
-	descriptorRangeForInstancing[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV; //SRVを使う
-	descriptorRangeForInstancing[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
-
 	rootParametersForParticle[0] = {};
 	rootParametersForParticle[1] = {};
 	rootParametersForParticle[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
@@ -217,21 +211,21 @@ void GraphicsRenderer::MakeRootSignatureForParticle() {
 
 	rootParametersForParticle[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
 	rootParametersForParticle[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX;
-	rootParametersForParticle[1].DescriptorTable.pDescriptorRanges = descriptorRangeForInstancing;
-	rootParametersForParticle[1].DescriptorTable.NumDescriptorRanges = _countof(descriptorRangeForInstancing);
+	rootParametersForParticle[1].DescriptorTable.pDescriptorRanges = descriptorRange;
+	rootParametersForParticle[1].DescriptorTable.NumDescriptorRanges = _countof(descriptorRange);
 			
 	rootParametersForParticle[2].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
 	rootParametersForParticle[2].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
 	rootParametersForParticle[2].DescriptorTable.pDescriptorRanges = descriptorRange;
 	rootParametersForParticle[2].DescriptorTable.NumDescriptorRanges = _countof(descriptorRange);
 			
-	rootParametersForParticle[3].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
-	rootParametersForParticle[3].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
-	rootParametersForParticle[3].Descriptor.ShaderRegister = 1;
+	//rootParametersForParticle[3].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
+	//rootParametersForParticle[3].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+	//rootParametersForParticle[3].Descriptor.ShaderRegister = 1;
 
-	rootParametersForParticle[4].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
-	rootParametersForParticle[4].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
-	rootParametersForParticle[4].Descriptor.ShaderRegister = 2;
+	//rootParametersForParticle[4].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
+	//rootParametersForParticle[4].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+	//rootParametersForParticle[4].Descriptor.ShaderRegister = 2;
 
 	descriptionRootSignatureForParticle.pParameters = rootParametersForParticle;
 	descriptionRootSignatureForParticle.NumParameters = _countof(rootParametersForParticle);
@@ -262,6 +256,7 @@ void GraphicsRenderer::MakeRootSignatureForParticle() {
 }
 
 void GraphicsRenderer::MakeRootSignatureForSkinning() {
+	//RootSignature生成
 	descriptionRootSignatureForSkinning = {};
 	descriptionRootSignatureForSkinning.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
 
@@ -271,22 +266,16 @@ void GraphicsRenderer::MakeRootSignatureForSkinning() {
 	descriptorRange[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
 	descriptorRange[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
 
-	D3D12_DESCRIPTOR_RANGE descriptorRangeForInstancing[1] = {};
-	descriptorRangeForInstancing[0].BaseShaderRegister = 0; //0から始まる
-	descriptorRangeForInstancing[0].NumDescriptors = 1;
-	descriptorRangeForInstancing[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV; //SRVを使う
-	descriptorRangeForInstancing[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
-
 	rootParametersForSkinning[0] = {};
 	rootParametersForSkinning[1] = {};
+
 	rootParametersForSkinning[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
 	rootParametersForSkinning[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
 	rootParametersForSkinning[0].Descriptor.ShaderRegister = 0;
 
-	rootParametersForSkinning[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
+	rootParametersForSkinning[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
 	rootParametersForSkinning[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX;
-	rootParametersForSkinning[1].DescriptorTable.pDescriptorRanges = descriptorRangeForInstancing;
-	rootParametersForSkinning[1].DescriptorTable.NumDescriptorRanges = _countof(descriptorRangeForInstancing);
+	rootParametersForSkinning[1].Descriptor.ShaderRegister = 0;
 
 	rootParametersForSkinning[2].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
 	rootParametersForSkinning[2].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
@@ -296,10 +285,15 @@ void GraphicsRenderer::MakeRootSignatureForSkinning() {
 	rootParametersForSkinning[3].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
 	rootParametersForSkinning[3].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
 	rootParametersForSkinning[3].Descriptor.ShaderRegister = 1;
-								
+							
 	rootParametersForSkinning[4].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
 	rootParametersForSkinning[4].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
 	rootParametersForSkinning[4].Descriptor.ShaderRegister = 2;
+
+	rootParametersForSkinning[5].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
+	rootParametersForSkinning[5].ShaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX;
+	rootParametersForSkinning[5].DescriptorTable.pDescriptorRanges = descriptorRange;
+	rootParametersForSkinning[5].DescriptorTable.NumDescriptorRanges = _countof(descriptorRange);
 
 	descriptionRootSignatureForSkinning.pParameters = rootParametersForSkinning;
 	descriptionRootSignatureForSkinning.NumParameters = _countof(rootParametersForSkinning);

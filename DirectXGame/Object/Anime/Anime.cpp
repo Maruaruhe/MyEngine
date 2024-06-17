@@ -81,7 +81,12 @@ void Anime::Update() {
 }
 
 void Anime::Draw() {
-	DirectX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView);	//VBVを設定
+	D3D12_VERTEX_BUFFER_VIEW vbvs[2] = {
+		vertexBufferView,
+		skinCluster.influenceBufferView
+	};
+
+	DirectX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 2, vbvs);	//VBVを設定
 	DirectX12::GetInstance()->GetCommandList()->IASetIndexBuffer(&indexBufferView);	//
 	//形状を設定。PSOに設定しているものとはまた別。同じものを設定すると考えておけばよい
 	DirectX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);

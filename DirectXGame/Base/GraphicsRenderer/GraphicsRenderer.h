@@ -75,10 +75,10 @@ private:
 	D3D12_ROOT_PARAMETER rootParameters[5];
 	//MakeRootSignature
 	D3D12_ROOT_SIGNATURE_DESC descriptionRootSignatureForParticle{};
-	D3D12_ROOT_PARAMETER rootParametersForParticle[5];
+	D3D12_ROOT_PARAMETER rootParametersForParticle[3];
 	//MakeRootSignature
 	D3D12_ROOT_SIGNATURE_DESC descriptionRootSignatureForSkinning{};
-	D3D12_ROOT_PARAMETER rootParametersForSkinning[5];
+	D3D12_ROOT_PARAMETER rootParametersForSkinning[6];
 
 
 	ID3DBlob* signatureBlob;
