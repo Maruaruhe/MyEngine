@@ -43,6 +43,8 @@ private:
 	void UpdateSkinCluster(SkinCluster& skinCluster, const Skelton& skelton);
 	void ApplyAnimation(Skelton& skelton, const Animation& animation, float animationTime);
 
+	void DrawBone();
+
 	void ApplyGlobalVariables();
 
 	void CreateMaterialResource();
