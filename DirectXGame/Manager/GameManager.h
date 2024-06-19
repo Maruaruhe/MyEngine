@@ -8,6 +8,7 @@
 #include "../Base/DirextX12/DirectX12.h"
 #include "../Base/WindowsAPI/WindowsAPI.h"
 #include "../Base/GraphicsRenderer/GraphicsRenderer.h"
+#include "../Base/PostEffect/PostEffect.h"
 
 #include "../Scene/IScene.h"
 #include "../Scene/TestScene.h"
@@ -26,6 +27,7 @@ private:
 	DirectX12* directX12 = nullptr;
 	WindowsAPI* windowsAPI = nullptr;
 	GraphicsRenderer* graphicsRenderer_ = nullptr;
+	PostEffect posteffectr;
 
 	//Scene
 	std::unique_ptr<IScene> sceneArr[6];

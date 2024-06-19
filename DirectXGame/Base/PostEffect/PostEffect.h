@@ -1,9 +1,21 @@
 #pragma once
+#include "../DirextX12/DirectX12.h"
+#include <d3d12.h>
+#include <dxgi1_6.h>
+#include <cassert>
+#include <string>
+#include <format>
+#include <dxgidebug.h>
+#include <dxcapi.h>
+
 class PostEffect
 {
 public:
-	void CreateRootSignature();
-private:
+	void Initialize();
 
+	void CreateRootSignature();
+	void CreatePSO();
+private:
+	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature;
 };
 

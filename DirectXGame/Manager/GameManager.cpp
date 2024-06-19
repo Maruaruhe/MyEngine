@@ -15,6 +15,8 @@ GameManager::GameManager() {
 	directX12->Initialize();
 	graphicsRenderer_->Initialize();
 
+	posteffectr.Initialize();
+
 	Input::GetInstance()->Initialize();
 
 	TextureManager::GetInstance()->Initialize();
