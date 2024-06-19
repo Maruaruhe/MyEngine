@@ -16,7 +16,6 @@
 #pragma comment(lib,"dxguid.lib")
 #pragma comment(lib,"dxcompiler.lib")
 
-class Texture;
 class GraphicsRenderer
 {
 public:
@@ -58,7 +57,6 @@ public:
 	void Release();
 private:
 	DirectX12* directX12 = nullptr;
-	Texture* texture;
 
 	HRESULT hr;
 	//Microsoft::WRL::ComPtr<ID3D12Device> device;

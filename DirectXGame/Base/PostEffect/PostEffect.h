@@ -2,7 +2,7 @@
 class PostEffect
 {
 public:
-
+	void CreateRootSignature();
 private:
 
 };

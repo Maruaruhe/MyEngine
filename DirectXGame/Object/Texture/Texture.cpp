@@ -1,6 +1,6 @@
 #include "Texture.h"
 
-DirectX::ScratchImage Texture::LoadTexture(const std::string& filePath) {
+DirectX::ScratchImage TextureLoadTexture(const std::string& filePath) {
 	DirectX::ScratchImage image{};
 	std::wstring filePathW = ConvertString(filePath);
 	HRESULT hr = DirectX::LoadFromWICFile(filePathW.c_str(), DirectX::WIC_FLAGS_FORCE_SRGB, nullptr, image);
@@ -13,7 +13,7 @@ DirectX::ScratchImage Texture::LoadTexture(const std::string& filePath) {
 	return mipImages;
 }
 
-Microsoft::WRL::ComPtr<ID3D12Resource> Texture::CreateTextureResource(Microsoft::WRL::ComPtr<ID3D12Device> device, const DirectX::TexMetadata& metadata) {
+Microsoft::WRL::ComPtr<ID3D12Resource> CreateTextureResource(Microsoft::WRL::ComPtr<ID3D12Device> device, const DirectX::TexMetadata& metadata) {
 	//metadataを基にResourceの設定
 	D3D12_RESOURCE_DESC resourceDesc{};
 	resourceDesc.Width = UINT(metadata.width);
@@ -42,7 +42,7 @@ Microsoft::WRL::ComPtr<ID3D12Resource> Texture::CreateTextureResource(Microsoft:
 	return resource;
 }
 
-void Texture::UploadTextureData(Microsoft::WRL::ComPtr<ID3D12Resource> resource, const DirectX::ScratchImage& mipImages) {
+void UploadTextureData(Microsoft::WRL::ComPtr<ID3D12Resource> resource, const DirectX::ScratchImage& mipImages) {
 	const DirectX::TexMetadata& metadata = mipImages.GetMetadata();
 
 	for (size_t mipLevel = 0; mipLevel < metadata.mipLevels; ++mipLevel) {
@@ -58,7 +58,7 @@ void Texture::UploadTextureData(Microsoft::WRL::ComPtr<ID3D12Resource> resource,
 	}
 }
 
-Microsoft::WRL::ComPtr<ID3D12Resource> Texture::CreateDepthStencilTextureResource(Microsoft::WRL::ComPtr<ID3D12Device> device, int32_t width, int32_t height) {
+Microsoft::WRL::ComPtr<ID3D12Resource> CreateDepthStencilTextureResource(Microsoft::WRL::ComPtr<ID3D12Device> device, int32_t width, int32_t height) {
 	D3D12_RESOURCE_DESC resourceDesc{};
 	resourceDesc.Width = width;
 	resourceDesc.Height = height;

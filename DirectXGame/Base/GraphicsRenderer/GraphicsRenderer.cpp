@@ -362,7 +362,7 @@ void GraphicsRenderer::CreateDSV() {
 	dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
 
 
-	depthStencilResource = texture->CreateDepthStencilTextureResource(directX12->GetDevice(), kClientWidth, kClientHeight);
+	depthStencilResource = CreateDepthStencilTextureResource(directX12->GetDevice(), kClientWidth, kClientHeight);
 	directX12->GetDevice()->CreateDepthStencilView(depthStencilResource.Get(), &dsvDesc, directX12->GetDsvDescriptorHeap()->GetCPUDescriptorHandleForHeapStart());
 
 	depthStencilDesc.DepthEnable = true;
@@ -377,7 +377,7 @@ void GraphicsRenderer::CreateDSVParticle() {
 	dsvDescForParticle.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
 	dsvDescForParticle.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
 
-	depthStencilResourceForParticle = texture->CreateDepthStencilTextureResource(directX12->GetDevice(), kClientWidth, kClientHeight);
+	depthStencilResourceForParticle = CreateDepthStencilTextureResource(directX12->GetDevice(), kClientWidth, kClientHeight);
 	directX12->GetDevice()->CreateDepthStencilView(depthStencilResourceForParticle.Get(), &dsvDescForParticle, directX12->GetDsvDescriptorHeapForParticle()->GetCPUDescriptorHandleForHeapStart());
 
 	depthStencilDescForParticle.DepthEnable = true;
