@@ -16,6 +16,7 @@
 #pragma comment(lib,"dxguid.lib")
 #pragma comment(lib,"dxcompiler.lib")
 
+class Texture;
 class GraphicsRenderer
 {
 public:
@@ -51,11 +52,16 @@ public:
 
 	void ViewportScissor();
 
+	void CreateDSV();
+	void CreateDSVParticle();
+
 	void Release();
 private:
 	DirectX12* directX12 = nullptr;
+	Texture* texture;
+
 	HRESULT hr;
-	Microsoft::WRL::ComPtr<ID3D12Device> device;
+	//Microsoft::WRL::ComPtr<ID3D12Device> device;
 	//InitializeDXC
 	IDxcUtils* dxcUtils =nullptr;
 	IDxcCompiler3* dxcCompiler;
@@ -113,6 +119,16 @@ private:
 
 	const int32_t kClientWidth = 1280;
 	const int32_t kClientHeight = 720;
+
+	//dsv
+	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc;
+	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDescForParticle;
+
+	D3D12_DEPTH_STENCIL_DESC depthStencilDesc{};
+	D3D12_DEPTH_STENCIL_DESC depthStencilDescForParticle{};
+
+	Microsoft::WRL::ComPtr<ID3D12Resource> depthStencilResource;
+	Microsoft::WRL::ComPtr<ID3D12Resource> depthStencilResourceForParticle;
 
 	GraphicsRenderer() = default;
 	~GraphicsRenderer() = default;

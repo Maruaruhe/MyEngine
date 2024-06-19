@@ -16,8 +16,6 @@
 
 class WindowsAPI;
 
-class Texture;
-
 class DirectX12
 {
 public:
@@ -88,9 +86,6 @@ public:
 public:
 	void GetBackBuffer();
 
-	void CreateDSV();
-	void CreateDSVParticle();
-
 	void RTV();
 
 	void CommandKick();
@@ -106,9 +101,6 @@ public:
 
 	D3D12_GPU_DESCRIPTOR_HANDLE GetSrvHandleGPU() { return textureSrvHandleGPU; }
 
-	D3D12_DEPTH_STENCIL_DESC GetDepthStencilDesc() { return depthStencilDesc; }
-	D3D12_DEPTH_STENCIL_DESC GetDepthStencilDescForParticle() { return depthStencilDescForParticle; }
-
 	D3D12_CPU_DESCRIPTOR_HANDLE GetCPUDescriptorHandle(uint32_t index);
 	D3D12_GPU_DESCRIPTOR_HANDLE GetGPUDescriptorHandle(uint32_t index);
 
@@ -116,11 +108,13 @@ public:
 	uint32_t GetdescriptorSizeSRV() { return descriptorSizeSRV; }
 
 	Microsoft::WRL::ComPtr<ID3D12Resource> CreateRenderTextureResource(uint32_t width, uint32_t height, DXGI_FORMAT format, const Vector4& color);
+
+	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> GetDsvDescriptorHeap() { return dsvDescriptorHeap; }
+	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> GetDsvDescriptorHeapForParticle() { return dsvDescriptorHeapForParticle; }
 private:
 	static DirectX12* instance;
 
 	WindowsAPI* windowsAPI_ = nullptr;
-	Texture* texture;
 
 	D3D12_GPU_DESCRIPTOR_HANDLE textureSrvHandleGPU;
 
@@ -156,12 +150,6 @@ private:
 
 	//RTVの設定
 	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc;
-
-	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc;
-	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDescForParticle;
-
-	D3D12_DEPTH_STENCIL_DESC depthStencilDesc{};
-	D3D12_DEPTH_STENCIL_DESC depthStencilDescForParticle{};
 
 	//ディスクリプタの先頭を取得する
 	D3D12_CPU_DESCRIPTOR_HANDLE rtvStartHandle;

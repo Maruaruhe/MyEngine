@@ -1,5 +1,6 @@
 #include "GraphicsRenderer.h"
 #include <assert.h>
+#include "../../Object/Texture/Texture.h"
 
 GraphicsRenderer* GraphicsRenderer::GetInstance() {
 	static GraphicsRenderer instance;
@@ -11,6 +12,10 @@ GraphicsRenderer* GraphicsRenderer::GetInstance() {
 void GraphicsRenderer::Initialize() {
 	directX12 = DirectX12::GetInstance();
 	InitializeDXC();
+
+	CreateDSV();
+	CreateDSVParticle();
+
 	MakeRootSignature();
 	MakeRootSignatureForParticle();
 
@@ -321,7 +326,7 @@ void GraphicsRenderer::MakePSO() {
 	graphicsPipelineStateDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
 	graphicsPipelineStateDesc.SampleDesc.Count = 1;
 	graphicsPipelineStateDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
-	graphicsPipelineStateDesc.DepthStencilState = directX12->GetDepthStencilDesc();
+	graphicsPipelineStateDesc.DepthStencilState = depthStencilDesc;
 	graphicsPipelineStateDesc.DSVFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
 
 	graphicsPipelineState = nullptr;
@@ -342,12 +347,43 @@ void GraphicsRenderer::MakePSOForParticle() {
 	graphicsPipelineStateDescForParticle.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
 	graphicsPipelineStateDescForParticle.SampleDesc.Count = 1;
 	graphicsPipelineStateDescForParticle.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
-	graphicsPipelineStateDescForParticle.DepthStencilState = directX12->GetDepthStencilDescForParticle();
+	graphicsPipelineStateDescForParticle.DepthStencilState = depthStencilDescForParticle;
 	graphicsPipelineStateDescForParticle.DSVFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
 
 	graphicsPipelineStateForParticle = nullptr;
 	hr = directX12->GetDevice()->CreateGraphicsPipelineState(&graphicsPipelineStateDescForParticle, IID_PPV_ARGS(&graphicsPipelineStateForParticle));
 	assert((SUCCEEDED(hr)));
+}
+
+void GraphicsRenderer::CreateDSV() {
+	//dsv
+	dsvDesc = {};
+	dsvDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+	dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
+
+
+	depthStencilResource = texture->CreateDepthStencilTextureResource(directX12->GetDevice(), kClientWidth, kClientHeight);
+	directX12->GetDevice()->CreateDepthStencilView(depthStencilResource.Get(), &dsvDesc, directX12->GetDsvDescriptorHeap()->GetCPUDescriptorHandleForHeapStart());
+
+	depthStencilDesc.DepthEnable = true;
+	depthStencilDesc.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
+	//depthStencilDesc.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;
+	depthStencilDesc.DepthFunc = D3D12_COMPARISON_FUNC_LESS_EQUAL;
+}
+
+void GraphicsRenderer::CreateDSVParticle() {
+	//dsv
+	dsvDescForParticle = {};
+	dsvDescForParticle.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+	dsvDescForParticle.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
+
+	depthStencilResourceForParticle = texture->CreateDepthStencilTextureResource(directX12->GetDevice(), kClientWidth, kClientHeight);
+	directX12->GetDevice()->CreateDepthStencilView(depthStencilResourceForParticle.Get(), &dsvDescForParticle, directX12->GetDsvDescriptorHeapForParticle()->GetCPUDescriptorHandleForHeapStart());
+
+	depthStencilDescForParticle.DepthEnable = true;
+	//epthStencilDescForParticle.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
+	depthStencilDescForParticle.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;
+	depthStencilDescForParticle.DepthFunc = D3D12_COMPARISON_FUNC_LESS_EQUAL;
 }
 
 void GraphicsRenderer::ViewportScissor() {

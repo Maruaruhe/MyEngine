@@ -1,6 +1,6 @@
 #include "DirectX12.h"
 #include "../Log/Log.h"
-#include "../../Object/Texture/Texture.h"
+
 DirectX12* DirectX12::instance = nullptr;
 
 DirectX12* DirectX12::GetInstance() {
@@ -24,12 +24,15 @@ void DirectX12::Initialize() {
 	descriptorSizeRTV = device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
 	descriptorSizeDSV = device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_DSV);
 
+	dsvDescriptorHeap = CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE_DSV, 1, false);
+	dsvDescriptorHeapForParticle = CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE_DSV, 1, false);
+
 	Error();
 	Command();
 	SwapChain();
 	DescriptorHeap();
-	CreateDSV();
-	CreateDSVParticle();
+	//CreateDSV();
+	//CreateDSVParticle();
 	Fence();
 
 	//ImGuiの初期化
@@ -256,38 +259,22 @@ void DirectX12::DescriptorHeap() {
 	//device->CreateShaderResourceView(renderTextureResource.Get(), &renderTextureSrvDesc, textureSrvHandleCPU);
 }
 
-void DirectX12::CreateDSV() {
-	//dsv
-	dsvDescriptorHeap = CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE_DSV, 1, false);
-
-	dsvDesc = {};
-	dsvDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
-	dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
-
-	Microsoft::WRL::ComPtr<ID3D12Resource> depthStencilResource = texture->CreateDepthStencilTextureResource(device, kClientWidth, kClientHeight);
-	device->CreateDepthStencilView(depthStencilResource.Get(), &dsvDesc, dsvDescriptorHeap->GetCPUDescriptorHandleForHeapStart());
-
-	depthStencilDesc.DepthEnable = true;
-	depthStencilDesc.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
-	//depthStencilDesc.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;
-	depthStencilDesc.DepthFunc = D3D12_COMPARISON_FUNC_LESS_EQUAL;
-}
-void DirectX12::CreateDSVParticle() {
-	//dsv
-	dsvDescriptorHeapForParticle = CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE_DSV, 1, false);
-
-	dsvDescForParticle = {};
-	dsvDescForParticle.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
-	dsvDescForParticle.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
-
-	Microsoft::WRL::ComPtr<ID3D12Resource> depthStencilResourceForParticle = texture->CreateDepthStencilTextureResource(device, kClientWidth, kClientHeight);
-	device->CreateDepthStencilView(depthStencilResourceForParticle.Get(), &dsvDescForParticle, dsvDescriptorHeapForParticle->GetCPUDescriptorHandleForHeapStart());
-
-	depthStencilDescForParticle.DepthEnable = true;
-	//epthStencilDescForParticle.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
-	depthStencilDescForParticle.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;
-	depthStencilDescForParticle.DepthFunc = D3D12_COMPARISON_FUNC_LESS_EQUAL;
-}
+//void DirectX12::CreateDSVParticle() {
+//	//dsv
+//	dsvDescriptorHeapForParticle = CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE_DSV, 1, false);
+//
+//	dsvDescForParticle = {};
+//	dsvDescForParticle.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+//	dsvDescForParticle.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
+//
+//	Microsoft::WRL::ComPtr<ID3D12Resource> depthStencilResourceForParticle = texture->CreateDepthStencilTextureResource(device, kClientWidth, kClientHeight);
+//	device->CreateDepthStencilView(depthStencilResourceForParticle.Get(), &dsvDescForParticle, dsvDescriptorHeapForParticle->GetCPUDescriptorHandleForHeapStart());
+//
+//	depthStencilDescForParticle.DepthEnable = true;
+//	//epthStencilDescForParticle.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
+//	depthStencilDescForParticle.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;
+//	depthStencilDescForParticle.DepthFunc = D3D12_COMPARISON_FUNC_LESS_EQUAL;
+//}
 
 void DirectX12::GetBackBuffer() {
 	//これから書き込むバックバッファのインデックスを取得
