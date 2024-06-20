@@ -80,13 +80,13 @@ void Anime::Update() {
 }
 
 void Anime::Draw() {
-	//D3D12_VERTEX_BUFFER_VIEW vbvs[2] = {
-	//	vertexBufferView,
-	//	skinCluster.influenceBufferView
-	//};
+	D3D12_VERTEX_BUFFER_VIEW vbvs[2] = {
+		vertexBufferView,
+		skinCluster.influenceBufferView
+	};
 
 	DirectX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView);	//VBVを設定
-	//DirectX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 2, vbvs);	//VBVを設定
+	DirectX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 2, vbvs);	//VBVを設定
 	DirectX12::GetInstance()->GetCommandList()->IASetIndexBuffer(&indexBufferView);	//
 	//形状を設定。PSOに設定しているものとはまた別。同じものを設定すると考えておけばよい
 	DirectX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -98,16 +98,17 @@ void Anime::Draw() {
 	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
 
 	//koko
+	//DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(1, skinCluster.paletteSrvHandle.second);
 	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(2, DirectX12::GetInstance()->GetSrvHandleGPU());
 	//描画！　（DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
 	DirectX12::GetInstance()->GetCommandList()->DrawIndexedInstanced(UINT(modelData.indices.size()), 1, 0, 0, 0);
 
-	for (Joint& joint : skelton.joints) {
-		joint.model.SetCamera(camera);
+	//for (Joint& joint : skelton.joints) {
+	//	joint.model.SetCamera(camera);
 
-		joint.model.Update();
-		joint.model.Draw();
-	}
+	//	joint.model.Update();
+	//	joint.model.Draw();
+	//}
 }
 
 void Anime::UpdateAnimation() {
