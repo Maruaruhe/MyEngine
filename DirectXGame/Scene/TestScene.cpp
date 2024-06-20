@@ -17,7 +17,7 @@ void TestScene::Initialize() {
 	//model.Initialize("walk");
 	//model.SetCamera(camera2);
 
-	a.Initialize("axis.obj");
+	a.Initialize("axis");
 	a.SetCamera(camera2);
 }
 
