@@ -55,7 +55,7 @@ void Model::Update() {
 			worldMatrix = Multiply(worldMatrix, camera->cameraMatrix);
 		}
 		const Matrix4x4& viewprojectionMatrix = camera->viewProjectionMatrix;
-		worldViewProjectionMatrix = localMatrix * worldMatrix * viewprojectionMatrix;
+		worldViewProjectionMatrix = worldMatrix * viewprojectionMatrix;
 	}
 	else {
 		worldViewProjectionMatrix = worldMatrix;
@@ -63,7 +63,7 @@ void Model::Update() {
 	//transformationMatrix->WVP = Multiply(Multiply(modelData.rootNode.localMatrix , worldMatrix), camera->viewProjectionMatrix);
 	//transformationMatrix->World = Multiply(modelData.rootNode.localMatrix, worldMatrix);
 	transformationMatrix->WVP = worldViewProjectionMatrix;
-	transformationMatrix->World = localMatrix * worldMatrix;
+	transformationMatrix->World = worldMatrix;
 }
 
 void Model::Draw() {
