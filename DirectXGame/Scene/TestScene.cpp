@@ -17,8 +17,8 @@ void TestScene::Initialize() {
 	model.Initialize("walk");
 	model.SetCamera(camera2);
 
-	//a.Initialize("plane");
-	//a.SetCamera(camera2);
+	a.Initialize("plane");
+	a.SetCamera(camera2);
 }
 
 void TestScene::Update() {
@@ -28,7 +28,7 @@ void TestScene::Update() {
 	camera2->Update();
 
 	model.Update();
-	//a.Update();
+	a.Update();
 }
 
 void TestScene::Draw() {
