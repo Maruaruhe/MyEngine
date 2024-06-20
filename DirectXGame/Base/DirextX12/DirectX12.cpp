@@ -435,8 +435,8 @@ Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> DirectX12::CreateDescriptorHeap(D3D
 
 //ImGui
 void DirectX12::SetImGuiDescriptorHeap() {
-	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descriptorHeaps[] = { srvDescriptorHeap.Get()};
-	commandList->SetDescriptorHeaps(1, descriptorHeaps->GetAddressOf());
+	ID3D12DescriptorHeap* descriptorHeaps[] = { srvDescriptorHeap.Get() };
+	commandList->SetDescriptorHeaps(1, descriptorHeaps);
 }
 
 void DirectX12::PushImGuiDrawCommand() {

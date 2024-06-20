@@ -85,20 +85,22 @@ void Anime::Draw() {
 		skinCluster.influenceBufferView
 	};
 
-	DirectX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView);	//VBVを設定
+	//DirectX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView);	//VBVを設定
 	DirectX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 2, vbvs);	//VBVを設定
 	DirectX12::GetInstance()->GetCommandList()->IASetIndexBuffer(&indexBufferView);	//
 	//形状を設定。PSOに設定しているものとはまた別。同じものを設定すると考えておけばよい
 	DirectX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
 
-	GraphicsRenderer::GetInstance()->SetRootSignatureAndPSO(MODEL);
+	GraphicsRenderer::GetInstance()->SetRootSignatureAndPSO(ANIME);
+	//GraphicsRenderer::GetInstance()->SetRootSignatureAndPSO(MODEL);
 
 	//wvp用のCBufferの場所を設定
 	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
 
 	//koko
 	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(5, skinCluster.paletteSrvHandle.second);
+	//DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(5, DirectX12::GetInstance()->GetSrvHandleGPU());
 	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(2, DirectX12::GetInstance()->GetSrvHandleGPU());
 	//描画！　（DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
 	DirectX12::GetInstance()->GetCommandList()->DrawIndexedInstanced(UINT(modelData.indices.size()), 1, 0, 0, 0);
