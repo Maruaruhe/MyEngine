@@ -8,6 +8,7 @@
 #include "../../Math/MathOperator.h"
 
 void Model::InitializePosition(const std::string& filename) {
+	ModelManager::GetInstance()->LoadObjFile("","");
 	modelData = ModelManager::GetInstance()->GetModel(filename);
 	vertexResource = DirectX12::GetInstance()->CreateBufferResource(sizeof(VertexData) * modelData.vertices.size());
 }
