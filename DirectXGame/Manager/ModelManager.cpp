@@ -216,7 +216,8 @@ void ModelManager::LoadModel(const std::string& filePath) {
 	}
 
 	ModelData modelData;
-	modelData = LoadModelFile("Resources", filePath);
+	//modelData = LoadModelFile("Resources", filePath);
+	modelData = LoadObjFile("Resources", filePath);
 
 	modelDatas.insert(std::make_pair(filePath, std::move(modelData)));
 }
