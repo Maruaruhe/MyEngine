@@ -10,15 +10,15 @@ void TestScene::Initialize() {
 
 	light.Initialize();
 
-	//ModelManager::GetInstance()->LoadModel("walk");
+	ModelManager::GetInstance()->LoadModel("walk");
 	//ModelManager::GetInstance()->LoadModel("GLTFPlane");
-	ModelManager::GetInstance()->LoadModel("axis");
+	ModelManager::GetInstance()->LoadModel("AnimatedCube");
 
 	//model.Initialize("walk");
 	//model.SetCamera(camera2);
 
-	a.Initialize("axis");
-	a.SetCamera(camera2);
+	model.Initialize("walk");
+	model.SetCamera(camera2);
 }
 
 void TestScene::Update() {
@@ -28,10 +28,10 @@ void TestScene::Update() {
 	camera2->Update();
 
 	//model.Update();
-	a.Update();
+	model.Update();
 }
 
 void TestScene::Draw() {
 	//model.Draw();
-	a.Draw();
+	model.Draw();
 }
