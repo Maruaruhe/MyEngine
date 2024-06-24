@@ -1,6 +1,9 @@
 #include "DirectX12.h"
 #include "../Log/Log.h"
 #include "../../Object/Texture/Texture.h"
+
+#include <thread>
+
 DirectX12* DirectX12::instance = nullptr;
 
 DirectX12* DirectX12::GetInstance() {
@@ -468,7 +471,7 @@ void DirectX12::UpdataFixFPS() {
 
 	if (elapsed < kMinCheckTime) {
 		while (std::chrono::steady_clock::now() - reference_ < kMinTime) {
-			//std::this_thread::sleep_for(std::chrono::microseconds(1));
+			std::this_thread::sleep_for(std::chrono::microseconds(1));
 		}
 	}
 	reference_ = std::chrono::steady_clock::now();
