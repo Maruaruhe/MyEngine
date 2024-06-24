@@ -16,6 +16,7 @@ GameManager::GameManager() {
 	graphicsRenderer_->Initialize();
 
 	KeyInput::GetInstance()->Initialize();
+	GamePadInput::GetInstance()->Initialize();
 
 	TextureManager::GetInstance()->Initialize();
 	ModelManager::GetInstance()->Initialize();
@@ -48,6 +49,7 @@ void GameManager::Run() {
 		}
 		else {
 			KeyInput::GetInstance()->Update();
+			GamePadInput::GetInstance()->BeginFrame();
 			//シーンのチェック
 			prevSceneNo = currentSceneNo;
 			currentSceneNo = sceneArr[currentSceneNo]->GetSceneNo();

@@ -11,8 +11,7 @@
 #include "../Object/Anime/Anime.h"
 #include "../Object/Particle/Particle.h"
 
-#include "../GameObject/Entity/Player/Player.h"
-#include "../GameObject/Entity/Enemy/Enemy.h"
+#include "../GameObject/Entity/TestObject/TestObject.h"
 #include "../GameObject/Skydome/Skydome.h"
 
 class TestScene : public IScene
@@ -29,8 +28,6 @@ private:
 
 	Camera* camera2;
 
-	Anime model;
-
-	Model a;
+	TestObject test;
 };
 
