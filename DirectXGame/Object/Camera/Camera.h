@@ -33,7 +33,7 @@ public:
 	Matrix4x4 viewMatrix;
 	Matrix4x4 projectionMatrix;
 private:
-	Input* input = nullptr;
+	KeyInput* input = nullptr;
 
 	Microsoft::WRL::ComPtr<ID3D12Resource> cameraForGPUResource;
 

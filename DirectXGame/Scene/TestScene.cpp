@@ -2,7 +2,7 @@
 #include "../Manager/ModelManager.h"
 
 void TestScene::Initialize() {
-	input = Input::GetInstance();
+	input = KeyInput::GetInstance();
 
 	camera2 = new Camera();
 	camera2->Initialize();

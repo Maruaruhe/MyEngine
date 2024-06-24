@@ -24,7 +24,7 @@ public:
 
 	void CheckAllCollision();
 private:
-	Input* input = nullptr;
+	KeyInput* input = nullptr;
 	Lighting light;
 
 	Camera* camera2;

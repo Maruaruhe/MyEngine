@@ -18,7 +18,7 @@ public:
 	void Draw() override;
 
 private:
-	Input* input = nullptr;
+	KeyInput* input = nullptr;
 
 	Sprite a;
 	Sprite b;

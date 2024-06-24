@@ -15,7 +15,7 @@ GameManager::GameManager() {
 	directX12->Initialize();
 	graphicsRenderer_->Initialize();
 
-	Input::GetInstance()->Initialize();
+	KeyInput::GetInstance()->Initialize();
 
 	TextureManager::GetInstance()->Initialize();
 	ModelManager::GetInstance()->Initialize();
@@ -47,7 +47,7 @@ void GameManager::Run() {
 			DispatchMessage(&msg);
 		}
 		else {
-			Input::GetInstance()->Update();
+			KeyInput::GetInstance()->Update();
 			//シーンのチェック
 			prevSceneNo = currentSceneNo;
 			currentSceneNo = sceneArr[currentSceneNo]->GetSceneNo();

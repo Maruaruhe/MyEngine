@@ -2,7 +2,7 @@
 #include "../Manager/ModelManager.h"
 
 void SubTestScene::Initialize() {
-	input = Input::GetInstance();
+	input = KeyInput::GetInstance();
 
 	TextureManager::GetInstance()->LoadTexture("Resources/ao.png");
 	TextureManager::GetInstance()->LoadTexture("Resources/monsterBall.png");

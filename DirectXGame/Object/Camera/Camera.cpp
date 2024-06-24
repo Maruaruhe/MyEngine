@@ -2,7 +2,7 @@
 #include "../../Base/GraphicsRenderer/GraphicsRenderer.h"
 
 void Camera::Initialize() {
-	input = Input::GetInstance();
+	input = KeyInput::GetInstance();
 
 	transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,-5.0f} };
 	horizontalAngle = 0.45f;

@@ -80,7 +80,7 @@ private:
 
 
 	//DirectX12* directX12 = nullptr;
-	Input* input_ = nullptr;
+	KeyInput* input_ = nullptr;
 	ModelData modelData;
 	VertexData* vertexData = nullptr;
 	Camera* camera = nullptr;
