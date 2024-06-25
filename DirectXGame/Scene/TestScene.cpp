@@ -10,8 +10,6 @@ void TestScene::Initialize() {
 
 	light.Initialize();
 
-	ModelManager::GetInstance()->LoadModel("walk");
-
 	test.Initialize();
 	test.anime.SetCamera(camera2);
 }

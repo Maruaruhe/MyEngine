@@ -1,7 +1,8 @@
 #include "TestObject.h"
 
 void TestObject::Initialize() {
-	anime.Initialize("walk");
+	ModelManager::GetInstance()->LoadModel("plane");
+	anime.Initialize("plane");
 
 	kInput = KeyInput::GetInstance();
 	pInput = GamePadInput::GetInstance();
