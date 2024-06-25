@@ -1,6 +1,7 @@
 #include "PostEffect.h"
 #include "../../Base/Log/Log.h"
 #include "../GraphicsRenderer/GraphicsRenderer.h"
+#include "../DirextX12/DirectX12.h"
 
 void PostEffect::Initialize() {
 	CreateRootSignature();
@@ -92,6 +93,6 @@ void PostEffect::CreatePSO() {
 	graphicsPipelineStateDesc.DSVFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
 
 	graphicsPipelineState = nullptr;
-	hr = directX12->GetDevice()->CreateGraphicsPipelineState(&graphicsPipelineStateDesc, IID_PPV_ARGS(&graphicsPipelineState));
+	HRESULT hr = DirectX12::GetInstance()->GetDevice()->CreateGraphicsPipelineState(&graphicsPipelineStateDesc, IID_PPV_ARGS(&graphicsPipelineState));
 	assert((SUCCEEDED(hr)));
 }

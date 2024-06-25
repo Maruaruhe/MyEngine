@@ -17,5 +17,6 @@ public:
 	void CreatePSO();
 private:
 	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature;
+	Microsoft::WRL::ComPtr<ID3D12PipelineState> graphicsPipelineState;
 };
 
