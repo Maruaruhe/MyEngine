@@ -1,8 +1,8 @@
 #include "TestObject.h"
 
 void TestObject::Initialize() {
-	ModelManager::GetInstance()->LoadModel("walk");
-	anime.Initialize("walk");
+	ModelManager::GetInstance()->LoadModel("sneakWalk");
+	anime.Initialize("sneakWalk");
 
 	kInput = KeyInput::GetInstance();
 	pInput = GamePadInput::GetInstance();
@@ -10,6 +10,7 @@ void TestObject::Initialize() {
 
 void TestObject::Update() {
 	anime.Update();
+	anime.transform.rotate.y += 0.05f;
 
 	//if (kInput->PushKey(DIK_UP)) {
 	//	anime.transform.translate.y += 0.1f;

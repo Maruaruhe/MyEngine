@@ -313,9 +313,6 @@ int32_t ModelManager::CreateJoint(const Node& node, const std::optional<int32_t>
 	joint.index = int32_t(joints.size());
 	joint.parent = parent;
 
-	joint.model.Initialize("walk");
-	joint.model.transform.scale = { 0.1f,0.1f,0.1f };
-
 	joints.push_back(joint);
 
 	for (const Node& child : node.children) {
