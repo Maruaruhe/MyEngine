@@ -1,11 +1,11 @@
 #include "TestObject.h"
 
 void TestObject::Initialize() {
-	ModelManager::GetInstance()->LoadModel("sneakWalk");
+	ModelManager::GetInstance()->LoadGLTF("sneakWalk");
 	anime.Initialize("sneakWalk");
 
-
-	model.Initialize("plane");
+	ModelManager::GetInstance()->LoadModel("ghostPori");
+	model.Initialize("ghostPori");
 
 	kInput = KeyInput::GetInstance();
 	pInput = GamePadInput::GetInstance();
@@ -14,6 +14,9 @@ void TestObject::Initialize() {
 void TestObject::Update() {
 	anime.Update();
 	anime.transform.rotate.y += 0.05f;
+
+	model.Update();
+	model.transform.rotate.y += 0.05f;
 
 	//if (kInput->PushKey(DIK_UP)) {
 	//	anime.transform.translate.y += 0.1f;
@@ -41,4 +44,6 @@ void TestObject::Update() {
 
 void TestObject::Draw() {
 	anime.Draw();
+
+	model.Draw();
 }

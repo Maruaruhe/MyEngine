@@ -46,6 +46,8 @@ private:
 
 	MaterialData LoadMaterialTemplateFile(const std::string& directoryPath, const std::string& filename);
 
+	void DrawMatrix4x4(const char* title, const Matrix4x4& matrix);
+
 public:
 	Material* material = nullptr;
 	Transform transform;

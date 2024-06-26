@@ -41,6 +41,8 @@ public:
 
 	void Initialize();
 	void LoadModel(const std::string& filePath);
+	void LoadGLTF(const std::string& filePath);
+
 	ModelData GetModel(const std::string& filePath);
 	ModelData LoadObjFile(const std::string& directoryPath, const std::string& filename);
 	ModelData LoadModelFile(const std::string& directoryPath, const std::string& filename);

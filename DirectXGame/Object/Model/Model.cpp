@@ -55,15 +55,13 @@ void Model::Update() {
 			worldMatrix = Multiply(worldMatrix, camera->cameraMatrix);
 		}
 		const Matrix4x4& viewprojectionMatrix = camera->viewProjectionMatrix;
-		worldViewProjectionMatrix = localMatrix * worldMatrix * viewprojectionMatrix;
+		worldViewProjectionMatrix = worldMatrix * viewprojectionMatrix;
 	}
 	else {
 		worldViewProjectionMatrix = worldMatrix;
 	}
-	//transformationMatrix->WVP = Multiply(Multiply(modelData.rootNode.localMatrix , worldMatrix), camera->viewProjectionMatrix);
-	//transformationMatrix->World = Multiply(modelData.rootNode.localMatrix, worldMatrix);
 	transformationMatrix->WVP = worldViewProjectionMatrix;
-	transformationMatrix->World = localMatrix * worldMatrix;
+	transformationMatrix->World = worldMatrix;
 }
 
 void Model::Draw() {
@@ -137,4 +135,20 @@ MaterialData Model::LoadMaterialTemplateFile(const std::string& directoryPath, c
 		}
 	}
 	return materialData;
+}
+
+void Model::DrawMatrix4x4(const char* title, const Matrix4x4& matrix) {
+#ifdef _DEBUG
+	ImGui::Begin(title);
+	ImGui::Text("Matrix4x4:");
+
+	for (int i = 0; i < 4; ++i) {
+		ImGui::Text("%.3f, %.3f, %.3f, %.3f",
+			matrix.m[i][0], matrix.m[i][1], matrix.m[i][2], matrix.m[i][3]);
+	}
+	ImGui::End();
+#else
+	(void)title;
+	(void)matrix;
+#endif // DEBUG
 }

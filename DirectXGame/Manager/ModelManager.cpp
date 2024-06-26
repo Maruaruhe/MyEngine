@@ -16,7 +16,7 @@ ModelData ModelManager::LoadObjFile(const std::string& directoryPath, const std:
 	ModelData modelData;
 	Assimp::Importer importer;
 
-	std::string filePath = directoryPath + "/" + filename + ".gltf";
+	std::string filePath = directoryPath + "/" + filename + ".obj";
 	const aiScene* scene = importer.ReadFile(filePath.c_str(), aiProcess_FlipWindingOrder | aiProcess_FlipUVs);
 	assert(scene->HasMeshes());
 
@@ -232,6 +232,19 @@ ModelData ModelManager::LoadModelFile(const std::string& directoryPath, const st
 //}
 
 void ModelManager::LoadModel(const std::string& filePath) {
+	//読み込み済みモデルを検索
+	if (modelDatas.contains(filePath)) {
+		return;
+	}
+
+	ModelData modelData;
+	//modelData = LoadModelFile("Resources", filePath);
+	modelData = LoadObjFile("Resources", filePath);
+
+	modelDatas.insert(std::make_pair(filePath, std::move(modelData)));
+}
+
+void ModelManager::LoadGLTF(const std::string& filePath) {
 	//読み込み済みモデルを検索
 	if (modelDatas.contains(filePath)) {
 		return;
