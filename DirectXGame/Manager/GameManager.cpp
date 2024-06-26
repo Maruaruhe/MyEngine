@@ -58,10 +58,14 @@ void GameManager::Run() {
 			if (prevSceneNo != currentSceneNo) {
 				sceneArr[currentSceneNo]->Initialize();
 			}
+
+			//更新処理
+			sceneArr[currentSceneNo]->Update();
+
+
 			directX12->PreDrawForPostEffect();
 			graphicsRenderer_->DecideCommand();
 
-			sceneArr[currentSceneNo]->Update();
 			sceneArr[currentSceneNo]->Draw();
 
 			directX12->PostDrawForPostEffect();
@@ -71,6 +75,7 @@ void GameManager::Run() {
 			graphicsRenderer_->DecideCommand();
 			ImGui::Text("a");
 
+			posteffectr.PostDraw();
 
 			ImGui::Render();
 

@@ -8,6 +8,14 @@ void PostEffect::Initialize() {
 	CreatePSO();
 }
 
+void PostEffect::PostDraw() {
+	DirectX12::GetInstance()->GetCommandList()->SetPipelineState(graphicsPipelineState.Get());
+	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(rootSignature.Get());
+	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(0, DirectX12::GetInstance()->GetGPUDescriptorHandle(200));
+
+	DirectX12::GetInstance()->GetCommandList()->DrawInstanced(3, 1, 0, 0);
+}
+
 void PostEffect::CreateRootSignature() {
 	Microsoft::WRL::ComPtr<ID3DBlob> signatureBlob;
 	Microsoft::WRL::ComPtr<ID3DBlob> errorBlob;
@@ -71,10 +79,13 @@ void PostEffect::CreatePSO() {
 	Microsoft::WRL::ComPtr<IDxcBlob> pixelShaderBlob = GraphicsRenderer::GetInstance()->CompileShader(L"Resources/Shaders/PostEffects/CopyImage.PS.hlsl", L"ps_6_0");
 
 	//blendDesc
-	
+	D3D12_BLEND_DESC blendDesc = {};
+	blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
 
 	//rasterizerDesc
-
+	D3D12_RASTERIZER_DESC rasterizerDesc = {};
+	rasterizerDesc.CullMode = D3D12_CULL_MODE_BACK;
+	rasterizerDesc.FillMode = D3D12_FILL_MODE_SOLID;
 	
 	////PSOを生成する-----------------------------------------------------------------------------------------------
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC graphicsPipelineStateDesc = {};

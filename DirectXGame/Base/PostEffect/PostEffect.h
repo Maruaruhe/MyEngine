@@ -15,6 +15,8 @@ public:
 
 	void CreateRootSignature();
 	void CreatePSO();
+
+	void PostDraw();
 private:
 	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature;
 	Microsoft::WRL::ComPtr<ID3D12PipelineState> graphicsPipelineState;
