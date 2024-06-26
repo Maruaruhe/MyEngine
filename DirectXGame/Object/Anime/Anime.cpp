@@ -61,8 +61,6 @@ void Anime::Update() {
 	UpdateSkelton(skelton);
 	UpdateSkinCluster(skinCluster,skelton);
 
-	transform.rotate.x += 0.1f;
-
 	Matrix4x4 worldViewProjectionMatrix;
 	if (camera) {
 		if (isParent) {
