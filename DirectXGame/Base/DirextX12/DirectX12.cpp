@@ -110,14 +110,44 @@ void DirectX12::PreDrawForPostEffect() {
 
 void DirectX12::PostDraw() {
 	PushImGuiDrawCommand();
-	ScreenDisplay();
-	CommandConfirm();
-	CommandKick();
+
+	//
+	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;
+	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;
+	commandList->ResourceBarrier(1, &barrier);
+
+	//
+	HRESULT hr = commandList->Close();
+	assert(SUCCEEDED(hr));
+
+	//
+	ID3D12CommandList* commandLists[] = { commandList.Get() };
+	commandQueue->ExecuteCommandLists(1, commandLists);
+
+	swapChain->Present(1, 0);
+
+	//
+	fenceValue++;
+	commandQueue->Signal(fence.Get(), fenceValue);
+	if (fence->GetCompletedValue() < fenceValue) {
+		fence->SetEventOnCompletion(fenceValue, fenceEvent);
+		WaitForSingleObject(fenceEvent, INFINITE);
+	}
+
+	//
+	hr = commandAllocator->Reset();
+	assert(SUCCEEDED(hr));
+	hr = commandList->Reset(commandAllocator.Get(), nullptr);
+	assert(SUCCEEDED(hr));
+
+	//ScreenDisplay();
+	//CommandConfirm();
+	//CommandKick();
 
 	UpdataFixFPS();
 
-	Signal();
-	NextFlameCommandList();
+	//Signal();
+	//NextFlameCommandList();
 }
 
 void DirectX12::PostDrawForPostEffect() {
@@ -129,15 +159,6 @@ void DirectX12::PostDrawForPostEffect() {
 	renderBarrier.Transition.StateBefore = D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE;
 	renderBarrier.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET;
 	commandList->ResourceBarrier(1, &renderBarrier);
-
-	//ScreenDisplay();
-	//CommandConfirm();
-	//CommandKick();
-
-	//UpdataFixFPS();
-
-	//Signal();
-	//NextFlameCommandList();
 }
 
 void DirectX12::DXGIFactory() {
@@ -248,15 +269,14 @@ void DirectX12::DescriptorHeap() {
 	//srv
 	srvDescriptorHeap = CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, kMaxSRVCount, true);
 
-	//D3D12_SHADER_RESOURCE_VIEW_DESC renderTextureSrvDesc{};
-	//renderTextureSrvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
-	//renderTextureSrvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-	//renderTextureSrvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
-	//renderTextureSrvDesc.Texture2D.MipLevels = 1;
+	D3D12_SHADER_RESOURCE_VIEW_DESC renderTextureSrvDesc{};
+	renderTextureSrvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+	renderTextureSrvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+	renderTextureSrvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
+	renderTextureSrvDesc.Texture2D.MipLevels = 1;
 
-	//D3D12_CPU_DESCRIPTOR_HANDLE textureSrvHandleCPU = GetCPUDescriptorHandle(1);
-	//textureSrvHandleGPU = GetGPUDescriptorHandle(1);
-	//device->CreateShaderResourceView(renderTextureResource.Get(), &renderTextureSrvDesc, textureSrvHandleCPU);
+	D3D12_CPU_DESCRIPTOR_HANDLE textureSrvHandleCPU = GetCPUDescriptorHandle(220);
+	device->CreateShaderResourceView(renderTextureResource.Get(), &renderTextureSrvDesc, textureSrvHandleCPU);
 }
 
 //void DirectX12::CreateDSVParticle() {

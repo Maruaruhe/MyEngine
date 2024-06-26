@@ -11,7 +11,7 @@ void PostEffect::Initialize() {
 void PostEffect::PostDraw() {
 	DirectX12::GetInstance()->GetCommandList()->SetPipelineState(graphicsPipelineState.Get());
 	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(rootSignature.Get());
-	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(0, DirectX12::GetInstance()->GetGPUDescriptorHandle(200));
+	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(0, DirectX12::GetInstance()->GetGPUDescriptorHandle(220));
 
 	DirectX12::GetInstance()->GetCommandList()->DrawInstanced(3, 1, 0, 0);
 }
