@@ -150,7 +150,7 @@
     <FxCompile Include="Resources\Shaders\Object3d.PS.hlsl" />
     <FxCompile Include="Resources\Shaders\Particle.VS.hlsl" />
     <FxCompile Include="Resources\Shaders\Particle.PS.hlsl" />
-    <FxCompile Include="Resources\Shaders\PostEffects\CopyImage.VS.hlsl" />
+    <FxCompile Include="Resources\Shaders\PostEffects\FullScreen.VS.hlsl" />
     <FxCompile Include="Resources\Shaders\PostEffects\CopyImage.PS.hlsl" />
   </ItemGroup>
   <ItemGroup>
@@ -296,6 +296,6 @@
   <ItemGroup>
     <None Include="Resources\Shaders\Object3d.hlsli" />
     <None Include="Resources\Shaders\Particle.hlsli" />
-    <None Include="Resources\Shaders\PostEffects\CopyImage.hlsli" />
+    <None Include="Resources\Shaders\PostEffects\FullScreen.hlsli" />
   </ItemGroup>
 </Project>
