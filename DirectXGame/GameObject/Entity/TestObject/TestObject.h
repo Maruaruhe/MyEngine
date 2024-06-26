@@ -1,4 +1,5 @@
 #include "../../../Object/Anime/Anime.h"
+#include "../../../Object/Model/Model.h"
 #include "../../../Base/Input/Input.h"
 
 class TestObject {
@@ -12,6 +13,7 @@ public:
 
 
 	Anime anime;
+	Model model;
 private:
 	GamePadInput* pInput;
 	KeyInput* kInput;
