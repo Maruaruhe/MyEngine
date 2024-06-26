@@ -75,7 +75,7 @@ void GameManager::Run() {
 			graphicsRenderer_->DecideCommand();
 			ImGui::Text("a");
 
-			posteffectr.PostDraw();
+			//posteffectr.PostDraw();
 
 			ImGui::Render();
 
