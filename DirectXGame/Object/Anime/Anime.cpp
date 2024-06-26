@@ -61,6 +61,8 @@ void Anime::Update() {
 	UpdateSkelton(skelton);
 	UpdateSkinCluster(skinCluster,skelton);
 
+	transform.rotate.x += 0.1f;
+
 	Matrix4x4 worldViewProjectionMatrix;
 	if (camera) {
 		if (isParent) {
@@ -68,13 +70,10 @@ void Anime::Update() {
 		}
 		const Matrix4x4& viewprojectionMatrix = camera->viewProjectionMatrix;
 		worldViewProjectionMatrix = worldMatrix * viewprojectionMatrix;
-		//worldViewProjectionMatrix = skelton.joints[0].skeltonSpaceMatrix * worldMatrix * viewprojectionMatrix;
 	}
 	else {
 		worldViewProjectionMatrix = worldMatrix;
 	}
-	//transformationMatrix->WVP = Multiply(Multiply(modelData.rootNode.localMatrix , worldMatrix), camera->viewProjectionMatrix);
-	//transformationMatrix->World = Multiply(modelData.rootNode.localMatrix, worldMatrix);
 	transformationMatrix->WVP = worldViewProjectionMatrix;
 	transformationMatrix->World = worldMatrix;
 }
@@ -104,13 +103,6 @@ void Anime::Draw() {
 	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(2, DirectX12::GetInstance()->GetSrvHandleGPU());
 	//描画！　（DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
 	DirectX12::GetInstance()->GetCommandList()->DrawIndexedInstanced(UINT(modelData.indices.size()), 1, 0, 0, 0);
-
-	//for (Joint& joint : skelton.joints) {
-	//	joint.model.SetCamera(camera);
-
-	//	joint.model.Update();
-	//	joint.model.Draw();
-	//}
 }
 
 void Anime::UpdateAnimation() {

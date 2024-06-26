@@ -10,11 +10,11 @@ void TestScene::Initialize() {
 
 	light.Initialize();
 
-	ModelManager::GetInstance()->LoadModel("walk");
+	ModelManager::GetInstance()->LoadModel("sneakWalk");
 	//ModelManager::GetInstance()->LoadModel("GLTFPlane");
 	ModelManager::GetInstance()->LoadModel("plane");
 
-	model.Initialize("walk");
+	model.Initialize("sneakWalk");
 	model.SetCamera(camera2);
 
 	//a.Initialize("plane");
