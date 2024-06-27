@@ -2,12 +2,12 @@
 
 void TestObject::Initialize() {
 	ModelManager::GetInstance()->LoadGLTF("sneakWalk");
-	anime.Initialize("sneakWalk");
+	ModelManager::GetInstance()->LoadGLTF("walk");
+	anime.Initialize("walk");
 	anime2.Initialize("sneakWalk");
 
 	anime2.transform.translate.x = -1.5f;
 	//anime2.isPlay = false;
-	anime2.animationSpeed = 1.0f;
 
 	ModelManager::GetInstance()->LoadModel("ghostPori");
 	model.Initialize("ghostPori");

@@ -54,6 +54,7 @@ public:
 
 	MaterialData LoadMaterialTemplateFile(const std::string& directoryPath, const std::string& filename);
 
+	uint32_t index = 500;
 private:
 	std::map<std::string, ModelData> modelDatas;
 
