@@ -3,6 +3,11 @@
 void TestObject::Initialize() {
 	ModelManager::GetInstance()->LoadGLTF("sneakWalk");
 	anime.Initialize("sneakWalk");
+	anime2.Initialize("sneakWalk");
+
+	anime2.transform.translate.x = -1.5f;
+	//anime2.isPlay = false;
+	anime2.animationSpeed = 1.0f;
 
 	ModelManager::GetInstance()->LoadModel("ghostPori");
 	model.Initialize("ghostPori");
@@ -13,37 +18,35 @@ void TestObject::Initialize() {
 
 void TestObject::Update() {
 	anime.Update();
-	anime.transform.rotate.y += 0.05f;
+
+	anime2.Update();
 
 	model.Update();
 	model.transform.rotate.y += 0.05f;
 
-	//if (kInput->PushKey(DIK_UP)) {
-	//	anime.transform.translate.y += 0.1f;
+	//float spd = 0.1f;
+	//// パッドの処理
+	//if (pInput->GetLStick().x <= -0.3f)
+	//{
+	//	anime.transform.translate.x -= spd;
 	//}
-
-	float spd = 0.1f;
-	// パッドの処理
-	if (pInput->GetLStick().x <= -0.3f)
-	{
-		anime.transform.translate.x -= spd;
-	}
-	if (pInput->GetLStick().x >= 0.3f)
-	{
-		anime.transform.translate.x += spd;
-	}
-	if (pInput->GetLStick().y <= -0.3f)
-	{
-		anime.transform.translate.z -= spd;
-	}
-	if (pInput->GetLStick().y >= 0.3f)
-	{
-		anime.transform.translate.z += spd;
-	}
+	//if (pInput->GetLStick().x >= 0.3f)
+	//{
+	//	anime.transform.translate.x += spd;
+	//}
+	//if (pInput->GetLStick().y <= -0.3f)
+	//{
+	//	anime.transform.translate.z -= spd;
+	//}
+	//if (pInput->GetLStick().y >= 0.3f)
+	//{
+	//	anime.transform.translate.z += spd;
+	//}
 }
 
 void TestObject::Draw() {
 	anime.Draw();
+	anime2.Draw();
 
 	model.Draw();
 }

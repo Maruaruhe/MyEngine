@@ -13,6 +13,8 @@ public:
 
 
 	Anime anime;
+	Anime anime2;
+
 	Model model;
 private:
 	GamePadInput* pInput;

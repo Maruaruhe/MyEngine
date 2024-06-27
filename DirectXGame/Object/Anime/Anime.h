@@ -65,6 +65,9 @@ public:
 	Material* material = nullptr;
 	Transform transform;
 	bool isParent;
+
+	float animationSpeed = 1.0f;
+	bool isPlay = true;
 private:
 	uint32_t textureIndex = 0;
 
@@ -107,8 +110,6 @@ private:
 
 	const int32_t kClientWidth = 1280;
 	const int32_t kClientHeight = 720;
-
-	bool useMonsterBall = true;
 
 private:
 

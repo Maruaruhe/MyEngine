@@ -54,10 +54,12 @@ void Anime::Update() {
 
 	worldMatrix = MakeAffineMatrix(transform.scale, transform.rotate, transform.translate);
 
-	animationTime += 1.0f / 60.0f;
+	animationTime += animationSpeed / 60.0f;
 	animationTime = std::fmod(animationTime, anime.duration);
 
-	ApplyAnimation(skelton, anime, animationTime);
+	if (isPlay) {
+		ApplyAnimation(skelton, anime, animationTime);
+	}
 	UpdateSkelton(skelton);
 	UpdateSkinCluster(skinCluster,skelton);
 
