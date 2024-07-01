@@ -2,10 +2,11 @@
 
 void TestObject::Initialize() {
 	ModelManager::GetInstance()->LoadGLTF("sneakWalk");
-	ModelManager::GetInstance()->LoadGLTF("walk");
-	anime.Initialize("walk");
+	ModelManager::GetInstance()->LoadGLTF("simpleSkin");
+	anime.Initialize("simpleSkin");
 	anime2.Initialize("sneakWalk");
 
+	anime.transform.rotate.y += 3.14f;
 	anime2.transform.translate.x = -1.5f;
 	//anime2.isPlay = false;
 
