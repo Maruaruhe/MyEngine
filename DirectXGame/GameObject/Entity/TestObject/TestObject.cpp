@@ -5,10 +5,14 @@ void TestObject::Initialize() {
 	ModelManager::GetInstance()->LoadGLTF("simpleSkin");
 	anime.Initialize("simpleSkin");
 	anime2.Initialize("sneakWalk");
+	anime3.Initialize("sneakWalk");
 
 	anime.transform.rotate.y += 3.14f;
 	anime2.transform.translate.x = -1.5f;
+	anime3.transform.translate.x = -3.0f;
 	//anime2.isPlay = false;
+
+	anime3.animationSpeed = 2.0f;
 
 	ModelManager::GetInstance()->LoadModel("ghostPori");
 	model.Initialize("ghostPori");
@@ -21,6 +25,7 @@ void TestObject::Update() {
 	anime.Update();
 
 	anime2.Update();
+	anime3.Update();
 
 	model.Update();
 	model.transform.rotate.y += 0.05f;
@@ -48,6 +53,7 @@ void TestObject::Update() {
 void TestObject::Draw() {
 	anime.Draw();
 	anime2.Draw();
+	anime3.Draw();
 
 	model.Draw();
 }

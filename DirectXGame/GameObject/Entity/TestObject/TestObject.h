@@ -14,6 +14,7 @@ public:
 
 	Anime anime;
 	Anime anime2;
+	Anime anime3;
 
 	Model model;
 private:

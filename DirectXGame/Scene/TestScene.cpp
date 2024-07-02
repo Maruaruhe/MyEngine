@@ -13,6 +13,7 @@ void TestScene::Initialize() {
 	test.Initialize();
 	test.anime.SetCamera(camera2);
 	test.anime2.SetCamera(camera2);
+	test.anime3.SetCamera(camera2);
 
 	test.model.SetCamera(camera2);
 }
