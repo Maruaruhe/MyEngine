@@ -36,10 +36,14 @@ PixelShaderOutput main(VertexShaderOutput input)
     {
         for (int32_t y = 0; y < 3; ++y)
         {
-            float32_t2 texcoord = input.texcoord + kIndex3x3[x][y] * upStepSize;
-            
+            float32_t2 index = float32_t2(x - (3.0f - 1.0f) / 2.0f, y - (3.0f - 1.0f) / 2.0f);
+            float32_t2 texcoord = input.texcoord + index * upStepSize;
             float32_t3 fetchColor = gTexture.Sample(gSampler, texcoord).rgb;
-            output.color.rgb += fetchColor * kKernel3x3[x][y];
+            output.color.rgb += fetchColor * rcp(pow(3.0f, 2.0f));
+            
+            //float32_t2 texcoord = input.texcoord + kIndex3x3[x][y] * upStepSize;
+            //float32_t3 fetchColor = gTexture.Sample(gSampler, texcoord).rgb;
+            //output.color.rgb += fetchColor * kKernel3x3[x][y];
         }
 
     }
