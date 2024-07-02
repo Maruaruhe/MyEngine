@@ -12,6 +12,7 @@
 #include "../Scene/IScene.h"
 #include "../Scene/TestScene.h"
 #include "../Scene/SubTestScene.h"
+#include "../Scene/GameScene.h"
 
 class DirectX12;
 class WindowsAPI;

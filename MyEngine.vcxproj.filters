@@ -114,27 +114,6 @@
     <ClCompile Include="DirectXGame\Scene\SubTestScene.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\GameObject\Entity\Player\Player.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\GameObject\Entity\Player\Bullet\Bullet.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\GameObject\Entity\Enemy\Enemy.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\GameObject\Entity\Enemy\EnemyBullet\EnemyBuullet.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\GameObject\Entity\TimedCall\TimedCall.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\GameObject\Skydome\Skydome.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\GameObject\Entity\Player\Reticle\Reticle.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="DirectXGame\Object\Animation\Animation.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -142,6 +121,12 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\GameObject\Entity\TestObject\TestObject.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Scene\GameScene.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\GameObject\Object\Map\Wall\Wall.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -258,27 +243,6 @@
     <ClInclude Include="DirectXGame\Scene\SubTestScene.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\GameObject\Entity\Player\Player.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\GameObject\Entity\Player\Bullet\Bullet.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\GameObject\Entity\Enemy\Enemy.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\GameObject\Entity\Enemy\EnemyBullet\EnemyBuullet.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\GameObject\Entity\TimedCall\TimedCall.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\GameObject\Skydome\Skydome.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\GameObject\Entity\Player\Reticle\Reticle.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="DirectXGame\Object\Animation\Animation.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -286,6 +250,12 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\GameObject\Entity\TestObject\TestObject.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Scene\GameScene.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\GameObject\Object\Map\Wall\Wall.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

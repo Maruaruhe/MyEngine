@@ -123,6 +123,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="DirectXGame\Base\Log\Log.cpp" />
     <ClCompile Include="DirectXGame\Scene\IScene.cpp" />
     <ClCompile Include="DirectXGame\Manager\GameManager.cpp" />
+    <ClCompile Include="DirectXGame\Scene\GameScene.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="DirectXGame\Base\GraphicsRenderer\GraphicsRenderer.cpp" />
     <ClCompile Include="DirectXGame\Base\WindowsAPI\WindowsAPI.cpp" />
@@ -132,6 +133,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="DirectXGame\Object\Particle\Particle.cpp" />
     <ClCompile Include="DirectXGame\Scene\SubTestScene.cpp" />
     <ClCompile Include="DirectXGame\GameObject\Entity\TestObject\TestObject.cpp" />
+    <ClCompile Include="DirectXGame\GameObject\Object\Map\Wall\Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Object3d.PS.hlsl">
@@ -202,6 +204,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="DirectXGame\Object\Particle\Particle.h" />
     <ClInclude Include="DirectXGame\Scene\SubTestScene.h" />
     <ClInclude Include="DirectXGame\GameObject\Entity\TestObject\TestObject.h" />
+    <ClInclude Include="DirectXGame\Scene\GameScene.h" />
+    <ClInclude Include="DirectXGame\GameObject\Object\Map\Wall\Wall.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt" />

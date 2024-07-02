@@ -23,6 +23,7 @@ GameManager::GameManager() {
 
 	sceneArr[TEST] = std::make_unique<TestScene>();
 	sceneArr[SUBTEST] = std::make_unique<SubTestScene>();
+	sceneArr[INGAME] = std::make_unique<GameScene>();
 }
 
 GameManager::~GameManager() {

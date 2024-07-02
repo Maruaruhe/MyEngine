@@ -11,10 +11,10 @@
 #include "../Object/Anime/Anime.h"
 #include "../Object/Particle/Particle.h"
 
-#include "../GameObject/Entity/TestObject/TestObject.h"
 #include "../GameObject/Skydome/Skydome.h"
+#include "../GameObject/Object/Map/Wall/Wall.h"
 
-class TestScene : public IScene
+class GameScene : public IScene
 {
 public:
 	void Initialize() override;
@@ -26,7 +26,7 @@ private:
 	Lighting light;
 
 	std::unique_ptr<Camera> camera2;
-
-	TestObject test;
+	Wall wall;
+	Wall wall2;
 };
 

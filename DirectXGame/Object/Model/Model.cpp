@@ -32,6 +32,7 @@ void Model::Initialize(const std::string& filename) {
 	ApplyGlobalVariables();
 	//
 
+	material->uvTransform = MakeIdentity4x4();
 
 	TextureManager::GetInstance()->LoadTexture("Resources/uvChecker.png");
 	textureIndex = TextureManager::GetInstance()->GetTextureIndexByFilePath("Resources/uvChecker.png");
@@ -44,9 +45,7 @@ void Model::ApplyGlobalVariables() {
 }
 
 void Model::Update() {
-	ApplyGlobalVariables();
-
-	material->uvTransform = MakeIdentity4x4();
+	//ApplyGlobalVariables();
 
 	worldMatrix = MakeAffineMatrix(transform.scale, transform.rotate, transform.translate);
 	Matrix4x4 worldViewProjectionMatrix;

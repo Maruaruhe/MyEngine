@@ -1,5 +1,5 @@
 #include "IScene.h"
 
-int IScene::sceneNo = TEST;
+int IScene::sceneNo = INGAME;
 
 IScene::~IScene(){}
