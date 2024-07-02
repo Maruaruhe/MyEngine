@@ -22,6 +22,11 @@ void TestScene::Update() {
 	camera2->Update();
 
 	model.Update();
+
+	for (int i = 0; i < 3; ++i) {
+		int a = i;
+		int b = 0;
+	}
 }
 
 void TestScene::Draw() {
