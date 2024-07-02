@@ -79,7 +79,8 @@ void PostEffect::CreatePSO() {
 	//Microsoft::WRL::ComPtr<IDxcBlob> pixelShaderBlob = GraphicsRenderer::GetInstance()->CompileShader(L"Resources/Shaders/PostEffects/CopyImage.PS.hlsl", L"ps_6_0");
 	//Microsoft::WRL::ComPtr<IDxcBlob> pixelShaderBlob = GraphicsRenderer::GetInstance()->CompileShader(L"Resources/Shaders/PostEffects/GrayScale.PS.hlsl", L"ps_6_0");
 	//Microsoft::WRL::ComPtr<IDxcBlob> pixelShaderBlob = GraphicsRenderer::GetInstance()->CompileShader(L"Resources/Shaders/PostEffects/Vignette.PS.hlsl", L"ps_6_0");
-	Microsoft::WRL::ComPtr<IDxcBlob> pixelShaderBlob = GraphicsRenderer::GetInstance()->CompileShader(L"Resources/Shaders/PostEffects/BoxFilter.PS.hlsl", L"ps_6_0");
+	//Microsoft::WRL::ComPtr<IDxcBlob> pixelShaderBlob = GraphicsRenderer::GetInstance()->CompileShader(L"Resources/Shaders/PostEffects/BoxFilter.PS.hlsl", L"ps_6_0");
+	Microsoft::WRL::ComPtr<IDxcBlob> pixelShaderBlob = GraphicsRenderer::GetInstance()->CompileShader(L"Resources/Shaders/PostEffects/GaussianFilter.PS.hlsl", L"ps_6_0");
 
 	//blendDesc
 	D3D12_BLEND_DESC blendDesc = {};

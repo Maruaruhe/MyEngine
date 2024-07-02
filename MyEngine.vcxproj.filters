@@ -154,6 +154,7 @@
     <FxCompile Include="Resources\Shaders\PostEffects\CopyImage.PS.hlsl" />
     <FxCompile Include="Resources\Shaders\PostEffects\Vignette.PS.hlsl" />
     <FxCompile Include="Resources\Shaders\PostEffects\BoxFilter.PS.hlsl" />
+    <FxCompile Include="Resources\Shaders\PostEffects\GaussianFilter.PS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Base\WindowsAPI\WindowsAPI.h">
