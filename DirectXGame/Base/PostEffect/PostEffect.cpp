@@ -76,7 +76,8 @@ void PostEffect::CreatePSO() {
 
 	//Shader
 	Microsoft::WRL::ComPtr<IDxcBlob> vertexShaderBlob = GraphicsRenderer::GetInstance()->CompileShader(L"Resources/Shaders/PostEffects/FullScreen.VS.hlsl", L"vs_6_0");
-	Microsoft::WRL::ComPtr<IDxcBlob> pixelShaderBlob = GraphicsRenderer::GetInstance()->CompileShader(L"Resources/Shaders/PostEffects/CopyImage.PS.hlsl", L"ps_6_0");
+	//Microsoft::WRL::ComPtr<IDxcBlob> pixelShaderBlob = GraphicsRenderer::GetInstance()->CompileShader(L"Resources/Shaders/PostEffects/CopyImage.PS.hlsl", L"ps_6_0");
+	Microsoft::WRL::ComPtr<IDxcBlob> pixelShaderBlob = GraphicsRenderer::GetInstance()->CompileShader(L"Resources/Shaders/PostEffects/GrayScale.PS.hlsl", L"ps_6_0");
 
 	//blendDesc
 	D3D12_BLEND_DESC blendDesc = {};
