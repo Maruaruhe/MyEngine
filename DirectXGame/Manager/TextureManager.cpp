@@ -39,7 +39,7 @@ void TextureManager::LoadTexture(const std::string& filePath) {
 
 	DirectX::ScratchImage mipImages{};
 	if (DirectX::IsCompressed(image.GetMetadata().format)) {
-		mipImages = std::move(image);
+		mipImages = std::move(image); //圧縮フォーマットならそのままMOVE
 	}
 	else {
 		hr = DirectX::GenerateMipMaps(image.GetImages(), image.GetImageCount(), image.GetMetadata(), DirectX::TEX_FILTER_SRGB, 0, mipImages);
