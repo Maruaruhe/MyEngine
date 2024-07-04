@@ -12,8 +12,10 @@ void GameScene::Initialize() {
 
 	wall.Initialize({0.0f,-1.0f,0.0f}, {5.0f,5.0f,1.0f});
 	wall.model.SetCamera(camera2.get());	
+
+	wall.model.material->enableLighting = true;
 	
-	wall2.Initialize({-1.0f,-1.0f,0.0f}, {1.0f,5.0f,1.0f});
+	wall2.Initialize({-1.0f,-1.0f,0.0f}, {1.0f,5.0f,5.0f});
 	wall2.model.SetCamera(camera2.get());
 }
 
@@ -29,5 +31,5 @@ void GameScene::Update() {
 
 void GameScene::Draw() {
 	wall.Draw();
-	//wall2.Draw();
+	wall2.Draw();
 }

@@ -12,72 +12,51 @@ ModelManager* ModelManager::GetInstance() {
 	return &instance;
 }
 
-ModelData ModelManager::LoadObjFile(const std::string& directoryPath, const std::string& filename) {
-	ModelData modelData;
-	Assimp::Importer importer;
-
-	std::string filePath = directoryPath + "/" + filename + ".obj";
-	const aiScene* scene = importer.ReadFile(filePath.c_str(), aiProcess_FlipWindingOrder | aiProcess_FlipUVs);
-	assert(scene->HasMeshes());
-
-	for (uint32_t meshIndex = 0; meshIndex < scene->mNumMeshes; ++meshIndex) {
-		aiMesh* mesh = scene->mMeshes[meshIndex];
-		assert(mesh->HasNormals());
-		assert(mesh->HasTextureCoords(0));
-
-		for (uint32_t faceIndex = 0; faceIndex < mesh->mNumFaces; ++faceIndex) {
-			aiFace& face = mesh->mFaces[faceIndex];
-			assert(face.mNumIndices == 3);
-
-			for (uint32_t element = 0; element < face.mNumIndices; ++element) {
-				uint32_t vertexIndex = face.mIndices[element];
-				aiVector3D& position = mesh->mVertices[vertexIndex];
-				aiVector3D& normal = mesh->mNormals[vertexIndex];
-				aiVector3D& texcoord = mesh->mTextureCoords[0][vertexIndex];
-
-				VertexData vertex{};
-				vertex.position = { position.x,position.y,position.z,1.0f };
-				vertex.normal.x *= -1.0f;
-				vertex.texcoord = { texcoord.x,texcoord.y };
-
-				vertex.position.x *= -1.0f;
-				vertex.normal.x *= -1.0f;
-				modelData.vertices.push_back(vertex);
-			}
-			for (uint32_t materialIndex = 0; materialIndex < scene->mNumMaterials; ++materialIndex) {
-				aiMaterial* material = scene->mMaterials[materialIndex];
-				if (material->GetTextureCount(aiTextureType_DIFFUSE) != 0) {
-					aiString textureFilePath;
-					material->GetTexture(aiTextureType_DIFFUSE, 0, &textureFilePath);
-					modelData.material.textureFilePath = directoryPath + "/" + textureFilePath.C_Str();
-				}
-			}
-		}
-		//SkinCluster構築用のデータ取得
-		for (uint32_t boneIndex = 0; boneIndex < mesh->mNumBones; ++boneIndex) {
-			//Jointごとの格納領域
-			aiBone* bone = mesh->mBones[boneIndex];
-			std::string jointName = bone->mName.C_Str();
-			JointWeightData& jointWeightData = modelData.skinClusterData[jointName];
-
-			//InverseBindPoseMatrixの抽出
-			aiMatrix4x4 bindPoseMatrixAssimp = bone->mOffsetMatrix.Inverse();
-			aiVector3D scale, translate;
-			aiQuaternion rotate;
-			bindPoseMatrixAssimp.Decompose(scale, rotate, translate);
-			Matrix4x4 bindPoseMatrix = MakeAffineMatrix({ scale.x,scale.y,scale.z }, { rotate.x,-rotate.y,-rotate.z,rotate.w }, { -translate.x,translate.y,translate.z });
-			jointWeightData.inverseBindPoseMatrix = Inverse(bindPoseMatrix);
-			Matrix4x4 hr = Multiply(jointWeightData.inverseBindPoseMatrix,  bindPoseMatrix);
-
-			//Weight情報を取り出す
-			for (uint32_t weightIndex = 0; weightIndex < bone->mNumWeights; ++weightIndex) {
-				jointWeightData.vertexWeights.push_back({ bone->mWeights[weightIndex].mWeight,bone->mWeights[weightIndex].mVertexId });
-			}
-		}
-	}
-
-	return modelData;
-}
+//ModelData ModelManager::LoadObjFile(const std::string& directoryPath, const std::string& filename) {
+//	ModelData modelData;
+//	Assimp::Importer importer;
+//
+//	std::string filePath = directoryPath + "/" + filename + ".obj";
+//	const aiScene* scene = importer.ReadFile(filePath.c_str(), aiProcess_FlipWindingOrder | aiProcess_FlipUVs);
+//	assert(scene->HasMeshes());
+//
+//	for (uint32_t meshIndex = 0; meshIndex < scene->mNumMeshes; ++meshIndex) {
+//		aiMesh* mesh = scene->mMeshes[meshIndex];
+//		assert(mesh->HasNormals());
+//		assert(mesh->HasTextureCoords(0));
+//
+//		for (uint32_t faceIndex = 0; faceIndex < mesh->mNumFaces; ++faceIndex) {
+//			aiFace& face = mesh->mFaces[faceIndex];
+//			assert(face.mNumIndices == 3);
+//
+//			for (uint32_t element = 0; element < face.mNumIndices; ++element) {
+//				uint32_t vertexIndex = face.mIndices[element];
+//				aiVector3D& position = mesh->mVertices[vertexIndex];
+//				aiVector3D& normal = mesh->mNormals[vertexIndex];
+//				aiVector3D& texcoord = mesh->mTextureCoords[0][vertexIndex];
+//
+//				VertexData vertex{};
+//				vertex.position = { position.x,position.y,position.z,1.0f };
+//				vertex.normal.x *= -1.0f;
+//				vertex.texcoord = { texcoord.x,texcoord.y };
+//
+//				vertex.position.x *= -1.0f;
+//				vertex.normal.x *= -1.0f;
+//				modelData.vertices.push_back(vertex);
+//			}
+//			for (uint32_t materialIndex = 0; materialIndex < scene->mNumMaterials; ++materialIndex) {
+//				aiMaterial* material = scene->mMaterials[materialIndex];
+//				if (material->GetTextureCount(aiTextureType_DIFFUSE) != 0) {
+//					aiString textureFilePath;
+//					material->GetTexture(aiTextureType_DIFFUSE, 0, &textureFilePath);
+//					modelData.material.textureFilePath = directoryPath + "/" + textureFilePath.C_Str();
+//				}
+//			}
+//		}
+//	}
+//
+//	return modelData;
+//}
 
 ModelData ModelManager::LoadModelFile(const std::string& directoryPath, const std::string& filename) {
 	ModelData modelData;
@@ -162,74 +141,74 @@ ModelData ModelManager::LoadModelFile(const std::string& directoryPath, const st
 	return modelData;
 }
 
-//ModelData ModelManager::LoadObjFile(const std::string& directoryPath, const std::string& filename) {
-//	ModelData modelData;
-//	std::vector<Vector4> positions;
-//	std::vector<Vector3> normals;
-//	std::vector<Vector2> texcoords;
-//	std::string line;
-//
-//	std::ifstream file(directoryPath + "/" + filename + ".obj");
-//	assert(file.is_open());
-//
-//	while (std::getline(file, line)) {
-//		std::string identifier;
-//		std::istringstream s(line);
-//		s >> identifier;
-//
-//		if (identifier == "v") {
-//			Vector4 position;
-//			s >> position.x >> position.y >> position.z;
-//			position.w = 1.0f;
-//			positions.push_back(position);
-//		}
-//		else if (identifier == "vt") {
-//			Vector2 texcoord;
-//			s >> texcoord.x >> texcoord.y;
-//			texcoords.push_back(texcoord);
-//		}
-//		else if (identifier == "vn") {
-//			Vector3 normal;
-//			s >> normal.x >> normal.y >> normal.z;
-//			normals.push_back(normal);
-//		}
-//		else if (identifier == "f") {
-//			VertexData triangle[3];
-//			for (int32_t faceVertex = 0; faceVertex < 3; ++faceVertex) {
-//				std::string vertexDefinition;
-//				s >> vertexDefinition;
-//
-//				std::istringstream v(vertexDefinition);
-//				uint32_t elementIndices[3];
-//				for (int32_t element = 0; element < 3; ++element) {
-//					std::string index;
-//					std::getline(v, index, '/');
-//					elementIndices[element] = std::stoi(index);
-//				}
-//				Vector4 position = positions[elementIndices[0] - 1];
-//				Vector2 texcoord = texcoords[elementIndices[1] - 1];
-//				Vector3 normal = normals[elementIndices[2] - 1];
-//				position.x *= -1;
-//				normal.x *= -1;
-//				texcoord.x = 1.0f - texcoord.x;
-//				texcoord.y = 1.0f - texcoord.y;
-//				VertexData vertex = { position,texcoord,normal };
-//				modelData.vertices.push_back(vertex);
-//				triangle[faceVertex] = { position,texcoord,normal };
-//			}
-//			modelData.vertices.push_back(triangle[2]);
-//			modelData.vertices.push_back(triangle[1]);
-//			modelData.vertices.push_back(triangle[0]);
-//		}
-//		else if (identifier == "mtllib") {
-//			std::string materialFilename;
-//			s >> materialFilename;
-//
-//			modelData.material = LoadMaterialTemplateFile(directoryPath, materialFilename);
-//		}
-//	}
-//	return modelData;
-//}
+ModelData ModelManager::LoadObjFile(const std::string& directoryPath, const std::string& filename) {
+	ModelData modelData;
+	std::vector<Vector4> positions;
+	std::vector<Vector3> normals;
+	std::vector<Vector2> texcoords;
+	std::string line;
+
+	std::ifstream file(directoryPath + "/" + filename + ".obj");
+	assert(file.is_open());
+
+	while (std::getline(file, line)) {
+		std::string identifier;
+		std::istringstream s(line);
+		s >> identifier;
+
+		if (identifier == "v") {
+			Vector4 position;
+			s >> position.x >> position.y >> position.z;
+			position.w = 1.0f;
+			positions.push_back(position);
+		}
+		else if (identifier == "vt") {
+			Vector2 texcoord;
+			s >> texcoord.x >> texcoord.y;
+			texcoords.push_back(texcoord);
+		}
+		else if (identifier == "vn") {
+			Vector3 normal;
+			s >> normal.x >> normal.y >> normal.z;
+			normals.push_back(normal);
+		}
+		else if (identifier == "f") {
+			VertexData triangle[3];
+			for (int32_t faceVertex = 0; faceVertex < 3; ++faceVertex) {
+				std::string vertexDefinition;
+				s >> vertexDefinition;
+
+				std::istringstream v(vertexDefinition);
+				uint32_t elementIndices[3];
+				for (int32_t element = 0; element < 3; ++element) {
+					std::string index;
+					std::getline(v, index, '/');
+					elementIndices[element] = std::stoi(index);
+				}
+				Vector4 position = positions[elementIndices[0] - 1];
+				Vector2 texcoord = texcoords[elementIndices[1] - 1];
+				Vector3 normal = normals[elementIndices[2] - 1];
+				position.x *= -1;
+				normal.x *= -1;
+				texcoord.x = 1.0f - texcoord.x;
+				texcoord.y = 1.0f - texcoord.y;
+				VertexData vertex = { position,texcoord,normal };
+				modelData.vertices.push_back(vertex);
+				triangle[faceVertex] = { position,texcoord,normal };
+			}
+			modelData.vertices.push_back(triangle[2]);
+			modelData.vertices.push_back(triangle[1]);
+			modelData.vertices.push_back(triangle[0]);
+		}
+		else if (identifier == "mtllib") {
+			std::string materialFilename;
+			s >> materialFilename;
+
+			//modelData.material = LoadMaterialTemplateFile(directoryPath, materialFilename);
+		}
+	}
+	return modelData;
+}
 
 void ModelManager::LoadModel(const std::string& filePath) {
 	//読み込み済みモデルを検索
