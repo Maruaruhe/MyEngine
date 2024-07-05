@@ -18,25 +18,25 @@ void Camera::Initialize() {
 void Camera::Update() {
 	Vector3 move{};
 
-	if (input->PushKey(DIK_W)) {
-		move.z += 0.1f;
-	}
-	if (input->PushKey(DIK_S)) {
-		move.z -= 0.1f;
-	}
-	if (input->PushKey(DIK_A)) {
-		move.x -= 0.1f;
-	}
-	if (input->PushKey(DIK_D)) {
-		move.x += 0.1f;
-	}
+	//if (input->PushKey(DIK_W)) {
+	//	move.z += 0.1f;
+	//}
+	//if (input->PushKey(DIK_S)) {
+	//	move.z -= 0.1f;
+	//}
+	//if (input->PushKey(DIK_A)) {
+	//	move.x -= 0.1f;
+	//}
+	//if (input->PushKey(DIK_D)) {
+	//	move.x += 0.1f;
+	//}
 
-	if (input->PushKey(DIK_LEFT)) {
-		transform.rotate.y -= 0.03f;
-	}
-	if (input->PushKey(DIK_RIGHT)) {
-		transform.rotate.y += 0.03f;
-	}
+	//if (input->PushKey(DIK_LEFT)) {
+	//	transform.rotate.y -= 0.03f;
+	//}
+	//if (input->PushKey(DIK_RIGHT)) {
+	//	transform.rotate.y += 0.03f;
+	//}
 
 	Matrix4x4 wM = MakeRotateXYZMatrix(transform.rotate);
 	move = {

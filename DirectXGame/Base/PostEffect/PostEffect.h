@@ -8,6 +8,15 @@
 #include <dxgidebug.h>
 #include <dxcapi.h>
 
+#define maxEffectNum 4
+
+enum EffectType {
+	COPYIMAGE = 0,
+	GRAYSCALE = 1,
+	VIGNETTING = 2,
+	SMOOTHING = 3
+};
+
 class PostEffect
 {
 public:
@@ -19,6 +28,8 @@ public:
 	void PostDraw();
 private:
 	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature;
-	Microsoft::WRL::ComPtr<ID3D12PipelineState> graphicsPipelineState;
+	Microsoft::WRL::ComPtr<ID3D12PipelineState> graphicsPipelineState[maxEffectNum];
+
+	EffectType effectType = COPYIMAGE;
 };
 

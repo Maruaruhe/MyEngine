@@ -2,6 +2,7 @@
 #include "../../Base/Log/Log.h"
 #include "../GraphicsRenderer/GraphicsRenderer.h"
 #include "../DirextX12/DirectX12.h"
+#include "../Input/Input.h"
 
 void PostEffect::Initialize() {
 	CreateRootSignature();
@@ -9,7 +10,20 @@ void PostEffect::Initialize() {
 }
 
 void PostEffect::PostDraw() {
-	DirectX12::GetInstance()->GetCommandList()->SetPipelineState(graphicsPipelineState.Get());
+	if (Input::GetInstance()->TriggerKey(DIK_LEFT)) {
+		effectType = COPYIMAGE;
+	}
+	if (Input::GetInstance()->TriggerKey(DIK_RIGHT)) {
+		effectType = GRAYSCALE;
+	}
+	if (Input::GetInstance()->TriggerKey(DIK_UP)) {
+		effectType = VIGNETTING;
+	}
+	if (Input::GetInstance()->TriggerKey(DIK_DOWN)) {
+		effectType = SMOOTHING;
+	}
+
+	DirectX12::GetInstance()->GetCommandList()->SetPipelineState(graphicsPipelineState[effectType].Get());
 	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(rootSignature.Get());
 	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(0, DirectX12::GetInstance()->GetGPUDescriptorHandle(220));
 
@@ -76,10 +90,12 @@ void PostEffect::CreatePSO() {
 
 	//Shader
 	Microsoft::WRL::ComPtr<IDxcBlob> vertexShaderBlob = GraphicsRenderer::GetInstance()->CompileShader(L"Resources/Shaders/PostEffects/FullScreen.VS.hlsl", L"vs_6_0");
-	//Microsoft::WRL::ComPtr<IDxcBlob> pixelShaderBlob = GraphicsRenderer::GetInstance()->CompileShader(L"Resources/Shaders/PostEffects/CopyImage.PS.hlsl", L"ps_6_0");
-	//Microsoft::WRL::ComPtr<IDxcBlob> pixelShaderBlob = GraphicsRenderer::GetInstance()->CompileShader(L"Resources/Shaders/PostEffects/GrayScale.PS.hlsl", L"ps_6_0");
-	//Microsoft::WRL::ComPtr<IDxcBlob> pixelShaderBlob = GraphicsRenderer::GetInstance()->CompileShader(L"Resources/Shaders/PostEffects/Vignette.PS.hlsl", L"ps_6_0");
-	Microsoft::WRL::ComPtr<IDxcBlob> pixelShaderBlob = GraphicsRenderer::GetInstance()->CompileShader(L"Resources/Shaders/PostEffects/BoxFilter.PS.hlsl", L"ps_6_0");
+
+	Microsoft::WRL::ComPtr<IDxcBlob> pixelShaderBlob[maxEffectNum];
+	pixelShaderBlob[COPYIMAGE] = GraphicsRenderer::GetInstance()->CompileShader(L"Resources/Shaders/PostEffects/CopyImage.PS.hlsl", L"ps_6_0");
+	pixelShaderBlob[GRAYSCALE] = GraphicsRenderer::GetInstance()->CompileShader(L"Resources/Shaders/PostEffects/GrayScale.PS.hlsl", L"ps_6_0");
+	pixelShaderBlob[VIGNETTING] = GraphicsRenderer::GetInstance()->CompileShader(L"Resources/Shaders/PostEffects/Vignette.PS.hlsl", L"ps_6_0");
+	pixelShaderBlob[SMOOTHING] = GraphicsRenderer::GetInstance()->CompileShader(L"Resources/Shaders/PostEffects/BoxFilter.PS.hlsl", L"ps_6_0");
 
 	//blendDesc
 	D3D12_BLEND_DESC blendDesc = {};
@@ -91,22 +107,24 @@ void PostEffect::CreatePSO() {
 	rasterizerDesc.FillMode = D3D12_FILL_MODE_SOLID;
 	
 	////PSOを生成する-----------------------------------------------------------------------------------------------
-	D3D12_GRAPHICS_PIPELINE_STATE_DESC graphicsPipelineStateDesc = {};
-	graphicsPipelineStateDesc.pRootSignature = rootSignature.Get();
-	graphicsPipelineStateDesc.InputLayout = inputLayoutDesc;
-	graphicsPipelineStateDesc.VS = { vertexShaderBlob->GetBufferPointer(),vertexShaderBlob->GetBufferSize() };
-	graphicsPipelineStateDesc.PS = { pixelShaderBlob->GetBufferPointer(),pixelShaderBlob->GetBufferSize() };
-	graphicsPipelineStateDesc.BlendState = blendDesc;
-	graphicsPipelineStateDesc.RasterizerState = rasterizerDesc;
-	graphicsPipelineStateDesc.NumRenderTargets = 1;
-	graphicsPipelineStateDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
-	graphicsPipelineStateDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
-	graphicsPipelineStateDesc.SampleDesc.Count = 1;
-	graphicsPipelineStateDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
-	graphicsPipelineStateDesc.DepthStencilState = depthStencilDesc;
-	graphicsPipelineStateDesc.DSVFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
+	for (int i = 0; i < maxEffectNum; i++) {
+		D3D12_GRAPHICS_PIPELINE_STATE_DESC graphicsPipelineStateDesc = {};
+		graphicsPipelineStateDesc.pRootSignature = rootSignature.Get();
+		graphicsPipelineStateDesc.InputLayout = inputLayoutDesc;
+		graphicsPipelineStateDesc.VS = { vertexShaderBlob->GetBufferPointer(),vertexShaderBlob->GetBufferSize() };
+		graphicsPipelineStateDesc.PS = { pixelShaderBlob[i]->GetBufferPointer(),pixelShaderBlob[i]->GetBufferSize()};
+		graphicsPipelineStateDesc.BlendState = blendDesc;
+		graphicsPipelineStateDesc.RasterizerState = rasterizerDesc;
+		graphicsPipelineStateDesc.NumRenderTargets = 1;
+		graphicsPipelineStateDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+		graphicsPipelineStateDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
+		graphicsPipelineStateDesc.SampleDesc.Count = 1;
+		graphicsPipelineStateDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;
+		graphicsPipelineStateDesc.DepthStencilState = depthStencilDesc;
+		graphicsPipelineStateDesc.DSVFormat = DXGI_FORMAT_D24_UNORM_S8_UINT;
 
-	graphicsPipelineState = nullptr;
-	HRESULT hr = DirectX12::GetInstance()->GetDevice()->CreateGraphicsPipelineState(&graphicsPipelineStateDesc, IID_PPV_ARGS(&graphicsPipelineState));
-	assert((SUCCEEDED(hr)));
+		graphicsPipelineState[i] = nullptr;
+		HRESULT hr = DirectX12::GetInstance()->GetDevice()->CreateGraphicsPipelineState(&graphicsPipelineStateDesc, IID_PPV_ARGS(&graphicsPipelineState[i]));
+		assert((SUCCEEDED(hr)));
+	}
 }
