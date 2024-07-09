@@ -25,8 +25,8 @@ void GameScene::Update() {
 	light.Update();
 	camera2->Update();
 
-	wall.Update();
-	wall2.Update();
+	wall.Update("a");
+	wall2.Update("b");
 }
 
 void GameScene::Draw() {
