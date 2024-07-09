@@ -8,7 +8,7 @@ class Wall
 public:
 	void Initialize(const Vector3 pos, const Vector3 scale);
 
-	void Update(const char* a);
+	void Update();
 
 	void Draw();
 

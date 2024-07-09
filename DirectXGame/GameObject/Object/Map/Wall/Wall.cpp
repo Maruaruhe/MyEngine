@@ -15,15 +15,15 @@ void Wall::Initialize(const Vector3 pos, const Vector3 scale) {
 	}
 }
 
-void Wall::Update(const char* a) {
+void Wall::Update() {
 	model.Update();
 
-	ImGui::Begin(a);
-	ImGui::DragFloat4("a", model.material->uvTransform.m[0]);
-	ImGui::DragFloat4("b", model.material->uvTransform.m[1]);
-	ImGui::DragFloat4("c", model.material->uvTransform.m[2]);
-	ImGui::DragFloat4("d", model.material->uvTransform.m[3]);
-	ImGui::End();
+	//ImGui::Begin(a);
+	//ImGui::DragFloat4("a", model.material->uvTransform.m[0]);
+	//ImGui::DragFloat4("b", model.material->uvTransform.m[1]);
+	//ImGui::DragFloat4("c", model.material->uvTransform.m[2]);
+	//ImGui::DragFloat4("d", model.material->uvTransform.m[3]);
+	//ImGui::End();
 }
 
 void Wall::Draw() {

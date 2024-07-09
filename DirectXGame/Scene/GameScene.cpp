@@ -17,6 +17,8 @@ void GameScene::Initialize() {
 	
 	wall2.Initialize({-1.0f,-1.0f,0.0f}, {1.0f,5.0f,5.0f});
 	wall2.model.SetCamera(camera2.get());
+
+	map.Initialize();
 }
 
 void GameScene::Update() {
@@ -25,8 +27,8 @@ void GameScene::Update() {
 	light.Update();
 	camera2->Update();
 
-	wall.Update("a");
-	wall2.Update("b");
+	wall.Update();
+	wall2.Update();
 }
 
 void GameScene::Draw() {
