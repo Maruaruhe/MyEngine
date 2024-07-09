@@ -124,6 +124,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="DirectXGame\Scene\IScene.cpp" />
     <ClCompile Include="DirectXGame\Manager\GameManager.cpp" />
     <ClCompile Include="DirectXGame\Scene\GameScene.cpp" />
+    <ClCompile Include="DirectXGame\Base\Load\LoadCSV.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="DirectXGame\Base\GraphicsRenderer\GraphicsRenderer.cpp" />
     <ClCompile Include="DirectXGame\Base\WindowsAPI\WindowsAPI.cpp" />
@@ -206,6 +207,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="DirectXGame\GameObject\Entity\TestObject\TestObject.h" />
     <ClInclude Include="DirectXGame\Scene\GameScene.h" />
     <ClInclude Include="DirectXGame\GameObject\Object\Map\Wall\Wall.h" />
+    <ClInclude Include="DirectXGame\Base\Load\LoadCSV.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt" />
