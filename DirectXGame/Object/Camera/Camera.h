@@ -41,7 +41,7 @@ private:
 	const int32_t kClientHeight = 720;
 
 
-	float horizontalAngle;
+	float fov;
 	float aspectRatio;
 	float nearClip;
 	float farClip;

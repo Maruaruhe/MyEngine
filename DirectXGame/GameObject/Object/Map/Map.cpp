@@ -1,9 +1,9 @@
 #include "Map.h"
 #include "../../../Base/Load/LoadCSV.h"
 
-void Map::Initialize(){
-    mapData = LoadMapData("");
-	CreateWall();
+void Map::Initialize(Camera* camera){
+    mapData = LoadMapData("testMap");
+    CreateWall(camera);
 }
 
 void Map::Update(){
@@ -43,7 +43,7 @@ std::vector<std::vector<int>> Map::LoadMapData(const std::string& filename) {
     return map;
 }
 
-void Map::CreateWall() {
+void Map::CreateWall(Camera* camera) {
     std::vector<std::vector<int>> data = mapData;
 
     //x方面へのモデルを作る
@@ -71,6 +71,7 @@ void Map::CreateWall() {
                     i = 0;
 
                     newWall.Initialize(transform.translate, transform.scale);
+                    newWall.model.SetCamera(camera);
                     walls.push_back(newWall);
                 }
                 else { //一つしか続かなかったら生成しない
@@ -105,6 +106,7 @@ void Map::CreateWall() {
                     i = 0;
 
                     newWall.Initialize(transform.translate, transform.scale);
+                    newWall.model.SetCamera(camera);
                     walls.push_back(newWall);
                 }
             }

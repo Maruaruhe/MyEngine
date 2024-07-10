@@ -2,14 +2,14 @@
 #include "Wall/Wall.h"
 
 enum BlockType {
-	NONE = 0,
+	//NONE = 0,
 	WALL = 1,
 };
 
 class Map
 {
 public:
-	void Initialize();
+	void Initialize(Camera* camera);
 
 	void Update();
 
@@ -18,7 +18,7 @@ public:
 private:
 	std::vector<std::vector<int>> LoadMapData(const std::string& filename);
 
-	void CreateWall();
+	void CreateWall(Camera* camera);
 
 private:
 	const std::string directoryPath = "Resources/csv/";

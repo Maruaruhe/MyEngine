@@ -4,8 +4,9 @@
 void Camera::Initialize() {
 	input = KeyInput::GetInstance();
 
-	transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,-5.0f} };
-	horizontalAngle = 0.45f;
+	transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,2.0f,0.0f} };
+	//視野角これ
+	fov = 0.75f;
 	aspectRatio = (float(kClientWidth) / float(kClientHeight));
 	nearClip = 0.1f;
 	farClip = 100.0f;
@@ -37,6 +38,12 @@ void Camera::Update() {
 	if (input->PushKey(DIK_RIGHT)) {
 		transform.rotate.y += 0.03f;
 	}
+	if (input->PushKey(DIK_UP)) {
+		transform.rotate.x -= 0.03f;
+	}
+	if (input->PushKey(DIK_DOWN)) {
+		transform.rotate.x += 0.03f;
+	}
 
 	Matrix4x4 wM = MakeRotateXYZMatrix(transform.rotate);
 	move = {
@@ -45,6 +52,13 @@ void Camera::Update() {
 		move.x * wM.m[0][2] + move.z * wM.m[2][2]
 
 	};
+
+	if (input->PushKey(DIK_Q)) {
+		move.y += 0.1f;
+	}
+	if (input->PushKey(DIK_E)) {
+		move.y -= 0.1f;
+	}
 
 	transform.translate = Add(transform.translate,move);
 
@@ -64,6 +78,6 @@ void Camera::Update() {
 void Camera::MakeWVPMatrix() {
 	cameraMatrix = MakeAffineMatrix(transform.scale, transform.rotate, transform.translate);
 	viewMatrix = Inverse(cameraMatrix);
-	projectionMatrix = MakePerspectiveFovMatrix(horizontalAngle, aspectRatio, nearClip, farClip);
+	projectionMatrix = MakePerspectiveFovMatrix(fov, aspectRatio, nearClip, farClip);
 	viewProjectionMatrix = Multiply(viewMatrix, projectionMatrix);
 }
