@@ -526,3 +526,41 @@ Matrix4x4 MakeRotateMatrix(const Quaternion& q) {
 
 	return result;
 }
+
+int Min(int num1, int num2) {
+	if (num1 < num2) {
+		return num1;
+	}
+	else {
+		return num2;
+	}
+
+	return 0;
+}
+
+float Min(float num1, float num2) {
+	if (num1 < num2) {
+		return num1;
+	}
+	else {
+		return num2;
+	}
+}
+
+int Max(int num1, int num2) {
+	if (num1 > num2) {
+		return num1;
+	}
+	else {
+		return num2;
+	}
+}
+
+float Max(float num1, float num2) {
+	if (num1 > num2) {
+		return num1;
+	}
+	else {
+		return num2;
+	}
+}

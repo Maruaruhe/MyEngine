@@ -17,50 +17,6 @@ void Camera::Initialize() {
 }
 
 void Camera::Update() {
-	Vector3 move{};
-
-	if (input->PushKey(DIK_W)) {
-		move.z += 0.1f;
-	}
-	if (input->PushKey(DIK_S)) {
-		move.z -= 0.1f;
-	}
-	if (input->PushKey(DIK_A)) {
-		move.x -= 0.1f;
-	}
-	if (input->PushKey(DIK_D)) {
-		move.x += 0.1f;
-	}
-
-	if (input->PushKey(DIK_LEFT)) {
-		transform.rotate.y -= 0.03f;
-	}
-	if (input->PushKey(DIK_RIGHT)) {
-		transform.rotate.y += 0.03f;
-	}
-	if (input->PushKey(DIK_UP)) {
-		transform.rotate.x -= 0.03f;
-	}
-	if (input->PushKey(DIK_DOWN)) {
-		transform.rotate.x += 0.03f;
-	}
-
-	Matrix4x4 wM = MakeRotateXYZMatrix(transform.rotate);
-	move = {
-		move.x * wM.m[0][0] + move.z * wM.m[2][0],
-		0,
-		move.x * wM.m[0][2] + move.z * wM.m[2][2]
-
-	};
-
-	if (input->PushKey(DIK_Q)) {
-		move.y += 0.1f;
-	}
-	if (input->PushKey(DIK_E)) {
-		move.y -= 0.1f;
-	}
-
-	transform.translate = Add(transform.translate,move);
 
 	position->worldPosition = transform.translate;
 	ImGui::Begin("Camera");

@@ -9,7 +9,7 @@
 /// <summary>
 /// AABBクラス
 /// </summary>
-class AABB final {
+class AABB  {
 public: // ** パブリックなメンバ変数 ** //
 
 	// 最小点
@@ -46,22 +46,13 @@ public: // ** メンバ関数 ** //
 	/// <summary>
 	/// TransformからAABBを作る関数
 	/// </summary>
-	void CreateAABB(Transform transform);
+	void CreateEntityAABB(Transform transform);
 
 	void CreateModelAABB(Transform transform);
 
 	//Vector3 NearestPoint(const Segment& segment);
 
 private: // ** プライベートなメンバ関数（上で宣言した関数内に全部詰め込まないこと） ** //
-
-
-	int Min(int num1, int num2);
-
-	float Min(float num1, float num2);
-
-	int Max(int num1, int num2);
-
-	float Max(float num1, float num2);
 	/// <summary>
 	/// ファイルからマップチップのデータを読み取る関数
 	/// </summary>

@@ -14,6 +14,7 @@
 #include "../GameObject/Skydome/Skydome.h"
 #include "../GameObject/Object/Map/Map.h"
 #include "../GameObject/Object/Map/Wall/Wall.h"
+#include "../GameObject/Entity/Player/Player.h"
 
 class GameScene : public IScene
 {
@@ -29,7 +30,6 @@ private:
 	std::unique_ptr<Camera> camera2;
 	Map map;
 
-	Wall wall;
-	Wall wall2;
+	Player player;
 };
 

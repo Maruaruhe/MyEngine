@@ -1,5 +1,6 @@
 #pragma once
 #include "Wall/Wall.h"
+#include "../../../Object/AABB/AABB.h"
 
 enum BlockType {
 	//NONE = 0,
@@ -14,6 +15,8 @@ public:
 	void Update();
 
 	void Draw();
+
+	void CheckCollision(AABB pAABB, Vector2 move, Vector3* fixVector);
 
 private:
 	std::vector<std::vector<int>> LoadMapData(const std::string& filename);
@@ -31,5 +34,6 @@ private:
 
 	//
 	const float kMapHeight = 10.0f;
+	const float dis = 0.01f;
 };
 
