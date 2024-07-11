@@ -1,8 +1,10 @@
 #pragma once
 #include <array>
 #include <string>
+#include <vector>
 #include <d3d12.h>
 #include "../../externals/DirectXTex/DirectXTex.h"
+#include "../../externals/DirectXTex/d3dx12.h"
 
 #include "../Base/DirextX12/DirectX12.h"
 #include "../Base/Log/Log.h"
