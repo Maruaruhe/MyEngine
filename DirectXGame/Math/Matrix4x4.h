@@ -77,3 +77,8 @@ Quaternion Slerp(const Quaternion& q0, const Quaternion& q1, float t);
 float Dot(const Quaternion& q1, const Quaternion& q2);
 Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Quaternion& rotate, const Vector3& translate);
 Matrix4x4 MakeRotateMatrix(const Quaternion& q);
+
+int Min(int num1, int num2);
+float Min(float num1, float num2);
+int Max(int num1, int num2);
+float Max(float num1, float num2);

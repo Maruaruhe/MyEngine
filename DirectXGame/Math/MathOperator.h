@@ -1,7 +1,6 @@
 #pragma once
 #include "Vector4.h"
 #include "Matrix4x4.h"
-#include "AABB.h"
 
 /// -------------------------------------------------------------------------
 /// 2次元ベクトル

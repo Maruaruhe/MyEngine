@@ -137,6 +137,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="DirectXGame\GameObject\Entity\TestObject\TestObject.cpp" />
     <ClCompile Include="DirectXGame\GameObject\Object\Map\Wall\Wall.cpp" />
     <ClCompile Include="DirectXGame\GameObject\Object\Map\Map.cpp" />
+    <ClCompile Include="DirectXGame\GameObject\Entity\Player\Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Object3d.PS.hlsl">
@@ -212,6 +213,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="DirectXGame\GameObject\Object\Map\Wall\Wall.h" />
     <ClInclude Include="DirectXGame\Base\Load\LoadCSV.h" />
     <ClInclude Include="DirectXGame\GameObject\Object\Map\Map.h" />
+    <ClInclude Include="DirectXGame\GameObject\Entity\Player\Player.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt" />

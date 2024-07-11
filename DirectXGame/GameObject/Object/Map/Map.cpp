@@ -113,3 +113,63 @@ void Map::CreateWall(Camera* camera) {
         }
     }
 }
+
+void Map::CheckCollision(AABB pAABB, Vector2 move, Vector3* fixVector) {
+    Vector3 distance{};
+
+    for (Wall wall : walls) {
+        AABB wallAABB;
+        wallAABB.CreateModelAABB(wall.model.transform);
+
+        if (wallAABB.CheckCollision(pAABB)) {
+            //X軸の当たり判定
+            if (pAABB.max.x < wallAABB.max.x) {//壁に右方面へ
+                distance.x = pAABB.max.x - wallAABB.min.x;
+                if (fabs(move.x) + dis >= fabs(distance.x)) {//移動量が差分より大きかったら調整
+                    fixVector->x = -fabs(distance.x);
+                }
+            }
+            else {//左方面へ
+                distance.x = pAABB.min.x - wallAABB.max.x;
+                if (fabs(move.x) + dis >= fabs(distance.x)) {//移動量が差分より大きかったら調整
+                    fixVector->x = fabs(distance.x);
+                }
+            }
+        }
+    }
+
+    //fixVectorに応じてpAABBの座標の調整
+    if (fixVector->x >= 0) {
+        pAABB.min.x += fixVector->x;
+        pAABB.max.x += fixVector->x;
+    }
+    else {//omaenoseida
+        pAABB.min.x += fixVector->x;
+        pAABB.max.x += fixVector->x;
+    }
+
+    //intにすることでめっちゃ小さい小数のせいで当たり判定がtrueになることを回避
+    //pAABB.max.x = int(pAABB.max.x);
+    //pAABB.min.x = int(pAABB.min.x);
+
+    for (Wall wall : walls) {
+        AABB wallAABB;
+        wallAABB.CreateModelAABB(wall.model.transform);
+
+        if (wallAABB.CheckCollision(pAABB)) {
+            //Z軸の当たり判定
+            if (pAABB.max.z < wallAABB.max.z) {//壁に前方面へ衝突
+                distance.z = pAABB.max.z - wallAABB.min.z;
+                if (fabs(move.y) + dis >= fabs(distance.z)) {//移動量が差分より大きかったら調整
+                    fixVector->z = -fabs(distance.z);
+                }
+            }
+            else {//後方面へ
+                distance.z = pAABB.min.z - wallAABB.max.z;
+                if (fabs(move.y) + dis >= fabs(distance.z)) {//移動量が差分より大きかったら調整
+                    fixVector->z = fabs(distance.z);
+                }
+            }
+        }
+    }
+}
