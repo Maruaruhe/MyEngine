@@ -22,6 +22,8 @@ private:
 	std::vector<std::vector<int>> LoadMapData(const std::string& filename);
 
 	void CreateWall(Camera* camera);
+	void CreateFloor(Camera* camera);
+	void CreateRoof(Camera* camera);
 
 private:
 	const std::string directoryPath = "Resources/csv/";
@@ -31,6 +33,8 @@ private:
 
 	//Wallのリスト
 	std::vector<Wall> walls;
+	Wall floor;
+	Wall roof;
 
 	//
 	const float kMapHeight = 10.0f;

@@ -3,7 +3,7 @@
 void Player::Initialize() {
 	ModelManager::GetInstance()->LoadModel("player");
 	model.Initialize("player");
-	model.transform.translate = { -1.0f,2.0f,-3.0f };
+	model.transform.translate = { -1.0f,1.5f,-3.0f };
 
 	kInput = KeyInput::GetInstance();
 	pInput = GamePadInput::GetInstance();
@@ -76,4 +76,16 @@ void Player::Move() {
 	}
 
 	model.transform.translate += move;
+
+	// 最後に当たり判定をチェック
+	Vector3 fixVector{};
+	map->CheckCollision(GetCollision(), { move.x,move.z }, &fixVector);
+	model.transform.translate += fixVector;
+}
+
+AABB Player::GetCollision() {
+	AABB a;
+	a.CreateEntityAABB(model.transform);
+
+	return a;
 }

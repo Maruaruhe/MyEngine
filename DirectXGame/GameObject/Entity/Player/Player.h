@@ -2,6 +2,8 @@
 #include "../../../Object/Model/Model.h"
 #include "../../../Base/Input/Input.h"
 
+#include "../../Object/Map/Map.h"
+
 class Player {
 public:
 
@@ -11,12 +13,18 @@ public:
 
 	void Draw();
 
+	void SetMap(Map* map) { this->map = map; }
+
 	Model model;
 
 private:
 	void Move();
+	AABB GetCollision();
 
 private:
 	GamePadInput* pInput;
 	KeyInput* kInput;
+
+	//MapInfo
+	Map* map;
 };

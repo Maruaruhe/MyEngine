@@ -13,6 +13,7 @@ void GameScene::Initialize() {
 	map.Initialize(camera2.get());
 
 	player.Initialize();
+	player.SetMap(&map);
 	player.model.SetCamera(camera2.get());
 }
 
