@@ -53,17 +53,18 @@ void TextureManager::LoadTexture(const std::string& filePath) {
 	textureData.metaData = mipImages.GetMetadata();
 	textureData.resource = CreateTextureResource(textureData.metaData);
 
-	for (size_t mipLevel = 0; mipLevel < textureData.metaData.mipLevels; ++mipLevel) {
-		const DirectX::Image* img = mipImages.GetImage(mipLevel, 0, 0);
-		hr = textureData.resource->WriteToSubresource(
-			UINT(mipLevel),
-			nullptr,
-			img->pixels,
-			UINT(img->rowPitch),
-			UINT(img->slicePitch)
-		);
-		assert(SUCCEEDED(hr));
-	}
+	//for (size_t mipLevel = 0; mipLevel < textureData.metaData.mipLevels; ++mipLevel) {
+	//	const DirectX::Image* img = mipImages.GetImage(mipLevel, 0, 0);
+	//	hr = textureData.resource->WriteToSubresource(
+	//		UINT(mipLevel),
+	//		nullptr,
+	//		img->pixels,
+	//		UINT(img->rowPitch),
+	//		UINT(img->slicePitch)
+	//	);
+	//	assert(SUCCEEDED(hr));
+	//}
+	ID3D12Resource* intermediateResource = UploadTextureData(textureData.resource.Get(), mipImages, DirectX12::GetInstance()->GetDevice().Get(), DirectX12::GetInstance()->GetCommandList().Get());
 
 	uint32_t srvIndex = static_cast<uint32_t>(textureDatas.size() - 1) + kSRVIndexTop;
 	textureData.srvHandleCPU = GetCPUDescriptorHandle(srvIndex);
@@ -98,8 +99,8 @@ Microsoft::WRL::ComPtr<ID3D12Resource> TextureManager::CreateTextureResource(con
 	//利用するHeapの設定
 	D3D12_HEAP_PROPERTIES heapProperties{};
 	heapProperties.Type = D3D12_HEAP_TYPE_DEFAULT;
-	heapProperties.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_WRITE_BACK;
-	heapProperties.MemoryPoolPreference = D3D12_MEMORY_POOL_L0;
+	//heapProperties.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_WRITE_BACK;
+	//heapProperties.MemoryPoolPreference = D3D12_MEMORY_POOL_L0;
 	//Resourceを生成する
 	ID3D12Resource* resource = nullptr;
 	HRESULT hr = DirectX12::GetInstance()->GetDevice()->CreateCommittedResource(
@@ -117,7 +118,7 @@ Microsoft::WRL::ComPtr<ID3D12Resource> TextureManager::CreateTextureResource(con
 [[nodiscard]]
 ID3D12Resource* TextureManager::UploadTextureData(ID3D12Resource* texture, const DirectX::ScratchImage& mipImages, ID3D12Device* device, ID3D12GraphicsCommandList* commandlist) {
 	std::vector<D3D12_SUBRESOURCE_DATA> subresources;
-	DirectX::PrepareUpload(device, mipImages.GetImage(), mipImages.GetImageCount(), mipImages.GetMetadata(), subresources);
+	DirectX::PrepareUpload(device, mipImages.GetImages(), mipImages.GetImageCount(), mipImages.GetMetadata(), subresources);
 	uint64_t intermediateSize = GetRequiredIntermediateSize(texture, 0, UINT(subresources.size()));
 	ID3D12Resource* intermediateResource = DirectX12::GetInstance()->CreateBufferResource(intermediateSize).Get();
 	UpdateSubresources(commandlist, texture, intermediateResource, 0, 0, UINT(subresources.size()), subresources.data());
