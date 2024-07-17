@@ -54,8 +54,8 @@ public:
 	bool isParent;
 
 	Matrix4x4 localMatrix;
-private:
 	uint32_t textureIndex = 0;
+private:
 
 	Matrix4x4 worldMatrix;
 
