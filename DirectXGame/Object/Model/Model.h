@@ -53,6 +53,7 @@ public:
 	Transform transform;
 	bool isParent;
 
+	Transform uvTransform;
 	Matrix4x4 localMatrix;
 	uint32_t textureIndex = 0;
 private:

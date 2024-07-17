@@ -33,6 +33,7 @@ private:
 
 	//Wallのリスト
 	std::vector<Wall> walls;
+	Wall w;
 	Wall floor;
 	Wall roof;
 

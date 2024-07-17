@@ -34,6 +34,12 @@ void Model::Initialize(const std::string& filename) {
 
 	material->uvTransform = MakeIdentity4x4();
 
+	uvTransform = {
+	{1.0f,1.0f,1.0f},
+	{0.0f,0.0f,0.0f},
+	{0.0f,0.0f,0.0f},
+	};
+
 	TextureManager::GetInstance()->LoadTexture("Resources/uvChecker.png");
 	textureIndex = TextureManager::GetInstance()->GetTextureIndexByFilePath("Resources/uvChecker.png");
 }
@@ -61,6 +67,19 @@ void Model::Update() {
 	}
 	transformationMatrix->WVP = worldViewProjectionMatrix;
 	transformationMatrix->World = worldMatrix;
+
+	uvTransform.rotate.z = 3.14f / 2.0f;
+	//uvTransform.scale.x = 10.0f;
+	uvTransform.scale.y = -1.0f;
+	//ImGui::Begin("a");
+	//ImGui::SliderAngle("R", &uvTransform.rotate.z);
+	//ImGui::End();
+
+
+	Matrix4x4 uvTransformMatrix = MakeScaleMatrix(uvTransform.scale);
+	uvTransformMatrix = Multiply(uvTransformMatrix, MakeRotateZMatrix(uvTransform.rotate.z));
+	uvTransformMatrix = Multiply(uvTransformMatrix, MakeTranslateMatrix(uvTransform.translate));
+	material->uvTransform = uvTransformMatrix;
 }
 
 void Model::Draw() {

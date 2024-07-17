@@ -5,6 +5,11 @@ void Map::Initialize(Camera* camera){
     mapData = LoadMapData("testMap");
     CreateWall(camera);
     CreateFloor(camera);
+
+    w.Initialize({ 0,0,3 }, { 1,1, 1 });
+    w.model.SetCamera(camera);
+
+    walls.push_back(w);
 }
 
 void Map::Update(){
@@ -140,13 +145,13 @@ void Map::CheckCollision(AABB pAABB, Vector2 move, Vector3* fixVector) {
 
         if (wallAABB.CheckCollision(pAABB)) {
             //X軸の当たり判定
-            if (pAABB.max.x < wallAABB.max.x) {//壁に右方面へ
+            if (pAABB.max.x < wallAABB.max.x) {//壁に対して右方面へ衝突してる時
                 distance.x = pAABB.max.x - wallAABB.min.x;
                 if (fabs(move.x) + dis >= fabs(distance.x)) {//移動量が差分より大きかったら調整
                     fixVector->x = -fabs(distance.x);
                 }
             }
-            else {//左方面へ
+            else {//左方面へ衝突してる時
                 distance.x = pAABB.min.x - wallAABB.max.x;
                 if (fabs(move.x) + dis >= fabs(distance.x)) {//移動量が差分より大きかったら調整
                     fixVector->x = fabs(distance.x);
@@ -156,18 +161,8 @@ void Map::CheckCollision(AABB pAABB, Vector2 move, Vector3* fixVector) {
     }
 
     //fixVectorに応じてpAABBの座標の調整
-    if (fixVector->x >= 0) {
-        pAABB.min.x += fixVector->x;
-        pAABB.max.x += fixVector->x;
-    }
-    else {//omaenoseida
-        pAABB.min.x += fixVector->x;
-        pAABB.max.x += fixVector->x;
-    }
-
-    //intにすることでめっちゃ小さい小数のせいで当たり判定がtrueになることを回避
-    //pAABB.max.x = int(pAABB.max.x);
-    //pAABB.min.x = int(pAABB.min.x);
+    pAABB.min.x += fixVector->x;
+    pAABB.max.x += fixVector->x;
 
     for (Wall wall : walls) {
         AABB wallAABB;
