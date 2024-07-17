@@ -34,7 +34,6 @@ void Model::Initialize(const std::string& filename) {
 
 	material->uvTransform = MakeIdentity4x4();
 
-	//TextureManager::GetInstance()->LoadTexture("Resources/ao.png");
 	TextureManager::GetInstance()->LoadTexture("Resources/uvChecker.png");
 	textureIndex = TextureManager::GetInstance()->GetTextureIndexByFilePath("Resources/uvChecker.png");
 }
