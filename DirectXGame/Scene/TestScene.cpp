@@ -16,6 +16,9 @@ void TestScene::Initialize() {
 	test.anime3.SetCamera(camera2);
 
 	test.model.SetCamera(camera2);
+
+	s.Initialize();
+	s.camera = camera2;
 }
 
 void TestScene::Update() {
@@ -25,8 +28,12 @@ void TestScene::Update() {
 	camera2->Update();
 
 	test.Update();
+
+	s.Update();
 }
 
 void TestScene::Draw() {
 	test.Draw();
+
+	s.Draw();
 }

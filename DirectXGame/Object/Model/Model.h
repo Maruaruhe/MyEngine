@@ -62,8 +62,8 @@ private:
 	//DirectX12* directX12 = nullptr;
 	KeyInput* input_ = nullptr;
 	ModelData modelData;
-	VertexData* vertexData = nullptr;
 	Camera* camera = nullptr;
+	VertexData* vertexData = nullptr;
 	TransformationMatrix* transformationMatrix = nullptr;
 
 	std::string forg;

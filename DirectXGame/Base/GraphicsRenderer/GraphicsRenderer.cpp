@@ -46,17 +46,14 @@ void GraphicsRenderer::InitializeDXC() {
 }
 IDxcBlob* GraphicsRenderer::CompileShader(
 	const std::wstring& filePath,
-	const wchar_t* profile,
-	IDxcUtils* dxcUtiles,
-	IDxcCompiler3* dxcCompiler,
-	IDxcIncludeHandler* includeHandler
+	const wchar_t* profile
 ) {
 	//1.hlslファイルを読む---------------------------------------------------------------------------------------------------------
 	//これからシェーダーをコンパイルする旨をログに出す
 	LogText(ConvertString(std::format(L"Begin CompilerShader, path:{}, profile:{}\n", filePath, profile)));
 	//hlslファイルを読む
 	IDxcBlobEncoding* shaderSource = nullptr;
-    hr = dxcUtiles->LoadFile(filePath.c_str(), nullptr, &shaderSource);
+    hr = dxcUtils->LoadFile(filePath.c_str(), nullptr, &shaderSource);
 	//読めなかったら止める
 	assert(SUCCEEDED(hr));
 	//読み込んだファイルの内容を設定する
@@ -402,17 +399,17 @@ void GraphicsRenderer::SetRasterizerState() {
 }
 
 void GraphicsRenderer::ShaderCompile() {
-	vertexShaderBlob = CompileShader(L"Object3d.VS.hlsl", L"vs_6_0", dxcUtils, dxcCompiler, includeHandler);
+	vertexShaderBlob = CompileShader(L"Object3d.VS.hlsl", L"vs_6_0");
 	assert(vertexShaderBlob != nullptr);
-	pixelShaderBlob = CompileShader(L"Object3d.PS.hlsl", L"ps_6_0", dxcUtils, dxcCompiler, includeHandler);
+	pixelShaderBlob = CompileShader(L"Object3d.PS.hlsl", L"ps_6_0");
 	assert(pixelShaderBlob != nullptr);
 	
-	particleVertexShaderBlob = CompileShader(L"Particle.VS.hlsl", L"vs_6_0", dxcUtils, dxcCompiler, includeHandler);
+	particleVertexShaderBlob = CompileShader(L"Particle.VS.hlsl", L"vs_6_0");
 	assert(vertexShaderBlob != nullptr);
-	particlePixelShaderBlob = CompileShader(L"Particle.PS.hlsl", L"ps_6_0", dxcUtils, dxcCompiler, includeHandler);
+	particlePixelShaderBlob = CompileShader(L"Particle.PS.hlsl", L"ps_6_0");
 	assert(pixelShaderBlob != nullptr);
 
-	skinningVertexShaderBlob = CompileShader(L"SkinningObject3D.VS.hlsl", L"vs_6_0", dxcUtils, dxcCompiler, includeHandler);
+	skinningVertexShaderBlob = CompileShader(L"SkinningObject3D.VS.hlsl", L"vs_6_0");
 	assert(skinningVertexShaderBlob != nullptr);
 }
 void GraphicsRenderer::MakePSO() {

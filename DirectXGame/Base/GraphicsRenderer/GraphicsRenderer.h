@@ -33,10 +33,7 @@ public:
 
 	IDxcBlob* CompileShader(
 		const std::wstring& filepath,
-		const wchar_t* profile,
-		IDxcUtils* dxcUtiles,
-		IDxcCompiler3* dxcCompiler,
-		IDxcIncludeHandler* includeHandler
+		const wchar_t* profile
 	);
 	void DecideCommand();
 	//void CloseCommand(DirectX12* directX12);

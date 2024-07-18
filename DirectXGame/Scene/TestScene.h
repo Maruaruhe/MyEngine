@@ -12,7 +12,7 @@
 #include "../Object/Particle/Particle.h"
 
 #include "../GameObject/Entity/TestObject/TestObject.h"
-#include "../GameObject/Skydome/Skydome.h"
+#include "../Object/Skybox/Skybox.h"
 
 class TestScene : public IScene
 {
@@ -29,5 +29,6 @@ private:
 	Camera* camera2;
 
 	TestObject test;
+	Skybox s;
 };
 
