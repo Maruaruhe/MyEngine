@@ -120,7 +120,6 @@ void Skybox::CreateVertexBufferView() {
 
 	vertexData = nullptr;
 	vertexResource->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
-	//std::memcpy(vertexData, 0, sizeof(VertexData) * kNumVertices_);
 }
 
 void Skybox::CreateIndexResource() {
