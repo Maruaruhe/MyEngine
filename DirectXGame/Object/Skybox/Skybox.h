@@ -30,6 +30,7 @@ private:
 	void CreateVertexBufferView();
 	void CreateMaterialResource();
 	void CreateTransformationMatrixResource();
+	void CreateIndexResource();
 public:
 
 	Camera* camera = nullptr;
@@ -49,6 +50,10 @@ private:
 	Material* material = nullptr;
 	VertexData* vertexData = nullptr;
 	TransformationMatrix* transformationMatrix = nullptr;
+
+	Microsoft::WRL::ComPtr<ID3D12Resource> indexResource;
+	D3D12_INDEX_BUFFER_VIEW indexBufferView;
+	uint32_t* indexData;
 
 	//実際に頂点リソースを作る
 	Microsoft::WRL::ComPtr<ID3D12Resource> vertexResource;

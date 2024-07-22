@@ -5,15 +5,72 @@
 #include "../../Manager/TextureManager.h"
 
 void Skybox::Initialize() {
+	TextureManager::GetInstance()->LoadTexture("Resources/rostock_laage_airport_4k.dds");
+	textureIndex = TextureManager::GetInstance()->GetTextureIndexByFilePath("Resources/rostock_laage_airport_4k.dds");
+
 	CreateRootSignature();
 	CreatePSO();
 
 	CreateVertexBufferView();
+	CreateIndexResource();
 	CreateMaterialResource();
 	CreateTransformationMatrixResource();
 
-	TextureManager::GetInstance()->LoadTexture("Resources/rostock_laage_airport_4k.dds");
-	textureIndex = TextureManager::GetInstance()->GetTextureIndexByFilePath("Resources/rostock_laage_airport_4k.dds");
+	// 右面。描画インデックスは [0, 1, 2][2, 1, 3]
+	vertexData[0].position = { 1.0f, 1.0f, 1.0f, 1.0f };
+	vertexData[1].position = { 1.0f, 1.0f, -1.0f, 1.0f };
+	vertexData[2].position = { 1.0f, -1.0f, 1.0f, 1.0f };
+	vertexData[3].position = { 1.0f, -1.0f, -1.0f, 1.0f };
+
+	indexData[0] = 0; indexData[1] = 1; indexData[2] = 2;
+	indexData[3] = 2; indexData[4] = 1; indexData[5] = 3;
+
+	// 左面。描画インデックスは [4, 5, 6][6, 5, 7]
+	vertexData[4].position = { -1.0f, 1.0f, -1.0f, 1.0f };
+	vertexData[5].position = { -1.0f, 1.0f, 1.0f, 1.0f };
+	vertexData[6].position = { -1.0f, -1.0f, -1.0f, 1.0f };
+	vertexData[7].position = { -1.0f, -1.0f, 1.0f, 1.0f };
+
+	indexData[6] = 4; indexData[7] = 5; indexData[8] = 6;
+	indexData[9] = 6; indexData[10] = 5; indexData[11] = 7;
+
+	// 前面。描画インデックスは [8, 9, 10][10, 9, 11]
+	vertexData[8].position = { -1.0f, 1.0f, 1.0f, 1.0f };
+	vertexData[9].position = { 1.0f, 1.0f, 1.0f, 1.0f };
+	vertexData[10].position = { -1.0f, -1.0f, 1.0f, 1.0f };
+	vertexData[11].position = { 1.0f, -1.0f, 1.0f, 1.0f };
+
+	indexData[12] = 8; indexData[13] = 9; indexData[14] = 10;
+	indexData[15] = 10; indexData[16] = 9; indexData[17] = 11;
+
+	// 後面。描画インデックスは [12, 13, 14][14, 13, 15]
+	vertexData[12].position = { 1.0f, 1.0f, -1.0f, 1.0f };
+	vertexData[13].position = { -1.0f, 1.0f, -1.0f, 1.0f };
+	vertexData[14].position = { 1.0f, -1.0f, -1.0f, 1.0f };
+	vertexData[15].position = { -1.0f, -1.0f, -1.0f, 1.0f };
+
+	indexData[18] = 12; indexData[19] = 13; indexData[20] = 14;
+	indexData[21] = 14; indexData[22] = 13; indexData[23] = 15;
+
+	// 上面。描画インデックスは [16, 17, 18][18, 17, 19]
+	vertexData[16].position = { -1.0f, 1.0f, -1.0f, 1.0f };
+	vertexData[17].position = { 1.0f, 1.0f, -1.0f, 1.0f };
+	vertexData[18].position = { -1.0f, 1.0f, 1.0f, 1.0f };
+	vertexData[19].position = { 1.0f, 1.0f, 1.0f, 1.0f };
+
+	indexData[24] = 16; indexData[25] = 17; indexData[26] = 18;
+	indexData[27] = 18; indexData[28] = 17; indexData[29] = 19;
+
+	// 下面。描画インデックスは [20, 21, 22][22, 21, 23]
+	vertexData[20].position = { -1.0f, -1.0f, 1.0f, 1.0f };
+	vertexData[21].position = { 1.0f, -1.0f, 1.0f, 1.0f };
+	vertexData[22].position = { -1.0f, -1.0f, -1.0f, 1.0f };
+	vertexData[23].position = { 1.0f, -1.0f, -1.0f, 1.0f };
+
+	indexData[30] = 20; indexData[31] = 21; indexData[32] = 22;
+	indexData[33] = 22; indexData[34] = 21; indexData[35] = 23;
+
+	transform = { {100.0f,100.0f,100.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,-10.0f} };
 }
 void Skybox::Update() {
 	material->uvTransform = MakeIdentity4x4();
@@ -34,48 +91,14 @@ void Skybox::Update() {
 	transformationMatrix->World = worldMatrix;
 }
 void Skybox::Draw() {
-	// 右面。描画インデックスは [0, 1, 2][2, 1, 3]
-	vertexData[0].position = { 1.0f, 1.0f, 1.0f, 1.0f };
-	vertexData[1].position = { 1.0f, 1.0f, -1.0f, 1.0f };
-	vertexData[2].position = { 1.0f, -1.0f, 1.0f, 1.0f };
-	vertexData[3].position = { 1.0f, -1.0f, -1.0f, 1.0f };
-
-	// 左面。描画インデックスは [4, 5, 6][6, 5, 7]
-	vertexData[4].position = { -1.0f, 1.0f, -1.0f, 1.0f };
-	vertexData[5].position = { -1.0f, 1.0f, 1.0f, 1.0f };
-	vertexData[6].position = { -1.0f, -1.0f, -1.0f, 1.0f };
-	vertexData[7].position = { -1.0f, -1.0f, 1.0f, 1.0f };
-
-	// 前面。描画インデックスは [8, 9, 10][10, 9, 11]
-	vertexData[8].position = { -1.0f, 1.0f, 1.0f, 1.0f };
-	vertexData[9].position = { 1.0f, 1.0f, 1.0f, 1.0f };
-	vertexData[10].position = { -1.0f, -1.0f, 1.0f, 1.0f };
-	vertexData[11].position = { 1.0f, -1.0f, 1.0f, 1.0f };
-
-	// 後面。描画インデックスは [12, 13, 14][14, 13, 15]
-	vertexData[12].position = { 1.0f, 1.0f, -1.0f, 1.0f };
-	vertexData[13].position = { -1.0f, 1.0f, -1.0f, 1.0f };
-	vertexData[14].position = { 1.0f, -1.0f, -1.0f, 1.0f };
-	vertexData[15].position = { -1.0f, -1.0f, -1.0f, 1.0f };
-
-	// 上面。描画インデックスは [16, 17, 18][18, 17, 19]
-	vertexData[16].position = { -1.0f, 1.0f, -1.0f, 1.0f };
-	vertexData[17].position = { 1.0f, 1.0f, -1.0f, 1.0f };
-	vertexData[18].position = { -1.0f, 1.0f, 1.0f, 1.0f };
-	vertexData[19].position = { 1.0f, 1.0f, 1.0f, 1.0f };
-
-	// 下面。描画インデックスは [20, 21, 22][22, 21, 23]
-	vertexData[20].position = { -1.0f, -1.0f, 1.0f, 1.0f };
-	vertexData[21].position = { 1.0f, -1.0f, 1.0f, 1.0f };
-	vertexData[22].position = { -1.0f, -1.0f, -1.0f, 1.0f };
-	vertexData[23].position = { 1.0f, -1.0f, -1.0f, 1.0f };
-
 	DirectX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView);	//VBVを設定
+	DirectX12::GetInstance()->GetCommandList()->IASetIndexBuffer(&indexBufferView);	//VBVを設定
 	//形状を設定。PSOに設定しているものとはまた別。同じものを設定すると考えておけばよい
 	DirectX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
 
-	GraphicsRenderer::GetInstance()->SetRootSignatureAndPSO(MODEL);
+	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootSignature(rootSignature.Get());
+	DirectX12::GetInstance()->GetCommandList()->SetPipelineState(graphicsPipelineState.Get());
 
 	//directX12_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResourceSprite->GetGPUVirtualAddress());
 	//wvp用のCBufferの場所を設定
@@ -84,7 +107,7 @@ void Skybox::Draw() {
 	//koko
 	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(2, TextureManager::GetInstance()->GetSrvHandleGPU(textureIndex));
 	//描画！　（DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
-	DirectX12::GetInstance()->GetCommandList()->DrawInstanced(UINT(kNumVertices_), 1, 0, 0);
+	DirectX12::GetInstance()->GetCommandList()->DrawIndexedInstanced(UINT(kNumVertices_), 1, 0, 0, 0);
 }
 
 void Skybox::CreateVertexBufferView() {
@@ -97,7 +120,18 @@ void Skybox::CreateVertexBufferView() {
 
 	vertexData = nullptr;
 	vertexResource->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
-	std::memcpy(vertexData, 0, sizeof(VertexData) * kNumVertices_);
+	//std::memcpy(vertexData, 0, sizeof(VertexData) * kNumVertices_);
+}
+
+void Skybox::CreateIndexResource() {
+	indexResource = DirectX12::GetInstance()->CreateBufferResource(sizeof(uint32_t) * UINT(kNumIndices_));
+	indexBufferView = {};
+	indexBufferView.BufferLocation = indexResource->GetGPUVirtualAddress();
+	indexBufferView.SizeInBytes = sizeof(uint32_t) * UINT(kNumIndices_);
+	indexBufferView.Format = DXGI_FORMAT_R32_UINT;
+
+	indexData = nullptr;
+	indexResource->Map(0, nullptr, reinterpret_cast<void**>(&indexData));
 }
 
 void Skybox::CreateMaterialResource() {
@@ -106,8 +140,6 @@ void Skybox::CreateMaterialResource() {
 	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&material));
 
 	material->color = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
-	material->enableLighting = false;
-	material->enablePhong = false;
 }
 
 void Skybox::CreateTransformationMatrixResource() {
@@ -137,7 +169,7 @@ void Skybox::CreateRootSignature() {
 	descriptionRootSignature.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
 
 	//RootParameter作成。
-	D3D12_ROOT_PARAMETER rootParameters[5] = {};
+	D3D12_ROOT_PARAMETER rootParameters[3] = {};
 	rootParameters[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
 	rootParameters[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
 	rootParameters[0].Descriptor.ShaderRegister = 0;
@@ -150,14 +182,6 @@ void Skybox::CreateRootSignature() {
 	rootParameters[2].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
 	rootParameters[2].DescriptorTable.pDescriptorRanges = descriptorRange;
 	rootParameters[2].DescriptorTable.NumDescriptorRanges = _countof(descriptorRange);
-
-	rootParameters[3].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
-	rootParameters[3].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
-	rootParameters[3].Descriptor.ShaderRegister = 1;
-
-	rootParameters[4].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
-	rootParameters[4].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
-	rootParameters[4].Descriptor.ShaderRegister = 2;
 
 	descriptionRootSignature.pParameters = rootParameters;
 	descriptionRootSignature.NumParameters = _countof(rootParameters);
@@ -189,7 +213,7 @@ void Skybox::CreateRootSignature() {
 
 void Skybox::CreatePSO() {
 	//InputLayoutの設定
-	D3D12_INPUT_ELEMENT_DESC inputElementDescs[3];
+	D3D12_INPUT_ELEMENT_DESC inputElementDescs[2] = {};
 	inputElementDescs[0].SemanticName = "POSITION";
 	inputElementDescs[0].SemanticIndex = 0;
 	inputElementDescs[0].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
@@ -199,11 +223,6 @@ void Skybox::CreatePSO() {
 	inputElementDescs[1].SemanticIndex = 0;
 	inputElementDescs[1].Format = DXGI_FORMAT_R32G32_FLOAT;
 	inputElementDescs[1].AlignedByteOffset = D3D12_APPEND_ALIGNED_ELEMENT;
-
-	inputElementDescs[2].SemanticName = "NORMAL";
-	inputElementDescs[2].SemanticIndex = 0;
-	inputElementDescs[2].Format = DXGI_FORMAT_R32G32B32_FLOAT;
-	inputElementDescs[2].AlignedByteOffset = D3D12_APPEND_ALIGNED_ELEMENT;
 
 	D3D12_INPUT_LAYOUT_DESC inputLayoutDesc = {};
 	inputLayoutDesc.pInputElementDescs = inputElementDescs;

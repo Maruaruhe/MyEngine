@@ -20,6 +20,8 @@ void DirectX12::Initialize() {
 
 	windowsAPI_ = WindowsAPI::GetInstance();
 	windowsAPI_->Init();
+	//DebugLayer();
+
 	DXGIFactory();
 	Adapter();
 	D3D12Device();
@@ -233,17 +235,17 @@ void DirectX12::NextFlameCommandList() {
 	assert(SUCCEEDED(hr));
 }
 
-//void DirectX12::DebugLayer() {
-//	#ifdef _DEBUG
-//	ID3D12Debug1* debugControllar = nullptr;
-//	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugControllar)))) {
-//		//デバッグレイヤーを有効化する
-//		debugControllar->EnableDebugLayer();
-//		//さらにGPU側でもチェックを行うようにする
-//		debugControllar->SetEnableGPUBasedValidation(TRUE);
-//	}
-//#endif // _DEBUG
-//}
+void DirectX12::DebugLayer() {
+	#ifdef _DEBUG
+	ID3D12Debug1* debugControllar = nullptr;
+	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugControllar)))) {
+		//デバッグレイヤーを有効化する
+		debugControllar->EnableDebugLayer();
+		//さらにGPU側でもチェックを行うようにする
+		debugControllar->SetEnableGPUBasedValidation(TRUE);
+	}
+#endif // _DEBUG
+}
 
 void DirectX12::Error() {
 #ifdef _DEBUG
