@@ -124,10 +124,10 @@ void Skybox::CreateVertexBufferView() {
 }
 
 void Skybox::CreateIndexResource() {
-	indexResource = DirectX12::GetInstance()->CreateBufferResource(sizeof(uint32_t) * UINT(kNumIndices_));
+	indexResource = DirectX12::GetInstance()->CreateBufferResource(sizeof(uint32_t) * uint32_t(kNumIndices_));
 	indexBufferView = {};
 	indexBufferView.BufferLocation = indexResource->GetGPUVirtualAddress();
-	indexBufferView.SizeInBytes = sizeof(uint32_t) * UINT(kNumIndices_);
+	indexBufferView.SizeInBytes = sizeof(uint32_t) * uint32_t(kNumIndices_);
 	indexBufferView.Format = DXGI_FORMAT_R32_UINT;
 
 	indexData = nullptr;
