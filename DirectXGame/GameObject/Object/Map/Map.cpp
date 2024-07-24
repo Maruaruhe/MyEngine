@@ -5,6 +5,7 @@ void Map::Initialize(Camera* camera){
     mapData = LoadMapData("testMap");
     CreateWall(camera);
     CreateFloor(camera);
+    CreateRoof(camera);
 
     w.Initialize({ 0,0,3 }, { 1,1, 1 });
     w.model.SetCamera(camera);
@@ -17,6 +18,7 @@ void Map::Update(){
 		wall.Update();
 	}
     floor.Update();
+    roof.Update();
 }
 
 void Map::Draw(){
@@ -24,6 +26,7 @@ void Map::Draw(){
 		wall.Draw();
 	}
     floor.Draw();
+    roof.Draw();
 }
 
 std::vector<std::vector<int>> Map::LoadMapData(const std::string& filename) {
@@ -134,6 +137,20 @@ void Map::CreateFloor(Camera* camera) {
 
     floor.Initialize(transform.translate, transform.scale);
     floor.model.SetCamera(camera);
+}
+
+void Map::CreateRoof(Camera* camera) {
+    std::vector<std::vector<int>> data = mapData;
+
+    Vector2 floorScale = { float(data[0].size()), float(data.size()) };
+
+    Transform transform;
+    transform.translate = { 0.0f,kMapHeight - 3.0f,-floorScale.y + 1.0f };
+    transform.scale = { floorScale.x - 1.0f,1.0f,floorScale.y - 1.0f };
+    transform.rotate = { 0.0f,0.0f,0.0f };
+
+    roof.Initialize(transform.translate, transform.scale);
+    roof.model.SetCamera(camera);
 }
 
 void Map::CheckCollision(AABB pAABB, Vector2 move, Vector3* fixVector) {
