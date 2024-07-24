@@ -1,13 +1,20 @@
 #pragma once
+#include "../../../../Object/Model/Model.h"
+
 class IItem
 {
 public:
-	void Initialize();
+	virtual void Initialize();
 
+	virtual void Update();
 
+	virtual void Draw();
 
 private:
-	int weight;
+	Transform transform;
+	Model model;
 
+	int weight;
+	bool isTaken;
 };
 
