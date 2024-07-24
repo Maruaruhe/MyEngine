@@ -13,7 +13,7 @@ void Player::Update() {
 	Move();
 
 	model.Update();
-
+	GetFrontVector();
 }
 
 void Player::Draw() {
@@ -104,5 +104,6 @@ Vector3 Player::CheckLineOfSightCollision() {
 Vector3 Player::GetFrontVector() {
 	Matrix4x4 wM = MakeRotateXYZMatrix(model.transform.rotate);
 	Vector3 dir = { 0.0f,0.0f,1.0f };
-	return Normalize(vecMat(dir, wM));
+	a= model.transform.translate + Normalize(vecMat(dir, wM)) * 4.0f;
+	return a;
 }

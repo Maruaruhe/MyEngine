@@ -12,9 +12,9 @@ public:
 	virtual void Draw();
 
 	bool isTaken = false;
+	Model model;
 protected:
 	Transform transform;
-	Model model;
 	Camera* camera;
 
 	int weight;

@@ -34,5 +34,6 @@ private:
 	Player player;
 
 	SmallItem item;
+	SmallItem item2;
 };
 

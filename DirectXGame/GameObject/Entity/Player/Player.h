@@ -16,7 +16,7 @@ public:
 	void SetMap(Map* map) { this->map = map; }
 
 	Model model;
-
+	Vector3 a;
 private:
 	void Move();
 	AABB GetCollision();

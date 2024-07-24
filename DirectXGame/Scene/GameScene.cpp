@@ -21,6 +21,7 @@ void GameScene::Initialize() {
 	trans.scale = { 1.0f,1.0f,1.0f };
 	trans.rotate = {};
 	item.Initialize(trans, camera2.get());
+	item2.Initialize(trans, camera2.get());
 }
 
 void GameScene::Update() {
@@ -36,6 +37,8 @@ void GameScene::Update() {
 	camera2.get()->transform.rotate = player.model.transform.rotate;
 
 	item.Update();
+	item2.Update();
+	item.model.transform.translate = player.a;
 }
 
 void GameScene::Draw() {
@@ -44,4 +47,5 @@ void GameScene::Draw() {
 	player.Draw();
 
 	item.Draw();
+	item2.Draw();
 }
