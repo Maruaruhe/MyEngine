@@ -3,7 +3,7 @@
 void Player::Initialize() {
 	ModelManager::GetInstance()->LoadModel("player");
 	model.Initialize("player");
-	model.transform.translate = { -1.0f,1.5f,-3.0f };
+	model.transform.translate = { 19.0f,1.5f,-19.0f };
 
 	kInput = KeyInput::GetInstance();
 	pInput = GamePadInput::GetInstance();
