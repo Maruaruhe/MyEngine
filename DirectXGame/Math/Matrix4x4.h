@@ -82,3 +82,6 @@ int Min(int num1, int num2);
 float Min(float num1, float num2);
 int Max(int num1, int num2);
 float Max(float num1, float num2);
+
+
+Vector3 vecMat(const Vector3& v1, const Matrix4x4& other);

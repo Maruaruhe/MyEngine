@@ -89,3 +89,20 @@ AABB Player::GetCollision() {
 
 	return a;
 }
+
+Vector3 Player::CheckLineOfSightCollision() {
+	Segment lineOfSight;
+	float dis = 100.0f;
+	//Player視線(線分)
+	lineOfSight.start = model.transform.translate;
+	lineOfSight.start.y = 2.0f;
+	lineOfSight.end = model.transform.translate + GetFrontVector() * dis;
+	lineOfSight.end.y = 2.0f;
+}
+
+//向いている方向へのベクトルを求める関数
+Vector3 Player::GetFrontVector() {
+	Matrix4x4 wM = MakeRotateXYZMatrix(model.transform.rotate);
+	Vector3 dir = { 0.0f,0.0f,1.0f };
+	return Normalize(vecMat(dir, wM));
+}

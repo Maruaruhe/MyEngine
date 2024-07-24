@@ -564,3 +564,11 @@ float Max(float num1, float num2) {
 		return num2;
 	}
 }
+
+Vector3 vecMat(const Vector3& v1, const Matrix4x4& other){
+	Vector3 result{};
+	result.x = v1.x * other.m[0][0] + v1.y * other.m[1][0] + v1.z * other.m[2][0] + other.m[3][0];
+	result.y = v1.x * other.m[0][1] + v1.y * other.m[1][1] + v1.z * other.m[2][1] + other.m[3][1];
+	result.z = v1.x * other.m[0][2] + v1.y * other.m[1][2] + v1.z * other.m[2][2] + other.m[3][2];
+	return result;
+}

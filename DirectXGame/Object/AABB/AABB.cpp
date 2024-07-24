@@ -26,7 +26,6 @@ void AABB::CreateEntityAABB(Transform transform) {
 	max.z += transform.translate.z;
 }
 
-
 void AABB::CreateModelAABB(Transform transform) {
 	min = { 0.0f,0.0f,0.0f };
 	max = {
@@ -44,4 +43,74 @@ void AABB::CreateModelAABB(Transform transform) {
 	this->transform.scale = transform.scale;
 	//mid
 	this->transform.translate = { (min.x + max.x) / 2,(min.y + max.y) / 2 ,(min.z + max.z) / 2 };
+}
+
+bool AABB::CheckLineCollision(const Segment& segment) {
+
+	//x
+	float txMin = (min.x - segment.start.x) / (segment.end.x - segment.start.x);
+	float txMax = (max.x - segment.start.x) / (segment.end.x - segment.start.x);
+	float tNearX = Min(txMin, txMax);
+	float tFarX = Max(txMin, txMax);
+
+	//y
+	float tyMin = (min.y - segment.start.y) / (segment.end.y - segment.start.y);
+	float tyMax = (max.y - segment.start.y) / (segment.end.y - segment.start.y);
+	float tNearY = Min(tyMin, tyMax);
+	float tFarY = Max(tyMin, tyMax);
+
+
+	//z
+	float tzMin = (min.z - segment.start.z) / (segment.end.z - segment.start.z);
+	float tzMax = (max.z - segment.start.z) / (segment.end.z - segment.start.z);
+	float tNearZ = Min(tzMin, tzMax);
+	float tFarZ = Max(tzMin, tzMax);
+
+	float tMin = Max(Max(tNearX, tNearY), tNearZ);
+	float tMax = Min(Min(tFarX, tFarY), tFarZ);
+
+	if (tMin <= tMax) {
+		if (tMin <= 1.0f && 0.0f <= tMax) {
+			return true;
+		}
+	}
+	return false;
+}
+
+int AABB::Min(int num1, int num2) {
+	if (num1 < num2) {
+		return num1;
+	}
+	else {
+		return num2;
+	}
+
+	return 0;
+}
+
+float AABB::Min(float num1, float num2) {
+	if (num1 < num2) {
+		return num1;
+	}
+	else {
+		return num2;
+	}
+}
+
+int AABB::Max(int num1, int num2) {
+	if (num1 > num2) {
+		return num1;
+	}
+	else {
+		return num2;
+	}
+}
+
+float AABB::Max(float num1, float num2) {
+	if (num1 > num2) {
+		return num1;
+	}
+	else {
+		return num2;
+	}
 }

@@ -2,10 +2,10 @@
 #include "../../Math/Vector4.h"
 #include "../../Math/Matrix4x4.h"
 //
-//struct Segment {
-//	Vector3 start, end;
-//};
-//
+struct Segment {
+	Vector3 start, end;
+};
+
 /// <summary>
 /// AABBクラス
 /// </summary>
@@ -39,6 +39,8 @@ public: // ** メンバ関数 ** //
 
 	bool CheckCollision(AABB a);
 
+	bool CheckLineCollision(const Segment& segment);
+
 	//bool CheckLineCollision(const Segment& segment);
 
 	//bool CheckModelCollision(LWP::Object::WorldTransform transform1);
@@ -56,6 +58,13 @@ private: // ** プライベートなメンバ関数（上で宣言した関数�
 	/// <summary>
 	/// ファイルからマップチップのデータを読み取る関数
 	/// </summary>
+	int Min(int num1, int num2);
+
+	float Min(float num1, float num2);
+
+	int Max(int num1, int num2);
+
+	float Max(float num1, float num2);
 };
 //bool CheckLineCollision(Segment a, Segment b);
 

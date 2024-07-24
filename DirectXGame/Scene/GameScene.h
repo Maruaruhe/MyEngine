@@ -14,6 +14,7 @@
 #include "../GameObject/Skydome/Skydome.h"
 #include "../GameObject/Object/Map/Map.h"
 #include "../GameObject/Object/Map/Wall/Wall.h"
+#include "../GameObject/Object/Map/Item/SmallItem/SmallItem.h"
 #include "../GameObject/Entity/Player/Player.h"
 
 class GameScene : public IScene
@@ -31,5 +32,7 @@ private:
 	Map map;
 
 	Player player;
+
+	SmallItem item;
 };
 

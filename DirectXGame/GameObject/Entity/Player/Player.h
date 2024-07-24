@@ -20,6 +20,8 @@ public:
 private:
 	void Move();
 	AABB GetCollision();
+	Vector3 CheckLineOfSightCollision();
+	Vector3 GetFrontVector();
 
 private:
 	GamePadInput* pInput;
