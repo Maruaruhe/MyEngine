@@ -62,10 +62,10 @@ void Skybox::Initialize() {
 	indexData[27] = 18; indexData[28] = 17; indexData[29] = 19;
 
 	// 下面。描画インデックスは [20, 21, 22][22, 21, 23]
-	vertexData[12].position = { -1.0f, -1.0f, 1.0f, 1.0f };
-	vertexData[13].position = { 1.0f, -1.0f, 1.0f, 1.0f };
-	vertexData[14].position = { -1.0f, -1.0f, -1.0f, 1.0f };
-	vertexData[15].position = { 1.0f, -1.0f, -1.0f, 1.0f };
+	vertexData[20].position = { -1.0f, -1.0f, 1.0f, 1.0f };
+	vertexData[21].position = { 1.0f, -1.0f, 1.0f, 1.0f };
+	vertexData[22].position = { -1.0f, -1.0f, -1.0f, 1.0f };
+	vertexData[23].position = { 1.0f, -1.0f, -1.0f, 1.0f };
 
 	indexData[30] = 20; indexData[31] = 21; indexData[32] = 22;
 	indexData[33] = 22; indexData[34] = 21; indexData[35] = 23;
