@@ -3,6 +3,7 @@
 uint32_t TextureManager::kSRVIndexTop = 1;
 
 void TextureManager::Initialize() {
+	CreateFence();
 	textureDatas.reserve(DirectX12::kMaxSRVCount);
 }
 
@@ -70,11 +71,11 @@ void TextureManager::LoadTexture(const std::string& filePath) {
 	ID3D12CommandList* commandLists[] = { DirectX12::GetInstance()->GetCommandList().Get() };
 	DirectX12::GetInstance()->GetCommandQueue().Get()->ExecuteCommandLists(1, commandLists);
 	//実行を待つ
-	DirectX12::GetInstance()->SetFenceValue(1);
-	DirectX12::GetInstance()->GetCommandQueue().Get()->Signal(DirectX12::GetInstance()->GetFence().Get(), UINT(DirectX12::GetInstance()->GetFenceValue()));
-	if (DirectX12::GetInstance()->GetFence().Get()->GetCompletedValue() < UINT(DirectX12::GetInstance()->GetFenceValue())) {
-		DirectX12::GetInstance()->GetFence().Get()->SetEventOnCompletion(UINT(DirectX12::GetInstance()->GetFenceValue()), DirectX12::GetInstance()->GerFenceEvent());
-		WaitForSingleObject(DirectX12::GetInstance()->GerFenceEvent(), INFINITE);
+	fenceValue_++;
+	DirectX12::GetInstance()->GetCommandQueue().Get()->Signal(fence_.Get(), fenceValue_);
+	if (fence_.Get()->GetCompletedValue() < fenceValue_) {
+		fence_.Get()->SetEventOnCompletion(fenceValue_,fenceEvent_);
+		WaitForSingleObject(fenceEvent_, INFINITE);
 	}
 	//allocator commandlist reset
 	hr = DirectX12::GetInstance()->GetCommandAllocator().Get()->Reset();
@@ -185,4 +186,22 @@ D3D12_GPU_DESCRIPTOR_HANDLE TextureManager::GetSrvHandleGPU(uint32_t textureInde
 
 	TextureData& textureData = textureDatas[textureIndex];
 	return textureData.srvHandleGPU;
+}
+
+/// <summary>
+/// Fenceを生成する
+/// </summary>
+void TextureManager::CreateFence()
+{
+	// Deviceの取得
+	Microsoft::WRL::ComPtr<ID3D12Device> device = DirectX12::GetInstance()->GetDevice();
+
+	// 初期値0でFenceを作る
+	HRESULT result{};
+	result = device->CreateFence(fenceValue_, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&fence_));
+	assert(SUCCEEDED(result));
+
+	// FenceのSignalを待つためのイベントを作成する
+	fenceEvent_ = CreateEvent(NULL, FALSE, FALSE, NULL);
+	assert(fenceEvent_ != nullptr);
 }
