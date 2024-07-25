@@ -35,6 +35,7 @@ struct Material {
 	Matrix4x4 uvTransform;
 	int32_t enablePhong;
 	float shininess;
+	int32_t enableEnvTexture;
 };
 
 struct MaterialData {

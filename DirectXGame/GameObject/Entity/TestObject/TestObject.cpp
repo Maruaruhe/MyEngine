@@ -9,7 +9,9 @@ void TestObject::Initialize() {
 
 	anime.transform.rotate.y += 3.14f;
 	anime2.transform.translate.x = -1.5f;
+	anime2.material->enableEnvTexture = true;
 	anime3.transform.translate.x = -3.0f;
+	anime3.material->enableLighting = true;
 	//anime2.isPlay = false;
 
 	anime3.animationSpeed = 2.0f;
@@ -17,6 +19,7 @@ void TestObject::Initialize() {
 	ModelManager::GetInstance()->LoadModel("ghostPori");
 	model.Initialize("ghostPori");
 	model.material->enableLighting = true;
+	model.material->enableEnvTexture = true;
 
 	kInput = KeyInput::GetInstance();
 	pInput = GamePadInput::GetInstance();

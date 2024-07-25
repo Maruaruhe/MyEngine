@@ -139,6 +139,12 @@ void GraphicsRenderer::MakeRootSignature() {
 	descriptorRange[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
 	descriptorRange[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
 
+	D3D12_DESCRIPTOR_RANGE descriptorRangeTexture[1] = {};
+	descriptorRangeTexture[0].BaseShaderRegister = 1;
+	descriptorRangeTexture[0].NumDescriptors = 1;
+	descriptorRangeTexture[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
+	descriptorRangeTexture[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
+
 	rootParameters[0] = {};
 	rootParameters[1] = {};
 	rootParameters[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
@@ -161,6 +167,11 @@ void GraphicsRenderer::MakeRootSignature() {
 	rootParameters[4].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
 	rootParameters[4].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
 	rootParameters[4].Descriptor.ShaderRegister = 2;
+
+	rootParameters[5].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
+	rootParameters[5].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+	rootParameters[5].DescriptorTable.pDescriptorRanges = descriptorRangeTexture;
+	rootParameters[5].DescriptorTable.NumDescriptorRanges = _countof(descriptorRangeTexture);
 
 	descriptionRootSignature.pParameters = rootParameters;
 	descriptionRootSignature.NumParameters = _countof(rootParameters);
@@ -263,6 +274,12 @@ void GraphicsRenderer::MakeRootSignatureForSkinning() {
 	descriptorRange[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
 	descriptorRange[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
 
+	D3D12_DESCRIPTOR_RANGE descriptorRangeTexture[1] = {};
+	descriptorRangeTexture[0].BaseShaderRegister = 1;
+	descriptorRangeTexture[0].NumDescriptors = 1;
+	descriptorRangeTexture[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
+	descriptorRangeTexture[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
+
 	rootParametersForSkinning[0] = {};
 	rootParametersForSkinning[1] = {};
 
@@ -291,6 +308,11 @@ void GraphicsRenderer::MakeRootSignatureForSkinning() {
 	rootParametersForSkinning[5].ShaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX;
 	rootParametersForSkinning[5].DescriptorTable.pDescriptorRanges = descriptorRange;
 	rootParametersForSkinning[5].DescriptorTable.NumDescriptorRanges = _countof(descriptorRange);
+
+	rootParametersForSkinning[6].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
+	rootParametersForSkinning[6].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+	rootParametersForSkinning[6].DescriptorTable.pDescriptorRanges = descriptorRangeTexture;
+	rootParametersForSkinning[6].DescriptorTable.NumDescriptorRanges = _countof(descriptorRangeTexture);
 
 	descriptionRootSignatureForSkinning.pParameters = rootParametersForSkinning;
 	descriptionRootSignatureForSkinning.NumParameters = _countof(rootParametersForSkinning);
