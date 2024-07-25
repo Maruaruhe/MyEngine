@@ -64,6 +64,25 @@ void TextureManager::LoadTexture(const std::string& filePath) {
 	//	assert(SUCCEEDED(hr));
 	//}
 	ID3D12Resource* intermediateResource = UploadTextureData(textureData.resource.Get(), mipImages, DirectX12::GetInstance()->GetDevice().Get(), DirectX12::GetInstance()->GetCommandList().Get());
+	//commandList close
+	DirectX12::GetInstance()->GetCommandList().Get()->Close();
+
+	ID3D12CommandList* commandLists[] = { DirectX12::GetInstance()->GetCommandList().Get() };
+	DirectX12::GetInstance()->GetCommandQueue().Get()->ExecuteCommandLists(1, commandLists);
+	//実行を待つ
+	DirectX12::GetInstance()->SetFenceValue(1);
+	DirectX12::GetInstance()->GetCommandQueue().Get()->Signal(DirectX12::GetInstance()->GetFence().Get(), UINT(DirectX12::GetInstance()->GetFenceValue()));
+	if (DirectX12::GetInstance()->GetFence().Get()->GetCompletedValue() < UINT(DirectX12::GetInstance()->GetFenceValue())) {
+		DirectX12::GetInstance()->GetFence().Get()->SetEventOnCompletion(UINT(DirectX12::GetInstance()->GetFenceValue()), DirectX12::GetInstance()->GerFenceEvent());
+		WaitForSingleObject(DirectX12::GetInstance()->GerFenceEvent(), INFINITE);
+	}
+	//allocator commandlist reset
+	hr = DirectX12::GetInstance()->GetCommandAllocator().Get()->Reset();
+	assert(SUCCEEDED(hr));
+	hr = DirectX12::GetInstance()->GetCommandList().Get()->Reset(DirectX12::GetInstance()->GetCommandAllocator().Get(), nullptr);
+	assert(SUCCEEDED(hr));
+	//intermediateResource Release
+	intermediateResource->Release();
 
 	uint32_t srvIndex = static_cast<uint32_t>(textureDatas.size() - 1) + kSRVIndexTop;
 	textureData.srvHandleCPU = GetCPUDescriptorHandle(srvIndex);

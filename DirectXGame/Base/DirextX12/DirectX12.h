@@ -77,6 +77,7 @@ public:
 	Microsoft::WRL::ComPtr<ID3D12Device> GetDevice() { return device; }
 
 	Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> GetCommandList() { return commandList; }
+	Microsoft::WRL::ComPtr<ID3D12CommandQueue> GetCommandQueue() { return commandQueue; }
 
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible);
 
@@ -115,6 +116,12 @@ public:
 
 	static const uint32_t kMaxSRVCount = 512;
 	uint32_t GetdescriptorSizeSRV() { return descriptorSizeSRV; }
+
+	uint64_t GetFenceValue(){ return fenceValue; }
+	HANDLE GerFenceEvent() { return fenceEvent; }
+	void SetFenceValue(int value){  fenceValue += value; }
+	Microsoft::WRL::ComPtr<ID3D12Fence> GetFence() { return fence; }
+	Microsoft::WRL::ComPtr<ID3D12CommandAllocator> GetCommandAllocator() { return commandAllocator; }
 private:
 	static DirectX12* instance;
 
