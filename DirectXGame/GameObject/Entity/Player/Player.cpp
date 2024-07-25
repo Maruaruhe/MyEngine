@@ -98,6 +98,8 @@ Vector3 Player::CheckLineOfSightCollision() {
 	lineOfSight.start.y = 2.0f;
 	lineOfSight.end = model.transform.translate + GetFrontVector() * dis;
 	lineOfSight.end.y = 2.0f;
+
+	return {};
 }
 
 //向いている方向へのベクトルを求める関数

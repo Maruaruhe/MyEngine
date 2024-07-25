@@ -83,6 +83,7 @@ void Map::CreateWall(Camera* camera) {
 
                     newWall.Initialize(transform.translate, transform.scale);
                     newWall.model.SetCamera(camera);
+                    newWall.model.material->enableLighting = true;
                     walls.push_back(newWall);
                 }
                 else { //一つしか続かなかったら生成しない
@@ -118,6 +119,7 @@ void Map::CreateWall(Camera* camera) {
 
                     newWall.Initialize(transform.translate, transform.scale);
                     newWall.model.SetCamera(camera);
+                    newWall.model.material->enableLighting = true;
                     walls.push_back(newWall);
                 }
             }
