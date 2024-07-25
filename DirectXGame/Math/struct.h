@@ -14,6 +14,8 @@ struct VertexData {
 	Vector4 position;
 	Vector2 texcoord;
 	Vector3 normal;
+	float weight;
+	uint32_t vertexIndex;
 };
 
 struct TriangleData
