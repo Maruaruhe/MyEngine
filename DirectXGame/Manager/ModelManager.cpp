@@ -36,12 +36,12 @@ ModelData ModelManager::LoadObjFile(const std::string& directoryPath, const std:
 				aiVector3D& texcoord = mesh->mTextureCoords[0][vertexIndex];
 
 				VertexData vertex{};
-				vertex.position = { position.x,position.y,position.z,1.0f };
-				vertex.normal = {normal.x, normal.y, normal.z};
+				vertex.position = { -position.x,position.y,position.z,1.0f };
+				vertex.normal = {-normal.x, normal.y, normal.z};
 				vertex.texcoord = { texcoord.x,texcoord.y };
 
-				vertex.position.x *= -1.0f;
-				vertex.normal.x *= -1.0f;
+				//vertex.position.x *= -1.0f;
+				//vertex.normal.x *= -1.0f;
 				modelData.vertices.push_back(vertex);
 			}
 			for (uint32_t materialIndex = 0; materialIndex < scene->mNumMaterials; ++materialIndex) {
@@ -116,9 +116,8 @@ ModelData ModelManager::LoadModelFile(const std::string& directoryPath, const st
 		aiMesh* mesh = scene->mMeshes[meshIndex];
 		assert(mesh->HasNormals());
 		assert(mesh->HasTextureCoords(0));
-
-		//
 		modelData.vertices.resize(mesh->mNumVertices);
+
 		for (uint32_t vertexIndex = 0; vertexIndex < mesh->mNumVertices; ++vertexIndex) {
 			aiVector3D& position = mesh->mVertices[vertexIndex];
 			aiVector3D& normal = mesh->mNormals[vertexIndex];
@@ -137,15 +136,8 @@ ModelData ModelManager::LoadModelFile(const std::string& directoryPath, const st
 				uint32_t vertexIndex = face.mIndices[element];
 				modelData.indices.push_back(vertexIndex);
 			}
-			for (uint32_t materialIndex = 0; materialIndex < scene->mNumMaterials; ++materialIndex) {
-				aiMaterial* material = scene->mMaterials[materialIndex];
-				if (material->GetTextureCount(aiTextureType_DIFFUSE) != 0) {
-					aiString textureFilePath;
-					material->GetTexture(aiTextureType_DIFFUSE, 0, &textureFilePath);
-					modelData.material.textureFilePath = directoryPath + "/" + textureFilePath.C_Str();
-				}
-			}
 		}
+
 		//SkinCluster構築用のデータ取得
 		for (uint32_t boneIndex = 0; boneIndex < mesh->mNumBones; ++boneIndex) {
 			//Jointごとの格納領域
@@ -166,6 +158,15 @@ ModelData ModelManager::LoadModelFile(const std::string& directoryPath, const st
 			for (uint32_t weightIndex = 0; weightIndex < bone->mNumWeights; ++weightIndex) {
 				jointWeightData.vertexWeights.push_back({ bone->mWeights[weightIndex].mWeight,bone->mWeights[weightIndex].mVertexId });
 			}
+		}
+	}
+
+	for (uint32_t materialIndex = 0; materialIndex < scene->mNumMaterials; ++materialIndex) {
+		aiMaterial* material = scene->mMaterials[materialIndex];
+		if (material->GetTextureCount(aiTextureType_DIFFUSE) != 0) {
+			aiString textureFilePath;
+			material->GetTexture(aiTextureType_DIFFUSE, 0, &textureFilePath);
+			modelData.material.textureFilePath = directoryPath + "/" + textureFilePath.C_Str();
 		}
 	}
 	modelData.rootNode = ReadNode(scene->mRootNode);
