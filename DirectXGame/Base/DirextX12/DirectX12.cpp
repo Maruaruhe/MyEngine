@@ -20,7 +20,7 @@ void DirectX12::Initialize() {
 
 	windowsAPI_ = WindowsAPI::GetInstance();
 	windowsAPI_->Init();
-	DebugLayer();
+	//DebugLayer();
 
 	DXGIFactory();
 	Adapter();
