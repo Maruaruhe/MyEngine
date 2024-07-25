@@ -16,6 +16,7 @@ void TestObject::Initialize() {
 
 	ModelManager::GetInstance()->LoadModel("ghostPori");
 	model.Initialize("ghostPori");
+	model.material->enableLighting = true;
 
 	kInput = KeyInput::GetInstance();
 	pInput = GamePadInput::GetInstance();
