@@ -138,6 +138,15 @@ ModelData ModelManager::LoadModelFile(const std::string& directoryPath, const st
 			}
 		}
 
+		for (uint32_t materialIndex = 0; materialIndex < scene->mNumMaterials; ++materialIndex) {
+			aiMaterial* material = scene->mMaterials[materialIndex];
+			if (material->GetTextureCount(aiTextureType_DIFFUSE) != 0) {
+				aiString textureFilePath;
+				material->GetTexture(aiTextureType_DIFFUSE, 0, &textureFilePath);
+				modelData.material.textureFilePath = directoryPath + "/" + textureFilePath.C_Str();
+			}
+		}
+		
 		//SkinCluster構築用のデータ取得
 		for (uint32_t boneIndex = 0; boneIndex < mesh->mNumBones; ++boneIndex) {
 			//Jointごとの格納領域
@@ -158,15 +167,6 @@ ModelData ModelManager::LoadModelFile(const std::string& directoryPath, const st
 			for (uint32_t weightIndex = 0; weightIndex < bone->mNumWeights; ++weightIndex) {
 				jointWeightData.vertexWeights.push_back({ bone->mWeights[weightIndex].mWeight,bone->mWeights[weightIndex].mVertexId });
 			}
-		}
-	}
-
-	for (uint32_t materialIndex = 0; materialIndex < scene->mNumMaterials; ++materialIndex) {
-		aiMaterial* material = scene->mMaterials[materialIndex];
-		if (material->GetTextureCount(aiTextureType_DIFFUSE) != 0) {
-			aiString textureFilePath;
-			material->GetTexture(aiTextureType_DIFFUSE, 0, &textureFilePath);
-			modelData.material.textureFilePath = directoryPath + "/" + textureFilePath.C_Str();
 		}
 	}
 	modelData.rootNode = ReadNode(scene->mRootNode);
