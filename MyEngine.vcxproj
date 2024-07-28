@@ -123,6 +123,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="DirectXGame\Base\Log\Log.cpp" />
     <ClCompile Include="DirectXGame\Scene\IScene.cpp" />
     <ClCompile Include="DirectXGame\Manager\GameManager.cpp" />
+    <ClCompile Include="DirectXGame\Manager\FileManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="DirectXGame\Base\GraphicsRenderer\GraphicsRenderer.cpp" />
     <ClCompile Include="DirectXGame\Base\WindowsAPI\WindowsAPI.cpp" />
@@ -171,6 +172,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DirectXGame\Math\math.h" />
     <ClInclude Include="DirectXGame\Object\Anime\Anime.h" />
     <ClInclude Include="DirectXGame\Object\Animation\Animation.h" />
     <ClInclude Include="DirectXGame\Math\MathOperator.h" />
@@ -210,6 +212,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="DirectXGame\Scene\SubTestScene.h" />
     <ClInclude Include="DirectXGame\GameObject\Entity\TestObject\TestObject.h" />
     <ClInclude Include="DirectXGame\Object\Skybox\Skybox.h" />
+    <ClInclude Include="DirectXGame\Manager\FileManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt" />

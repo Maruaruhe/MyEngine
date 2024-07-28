@@ -7,8 +7,8 @@
 #include <span>
 #include <array>
 
-class Model;
-class Anime;
+//class Model;
+//class Anime;
 
 struct VertexData {
 	Vector4 position;
