@@ -28,10 +28,6 @@ struct LevelData {
 	};
 	std::map<std::string, std::unique_ptr<ObjectData>> objects;
 };
-struct LevelObject {
-	std::unique_ptr<Model> model;
-	Transform transform;
-};
 
 
 /* FileManagerクラス */
@@ -98,12 +94,17 @@ private:
 	// オブジェクトの走査
 	void ScanningObjects(nlohmann::json& object, std::map<std::string, std::unique_ptr<LevelData::ObjectData>>& objects);
 
+	void CreateModels();
+
 private:
 
 	// JSONファイルから読み込んだ情報をまとめおく変数
 	std::unique_ptr<LevelData> levelData_;
 
+//	std::vector
+
 	// 配置するための変数
-	std::map<const std::string, std::unique_ptr<LevelObject>> levelObjectMap_;
+	std::vector<Model> levelModels;
+//	std::map<const std::string, std::unique_ptr<LevelObject>> levelObjectMap_;
 };
 

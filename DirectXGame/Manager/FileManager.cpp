@@ -133,3 +133,15 @@ void FileManager::ScanningObjects(nlohmann::json& object, std::map<std::string, 
 		objects[objectData->file_name] = std::move(objectData);
 	}
 }
+
+void FileManager::CreateModels() {
+	// レベルデータからオブジェクトを生成、配置
+	for (auto& objectData : levelData_->objects) {
+
+		// ファイル名から登録済みモデルを検索
+		Model model;
+		model.Initialize("Box");
+		model.transform = FileManager::GetInstance()->GetObjectTransform("key");
+		levelModels.push_back(model);
+	}
+}
