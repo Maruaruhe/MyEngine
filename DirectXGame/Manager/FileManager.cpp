@@ -8,28 +8,6 @@ void FileManager::Initialize()
 	levelData_ = std::make_unique<LevelData>();
 }
 
-
-// 更新処理　
-void FileManager::Update()
-{
-
-
-
-}
-
-
-// 描画処理
-void FileManager::Draw()
-{
-
-
-
-}
-
-// 解放処理
-void FileManager::Finalize() {}
-
-
 // JSONファイル読み込み
 void FileManager::LoadJsonFile(const std::string& routeFilePath, const std::string& fileName)
 {
@@ -155,17 +133,3 @@ void FileManager::ScanningObjects(nlohmann::json& object, std::map<std::string, 
 		objects[objectData->file_name] = std::move(objectData);
 	}
 }
-
-
-// 読み込んだ情報からモデル作成
-void FileManager::CreateModel()
-{
-	//// レベルデータからオブジェクトを生成、配置
-	//for (auto& objectData : levelData_->objects) {
-
-	//	// ファイル名から登録済みモデルを検索
-
-	//}
-}
-
-
