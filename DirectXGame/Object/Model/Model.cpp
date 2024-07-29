@@ -24,12 +24,12 @@ void Model::Initialize(const std::string& filename) {
 
 	//GlobalVariables
 	forg = filename;
-	GlobalVariables::GetInstance()->CreateGroup(forg);
-	GlobalVariables::GetInstance()->AddItem(forg, "Translate", transform.translate);
-	GlobalVariables::GetInstance()->AddItem(forg, "Scale", transform.scale);
-	GlobalVariables::GetInstance()->AddItem(forg, "Rotate", transform.rotate);
+	//GlobalVariables::GetInstance()->CreateGroup(forg);
+	//GlobalVariables::GetInstance()->AddItem(forg, "Translate", transform.translate);
+	//GlobalVariables::GetInstance()->AddItem(forg, "Scale", transform.scale);
+	//GlobalVariables::GetInstance()->AddItem(forg, "Rotate", transform.rotate);
 
-	ApplyGlobalVariables();
+	//ApplyGlobalVariables();
 	//
 
 	TextureManager::GetInstance()->LoadTexture("Resources/uvChecker.png");
@@ -43,7 +43,7 @@ void Model::ApplyGlobalVariables() {
 }
 
 void Model::Update() {
-	ApplyGlobalVariables();
+	//ApplyGlobalVariables();
 
 	material->uvTransform = MakeIdentity4x4();
 

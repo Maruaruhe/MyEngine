@@ -1,5 +1,6 @@
 #include "TestScene.h"
 #include "../Manager/ModelManager.h"
+#include "../Manager/FileManager.h"
 
 void TestScene::Initialize() {
 	input = KeyInput::GetInstance();
@@ -10,15 +11,11 @@ void TestScene::Initialize() {
 
 	light.Initialize();
 
-	test.Initialize();
-	test.anime.SetCamera(camera2);
-	test.anime2.SetCamera(camera2);
-	test.anime3.SetCamera(camera2);
-
-	test.model.SetCamera(camera2);
-
+	FileManager::GetInstance()->LoadJsonFile("Json/", "testJ");
 	testJson.Initialize();
 	testJson.model->SetCamera(camera2);
+	testJson.model2->SetCamera(camera2);
+	testJson.model3->SetCamera(camera2);
 
 	s.Initialize();
 	s.camera = camera2;
@@ -30,15 +27,13 @@ void TestScene::Update() {
 	light.Update();
 	camera2->Update();
 
-	//test.Update();
 	testJson.Update();
 
 	s.Update();
 }
 
 void TestScene::Draw() {
-	//test.Draw();
 	testJson.Draw();
 
-	s.Draw();
+	//s.Draw();
 }

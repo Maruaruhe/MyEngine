@@ -1,10 +1,6 @@
 #include "FileManager.h"
 
-FileManager* FileManager::GetInstance() {
-	static FileManager instance;
 
-	return &instance;
-}
 
 // 初期化処理
 void FileManager::Initialize()
@@ -82,6 +78,7 @@ void FileManager::LoadJsonFile(const std::string& routeFilePath, const std::stri
 
 		// 走査してく
 		for (nlohmann::json& object : deserialized["objects"]) {
+
 			ScanningObjects(object, levelData->objects);
 		}
 	}
@@ -116,7 +113,6 @@ void FileManager::ScanningObjects(nlohmann::json& object, std::map<std::string, 
 			// タイプ
 			objectData->type = object["type"];
 		}
-
 		if (object.contains("file_name")) {
 
 			// ファイル名
@@ -133,10 +129,10 @@ void FileManager::ScanningObjects(nlohmann::json& object, std::map<std::string, 
 			objectData->transform.translate.y = (float)transform["translation"][2];
 			objectData->transform.translate.z = (float)transform["translation"][1];
 			// 回転角
-			objectData->transform.rotate.x = -(float)transform["rotation"][0] * (float(std::numbers::pi) / 180.0f);
-			objectData->transform.rotate.y = -(float)transform["rotation"][2] * (float(std::numbers::pi) / 180.0f);
-			objectData->transform.rotate.z = -(float)transform["rotation"][1] * (float(std::numbers::pi) / 180.0f);
-			// スケール
+			objectData->transform.rotate.x = -(float)transform["rotation"][0]; //*(float(std::numbers::pi) / 180.0f);
+			objectData->transform.rotate.y = -(float)transform["rotation"][2];// *(float(std::numbers::pi) / 180.0f);
+			objectData->transform.rotate.z = -(float)transform["rotation"][1];// *(float(std::numbers::pi) / 180.0f);
+			// スケーリング
 			objectData->transform.scale.x = (float)transform["scaling"][0];
 			objectData->transform.scale.y = (float)transform["scaling"][2];
 			objectData->transform.scale.z = (float)transform["scaling"][1];
@@ -164,10 +160,12 @@ void FileManager::ScanningObjects(nlohmann::json& object, std::map<std::string, 
 // 読み込んだ情報からモデル作成
 void FileManager::CreateModel()
 {
-	// レベルデータからオブジェクトを生成、配置
-	for (auto& objectData : levelData_->objects) {
+	//// レベルデータからオブジェクトを生成、配置
+	//for (auto& objectData : levelData_->objects) {
 
-		// ファイル名から登録済みモデルを検索
+	//	// ファイル名から登録済みモデルを検索
 
-	}
+	//}
 }
+
+

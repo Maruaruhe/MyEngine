@@ -3,6 +3,7 @@
 #include <memory>
 #include "TextureManager.h"
 #include "ModelManager.h"
+#include "FileManager.h"
 
 #include "../Base/GlobalVariables/GlobalVariables.h"
 #include "../Base/DirextX12/DirectX12.h"

@@ -13,11 +13,11 @@
 //#include "../Math/math.h"
 #include "../Object/Model/Model.h"
 
-//struct ColliderData {
-//	std::string type;
-//	Vector3 center;
-//	Vector3 size;
-//};
+struct ColliderData {
+	std::string type;
+	Vector3 center;
+	Vector3 size;
+};
 struct LevelData {
 
 	struct ObjectData {
@@ -37,10 +37,21 @@ struct LevelObject {
 /* FileManagerクラス */
 class FileManager {
 
+private:
+
+	// コンストラクタ、デストラクタ
+	FileManager() = default;
+	~FileManager() = default;
+	FileManager(const FileManager&) = delete;
+	const FileManager& operator=(const FileManager&) = delete;
+
 public:
 
 	// インスタンスの取得
-	static FileManager* GetInstance();
+	static FileManager* GetInstance() {
+		static FileManager instance;
+		return&instance;
+	}
 
 	// 初期化処理
 	void Initialize();
@@ -74,7 +85,7 @@ public:
 		return nullptr;
 	}
 
-	Transform GetObjectSrt(const std::string& key) const {
+	Transform GetObjectTransform(const std::string& key) const {
 
 		auto it = levelData_->objects.find(key);
 		if (it != levelData_->objects.end()) {
@@ -106,13 +117,5 @@ private:
 
 	// 配置するための変数
 	std::map<const std::string, std::unique_ptr<LevelObject>> levelObjectMap_;
-
-
-private:
-
-	// コンストラクタ、デストラクタ
-	FileManager() = default;
-	~FileManager() = default;
-	FileManager(FileManager&) = delete;
-	FileManager& operator=(FileManager&) = delete;
 };
+

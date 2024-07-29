@@ -11,9 +11,9 @@ public:
 
 	void Draw();
 
-
-
 	std::unique_ptr<Model> model;
+	std::unique_ptr<Model> model2;
+	std::unique_ptr<Model> model3;
 private:
 	GamePadInput* pInput;
 	KeyInput* kInput;

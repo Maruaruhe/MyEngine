@@ -20,6 +20,7 @@ GameManager::GameManager() {
 
 	TextureManager::GetInstance()->Initialize();
 	ModelManager::GetInstance()->Initialize();
+	FileManager::GetInstance()->Initialize();
 
 	sceneArr[TEST] = std::make_unique<TestScene>();
 	sceneArr[SUBTEST] = std::make_unique<SubTestScene>();

@@ -31,11 +31,24 @@ void Camera::Update() {
 		move.x += 0.1f;
 	}
 
+	if (input->PushKey(DIK_Q)) {
+		transform.translate.y += 0.03f;
+	}
+	if (input->PushKey(DIK_E)) {
+		transform.translate.y -= 0.03f;
+	}
+
 	if (input->PushKey(DIK_LEFT)) {
 		transform.rotate.y -= 0.03f;
 	}
 	if (input->PushKey(DIK_RIGHT)) {
 		transform.rotate.y += 0.03f;
+	}
+	if (input->PushKey(DIK_UP)) {
+		transform.rotate.x -= 0.03f;
+	}
+	if (input->PushKey(DIK_DOWN)) {
+		transform.rotate.x += 0.03f;
 	}
 
 	Matrix4x4 wM = MakeRotateXYZMatrix(transform.rotate);
