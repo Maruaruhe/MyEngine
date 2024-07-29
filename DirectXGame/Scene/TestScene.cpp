@@ -17,6 +17,9 @@ void TestScene::Initialize() {
 
 	test.model.SetCamera(camera2);
 
+	testJson.Initialize();
+	testJson.model->SetCamera(camera2);
+
 	s.Initialize();
 	s.camera = camera2;
 }
@@ -27,13 +30,15 @@ void TestScene::Update() {
 	light.Update();
 	camera2->Update();
 
-	test.Update();
+	//test.Update();
+	testJson.Update();
 
 	s.Update();
 }
 
 void TestScene::Draw() {
-	test.Draw();
+	//test.Draw();
+	testJson.Draw();
 
 	s.Draw();
 }

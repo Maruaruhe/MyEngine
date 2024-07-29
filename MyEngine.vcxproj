@@ -134,6 +134,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="DirectXGame\Scene\SubTestScene.cpp" />
     <ClCompile Include="DirectXGame\GameObject\Entity\TestObject\TestObject.cpp" />
     <ClCompile Include="DirectXGame\Object\Skybox\Skybox.cpp" />
+    <ClCompile Include="DirectXGame\GameObject\Entity\TestJsonObject\TestJsonObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Object3d.PS.hlsl">
@@ -213,6 +214,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="DirectXGame\GameObject\Entity\TestObject\TestObject.h" />
     <ClInclude Include="DirectXGame\Object\Skybox\Skybox.h" />
     <ClInclude Include="DirectXGame\Manager\FileManager.h" />
+    <ClInclude Include="DirectXGame\GameObject\Entity\TestJsonObject\TestJsonObject.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt" />
