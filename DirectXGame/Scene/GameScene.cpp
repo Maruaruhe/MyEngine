@@ -46,6 +46,6 @@ void GameScene::Draw() {
 
 	player.Draw();
 
-	//item.Draw();
+	item.Draw();
 	item2.Draw();
 }
