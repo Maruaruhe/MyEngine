@@ -11,13 +11,15 @@ public:
 
 	virtual void Draw();
 
+	virtual void TakenItem(Vector3 pos);
+
 	bool isTaken = false;
+	bool isabletobetaken = false;
 	Model model;
 protected:
 	Transform transform;
 	Camera* camera;
 
 	int weight;
-	bool isabletobetaken;
 };
 

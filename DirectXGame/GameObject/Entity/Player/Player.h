@@ -16,12 +16,15 @@ public:
 	void SetMap(Map* map) { this->map = map; }
 
 	Model model;
+	Model view;
 	Vector3 a;
 private:
 	void Move();
 	AABB GetCollision();
 	Vector3 CheckLineOfSightCollision();
 	Vector3 GetFrontVector();
+
+	void CheckItemCollision();
 
 private:
 	GamePadInput* pInput;

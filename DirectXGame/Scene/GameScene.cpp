@@ -15,13 +15,7 @@ void GameScene::Initialize() {
 	player.Initialize();
 	player.SetMap(&map);
 	player.model.SetCamera(camera2.get());
-
-	Transform trans;
-	trans.translate = { 19.0f,0.0f,-18.0f };
-	trans.scale = { 1.0f,1.0f,1.0f };
-	trans.rotate = {};
-	item.Initialize(trans, camera2.get());
-	item2.Initialize(trans, camera2.get());
+	player.view.SetCamera(camera2.get());
 }
 
 void GameScene::Update() {
@@ -35,17 +29,10 @@ void GameScene::Update() {
 	player.Update();
 	camera2.get()->transform.translate = player.model.transform.translate;
 	camera2.get()->transform.rotate = player.model.transform.rotate;
-
-	item.Update();
-	item2.Update();
-	item.model.transform.translate = player.a;
 }
 
 void GameScene::Draw() {
 	map.Draw();
 
 	player.Draw();
-
-	item.Draw();
-	item2.Draw();
 }

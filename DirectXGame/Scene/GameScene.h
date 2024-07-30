@@ -32,8 +32,5 @@ private:
 	Map map;
 
 	Player player;
-
-	SmallItem item;
-	SmallItem item2;
 };
 

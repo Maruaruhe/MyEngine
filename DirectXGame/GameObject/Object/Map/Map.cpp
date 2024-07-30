@@ -6,6 +6,8 @@ void Map::Initialize(Camera* camera){
     CreateWall(camera);
     CreateFloor(camera);
     CreateRoof(camera);
+    
+    CreateItem(camera);
 
     w.Initialize({ 0,0,3 }, { 1,1, 1 });
     w.model.SetCamera(camera);
@@ -19,6 +21,8 @@ void Map::Update(){
 	}
     floor.Update();
     roof.Update();
+
+    sItem->Update();
 }
 
 void Map::Draw(){
@@ -27,6 +31,8 @@ void Map::Draw(){
 	}
     floor.Draw();
     roof.Draw();
+
+    sItem->Draw();
 }
 
 std::vector<std::vector<int>> Map::LoadMapData(const std::string& filename) {
@@ -203,4 +209,14 @@ void Map::CheckCollision(AABB pAABB, Vector2 move, Vector3* fixVector) {
             }
         }
     }
+}
+
+void Map::CreateItem(Camera* camera) {
+    Transform trans;
+    trans.translate = { 19.0f,0.0f,-18.0f };
+    trans.scale = { 1.0f,1.0f,1.0f };
+    trans.rotate = {};
+
+    sItem = std::make_unique<SmallItem>();
+    sItem->Initialize(trans, camera);
 }

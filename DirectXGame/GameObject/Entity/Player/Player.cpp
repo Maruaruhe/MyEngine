@@ -5,6 +5,9 @@ void Player::Initialize() {
 	model.Initialize("player");
 	model.transform.translate = { 19.0f,1.5f,-19.0f };
 
+	view.Initialize("player");
+	view.transform.scale *= 0.25f;
+
 	kInput = KeyInput::GetInstance();
 	pInput = GamePadInput::GetInstance();
 }
@@ -12,12 +15,17 @@ void Player::Initialize() {
 void Player::Update() {
 	Move();
 
-	model.Update();
 	GetFrontVector();
+	CheckItemCollision();
+
+	model.Update();
+	view.Update();
+	view.transform.translate = a;
 }
 
 void Player::Draw() {
 	//model.Draw();
+	view.Draw();
 }
 
 void Player::Move() {
@@ -106,6 +114,35 @@ Vector3 Player::CheckLineOfSightCollision() {
 Vector3 Player::GetFrontVector() {
 	Matrix4x4 wM = MakeRotateXYZMatrix(model.transform.rotate);
 	Vector3 dir = { 0.0f,0.0f,1.0f };
-	a= model.transform.translate + Normalize(vecMat(dir, wM)) * 4.0f;
+	a= model.transform.translate + Normalize(vecMat(dir, wM)) * 2.0f;
 	return a;
+}
+
+void Player::CheckItemCollision() {
+	AABB itemAABB;
+	itemAABB.CreateEntityAABB(map->GetItem()->model.transform);
+
+	Segment playerSight;
+	playerSight.start = model.transform.translate;
+	playerSight.end = a;
+
+	int count = 0;
+	if (itemAABB.CheckLineCollision(playerSight)) {
+		count += 1;
+		map->GetItem()->isabletobetaken = true;
+		map->GetItem()->TakenItem(a/2);
+	}
+	else {
+		map->GetItem()->isabletobetaken = false;
+	}
+
+	ImGui::Begin("Item");
+
+	Vector3 aa = map->GetItem()->model.transform.translate;
+	ImGui::DragFloat3("pos", &aa.x);
+	ImGui::DragFloat3("sight.start", &playerSight.start.x);
+	ImGui::DragFloat3("sight.end", &playerSight.end.x);
+	ImGui::DragInt("count", &count);
+
+	ImGui::End();
 }

@@ -2,6 +2,8 @@
 #include "Wall/Wall.h"
 #include "../../../Object/AABB/AABB.h"
 
+#include "Item/SmallItem/SmallItem.h"
+
 enum BlockType {
 	//NONE = 0,
 	WALL = 1,
@@ -18,12 +20,16 @@ public:
 
 	void CheckCollision(AABB pAABB, Vector2 move, Vector3* fixVector);
 
+	SmallItem* GetItem() { return sItem.get(); }
+
 private:
 	std::vector<std::vector<int>> LoadMapData(const std::string& filename);
 
 	void CreateWall(Camera* camera);
 	void CreateFloor(Camera* camera);
 	void CreateRoof(Camera* camera);
+
+	void CreateItem(Camera* camera);
 
 private:
 	const std::string directoryPath = "Resources/csv/";
@@ -36,6 +42,8 @@ private:
 	Wall w;
 	Wall floor;
 	Wall roof;
+
+	std::unique_ptr<SmallItem> sItem;
 
 	//
 	const float kMapHeight = 10.0f;
