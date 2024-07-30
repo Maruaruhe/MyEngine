@@ -130,7 +130,7 @@ void Player::CheckItemCollision() {
 	if (itemAABB.CheckLineCollision(playerSight)) {
 		count += 1;
 		map->GetItem()->isabletobetaken = true;
-		map->GetItem()->TakenItem(a/2);
+		map->GetItem()->TakenItem(a);
 	}
 	else {
 		map->GetItem()->isabletobetaken = false;
