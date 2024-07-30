@@ -102,7 +102,7 @@ public:
 	void Finalize();
 	void DebugLayer();
 
-	void DebugLayer();
+	//void DebugLayer();
 
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> GetSrvDescriptorHeap() { return srvDescriptorHeap; }
 
