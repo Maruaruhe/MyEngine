@@ -12,7 +12,8 @@
 #include "../Object/Particle/Particle.h"
 
 #include "../GameObject/Entity/TestObject/TestObject.h"
-#include "../GameObject/Skydome/Skydome.h"
+#include "../GameObject/Entity/TestJsonObject/TestJsonObject.h"
+#include "../Object/Skybox/Skybox.h"
 
 class TestScene : public IScene
 {
@@ -28,5 +29,7 @@ private:
 	std::unique_ptr<Camera> camera2;
 
 	TestObject test;
+	TestJsonObject testJson;
+	Skybox s;
 };
 

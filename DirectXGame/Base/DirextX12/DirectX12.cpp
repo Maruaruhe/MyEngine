@@ -21,6 +21,8 @@ void DirectX12::Initialize() {
 
 	windowsAPI_ = WindowsAPI::GetInstance();
 	windowsAPI_->Init();
+	//DebugLayer();
+
 	DXGIFactory();
 	Adapter();
 	D3D12Device();
@@ -168,8 +170,6 @@ void DirectX12::DescriptorHeap() {
 	rtvHandle[1].ptr = rtvHandle[0].ptr + device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
 
 	device->CreateRenderTargetView(swapChainResource[1].Get(), &rtvDesc, rtvHandle[1]);
-	//kokomadeoke
-
 	//srv
 	srvDescriptorHeap = CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, kMaxSRVCount, true);
 }

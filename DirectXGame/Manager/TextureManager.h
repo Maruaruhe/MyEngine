@@ -1,8 +1,10 @@
 #pragma once
 #include <array>
 #include <string>
+#include <vector>
 #include <d3d12.h>
 #include "../../externals/DirectXTex/DirectXTex.h"
+#include "../../externals/DirectXTex/d3dx12.h"
 
 #include "../Base/DirextX12/DirectX12.h"
 #include "../Base/Log/Log.h"
@@ -20,6 +22,9 @@ public:
 
 	D3D12_CPU_DESCRIPTOR_HANDLE GetCPUDescriptorHandle(uint32_t index);
 	D3D12_GPU_DESCRIPTOR_HANDLE GetGPUDescriptorHandle(uint32_t index);
+
+	ID3D12Resource* UploadTextureData(ID3D12Resource* texture, const DirectX::ScratchImage& mipImages, ID3D12Device* device, ID3D12GraphicsCommandList* commandlist);
+	void CreateFence();
 private:
 
 	struct TextureData{
@@ -33,6 +38,11 @@ private:
 	static uint32_t kSRVIndexTop;
 
 	std::vector<TextureData> textureDatas;
+
+	// Fence
+	Microsoft::WRL::ComPtr<ID3D12Fence> fence_;
+	uint64_t fenceValue_ = 0;
+	HANDLE fenceEvent_{};
 
 	//static const size_t kMaxSRVCount = 2056;
 	//std::array<Microsoft::WRL::ComPtr<ID3D12Resource>, kMaxSRVCount> textureBuffers_;

@@ -5,7 +5,7 @@ void Camera::Initialize() {
 	input = KeyInput::GetInstance();
 
 	transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,2.0f,0.0f} };
-	//視野角これ
+	//����p����
 	fov = 0.75f;
 	aspectRatio = (float(kClientWidth) / float(kClientHeight));
 	nearClip = 0.1f;

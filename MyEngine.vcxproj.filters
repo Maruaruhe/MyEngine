@@ -123,6 +123,7 @@
     <ClCompile Include="DirectXGame\GameObject\Entity\TestObject\TestObject.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="DirectXGame\Object\Skybox\Skybox.cpp">
     <ClCompile Include="DirectXGame\Scene\GameScene.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -133,8 +134,10 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\GameObject\Object\Map\Map.cpp">
+    <ClCompile Include="DirectXGame\Manager\FileManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="DirectXGame\GameObject\Entity\TestJsonObject\TestJsonObject.cpp">
     <ClCompile Include="DirectXGame\Object\AABB\AABB.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -157,6 +160,7 @@
     <FxCompile Include="Particle.VS.hlsl" />
     <FxCompile Include="Particle.PS.hlsl" />
     <FxCompile Include="SkinningObject3D.VS.hlsl" />
+    <FxCompile Include="Skybox.VS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Base\WindowsAPI\WindowsAPI.h">
@@ -280,12 +284,15 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Base\Load\LoadCSV.h">
+    <ClInclude Include="DirectXGame\Object\Skybox\Skybox.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="DirectXGame\Manager\FileManager.h">
     <ClInclude Include="DirectXGame\GameObject\Object\Map\Map.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Object\AABB\AABB.h">
+    <ClInclude Include="DirectXGame\Math\math.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\GameObject\Entity\Player\Player.h">
@@ -298,6 +305,7 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\GameObject\Object\Map\Item\ItemManager.h">
+    <ClInclude Include="DirectXGame\GameObject\Entity\TestJsonObject\TestJsonObject.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
@@ -307,5 +315,7 @@
   <ItemGroup>
     <None Include="Object3d.hlsli" />
     <None Include="Particle.hlsli" />
+    <None Include="Skybox.hlsli" />
+    <None Include="Skybox.PS.hlsl" />
   </ItemGroup>
 </Project>

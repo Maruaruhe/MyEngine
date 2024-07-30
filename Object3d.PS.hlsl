@@ -12,6 +12,7 @@ struct Material
     float32_t4x4 uvTransform;
     int32_t eneblePhong;
     float32_t shininess;
+    int32_t enableEnvTexture;
 };
 
 struct DirectionalLight
@@ -31,6 +32,8 @@ ConstantBuffer<DirectionalLight> gDirectionalLight : register(b1);
 ConstantBuffer<Camera> gCamera : register(b2);
 
 Texture2D<float32_t4> gTexture : register(t0);
+TextureCube<float32_t4> gEnviromentTexture : register(t1);
+
 SamplerState gSampler : register(s0);
 
 PixelShaderOutput main(VertexShaderOutput input) {
@@ -66,6 +69,15 @@ PixelShaderOutput main(VertexShaderOutput input) {
 	else {
 		output.color = gMaterial.color * textureColor;
 	}
+	
+    if (gMaterial.enableEnvTexture != 0)
+    {
+        float32_t3 cameraToPosition = normalize(input.worldPosition - gCamera.worldPosition);
+        float32_t3 reflectedVector = reflect(cameraToPosition, normalize(input.normal));
+        float32_t4 enviromentColor = gEnviromentTexture.Sample(gSampler, reflectedVector);
+		
+        output.color.rgb += enviromentColor.rgb;
+    }
 
 	return output;
 }

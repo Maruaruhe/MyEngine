@@ -33,10 +33,7 @@ public:
 
 	IDxcBlob* CompileShader(
 		const std::wstring& filepath,
-		const wchar_t* profile,
-		IDxcUtils* dxcUtiles,
-		IDxcCompiler3* dxcCompiler,
-		IDxcIncludeHandler* includeHandler
+		const wchar_t* profile
 	);
 	void DecideCommand();
 	//void CloseCommand(DirectX12* directX12);
@@ -72,13 +69,13 @@ private:
 	IDxcIncludeHandler* includeHandler;
 	//MakeRootSignature
 	D3D12_ROOT_SIGNATURE_DESC descriptionRootSignature{};
-	D3D12_ROOT_PARAMETER rootParameters[5];
+	D3D12_ROOT_PARAMETER rootParameters[6];
 	//MakeRootSignature
 	D3D12_ROOT_SIGNATURE_DESC descriptionRootSignatureForParticle{};
 	D3D12_ROOT_PARAMETER rootParametersForParticle[3];
 	//MakeRootSignature
 	D3D12_ROOT_SIGNATURE_DESC descriptionRootSignatureForSkinning{};
-	D3D12_ROOT_PARAMETER rootParametersForSkinning[6];
+	D3D12_ROOT_PARAMETER rootParametersForSkinning[7];
 
 
 	ID3DBlob* signatureBlob;

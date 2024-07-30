@@ -7,13 +7,15 @@
 #include <span>
 #include <array>
 
-class Model;
-class Anime;
+//class Model;
+//class Anime;
 
 struct VertexData {
 	Vector4 position;
 	Vector2 texcoord;
 	Vector3 normal;
+	float weight;
+	uint32_t vertexIndex;
 };
 
 struct TriangleData
@@ -35,6 +37,7 @@ struct Material {
 	Matrix4x4 uvTransform;
 	int32_t enablePhong;
 	float shininess;
+	int32_t enableEnvTexture;
 };
 
 struct MaterialData {
