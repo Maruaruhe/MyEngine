@@ -13,6 +13,7 @@
 #include "../Scene/IScene.h"
 #include "../Scene/TestScene.h"
 #include "../Scene/SubTestScene.h"
+#include "../Scene/TitleScene.h"
 #include "../Scene/GameScene.h"
 
 class DirectX12;

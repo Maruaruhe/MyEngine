@@ -46,6 +46,7 @@ private:
 	Wall roof;
 
 	Model mapModel;
+	Model dish;
 
 	std::unique_ptr<SmallItem> sItem;
 

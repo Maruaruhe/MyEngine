@@ -43,7 +43,8 @@ void Sprite::Draw() {
 		DirectX12::GetInstance()->GetCommandList()->IASetIndexBuffer(&indexBufferView);	//VBVを設定
 		//形状を設定。PSOに設定しているものとはまた別。同じものを設定すると考えておけばよい
 		DirectX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-		GraphicsRenderer::GetInstance()->SetRootSignatureAndPSO(false);
+
+		GraphicsRenderer::GetInstance()->SetRootSignatureAndPSO(MODEL);
 
 		DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
 

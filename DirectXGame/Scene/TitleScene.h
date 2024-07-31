@@ -9,15 +9,8 @@
 #include "../Object/Camera/Camera.h"
 #include "../Object/Model/Model.h"
 #include "../Object/Anime/Anime.h"
-#include "../Object/Particle/Particle.h"
 
-#include "../GameObject/Skydome/Skydome.h"
-#include "../GameObject/Object/Map/Map.h"
-#include "../GameObject/Object/Map/Wall/Wall.h"
-#include "../GameObject/Object/Map/Item/SmallItem/SmallItem.h"
-#include "../GameObject/Entity/Player/Player.h"
-
-class GameScene : public IScene
+class TitleScene : public IScene
 {
 public:
 	void Initialize() override;
@@ -26,13 +19,10 @@ public:
 
 private:
 	KeyInput* input = nullptr;
-	Lighting light;
+	
+	Sprite title;
+	Model model;
 
 	std::unique_ptr<Camera> camera2;
-	Map map;
-
-	int clearCount;
-
-	Player player;
 };
 

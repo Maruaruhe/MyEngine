@@ -1,6 +1,7 @@
 #include "Map.h"
 #include "../../../Base/Load/LoadCSV.h"
 #include "../../../Manager/FileManager.h"
+#include "../../../Manager/TextureManager.h"
 
 
 void Map::Initialize(Camera* camera){
@@ -29,6 +30,7 @@ void Map::Update(){
     sItem->Update();
 
     mapModel.Update();
+    dish.Update();
 }
 
 void Map::Draw(){
@@ -41,6 +43,7 @@ void Map::Draw(){
     sItem->Draw();
 
     //mapModel.Draw();
+    dish.Draw();
 }
 
 std::vector<std::vector<int>> Map::LoadMapData(const std::string& filename) {
@@ -235,4 +238,13 @@ void Map::CreateModels(Camera* camera) {
     mapModel.Initialize("mapWall");
     mapModel.SetCamera(camera);
     mapModel.transform = FileManager::GetInstance()->GetObjectTransform("mapWall");
+
+    ModelManager::GetInstance()->LoadModel("dish");
+    dish.Initialize("dish");
+    dish.SetCamera(camera);
+    dish.transform.translate.x = 2.0f;
+    dish.transform.translate.z = -2.5f;
+    dish.transform.scale *= 0.75f;
+    TextureManager::GetInstance()->LoadTexture("Resources/dish.png");
+    dish.textureIndex = TextureManager::GetInstance()->GetTextureIndexByFilePath("Resources/dish.png");
 }

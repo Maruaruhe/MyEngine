@@ -1,9 +1,12 @@
 #include "SmallItem.h"
 #include "../../../../../Manager/ModelManager.h"
+#include "../../../../../Manager/TextureManager.h"
 
 void SmallItem::Initialize(Transform transform, Camera* camera) {
 	ModelManager::GetInstance()->LoadModel("Map/Item/smallItem");
 	model.Initialize("Map/Item/smallItem");
+	TextureManager::GetInstance()->LoadTexture("Resources/pizza.png");
+	model.textureIndex = TextureManager::GetInstance()->GetTextureIndexByFilePath("Resources/pizza.png");
 	model.SetCamera(camera);
 	model.transform = transform;
 }

@@ -29,6 +29,20 @@ void GameScene::Update() {
 	player.Update();
 	camera2.get()->transform.translate = player.model.transform.translate;
 	camera2.get()->transform.rotate = player.model.transform.rotate;
+
+	if (map.GetItem()->model.transform.translate.x >= 1.25f && map.GetItem()->model.transform.translate.x <= 2.75f ) {
+		if (map.GetItem()->model.transform.translate.x >= -3.5f) {
+			if (map.GetItem()->isTaken == false) {
+				clearCount++;
+				if (clearCount >= 60) {
+					sceneNo = TITLE;
+				}
+			}
+		}
+	}
+	else {
+		clearCount = 0;
+	}
 }
 
 void GameScene::Draw() {
