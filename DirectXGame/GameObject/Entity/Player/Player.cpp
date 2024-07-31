@@ -25,7 +25,9 @@ void Player::Update() {
 
 void Player::Draw() {
 	//model.Draw();
+#ifdef _DEBUG
 	view.Draw();
+#endif // DEBUG
 }
 
 void Player::Move() {
