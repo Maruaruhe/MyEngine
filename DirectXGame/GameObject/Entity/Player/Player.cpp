@@ -176,7 +176,7 @@ void Player::CheckItemBring() {
 		if (KeyInput::GetInstance()->PushKey(DIK_G)) {//Drop処理
 			map->GetItem()->isTaken = false;
 			//足元に落とす & リセット
-			map->GetItem()->model.transform.translate = GetFrontVector(0.75f);
+			map->GetItem()->model.transform.translate = GetFrontVector(0.7f);
 			map->GetItem()->model.transform.translate.y = 0.0f;
 			map->GetItem()->model.transform.scale = { 1.0f,1.0f,1.0f };
 			map->GetItem()->model.transform.rotate.x = {};
