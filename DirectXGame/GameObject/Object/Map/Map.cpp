@@ -33,14 +33,14 @@ void Map::Update(){
 
 void Map::Draw(){
 	for (Wall wall : walls) {
-	//	wall.Draw();
+		wall.Draw();
 	}
     floor.Draw();
     roof.Draw();
 
     sItem->Draw();
 
-    mapModel.Draw();
+    //mapModel.Draw();
 }
 
 std::vector<std::vector<int>> Map::LoadMapData(const std::string& filename) {
