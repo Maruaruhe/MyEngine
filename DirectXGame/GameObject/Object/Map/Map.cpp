@@ -220,3 +220,7 @@ void Map::CreateItem(Camera* camera) {
     sItem = std::make_unique<SmallItem>();
     sItem->Initialize(trans, camera);
 }
+
+void Map::CreateModels(Camera* camera) {
+
+}

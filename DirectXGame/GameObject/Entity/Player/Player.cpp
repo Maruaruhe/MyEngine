@@ -76,12 +76,14 @@ void Player::Move() {
 	};
 
 	//y
-	//if (kInput->PushKey(DIK_Q)) {
-	//	move.y += 0.1f;
-	//}
-	//if (kInput->PushKey(DIK_E)) {
-	//	move.y -= 0.1f;
-	//}
+#ifdef _DEBUG
+	if (kInput->PushKey(DIK_Q)) {
+		move.y += 0.1f;
+	}
+	if (kInput->PushKey(DIK_E)) {
+		move.y -= 0.1f;
+	}
+#endif // DEBUG
 
 	model.transform.translate += move;
 

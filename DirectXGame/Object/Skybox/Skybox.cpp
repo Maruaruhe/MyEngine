@@ -236,8 +236,8 @@ void Skybox::CreatePSO() {
 	depthStencilDesc.DepthFunc = D3D12_COMPARISON_FUNC_LESS_EQUAL;
 
 	//Shader
-	Microsoft::WRL::ComPtr<IDxcBlob> vertexShaderBlob = GraphicsRenderer::GetInstance()->CompileShader(L"Skybox.VS.hlsl", L"vs_6_0");
-	Microsoft::WRL::ComPtr<IDxcBlob> pixelShaderBlob = GraphicsRenderer::GetInstance()->CompileShader(L"Skybox.PS.hlsl", L"ps_6_0");
+	Microsoft::WRL::ComPtr<IDxcBlob> vertexShaderBlob = GraphicsRenderer::GetInstance()->CompileShader(L"Resources/Shader/Skybox.VS.hlsl", L"vs_6_0");
+	Microsoft::WRL::ComPtr<IDxcBlob> pixelShaderBlob = GraphicsRenderer::GetInstance()->CompileShader(L"Resources/Shader/Skybox.PS.hlsl", L"ps_6_0");
 
 	//blendDesc
 	D3D12_BLEND_DESC blendDesc = {};

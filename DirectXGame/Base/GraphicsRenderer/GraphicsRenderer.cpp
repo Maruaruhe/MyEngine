@@ -421,17 +421,17 @@ void GraphicsRenderer::SetRasterizerState() {
 }
 
 void GraphicsRenderer::ShaderCompile() {
-	vertexShaderBlob = CompileShader(L"Object3d.VS.hlsl", L"vs_6_0");
+	vertexShaderBlob = CompileShader(L"Resources/Shader/Object3d.VS.hlsl", L"vs_6_0");
 	assert(vertexShaderBlob != nullptr);
-	pixelShaderBlob = CompileShader(L"Object3d.PS.hlsl", L"ps_6_0");
+	pixelShaderBlob = CompileShader(L"Resources/Shader/Object3d.PS.hlsl", L"ps_6_0");
 	assert(pixelShaderBlob != nullptr);
 	
-	particleVertexShaderBlob = CompileShader(L"Particle.VS.hlsl", L"vs_6_0");
+	particleVertexShaderBlob = CompileShader(L"Resources/Shader/Particle.VS.hlsl", L"vs_6_0");
 	assert(vertexShaderBlob != nullptr);
-	particlePixelShaderBlob = CompileShader(L"Particle.PS.hlsl", L"ps_6_0");
+	particlePixelShaderBlob = CompileShader(L"Resources/Shader/Particle.PS.hlsl", L"ps_6_0");
 	assert(pixelShaderBlob != nullptr);
 
-	skinningVertexShaderBlob = CompileShader(L"SkinningObject3D.VS.hlsl", L"vs_6_0");
+	skinningVertexShaderBlob = CompileShader(L"Resources/Shader/SkinningObject3D.VS.hlsl", L"vs_6_0");
 	assert(skinningVertexShaderBlob != nullptr);
 }
 void GraphicsRenderer::MakePSO() {

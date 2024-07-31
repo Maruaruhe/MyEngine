@@ -29,6 +29,8 @@ private:
 	void CreateFloor(Camera* camera);
 	void CreateRoof(Camera* camera);
 
+	void CreateModels(Camera* camera);
+
 	void CreateItem(Camera* camera);
 
 private:
@@ -42,6 +44,8 @@ private:
 	Wall w;
 	Wall floor;
 	Wall roof;
+
+	Model mapModel;
 
 	std::unique_ptr<SmallItem> sItem;
 
