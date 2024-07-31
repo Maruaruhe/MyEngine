@@ -1,5 +1,7 @@
 #include "Map.h"
 #include "../../../Base/Load/LoadCSV.h"
+#include "../../../Manager/FileManager.h"
+
 
 void Map::Initialize(Camera* camera){
     mapData = LoadMapData("testMap");
@@ -8,6 +10,8 @@ void Map::Initialize(Camera* camera){
     CreateRoof(camera);
     
     CreateItem(camera);
+
+    CreateModels(camera);
 
     w.Initialize({ 0,0,3 }, { 1,1, 1 });
     w.model.SetCamera(camera);
@@ -23,16 +27,20 @@ void Map::Update(){
     roof.Update();
 
     sItem->Update();
+
+    mapModel.Update();
 }
 
 void Map::Draw(){
 	for (Wall wall : walls) {
-		wall.Draw();
+	//	wall.Draw();
 	}
     floor.Draw();
     roof.Draw();
 
     sItem->Draw();
+
+    mapModel.Draw();
 }
 
 std::vector<std::vector<int>> Map::LoadMapData(const std::string& filename) {
@@ -222,5 +230,9 @@ void Map::CreateItem(Camera* camera) {
 }
 
 void Map::CreateModels(Camera* camera) {
-
+    FileManager::GetInstance()->LoadJsonFile("Json/", "mapWall");
+    ModelManager::GetInstance()->LoadModel("mapWall");
+    mapModel.Initialize("mapWall");
+    mapModel.SetCamera(camera);
+    mapModel.transform = FileManager::GetInstance()->GetObjectTransform("mapWall");
 }
