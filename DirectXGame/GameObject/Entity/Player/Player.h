@@ -17,12 +17,11 @@ public:
 
 	Model model;
 	Model view;
-	Vector3 a;
 private:
 	void Move();
 	AABB GetCollision();
 	Vector3 CheckLineOfSightCollision();
-	Vector3 GetFrontVector();
+	Vector3 GetFrontVector(float length);
 	Vector3 GetItemFrontVector();
 
 	void CheckItemCollision();

@@ -11,7 +11,7 @@ public:
 
 	virtual void Draw();
 
-	virtual void TakenItem(Vector3 pos);
+	virtual void TakenItem();
 
 	bool isTaken = false;
 	bool isabletobetaken = false;

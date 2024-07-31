@@ -7,11 +7,11 @@ void IItem::Update(){}
 
 void IItem::Draw(){}
 
-void IItem::TakenItem(Vector3 pos) {
+void IItem::TakenItem() {
 	if (isabletobetaken && !isTaken) { // 取得可能状態
 		if (KeyInput::GetInstance()->PushKey(DIK_F)) { //かつキーを押された場合
 			isTaken = true;
-			model.transform.translate = pos;
+
 			model.transform.scale *= 0.75f;;
 		}
 	}

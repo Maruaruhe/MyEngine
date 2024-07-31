@@ -15,13 +15,12 @@ void Player::Initialize() {
 void Player::Update() {
 	Move();
 
-	GetFrontVector();
 	CheckItemCollision();
 	CheckItemBring();
 
 	model.Update();
 	view.Update();
-	view.transform.translate = a;
+	view.transform.translate = GetFrontVector(2.0f);
 }
 
 void Player::Draw() {
@@ -77,12 +76,12 @@ void Player::Move() {
 	};
 
 	//y
-	if (kInput->PushKey(DIK_Q)) {
-		move.y += 0.1f;
-	}
-	if (kInput->PushKey(DIK_E)) {
-		move.y -= 0.1f;
-	}
+	//if (kInput->PushKey(DIK_Q)) {
+	//	move.y += 0.1f;
+	//}
+	//if (kInput->PushKey(DIK_E)) {
+	//	move.y -= 0.1f;
+	//}
 
 	model.transform.translate += move;
 
@@ -105,17 +104,17 @@ Vector3 Player::CheckLineOfSightCollision() {
 	//Player視線(線分)
 	lineOfSight.start = model.transform.translate;
 	lineOfSight.start.y = 2.0f;
-	lineOfSight.end = model.transform.translate + GetFrontVector() * dis;
+	lineOfSight.end = model.transform.translate + GetFrontVector(2.0f) * dis;
 	lineOfSight.end.y = 2.0f;
 
 	return {};
 }
 
 //向いている方向へのベクトルを求める関数
-Vector3 Player::GetFrontVector() {
+Vector3 Player::GetFrontVector(float length) {
 	Matrix4x4 wM = MakeRotateXYZMatrix(model.transform.rotate);
 	Vector3 dir = { 0.0f,0.0f,1.0f };
-	a= model.transform.translate + Normalize(vecMat(dir, wM)) * 2.0f;
+	Vector3 a= model.transform.translate + Normalize(vecMat(dir, wM)) * length;
 	return a;
 }
 
@@ -128,7 +127,7 @@ Vector3 Player::GetItemFrontVector() {
 
 	Matrix4x4 wM = MakeRotateXYZMatrix(transform.rotate);
 	Vector3 dir = { 0.0f,0.0f,1.0f };
-	a= model.transform.translate + Normalize(vecMat(dir, wM)) * 1.0f;
+	Vector3 a= model.transform.translate + Normalize(vecMat(dir, wM)) * 1.0f;
 	return a;
 }
 
@@ -138,17 +137,19 @@ void Player::CheckItemCollision() {
 
 	Segment playerSight;
 	playerSight.start = model.transform.translate;
-	playerSight.end = a;
+	playerSight.end = GetFrontVector(2.0f);
 
 	int count = 0;
 	if (itemAABB.CheckLineCollision(playerSight)) {
 		count += 1;
 		map->GetItem()->isabletobetaken = true;
-		map->GetItem()->TakenItem(a);
+		map->GetItem()->TakenItem();
 	}
 	else {
 		map->GetItem()->isabletobetaken = false;
 	}
+
+#ifdef _DEBUG
 
 	ImGui::Begin("Item");
 
@@ -159,6 +160,8 @@ void Player::CheckItemCollision() {
 	ImGui::DragInt("count", &count);
 
 	ImGui::End();
+
+#endif // DEBUG
 }
 
 
@@ -173,7 +176,7 @@ void Player::CheckItemBring() {
 		if (KeyInput::GetInstance()->PushKey(DIK_G)) {//Drop処理
 			map->GetItem()->isTaken = false;
 			//足元に落とす & リセット
-			map->GetItem()->model.transform.translate = model.transform.translate;
+			map->GetItem()->model.transform.translate = GetFrontVector(0.75f);
 			map->GetItem()->model.transform.translate.y = 0.0f;
 			map->GetItem()->model.transform.scale = { 1.0f,1.0f,1.0f };
 			map->GetItem()->model.transform.rotate.x = {};

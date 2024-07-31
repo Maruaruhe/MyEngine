@@ -19,12 +19,17 @@ void Camera::Initialize() {
 void Camera::Update() {
 
 	position->worldPosition = transform.translate;
+
+#ifdef _DEBUG
+
+
 	ImGui::Begin("Camera");
 	ImGui::SliderFloat3("translate", &transform.translate.x, -15, 15);
 	ImGui::SliderFloat3("rotate", &transform.rotate.x, -3.0f, 3.0f);
 	ImGui::SliderFloat3("scale", &transform.scale.x, 1.0f, 10.0f);
 	ImGui::End();
 
+#endif // DEBUG
 	MakeWVPMatrix();
 
 //	GraphicsRenderer::GetInstance()->SetRootSignatureAndPSO(0);
