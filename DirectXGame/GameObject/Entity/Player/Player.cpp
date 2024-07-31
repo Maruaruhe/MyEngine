@@ -17,6 +17,7 @@ void Player::Update() {
 
 	GetFrontVector();
 	CheckItemCollision();
+	CheckItemBring();
 
 	model.Update();
 	view.Update();
@@ -118,6 +119,19 @@ Vector3 Player::GetFrontVector() {
 	return a;
 }
 
+//向いている方向へのベクトルを求める関数
+Vector3 Player::GetItemFrontVector() {
+	Transform transform;
+	transform = model.transform;
+	transform.rotate.x = model.transform.rotate.x + 0.25f;
+	transform.rotate.y = model.transform.rotate.y + 0.50f;
+
+	Matrix4x4 wM = MakeRotateXYZMatrix(transform.rotate);
+	Vector3 dir = { 0.0f,0.0f,1.0f };
+	a= model.transform.translate + Normalize(vecMat(dir, wM)) * 1.0f;
+	return a;
+}
+
 void Player::CheckItemCollision() {
 	AABB itemAABB;
 	itemAABB.CreateEntityAABB(map->GetItem()->model.transform);
@@ -145,4 +159,25 @@ void Player::CheckItemCollision() {
 	ImGui::DragInt("count", &count);
 
 	ImGui::End();
+}
+
+
+void Player::CheckItemBring() {
+	if (map->GetItem()->isTaken) {
+		//所持しているとき手に持つ
+		map->GetItem()->model.transform.translate = GetItemFrontVector();
+		//PlayerのRotateと同期
+		map->GetItem()->model.transform.rotate = model.transform.rotate;
+
+		//
+		if (KeyInput::GetInstance()->PushKey(DIK_G)) {//Drop処理
+			map->GetItem()->isTaken = false;
+			//足元に落とす & リセット
+			map->GetItem()->model.transform.translate = model.transform.translate;
+			map->GetItem()->model.transform.translate.y = 0.0f;
+			map->GetItem()->model.transform.scale = { 1.0f,1.0f,1.0f };
+			map->GetItem()->model.transform.rotate.x = {};
+			map->GetItem()->model.transform.rotate.z = {};
+		}
+	}
 }

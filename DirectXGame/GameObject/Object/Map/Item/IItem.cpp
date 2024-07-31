@@ -12,6 +12,7 @@ void IItem::TakenItem(Vector3 pos) {
 		if (KeyInput::GetInstance()->PushKey(DIK_F)) { //かつキーを押された場合
 			isTaken = true;
 			model.transform.translate = pos;
+			model.transform.scale *= 0.75f;;
 		}
 	}
 }

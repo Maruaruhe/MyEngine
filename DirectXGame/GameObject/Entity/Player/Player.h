@@ -23,8 +23,10 @@ private:
 	AABB GetCollision();
 	Vector3 CheckLineOfSightCollision();
 	Vector3 GetFrontVector();
+	Vector3 GetItemFrontVector();
 
 	void CheckItemCollision();
+	void CheckItemBring();
 
 private:
 	GamePadInput* pInput;
