@@ -34,6 +34,6 @@ void TitleScene::Update() {
 }
 
 void TitleScene::Draw() {
-	model.Draw();
-	//title.Draw();
+	//model.Draw();
+	title.Draw();
 }

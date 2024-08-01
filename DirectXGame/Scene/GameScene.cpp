@@ -16,6 +16,9 @@ void GameScene::Initialize() {
 	player.SetMap(&map);
 	player.model.SetCamera(camera2.get());
 	player.view.SetCamera(camera2.get());
+
+
+	sprite.Initialize({}, { 320,160 }, "Resources/ao.png");
 }
 
 void GameScene::Update() {
@@ -43,10 +46,14 @@ void GameScene::Update() {
 	else {
 		clearCount = 0;
 	}
+
+	sprite.Update();
 }
 
 void GameScene::Draw() {
 	map.Draw();
 
 	player.Draw();
+
+	sprite.Draw();
 }

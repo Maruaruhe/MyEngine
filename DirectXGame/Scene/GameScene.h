@@ -34,5 +34,6 @@ private:
 	int clearCount;
 
 	Player player;
+	Sprite sprite;
 };
 
