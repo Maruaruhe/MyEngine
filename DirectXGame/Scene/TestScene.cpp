@@ -20,7 +20,7 @@ void TestScene::Initialize() {
 	s.Initialize();
 	s.camera = camera2;
 
-	sprite.Initialize({}, { 1280,720 }, "Resources/ao.png");
+	sprite.Initialize({}, { 360,180 }, "Resources/ao.png");
 }
 
 void TestScene::Update() {
