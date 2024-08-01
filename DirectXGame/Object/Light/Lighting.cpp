@@ -7,7 +7,7 @@ void Lighting::Initialize() {
 
 	light->color = { 1.0f,1.0f,1.0f,1.0f };
 	light->direction = { 0.0f,0.0f,1.0f };
-	light->intensity = 1.0f;
+	light->intensity = 0.0f;
 }
 
 void Lighting::Update() {

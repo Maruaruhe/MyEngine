@@ -17,6 +17,7 @@ public:
 	Anime anime3;
 
 	Model model;
+	Model model2;
 private:
 	GamePadInput* pInput;
 	KeyInput* kInput;
