@@ -30,5 +30,6 @@ private:
 
 	TestObject test;
 	Skybox s;
+	Sprite sprite;
 };
 

@@ -19,6 +19,8 @@ void TestScene::Initialize() {
 
 	s.Initialize();
 	s.camera = camera2;
+
+	sprite.Initialize({}, { 1280,720 }, "Resources/ao.png");
 }
 
 void TestScene::Update() {
@@ -30,10 +32,14 @@ void TestScene::Update() {
 	test.Update();
 
 	s.Update();
+
+	sprite.Update();
 }
 
 void TestScene::Draw() {
 	test.Draw();
 
 	s.Draw();
+
+	sprite.Draw();
 }
