@@ -58,7 +58,7 @@ void Anime::Update() {
 	animationTime = std::fmod(animationTime, anime.duration);
 
 	if (isPlay) {
-		//ApplyAnimation(skelton, anime, animationTime);
+		ApplyAnimation(skelton, anime, animationTime);
 	}
 	UpdateSkelton(skelton);
 	UpdateSkinCluster(skinCluster,skelton);
