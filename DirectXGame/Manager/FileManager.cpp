@@ -1,4 +1,5 @@
 #include "FileManager.h"
+#include "ModelManager.h"
 
 
 
@@ -6,6 +7,18 @@
 void FileManager::Initialize()
 {
 	levelData_ = std::make_unique<LevelData>();
+}
+
+void FileManager::Update(){
+	for (Model model : levelModels) {
+		model.Update();
+	}
+}
+
+void FileManager::Draw(){
+	for (Model model : levelModels) {
+		model.Draw();
+	}
 }
 
 // JSONファイル読み込み
@@ -107,9 +120,9 @@ void FileManager::ScanningObjects(nlohmann::json& object, std::map<std::string, 
 			objectData->transform.translate.y = (float)transform["translation"][2];
 			objectData->transform.translate.z = (float)transform["translation"][1];
 			// 回転角
-			objectData->transform.rotate.x = -(float)transform["rotation"][0]; //*(float(std::numbers::pi) / 180.0f);
-			objectData->transform.rotate.y = -(float)transform["rotation"][2];// *(float(std::numbers::pi) / 180.0f);
-			objectData->transform.rotate.z = -(float)transform["rotation"][1];// *(float(std::numbers::pi) / 180.0f);
+			objectData->transform.rotate.x = -(float)transform["rotation"][0] *(float(std::numbers::pi) / 180.0f);
+			objectData->transform.rotate.y = -(float)transform["rotation"][2] *(float(std::numbers::pi) / 180.0f);
+			objectData->transform.rotate.z = -(float)transform["rotation"][1] *(float(std::numbers::pi) / 180.0f);
 			// スケーリング
 			objectData->transform.scale.x = (float)transform["scaling"][0];
 			objectData->transform.scale.y = (float)transform["scaling"][2];
@@ -134,14 +147,18 @@ void FileManager::ScanningObjects(nlohmann::json& object, std::map<std::string, 
 	}
 }
 
-void FileManager::CreateModels() {
+void FileManager::CreateModels(Camera* camera) {
 	// レベルデータからオブジェクトを生成、配置
 	for (auto& objectData : levelData_->objects) {
 
 		// ファイル名から登録済みモデルを検索
 		Model model;
-		model.Initialize("Box");
-		model.transform = FileManager::GetInstance()->GetObjectTransform("key");
-		levelModels.push_back(model);
+		if (!objectData.second->file_name._Equal("file_name_EMPTY")) {
+			ModelManager::GetInstance()->LoadModel(objectData.second->file_name);
+			model.Initialize(objectData.second->file_name);
+			model.transform = FileManager::GetInstance()->GetObjectTransform(objectData.second->file_name);
+			model.SetCamera(camera);
+			levelModels.push_back(model);
+		}
 	}
 }

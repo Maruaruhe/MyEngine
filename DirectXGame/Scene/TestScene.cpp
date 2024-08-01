@@ -11,11 +11,12 @@ void TestScene::Initialize() {
 
 	light.Initialize();
 
-	FileManager::GetInstance()->LoadJsonFile("Json/", "testJ");
-	testJson.Initialize();
-	testJson.model->SetCamera(camera2);
-	testJson.model2->SetCamera(camera2);
-	testJson.model3->SetCamera(camera2);
+	FileManager::GetInstance()->LoadJsonFile("Json/", "loadMap");
+	FileManager::GetInstance()->CreateModels(camera2);
+	//testJson.Initialize();
+	//testJson.model->SetCamera(camera2);
+	//testJson.model2->SetCamera(camera2);
+	//testJson.model3->SetCamera(camera2);
 
 	s.Initialize();
 	s.camera = camera2;
@@ -27,13 +28,16 @@ void TestScene::Update() {
 	light.Update();
 	camera2->Update();
 
-	testJson.Update();
+	FileManager::GetInstance()->Update();
+	//testJson.Update();
 
-	s.Update();
+	//s.Update();
 }
 
 void TestScene::Draw() {
-	testJson.Draw();
+	FileManager::GetInstance()->Draw();
+
+	//testJson.Draw();
 
 	//s.Draw();
 }

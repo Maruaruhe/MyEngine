@@ -52,6 +52,12 @@ public:
 	// 初期化処理
 	void Initialize();
 
+	void Update();
+
+	void Draw();
+
+	void CreateModels(Camera* camera);
+
 	// JSONファイル読み込み
 	void LoadJsonFile(const std::string& routeFilePath, const std::string& fileName);
 
@@ -93,8 +99,6 @@ private:
 
 	// オブジェクトの走査
 	void ScanningObjects(nlohmann::json& object, std::map<std::string, std::unique_ptr<LevelData::ObjectData>>& objects);
-
-	void CreateModels();
 
 private:
 
