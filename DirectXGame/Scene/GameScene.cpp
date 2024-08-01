@@ -18,7 +18,7 @@ void GameScene::Initialize() {
 	player.view.SetCamera(camera2.get());
 
 
-	sprite.Initialize({}, { 320,160 }, "Resources/ao.png");
+	sprite.Initialize({}, { 360,180 }, "Resources/explain.png");
 }
 
 void GameScene::Update() {
