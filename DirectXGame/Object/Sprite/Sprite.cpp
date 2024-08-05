@@ -38,7 +38,7 @@ void Sprite::Update() {
 }
 
 void Sprite::Draw() {
-	if (isActive) {
+	//if (isActive) {
 		DirectX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView);	//VBVを設定
 		DirectX12::GetInstance()->GetCommandList()->IASetIndexBuffer(&indexBufferView);	//VBVを設定
 		//形状を設定。PSOに設定しているものとはまた別。同じものを設定すると考えておけばよい
@@ -55,7 +55,7 @@ void Sprite::Draw() {
 		
 		//描画！　（DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
 		DirectX12::GetInstance()->GetCommandList()->DrawIndexedInstanced(6, 1, 0, 0, 0);
-	}
+	//}
 }
 
 void Sprite::CreateVertexResource() {
@@ -83,7 +83,7 @@ void Sprite::CreateMaterialResource() {
 
 void Sprite::CreateTransformationMatrixResource() {
 	//WVP用のリソースを作る。Matrix4x4　1つ分のサイズを用意する
-	wvpResource_ = DirectX12::GetInstance()->CreateBufferResource(sizeof(Matrix4x4));
+	wvpResource_ = DirectX12::GetInstance()->CreateBufferResource(sizeof(TransformationMatrix));
 	//データを書き込む
 	//wvpData = nullptr;
 	transformationMatrix = nullptr;

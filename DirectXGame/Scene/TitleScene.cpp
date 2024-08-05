@@ -18,8 +18,8 @@ void TitleScene::Initialize() {
 
 	model.SetCamera(camera2.get());
 
-
-	title.Initialize({0,0}, {1280,720}, "Resources/ao.png");
+	TextureManager::GetInstance()->LoadTexture("Resources/ao.png");
+	title.Initialize({0,0}, {320,180}, "Resources/ao.png");
 }
 
 void TitleScene::Update() {
@@ -35,5 +35,5 @@ void TitleScene::Update() {
 
 void TitleScene::Draw() {
 	model.Draw();
-	//title.Draw();
+	title.Draw();
 }
