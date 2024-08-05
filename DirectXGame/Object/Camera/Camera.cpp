@@ -6,7 +6,7 @@ void Camera::Initialize() {
 
 	transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,2.0f,0.0f} };
 	//����p����
-	fov = 0.75f;
+	fov = 0.85f;
 	aspectRatio = (float(kClientWidth) / float(kClientHeight));
 	nearClip = 0.1f;
 	farClip = 100.0f;
