@@ -55,5 +55,5 @@ void GameScene::Draw() {
 
 	player.Draw();
 
-	//sprite.Draw();
+	sprite.Draw();
 }
