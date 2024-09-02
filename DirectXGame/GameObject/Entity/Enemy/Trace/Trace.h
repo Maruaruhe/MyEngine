@@ -14,6 +14,12 @@ private:
 
 	std::vector<Wall> walls;
 	Vector3 velocity{};
+	Vector3 distance{};
+
 	int tracingTime;
+
+	float maxSpeed = 0.25f;
+	float firstSpeed = 0.05f;
+	float chaseSpeed;
 };
 

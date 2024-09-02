@@ -57,15 +57,20 @@ void Trace::ChasePlayer(){
 			isAttacking = true;
 			tracingTime = 0;
 
-			Vector3 distance;
 			distance = player->model.transform.translate - model.transform.translate;
 			distance.y = 0.0f;
 
-			float setSpeed = 0.05f;
-			velocity = Normalize(distance) * setSpeed;
+			chaseSpeed = firstSpeed;
 		}
 		else {
 			tracingTime++;
+			velocity = Normalize(distance) * chaseSpeed;
+
+			chaseSpeed += 0.0005f;
+			if (chaseSpeed >= maxSpeed) {
+				chaseSpeed = maxSpeed;
+			}
+
 			model.transform.translate += velocity;
 
 			// 最後に当たり判定をチェック
@@ -92,7 +97,7 @@ void Trace::ChasePlayer(){
 			}*/
 
 			//時間経過
-			if (tracingTime >= 300) {
+			if (tracingTime >= 0) {
 				velocity = {};
 				isAttacking = false;
 				isChase = false;
