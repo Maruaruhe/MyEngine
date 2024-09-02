@@ -38,7 +38,7 @@ void Map::Draw(){
 		wall.Draw();
 	}
     floor.Draw();
-    roof.Draw();
+    //roof.Draw();
 
     sItem->Draw();
 
