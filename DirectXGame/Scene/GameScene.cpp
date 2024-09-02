@@ -17,9 +17,9 @@ void GameScene::Initialize() {
 	player.model.SetCamera(camera2.get());
 	player.view.SetCamera(camera2.get());
 
-	//trace.Initialize({ {1.0f,1.0f,1.0f}, {0.0f,0.0f,0.0f}, { -10.0f, 0.0f, 1.0f } }, camera2.get(), &map, &player);
+	//trace.Initialize({ {1.0f,1.0f,1.0f}, {0.0f,0.0f,0.0f}, { -10.0f, 0.0f, 1.0f } });
 
-	sprite.Initialize({}, { 360,180 }, "Resources/explain.png");
+	//sprite.Initialize({}, { 360,180 }, "Resources/explain.png");
 }
 
 void GameScene::Update() {
@@ -54,7 +54,7 @@ void GameScene::Update() {
 		clearCount = 0;
 	}
 
-	sprite.Update();
+	//sprite.Update();
 }
 
 void GameScene::Draw() {
@@ -64,5 +64,5 @@ void GameScene::Draw() {
 
 	//trace.Draw();
 
-	sprite.Draw();
+	//sprite.Draw();
 }

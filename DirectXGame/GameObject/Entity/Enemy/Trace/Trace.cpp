@@ -2,7 +2,7 @@
 #include "../../../Object/Map/Map.h"
 #include "../../../Entity/Player/Player.h"
 
-void Trace::Initialize(Transform transform, Camera* camera, Map* map, Player* player) {
+void Trace::Initialize(Transform transform) {
 	isChase = false;
 	isAlive = true;
 	isAttacking = false;
@@ -10,12 +10,6 @@ void Trace::Initialize(Transform transform, Camera* camera, Map* map, Player* pl
 	ModelManager::GetInstance()->LoadModel("Entity/Enemy/trace");
 	model.Initialize("Entity/Enemy/trace");
 	model.transform = transform;
-	model.SetCamera(camera);
-
-	this->map =map;
-	this->player = player;
-
-	walls = map->GetWall();
 }
 
 void Trace::Update() {

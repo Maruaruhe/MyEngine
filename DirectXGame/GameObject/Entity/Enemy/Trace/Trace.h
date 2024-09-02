@@ -5,7 +5,7 @@ class Wall;
 class Trace : public IEnemy
 {
 public:
-	void Initialize(Transform transform, Camera* camera, Map* map, Player* player);
+	void Initialize(Transform transform);
 	void Update();
 	void Draw();
 private:

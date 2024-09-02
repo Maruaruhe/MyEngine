@@ -11,7 +11,7 @@ class Map;
 class IEnemy
 {
 public:
-	virtual void Initialize(Transform transform, Camera* camera, Map* map, Player* player);
+	virtual void Initialize(Transform transform);
 
 	virtual void Update();
 
