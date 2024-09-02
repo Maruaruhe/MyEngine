@@ -160,18 +160,25 @@ void GraphicsRenderer::MakeRootSignature() {
 	rootParameters[2].DescriptorTable.pDescriptorRanges = descriptorRange;
 	rootParameters[2].DescriptorTable.NumDescriptorRanges = _countof(descriptorRange);
 
+	//CAmera
 	rootParameters[3].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
 	rootParameters[3].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
 	rootParameters[3].Descriptor.ShaderRegister = 1;
 
+	//Light
 	rootParameters[4].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
 	rootParameters[4].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
 	rootParameters[4].Descriptor.ShaderRegister = 2;
 
-	rootParameters[5].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
+	//SpotLight
+	rootParameters[5].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
 	rootParameters[5].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
-	rootParameters[5].DescriptorTable.pDescriptorRanges = descriptorRangeTexture;
-	rootParameters[5].DescriptorTable.NumDescriptorRanges = _countof(descriptorRangeTexture);
+	rootParameters[5].Descriptor.ShaderRegister = 3;
+
+	rootParameters[6].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
+	rootParameters[6].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+	rootParameters[6].DescriptorTable.pDescriptorRanges = descriptorRangeTexture;
+	rootParameters[6].DescriptorTable.NumDescriptorRanges = _countof(descriptorRangeTexture);
 
 	descriptionRootSignature.pParameters = rootParameters;
 	descriptionRootSignature.NumParameters = _countof(rootParameters);
@@ -304,15 +311,19 @@ void GraphicsRenderer::MakeRootSignatureForSkinning() {
 	rootParametersForSkinning[4].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
 	rootParametersForSkinning[4].Descriptor.ShaderRegister = 2;
 
-	rootParametersForSkinning[5].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
-	rootParametersForSkinning[5].ShaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX;
-	rootParametersForSkinning[5].DescriptorTable.pDescriptorRanges = descriptorRange;
-	rootParametersForSkinning[5].DescriptorTable.NumDescriptorRanges = _countof(descriptorRange);
+	rootParametersForSkinning[5].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
+	rootParametersForSkinning[5].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+	rootParametersForSkinning[5].Descriptor.ShaderRegister = 3;
 
 	rootParametersForSkinning[6].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
-	rootParametersForSkinning[6].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
-	rootParametersForSkinning[6].DescriptorTable.pDescriptorRanges = descriptorRangeTexture;
-	rootParametersForSkinning[6].DescriptorTable.NumDescriptorRanges = _countof(descriptorRangeTexture);
+	rootParametersForSkinning[6].ShaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX;
+	rootParametersForSkinning[6].DescriptorTable.pDescriptorRanges = descriptorRange;
+	rootParametersForSkinning[6].DescriptorTable.NumDescriptorRanges = _countof(descriptorRange);
+
+	rootParametersForSkinning[7].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
+	rootParametersForSkinning[7].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+	rootParametersForSkinning[7].DescriptorTable.pDescriptorRanges = descriptorRangeTexture;
+	rootParametersForSkinning[7].DescriptorTable.NumDescriptorRanges = _countof(descriptorRangeTexture);
 
 	descriptionRootSignatureForSkinning.pParameters = rootParametersForSkinning;
 	descriptionRootSignatureForSkinning.NumParameters = _countof(rootParametersForSkinning);

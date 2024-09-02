@@ -6,6 +6,7 @@
 #include "../Object/Sprite/Sprite.h"
 #include "../Object/Sphere/Sphere.h"
 #include "../Object/Light/Lighting.h"
+#include "../Object/SpotLight/SpotLight.h"
 #include "../Object/Camera/Camera.h"
 #include "../Object/Model/Model.h"
 #include "../Object/Anime/Anime.h"
@@ -27,6 +28,7 @@ public:
 private:
 	KeyInput* input = nullptr;
 	Lighting light;
+	SpotLight sLight;
 
 	std::unique_ptr<Camera> camera2;
 	Map map;

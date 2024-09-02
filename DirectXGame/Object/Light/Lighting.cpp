@@ -1,6 +1,7 @@
 #include "Lighting.h"
 
 void Lighting::Initialize() {
+	//light = std::make_unique<DirectionalLight>();
 	directionalLightResource = DirectX12::GetInstance()->CreateBufferResource(sizeof(DirectionalLight));
 	light = nullptr;
 	directionalLightResource->Map(0, nullptr, reinterpret_cast<void**>(&light));
@@ -16,12 +17,12 @@ void Lighting::Update() {
 
 
 	ImGui::Begin("Light");
-	ImGui::DragFloat4("color", &light->color.x);
+	ImGui::DragFloat4("color", &light->color.x, 0.1f);
 	ImGui::SliderFloat3("direction", &light->direction.x, -1.0f, 1.0f);
 	light->direction = Normalize(light->direction);
 	ImGui::DragFloat("intensity", &light->intensity);
 	ImGui::End();
 
 #endif // DEBUG
-	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(3, directionalLightResource->GetGPUVirtualAddress());
+	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(4, directionalLightResource->GetGPUVirtualAddress());
 }

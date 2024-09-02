@@ -19,6 +19,7 @@ public:
 	void Initialize();
 	void Update();
 
+	//std::unique_ptr<DirectionalLight >light;
 	DirectionalLight* light;
 	Microsoft::WRL::ComPtr<ID3D12Resource> directionalLightResource;
 private:

@@ -3,6 +3,7 @@
 #include "../../../Base/Input/Input.h"
 
 #include "../../Object/Map/Map.h"
+#include "../../../Object/SpotLight/SpotLight.h"
 
 class Player {
 public:
@@ -17,6 +18,7 @@ public:
 
 	Model model;
 	Model view;
+
 private:
 	void Move();
 	AABB GetCollision();

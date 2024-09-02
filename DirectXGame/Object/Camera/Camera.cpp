@@ -33,7 +33,7 @@ void Camera::Update() {
 	MakeWVPMatrix();
 
 //	GraphicsRenderer::GetInstance()->SetRootSignatureAndPSO(0);
-	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(4, cameraForGPUResource->GetGPUVirtualAddress());
+	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(3, cameraForGPUResource->GetGPUVirtualAddress());
 }
 
 void Camera::MakeWVPMatrix() {

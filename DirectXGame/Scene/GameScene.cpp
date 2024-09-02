@@ -9,6 +9,7 @@ void GameScene::Initialize() {
 	camera2->transform.translate.z = -10.0f;
 
 	light.Initialize();
+	sLight.Initialize();
 
 	map.Initialize(camera2.get());
 
@@ -25,6 +26,8 @@ void GameScene::Update() {
 	GlobalVariables::GetInstance()->Update();
 
 	light.Update();
+	sLight.Update();
+
 	camera2->Update();
 
 	map.Update();
