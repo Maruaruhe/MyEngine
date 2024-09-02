@@ -5,7 +5,7 @@
 
 
 void Map::Initialize(Camera* camera){
-    mapData = LoadMapData("testMap");
+    mapData = LoadMapData("50x50");
     CreateWall(camera);
     CreateFloor(camera);
     CreateRoof(camera);

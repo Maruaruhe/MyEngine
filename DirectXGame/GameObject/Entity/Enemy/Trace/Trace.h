@@ -18,7 +18,7 @@ private:
 
 	int tracingTime;
 
-	float maxSpeed = 0.25f;
+	float maxSpeed = 0.20f;
 	float firstSpeed = 0.05f;
 	float chaseSpeed;
 };

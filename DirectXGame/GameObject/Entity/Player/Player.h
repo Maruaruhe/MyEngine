@@ -11,6 +11,7 @@ public:
 	void Initialize();
 
 	void Update();
+	void LightUpdate();
 
 	void Draw();
 
@@ -37,4 +38,5 @@ private:
 
 	//MapInfo
 	Map* map;
+	SpotLight sLight;
 };

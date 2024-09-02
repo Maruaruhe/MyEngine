@@ -30,7 +30,6 @@ public:
 private:
 	KeyInput* input = nullptr;
 	Lighting light;
-	SpotLight sLight;
 
 	std::unique_ptr<Camera> camera2;
 	Map map;

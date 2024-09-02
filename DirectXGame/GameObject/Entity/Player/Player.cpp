@@ -3,10 +3,12 @@
 void Player::Initialize() {
 	ModelManager::GetInstance()->LoadModel("player");
 	model.Initialize("player");
-	model.transform.translate = { 19.0f,1.5f,-19.0f };
+	model.transform.translate = { 24.0f,1.5f,-48.0f };
 
 	view.Initialize("player");
 	view.transform.scale *= 0.25f;
+
+	sLight.Initialize();
 
 	kInput = KeyInput::GetInstance();
 	pInput = GamePadInput::GetInstance();
@@ -22,6 +24,13 @@ void Player::Update() {
 	view.Update();
 	view.transform.translate = GetFrontVector(2.0f);
 
+	LightUpdate();
+}
+
+void Player::LightUpdate() {
+	sLight.light->position = model.transform.translate;
+	sLight.light->direction = GetFrontLightVector(1.0f);
+	sLight.Update();
 }
 
 void Player::Draw() {

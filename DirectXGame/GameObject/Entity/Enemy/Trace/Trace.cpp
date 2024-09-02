@@ -97,7 +97,7 @@ void Trace::ChasePlayer(){
 			}*/
 
 			//時間経過
-			if (tracingTime >= 0) {
+			if (tracingTime >= 240) {
 				velocity = {};
 				isAttacking = false;
 				isChase = false;
