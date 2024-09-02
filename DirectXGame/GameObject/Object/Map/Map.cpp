@@ -155,6 +155,7 @@ void Map::CreateFloor(Camera* camera) {
     transform.rotate = { 0.0f,0.0f,0.0f };
 
     floor.Initialize(transform.translate, transform.scale);
+    floor.model.material->enableLighting = true;
     floor.model.SetCamera(camera);
 }
 
@@ -169,6 +170,7 @@ void Map::CreateRoof(Camera* camera) {
     transform.rotate = { 0.0f,0.0f,0.0f };
 
     roof.Initialize(transform.translate, transform.scale);
+    roof.model.material->enableLighting = true;
     roof.model.SetCamera(camera);
 }
 
@@ -230,6 +232,7 @@ void Map::CreateItem(Camera* camera) {
 
     sItem = std::make_unique<SmallItem>();
     sItem->Initialize(trans, camera);
+    sItem->model.material->enableLighting = true;
 }
 
 void Map::CreateModels(Camera* camera) {

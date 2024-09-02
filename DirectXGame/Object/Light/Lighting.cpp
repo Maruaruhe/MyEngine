@@ -9,7 +9,7 @@ void Lighting::Initialize() {
 	light->color = { 1.0f,1.0f,1.0f,1.0f };
 	light->direction = { 0.0f,0.0f,1.0f };
 	light->direction = { 0.275f,0.944f,0.181f };
-	light->intensity = 1.0f;
+	light->intensity = 0.01f;
 }
 
 void Lighting::Update() {
@@ -20,7 +20,7 @@ void Lighting::Update() {
 	ImGui::DragFloat4("color", &light->color.x, 0.1f);
 	ImGui::SliderFloat3("direction", &light->direction.x, -1.0f, 1.0f);
 	light->direction = Normalize(light->direction);
-	ImGui::DragFloat("intensity", &light->intensity);
+	ImGui::DragFloat("intensity", &light->intensity, 0.01f);
 	ImGui::End();
 
 #endif // DEBUG

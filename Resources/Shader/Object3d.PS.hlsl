@@ -82,17 +82,22 @@ PixelShaderOutput main(VertexShaderOutput input)
 
     if (gMaterial.enableLighting != 0)
     {
+        //DirectionalLight
+        float Ndot = dot(normalize(input.normal), -gDirectionalLight.direction);
+        float co = pow(Ndot * 0.5f + 0.5f, 2.0f);
+
+        output.color.rgb += gMaterial.color.rgb * textureColor.rgb * gDirectionalLight.color.rgb * co * gDirectionalLight.intensity;
+        output.color.a = gMaterial.color.a * textureColor.a;
         
+        //SpotLight
         float32_t3 spotLightDirectionOnSurface = normalize(input.worldPosition - gSpotLight.position);
         
         float NdotL = dot(normalize(input.normal), -spotLightDirectionOnSurface);
         float cos = pow(NdotL * 0.5f + 0.5f, 2.0f);
         
-        //
         float32_t cosAngle = dot(spotLightDirectionOnSurface, gSpotLight.direction);
         float32_t falloffFactor = saturate((cosAngle - gSpotLight.cosAngle) / 1.0f - gSpotLight.cosAngle);
         
-        //
         float32_t distance = length(gSpotLight.position - input.worldPosition);
         float32_t attenuationFactor = saturate(pow(-distance / gSpotLight.distance + 1.0f, gSpotLight.decay));
         

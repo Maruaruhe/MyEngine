@@ -9,9 +9,9 @@ void SpotLight::Initialize() {
 	light->color = { 1.0f,1.0f,1.0f,1.0f };
 	light->direction = { 0.0f,0.0f,1.0f };
 	light->position = { 2.0f,2.0f,2.0f };
-	light->distance = 100.0f;
-	light->intensity = 10.0f;
-	light->decay = 10.0f;
+	light->distance = 50.0f;
+	light->intensity = 1.5f;
+	light->decay = 7.0f;
 	light->cosAngle = 0.45f;
 }
 
