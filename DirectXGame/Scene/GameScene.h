@@ -18,6 +18,8 @@
 #include "../GameObject/Object/Map/Item/SmallItem/SmallItem.h"
 #include "../GameObject/Entity/Player/Player.h"
 
+#include "../GameObject/Entity/Enemy/Trace/Trace.h"
+
 class GameScene : public IScene
 {
 public:
@@ -37,5 +39,7 @@ private:
 
 	Player player;
 	Sprite sprite;
+
+	Trace trace;
 };
 

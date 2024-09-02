@@ -17,7 +17,6 @@ public:
 	bool isabletobetaken = false;
 	Model model;
 protected:
-	Transform transform;
 	Camera* camera;
 
 	int weight;

@@ -21,6 +21,7 @@ public:
 	void CheckCollision(AABB pAABB, Vector2 move, Vector3* fixVector);
 
 	SmallItem* GetItem() { return sItem.get(); }
+	std::vector<Wall> GetWall() { return walls; }
 
 private:
 	std::vector<std::vector<int>> LoadMapData(const std::string& filename);

@@ -21,9 +21,10 @@ public:
 
 	Vector3 GetFrontVector(float length);
 	Vector3 GetFrontLightVector(float length);
+
+	AABB GetCollision();
 private:
 	void Move();
-	AABB GetCollision();
 	Vector3 CheckLineOfSightCollision();
 	Vector3 GetItemFrontVector();
 
