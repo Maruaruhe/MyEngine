@@ -26,6 +26,8 @@ void GameScene::Update() {
 	GlobalVariables::GetInstance()->Update();
 
 	light.Update();
+	sLight.light->position = player.model.transform.translate;
+	sLight.light->direction = player.GetFrontLightVector(1.0f);
 	sLight.Update();
 
 	camera2->Update();

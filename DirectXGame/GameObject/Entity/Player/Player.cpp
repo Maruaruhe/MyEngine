@@ -124,6 +124,14 @@ Vector3 Player::GetFrontVector(float length) {
 }
 
 //向いている方向へのベクトルを求める関数
+Vector3 Player::GetFrontLightVector(float length) {
+	Matrix4x4 wM = MakeRotateXYZMatrix(model.transform.rotate);
+	Vector3 dir = { 0.0f,0.0f,1.0f };
+	Vector3 a= Normalize(vecMat(dir, wM)) * length;
+	return a;
+}
+
+//向いている方向へのベクトルを求める関数
 Vector3 Player::GetItemFrontVector() {
 	Transform transform;
 	transform = model.transform;
