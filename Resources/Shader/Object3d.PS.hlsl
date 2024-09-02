@@ -21,15 +21,27 @@ struct DirectionalLight
     float32_t3 direction;
     float intensity;
 };
-
+	
 struct Camera
 {
     float32_t3 worldPosition;
 };
 
+//struct SpotLight
+//{
+//    float32_t4 color;
+//    float32_t3 position;
+//    float_t intensity;
+//    float32_t3 direction;
+//    float32_t distance;
+//    float32_t decay;
+//    float32_t cosAngle;
+//};
+
 ConstantBuffer<Material> gMaterial : register(b0);
 ConstantBuffer<DirectionalLight> gDirectionalLight : register(b1);
 ConstantBuffer<Camera> gCamera : register(b2);
+//ConstantBuffer<SpotLight> gSpotLight : register(b3);
 
 Texture2D<float32_t4> gTexture : register(t0);
 TextureCube<float32_t4> gEnviromentTexture : register(t1);

@@ -12,7 +12,7 @@ void TitleScene::Update() {
 	title.Update();
 
 	if (KeyInput::GetInstance()->PushKey(DIK_SPACE)) {
-		sceneNo = INGAME;
+  		sceneNo = INGAME;
 	}
 }
 
