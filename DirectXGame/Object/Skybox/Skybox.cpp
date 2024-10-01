@@ -6,7 +6,9 @@
 
 void Skybox::Initialize() {
 	TextureManager::GetInstance()->LoadTexture("Resources/rostock_laage_airport_4k.dds");
+	TextureManager::GetInstance()->LoadTexture("Resources/testCube1.dds");
 	textureIndex = TextureManager::GetInstance()->GetTextureIndexByFilePath("Resources/rostock_laage_airport_4k.dds");
+	textureIndex = TextureManager::GetInstance()->GetTextureIndexByFilePath("Resources/testCube1.dds");
 
 	CreateRootSignature();
 	CreatePSO();
