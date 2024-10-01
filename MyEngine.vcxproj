@@ -98,6 +98,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DirectXGame\Scene\ClearScene.cpp" />
     <ClCompile Include="DirectXGame\Object\AABB\AABB.cpp" />
     <ClCompile Include="DirectXGame\Object\Anime\Anime.cpp" />
     <ClCompile Include="DirectXGame\Object\Animation\Animation.cpp" />
@@ -148,6 +149,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="DirectXGame\Scene\TitleScene.cpp" />
     <ClCompile Include="DirectXGame\Object\SpotLight\SpotLight.cpp" />
     <ClCompile Include="DirectXGame\GameObject\Entity\Enemy\Trace\Trace.cpp" />
+    <ClCompile Include="DirectXGame\Object\PointLight\PointLight.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shader\Object3d.PS.hlsl">
@@ -186,6 +188,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DirectXGame\Scene\ClearScene.h" />
     <ClInclude Include="DirectXGame\Object\AABB\AABB.h" />
     <ClInclude Include="DirectXGame\Math\math.h" />
     <ClInclude Include="DirectXGame\Object\Anime\Anime.h" />
@@ -241,6 +244,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="DirectXGame\Object\SpotLight\SpotLight.h" />
     <ClInclude Include="DirectXGame\GameObject\Entity\Enemy\IEnemy.h" />
     <ClInclude Include="DirectXGame\GameObject\Entity\Enemy\Trace\Trace.h" />
+    <ClInclude Include="DirectXGame\Object\PointLight\PointLight.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt" />

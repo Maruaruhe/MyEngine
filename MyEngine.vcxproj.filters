@@ -59,6 +59,8 @@
     <ClCompile Include="DirectXGame\Object\SpotLight\SpotLight.cpp" />
     <ClCompile Include="DirectXGame\GameObject\Entity\Enemy\IEnemy.cpp" />
     <ClCompile Include="DirectXGame\GameObject\Entity\Enemy\Trace\Trace.cpp" />
+    <ClCompile Include="DirectXGame\Object\PointLight\PointLight.cpp" />
+    <ClCompile Include="DirectXGame\Scene\ClearScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Object\AABB\AABB.h" />
@@ -116,6 +118,8 @@
     <ClInclude Include="DirectXGame\Object\SpotLight\SpotLight.h" />
     <ClInclude Include="DirectXGame\GameObject\Entity\Enemy\IEnemy.h" />
     <ClInclude Include="DirectXGame\GameObject\Entity\Enemy\Trace\Trace.h" />
+    <ClInclude Include="DirectXGame\Object\PointLight\PointLight.h" />
+    <ClInclude Include="DirectXGame\Scene\ClearScene.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shader\Object3d.hlsli" />

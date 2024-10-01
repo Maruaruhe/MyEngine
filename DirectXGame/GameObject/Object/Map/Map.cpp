@@ -38,7 +38,7 @@ void Map::Draw(){
 		wall.Draw();
 	}
     floor.Draw();
-    //roof.Draw();
+    roof.Draw();
 
     sItem->Draw();
 
@@ -226,7 +226,7 @@ void Map::CheckCollision(AABB pAABB, Vector2 move, Vector3* fixVector) {
 
 void Map::CreateItem(Camera* camera) {
     Transform trans;
-    trans.translate = { 19.0f,0.0f,-18.0f };
+    trans.translate = { 24.0f,0.0f,-40.0f };
     trans.scale = { 1.0f,1.0f,1.0f };
     trans.rotate = {};
 
@@ -244,9 +244,10 @@ void Map::CreateModels(Camera* camera) {
 
     ModelManager::GetInstance()->LoadModel("dish");
     dish.Initialize("dish");
+    dish.material->enableLighting = true;
     dish.SetCamera(camera);
-    dish.transform.translate.x = 2.0f;
-    dish.transform.translate.z = -2.5f;
+    dish.transform.translate.x = 18.0f;
+    dish.transform.translate.z = -11.5f;
     dish.transform.scale *= 0.75f;
     TextureManager::GetInstance()->LoadTexture("Resources/dish.png");
     dish.textureIndex = TextureManager::GetInstance()->GetTextureIndexByFilePath("Resources/dish.png");

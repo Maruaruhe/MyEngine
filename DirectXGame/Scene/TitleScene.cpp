@@ -11,7 +11,7 @@ void TitleScene::Initialize() {
 void TitleScene::Update() {
 	title.Update();
 
-	if (KeyInput::GetInstance()->PushKey(DIK_SPACE)) {
+	if (KeyInput::GetInstance()->TriggerKey(DIK_SPACE)) {
   		sceneNo = INGAME;
 	}
 }

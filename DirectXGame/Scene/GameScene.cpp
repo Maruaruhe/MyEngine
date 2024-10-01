@@ -40,12 +40,12 @@ void GameScene::Update() {
 
 
 
-	if (map.GetItem()->model.transform.translate.x >= 1.25f && map.GetItem()->model.transform.translate.x <= 2.75f ) {
-		if (map.GetItem()->model.transform.translate.x >= -3.5f) {
+	if (map.GetItem()->model.transform.translate.x >= 17.00f && map.GetItem()->model.transform.translate.x <= 19.00f ) {
+		if (map.GetItem()->model.transform.translate.z >= -12.5f && map.GetItem()->model.transform.translate.z <= -10.5f) {
 			if (map.GetItem()->isTaken == false) {
 				clearCount++;
 				if (clearCount >= 60) {
-					sceneNo = TITLE;
+					sceneNo = CLEAR;
 				}
 			}
 		}

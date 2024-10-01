@@ -1,5 +1,8 @@
 #include "Object3d.hlsli"
 
+
+static const int kPointLightNum = 4;
+
 struct PixelShaderOutput
 {
     float32_t4 color : SV_TARGET0;
@@ -38,10 +41,23 @@ struct SpotLight
     float32_t cosAngle;
 };
 
+struct PointLight
+{
+    float32_t4 color;
+    float32_t3 position;
+    float32_t intensity;
+};
+
+struct PointLights
+{
+    PointLight pointlight[kPointLightNum];
+};
+
 ConstantBuffer<Material> gMaterial : register(b0);
 ConstantBuffer<Camera> gCamera : register(b1);
 ConstantBuffer<DirectionalLight> gDirectionalLight : register(b2);
 ConstantBuffer<SpotLight> gSpotLight : register(b3);
+ConstantBuffer<PointLights> gPointLight : register(b4);
 
 Texture2D<float32_t4> gTexture : register(t0);
 TextureCube<float32_t4> gEnviromentTexture : register(t1);

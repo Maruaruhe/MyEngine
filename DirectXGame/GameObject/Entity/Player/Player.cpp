@@ -15,6 +15,7 @@ void Player::Initialize() {
 }
 
 void Player::Update() {
+	LightUpdate();
 	Move();
 
 	CheckItemCollision();
@@ -24,7 +25,6 @@ void Player::Update() {
 	view.Update();
 	view.transform.translate = GetFrontVector(2.0f);
 
-	LightUpdate();
 }
 
 void Player::LightUpdate() {

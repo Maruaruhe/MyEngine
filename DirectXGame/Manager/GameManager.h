@@ -15,6 +15,7 @@
 #include "../Scene/SubTestScene.h"
 #include "../Scene/TitleScene.h"
 #include "../Scene/GameScene.h"
+#include "../Scene/ClearScene.h"
 
 class DirectX12;
 class WindowsAPI;
