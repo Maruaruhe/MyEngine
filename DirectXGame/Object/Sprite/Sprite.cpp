@@ -23,6 +23,10 @@ void Sprite::Initialize(Vector2 leftTop, Vector2 rightBot, std::string textureFi
 }
 
 void Sprite::Update() {
+}
+
+void Sprite::Draw() {
+	//Update
 	materialData_->uvTransform = MakeIdentity4x4();
 	transformationMatrix->World = MakeAffineMatrix(transform.scale, transform.rotate, transform.translate);
 	Matrix4x4 viewMatrix = MakeIdentity4x4();
@@ -35,9 +39,6 @@ void Sprite::Update() {
 	uvTransformMatrix = Multiply(uvTransformMatrix, MakeRotateZMatrix(uvTransform.rotate.z));
 	uvTransformMatrix = Multiply(uvTransformMatrix, MakeTranslateMatrix(uvTransform.translate));
 	materialData_->uvTransform = uvTransformMatrix;
-}
-
-void Sprite::Draw() {
 	//if (isActive) {
 		DirectX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView);	//VBVを設定
 		DirectX12::GetInstance()->GetCommandList()->IASetIndexBuffer(&indexBufferView);	//VBVを設定

@@ -9,13 +9,14 @@ void TitleScene::Initialize() {
 }
 
 void TitleScene::Update() {
-	title.Update();
-
-	if (KeyInput::GetInstance()->TriggerKey(DIK_SPACE)) {
-  		sceneNo = INGAME;
-	}
 }
 
 void TitleScene::Draw() {
 	title.Draw();
+}
+
+void TitleScene::SceneChange() {
+	if (KeyInput::GetInstance()->TriggerKey(DIK_SPACE)) {
+		sceneNo = INGAME;
+	}
 }

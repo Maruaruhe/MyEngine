@@ -4,20 +4,19 @@
 #include "../../../Manager/TextureManager.h"
 
 
-void Map::Initialize(Camera* camera){
-    mapData = LoadMapData("50x50");
-    CreateWall(camera);
-    CreateFloor(camera);
-    CreateRoof(camera);
-    
-    CreateItem(camera);
+void Map::Initialize(Camera* camera) {
+        mapData = LoadMapData("50x50");
 
-    CreateModels(camera);
+        walls.clear();
+        camera_ = camera;
 
-    w.Initialize({ 0,0,3 }, { 1,1, 1 });
-    w.model.SetCamera(camera);
+        CreateWall(camera);
+        CreateFloor(camera);
+        CreateRoof(camera);
 
-    walls.push_back(w);
+        CreateItem(camera);
+
+        CreateModels(camera);
 }
 
 void Map::Update(){
@@ -29,8 +28,12 @@ void Map::Update(){
 
     sItem->Update();
 
-    mapModel.Update();
+    //mapModel.Update();
     dish.Update();
+
+    if (KeyInput::GetInstance()->TriggerKey(DIK_SPACE)) {
+        Initialize(camera_);
+    }
 }
 
 void Map::Draw(){
@@ -236,11 +239,11 @@ void Map::CreateItem(Camera* camera) {
 }
 
 void Map::CreateModels(Camera* camera) {
-    FileManager::GetInstance()->LoadJsonFile("Json/", "mapWall");
+   /* FileManager::GetInstance()->LoadJsonFile("Json/", "mapWall");
     ModelManager::GetInstance()->LoadModel("mapWall");
     mapModel.Initialize("mapWall");
     mapModel.SetCamera(camera);
-    mapModel.transform = FileManager::GetInstance()->GetObjectTransform("mapWall");
+    mapModel.transform = FileManager::GetInstance()->GetObjectTransform("mapWall");*/
 
     ModelManager::GetInstance()->LoadModel("dish");
     dish.Initialize("dish");

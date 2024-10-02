@@ -1,5 +1,6 @@
 #include "GameScene.h"
 #include "../Manager/ModelManager.h"
+#include "../Base/Input/Input.h"
 
 void GameScene::Initialize() {
 	input = KeyInput::GetInstance();
@@ -38,9 +39,22 @@ void GameScene::Update() {
 	camera2.get()->transform.translate = player.model.transform.translate;
 	camera2.get()->transform.rotate = player.model.transform.rotate;
 
+	sprite.Update();
 
+}
 
-	if (map.GetItem()->model.transform.translate.x >= 17.00f && map.GetItem()->model.transform.translate.x <= 19.00f ) {
+void GameScene::Draw() {
+	map.Draw();
+
+	player.Draw();
+
+	//trace.Draw();
+
+	sprite.Draw();
+}
+
+void GameScene::SceneChange() {
+	if (map.GetItem()->model.transform.translate.x >= 17.00f && map.GetItem()->model.transform.translate.x <= 19.00f) {
 		if (map.GetItem()->model.transform.translate.z >= -12.5f && map.GetItem()->model.transform.translate.z <= -10.5f) {
 			if (map.GetItem()->isTaken == false) {
 				clearCount++;
@@ -53,16 +67,4 @@ void GameScene::Update() {
 	else {
 		clearCount = 0;
 	}
-
-	sprite.Update();
-}
-
-void GameScene::Draw() {
-	map.Draw();
-
-	player.Draw();
-
-	//trace.Draw();
-
-	sprite.Draw();
 }

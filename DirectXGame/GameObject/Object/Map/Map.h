@@ -51,6 +51,8 @@ private:
 
 	std::unique_ptr<SmallItem> sItem;
 
+	Camera* camera_;
+
 	//
 	const float kMapHeight = 10.0f;
 	const float dis = 0.01f;

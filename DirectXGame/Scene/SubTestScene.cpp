@@ -27,3 +27,7 @@ void SubTestScene::Draw() {
 	b.Draw();
 
 }
+
+void SubTestScene::SceneChange() {
+
+}

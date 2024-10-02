@@ -53,6 +53,10 @@ void Model::ApplyGlobalVariables() {
 void Model::Update() {
 	//ApplyGlobalVariables();
 
+}
+
+void Model::Draw() {
+	//Update
 	worldMatrix = MakeAffineMatrix(transform.scale, transform.rotate, transform.translate);
 	Matrix4x4 worldViewProjectionMatrix;
 	if (camera) {
@@ -69,20 +73,15 @@ void Model::Update() {
 	transformationMatrix->World = worldMatrix;
 
 	uvTransform.rotate.z = 3.14f / 2.0f;
-	//uvTransform.scale.x = 10.0f;
 	uvTransform.scale.y = -1.0f;
-	//ImGui::Begin("a");
-	//ImGui::SliderAngle("R", &uvTransform.rotate.z);
-	//ImGui::End();
 
 
 	Matrix4x4 uvTransformMatrix = MakeScaleMatrix(uvTransform.scale);
 	uvTransformMatrix = Multiply(uvTransformMatrix, MakeRotateZMatrix(uvTransform.rotate.z));
 	uvTransformMatrix = Multiply(uvTransformMatrix, MakeTranslateMatrix(uvTransform.translate));
 	material->uvTransform = uvTransformMatrix;
-}
 
-void Model::Draw() {
+	//Draw
 	DirectX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView);	//VBVを設定
 	//形状を設定。PSOに設定しているものとはまた別。同じものを設定すると考えておけばよい
 	DirectX12::GetInstance()->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);

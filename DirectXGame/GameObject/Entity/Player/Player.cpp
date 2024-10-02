@@ -24,7 +24,6 @@ void Player::Update() {
 	model.Update();
 	view.Update();
 	view.transform.translate = GetFrontVector(2.0f);
-
 }
 
 void Player::LightUpdate() {

@@ -10,12 +10,14 @@ void ClearScene::Initialize() {
 
 void ClearScene::Update() {
 	title.Update();
-
-	if (KeyInput::GetInstance()->TriggerKey(DIK_SPACE)) {
-		sceneNo = TITLE;
-	}
 }
 
 void ClearScene::Draw() {
 	title.Draw();
+}
+
+void ClearScene::SceneChange() {
+	if (KeyInput::GetInstance()->TriggerKey(DIK_SPACE)) {
+		sceneNo = TITLE;
+	}
 }

@@ -44,3 +44,7 @@ void TestScene::Draw() {
 	test.Draw();
 	//s.Draw();
 }
+
+void TestScene::SceneChange() {
+
+}

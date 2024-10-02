@@ -68,6 +68,7 @@ void GameManager::Run() {
 			ImGui::Render();
 			sceneArr[currentSceneNo]->Draw();
 			EndFrame();
+			sceneArr[currentSceneNo]->SceneChange();
 		}
 	}
 	Finalize();

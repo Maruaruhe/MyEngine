@@ -26,6 +26,7 @@ public:
 	void Initialize() override;
 	void Update() override;
 	void Draw() override;
+	void SceneChange() override;
 
 private:
 	KeyInput* input = nullptr;
