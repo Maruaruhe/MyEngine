@@ -41,7 +41,7 @@ public:
 
 	void Draw();
 
-	void SetCamera(Camera* camera) { this->camera = camera; }
+	void SetCamera(Camera* camera) { this->camera_ = camera; }
 
 	void SetModel(const std::string& filePath);
 
@@ -74,7 +74,7 @@ public:
 
 private:
 	uint32_t textureIndex = 0;
-	Emitter emitter{};
+	Emitter emitter_{};
 
 	uint32_t numInstance = 0;
 
@@ -83,7 +83,7 @@ private:
 	KeyInput* input_ = nullptr;
 	ModelData modelData;
 	VertexData* vertexData = nullptr;
-	Camera* camera = nullptr;
+	Camera* camera_ = nullptr;
 
 	uint32_t descriptorSizeSRV{};
 

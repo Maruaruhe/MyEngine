@@ -5,7 +5,7 @@
 class IItem
 {
 public:
-	virtual void Initialize(Transform transform, Camera* camera);
+	virtual void Initialize();
 
 	virtual void Update();
 
@@ -17,7 +17,7 @@ public:
 	bool isabletobetaken = false;
 	Model model;
 protected:
-	Camera* camera;
+	Camera* camera_;
 
 	int weight;
 };

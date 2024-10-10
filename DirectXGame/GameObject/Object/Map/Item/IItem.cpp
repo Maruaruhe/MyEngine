@@ -1,7 +1,7 @@
 #include "IItem.h"
 #include "../../../../Base/Input/Input.h"
 
-void IItem::Initialize(Transform transform, Camera* camera){}
+void IItem::Initialize(){}
 
 void IItem::Update(){}
 
