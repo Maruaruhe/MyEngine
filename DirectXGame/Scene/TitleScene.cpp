@@ -1,6 +1,12 @@
 #include "TitleScene.h"
 #include "../Manager/ModelManager.h"
 
+TitleScene::~TitleScene() {
+	for (tmpParticle* enemy : blacks) {
+		delete enemy;
+	}
+}
+
 void TitleScene::Initialize() {
 	input = KeyInput::GetInstance();
 
@@ -20,6 +26,12 @@ void TitleScene::Initialize() {
 
 	sScope.min = 0.3f;
 	sScope.max = 1.0f;
+
+	vScope.min = 0.3f;
+	vScope.max = 1.3f;
+
+	rScope.min = -0.3f;
+	rScope.max = -0.3f;
 }
 
 void TitleScene::Update() {
@@ -28,10 +40,12 @@ void TitleScene::Update() {
 
 void TitleScene::Draw() {
 	title.Draw();
-	for (Sprite b : blacks) {
-		b.transform.translate.y -= velocity;
+	for (tmpParticle* b : blacks) {
+		b->sprite->transform.translate.y -= b->velocity;
+		b->sprite->transform.rotate.z -= b->rotate;
+		//b->sprite->transform.scale *= 0.97f;
 
-		b.Draw();
+		b->sprite->Draw();
 	}
 }
 
@@ -49,23 +63,37 @@ void TitleScene::bUpdate(){
 	ct--;
 
 	if (ct <= 0) {
-		Sprite b;
+		tmpParticle* b = new tmpParticle();
+		b->sprite = new Sprite();
 
 		float x = RandomGenerator::GetInstance()->getRandom(tScope);
 		float y = RandomGenerator::GetInstance()->getRandom(yScope);
 		float s = RandomGenerator::GetInstance()->getRandom(sScope);
 
+		float ro = RandomGenerator::GetInstance()->getRandom(rScope);
+
 		float r = RandomGenerator::GetInstance()->getRandom(lScope);
+
+		float v = RandomGenerator::GetInstance()->getRandom(vScope);
 
 		if (x >= 200 && x <= 1080 && y >= 200 && y<= 400) {
 			ct = 0;
 		}
 		else {
-			b.Initialize({ x - 100,y }, { x, y + 100 }, "Resources/Title/aaa.png");
-			//b.transform.scale *= s;
+			//b->sprite->Initialize({ x - 100,y }, { x, y + 100 }, "Resources/Title/aaa.png");
+			b->sprite->Initialize({ 0, 0 }, { 100, 100 }, "Resources/Title/aaa.png");
+			//b->sprite->anchorPoint = { 0.5f,0.5f };
+
+			b->sprite->transform.translate.x = x;
+			b->sprite->transform.translate.y = y;
+
+			b->velocity = v;
+			b->rotate = ro;
+			b->sprite->transform.scale *= s;
 			blacks.push_back(b);
 
 			ct = int(r);
+			ct = int(180);
 		}
 	}
 

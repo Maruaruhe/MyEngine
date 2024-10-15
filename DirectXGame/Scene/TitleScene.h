@@ -12,6 +12,12 @@
 
 #include "../Math/RandomGenerator.h"
 
+struct tmpParticle {
+	Sprite* sprite;
+	float velocity;
+	float rotate;
+};
+
 class TitleScene : public IScene
 {
 public:
@@ -22,6 +28,8 @@ public:
 
 	void bInit();
 	void bUpdate();
+	
+	~TitleScene();
 
 private:
 	KeyInput* input = nullptr;
@@ -29,7 +37,8 @@ private:
 	Sprite title;
 	Sprite black;
 
-	std::vector<Sprite> blacks;
+	//std::vector<Sprite> blacks;
+	std::list<tmpParticle*> blacks;
 	int ct;
 
 	Model model;
@@ -39,6 +48,8 @@ private:
 	Scope yScope;
 	Scope rScope;
 	Scope sScope;
+
+	Scope vScope;
 
 	float velocity = 0.3f;
 

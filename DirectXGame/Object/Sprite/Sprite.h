@@ -46,6 +46,8 @@ public:
 	Material* materialData_;
 	bool isActive;
 
+	Vector2 anchorPoint = { 0.0f,0.0f };
+
 private:
 	uint32_t textureIndex = 0;
 
