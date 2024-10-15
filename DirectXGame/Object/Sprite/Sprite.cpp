@@ -31,10 +31,10 @@ void Sprite::Draw() {
 	float top = 0.0f - anchorPoint.y;
 	float bot = 1.0f - anchorPoint.y;
 
-	vertexData[0].position = { left,bot,0.0f,1.0f };
-	vertexData[1].position = { left, top, 0.0f,1.0f };
-	vertexData[2].position = { right, bot, 0.0f, 1.0f };
-	vertexData[3].position = { right, top, 0.0f, 1.0f};
+	//vertexData[0].position = { left,bot,0.0f,1.0f };
+	//vertexData[1].position = { left, top, 0.0f,1.0f };
+	//vertexData[2].position = { right, bot, 0.0f, 1.0f };
+	//vertexData[3].position = { right, top, 0.0f, 1.0f};
 
 	//Update
 	materialData_->uvTransform = MakeIdentity4x4();

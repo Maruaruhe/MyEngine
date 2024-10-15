@@ -42,7 +42,7 @@ void TitleScene::Draw() {
 	title.Draw();
 	for (tmpParticle* b : blacks) {
 		b->sprite->transform.translate.y -= b->velocity;
-		b->sprite->transform.rotate.z -= b->rotate;
+		//b->sprite->transform.rotate.z -= b->rotate;
 		//b->sprite->transform.scale *= 0.97f;
 
 		b->sprite->Draw();
@@ -88,7 +88,7 @@ void TitleScene::bUpdate(){
 			b->sprite->transform.translate.y = y;
 
 			b->velocity = v;
-			b->rotate = ro;
+			//b->rotate = ro;
 			b->sprite->transform.scale *= s;
 			blacks.push_back(b);
 
