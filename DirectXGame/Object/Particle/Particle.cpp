@@ -19,9 +19,9 @@ void Particle::Initialize(const std::string& filename) {
 	CreateInstance();
 	CreateSRV();
 
-	emitter.count = 3;
-	emitter.frequency = 60.0f;
-	emitter.frequencyTime = 0.0f;
+	emitter_.count = 3;
+	emitter_.frequency = 60.0f;
+	emitter_.frequencyTime = 0.0f;
 
 	TextureManager::GetInstance()->LoadTexture(filename);
 	textureIndex = TextureManager::GetInstance()->GetTextureIndexByFilePath(filename);
@@ -32,23 +32,23 @@ void Particle::Update() {
 
 	ImGui::Begin("Particle");
 	if (ImGui::Button("Add Particle")) {
-		particles.splice(particles.end(), Emit(emitter));
+		particles.splice(particles.end(), Emit(emitter_));
 	}
-	ImGui::DragFloat3("EmitterTranslate", &emitter.transform.translate.x, 0.01f, -100.0f, 100.0f);
+	ImGui::DragFloat3("EmitterTranslate", &emitter_.transform.translate.x, 0.01f, -100.0f, 100.0f);
 	ImGui::Text("ListSize %d", particles.size());
 	ImGui::Text("instanceNum %d", numInstance);
 	ImGui::End();
 
-	emitter.frequencyTime += 1.0f;
-	if (emitter.frequency <= emitter.frequencyTime) {
-		particles.splice(particles.end(), Emit(emitter));
-		emitter.frequencyTime -= emitter.frequency;
+	emitter_.frequencyTime += 1.0f;
+	if (emitter_.frequency <= emitter_.frequencyTime) {
+		particles.splice(particles.end(), Emit(emitter_));
+		emitter_.frequencyTime -= emitter_.frequency;
 	}
 
-	if (camera) {
+	if (camera_) {
 
 		Matrix4x4 backToFrontMatrix = MakeRotateYMatrix(std::numbers::pi_v<float>);
-		Matrix4x4 billboardMatrix = Multiply(backToFrontMatrix, camera->cameraMatrix);
+		Matrix4x4 billboardMatrix = Multiply(backToFrontMatrix, camera_->cameraMatrix);
 		billboardMatrix.m[3][0] = 0.0f;
 		billboardMatrix.m[3][1] = 0.0f;
 		billboardMatrix.m[3][2] = 0.0f;
@@ -74,7 +74,7 @@ void Particle::Update() {
 				Matrix4x4 translateMatrix = MakeTranslateMatrix((*particleIterator).transform.translate);
 
 				Matrix4x4 worldMatrix = scaleMatrix * billboardMatrix * translateMatrix;
-				Matrix4x4 worldViewProjectionMatrix = Multiply(worldMatrix, Multiply(camera->viewMatrix, camera->projectionMatrix));
+				Matrix4x4 worldViewProjectionMatrix = Multiply(worldMatrix, Multiply(camera_->viewMatrix, camera_->projectionMatrix));
 
 				instancingData[numInstance].WVP = worldViewProjectionMatrix;
 				instancingData[numInstance].World = worldMatrix;
@@ -122,7 +122,7 @@ ParticleInfo Particle::MakeNewParticle() {
 	Vector3 r = RandomGenerator::GetInstance()->getRandom({ scope, scope, scope });
 
 	ParticleInfo particleInfo;
-	particleInfo.transform.translate = r + emitter.transform.translate;
+	particleInfo.transform.translate = r + emitter_.transform.translate;
 	particleInfo.transform.scale = { 1.0f,1.0f,1.0f };
 	particleInfo.transform.rotate = {};
 	particleInfo.velocity = r;

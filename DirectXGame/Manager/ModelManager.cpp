@@ -357,9 +357,9 @@ SkinCluster ModelManager::CreateSkinCluster(const Skelton& skelton, const ModelD
 	WellForGPU* mappedPalette = nullptr;
 	skinCluster.paletteResource->Map(0, nullptr, reinterpret_cast<void**>(&mappedPalette));
 	skinCluster.mappedPalette = { mappedPalette,skelton.joints.size() };
-	skinCluster.paletteSrvHandle.first = DirectX12::GetInstance()->GetCPUDescriptorHandle(index);
-	skinCluster.paletteSrvHandle.second = DirectX12::GetInstance()->GetGPUDescriptorHandle(index);
-	index++;
+	skinCluster.paletteSrvHandle.first = DirectX12::GetInstance()->GetCPUDescriptorHandle(index_);
+	skinCluster.paletteSrvHandle.second = DirectX12::GetInstance()->GetGPUDescriptorHandle(index_);
+	index_++;
 
 	//Palette用のsrvを作成
 	D3D12_SHADER_RESOURCE_VIEW_DESC paletteSrvDesc{};

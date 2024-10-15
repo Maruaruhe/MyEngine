@@ -54,11 +54,11 @@ void Anime::Update() {
 
 	worldMatrix = MakeAffineMatrix(transform.scale, transform.rotate, transform.translate);
 
-	animationTime += animationSpeed / 60.0f;
-	animationTime = std::fmod(animationTime, anime.duration);
+	animationTime_ += animationSpeed / 60.0f;
+	animationTime_ = std::fmod(animationTime_, anime.duration);
 
 	if (isPlay) {
-		ApplyAnimation(skelton, anime, animationTime);
+		ApplyAnimation(skelton, anime, animationTime_);
 	}
 	UpdateSkelton(skelton);
 	UpdateSkinCluster(skinCluster,skelton);
@@ -107,9 +107,9 @@ void Anime::Draw() {
 
 void Anime::UpdateAnimation() {
 	NodeAnimation& rootNodeAnimation = anime.nodeAnimations[modelData.rootNode.name];
-	Vector3 translate = CalculateValue(rootNodeAnimation.translate, animationTime);
-	Quaternion rotate = CalculateValue(rootNodeAnimation.rotate, animationTime);
-	Vector3 scale = CalculateValue(rootNodeAnimation.scale, animationTime);
+	Vector3 translate = CalculateValue(rootNodeAnimation.translate, animationTime_);
+	Quaternion rotate = CalculateValue(rootNodeAnimation.rotate, animationTime_);
+	Vector3 scale = CalculateValue(rootNodeAnimation.scale, animationTime_);
 
 	localMatrix = MakeAffineMatrix(scale, rotate, translate);
 }

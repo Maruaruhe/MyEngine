@@ -116,5 +116,5 @@ private:
 	float num = 0.0625f;
 	const float pi = 3.14f;
 
-	float animationTime = 0.0f;
+	float animationTime_ = 0.0f;
 };

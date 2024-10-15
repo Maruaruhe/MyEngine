@@ -26,7 +26,7 @@ public:
 
 	void Draw();
 
-	void SetMap(Map* map) { this->map = map; }
+	void SetMap(Map* map) { this->map_ = map; }
 
 	Model model;
 	Model view;
@@ -48,6 +48,6 @@ private:
 	KeyInput* kInput;
 
 	//MapInfo
-	Map* map;
+	Map* map_;
 	SpotLight sLight;
 };

@@ -100,7 +100,7 @@ void Player::Move() {
 
 	// 最後に当たり判定をチェック
 	Vector3 fixVector{};
-	map->CheckCollision(GetCollision(), { move.x,move.z }, &fixVector);
+	map_->CheckCollision(GetCollision(), { move.x,move.z }, &fixVector);
 	model.transform.translate += fixVector;
 }
 
@@ -154,7 +154,7 @@ Vector3 Player::GetItemFrontVector() {
 
 void Player::CheckItemCollision() {
 	AABB itemAABB;
-	itemAABB.CreateEntityAABB(map->GetItem()->model.transform);
+	itemAABB.CreateEntityAABB(map_->GetItem()->model.transform);
 
 	Segment playerSight;
 	playerSight.start = model.transform.translate;
@@ -163,11 +163,11 @@ void Player::CheckItemCollision() {
 	int count = 0;
 	if (itemAABB.CheckLineCollision(playerSight)) {
 		count += 1;
-		map->GetItem()->isabletobetaken = true;
-		map->GetItem()->TakenItem();
+		map_->GetItem()->isabletobetaken = true;
+		map_->GetItem()->TakenItem();
 	}
 	else {
-		map->GetItem()->isabletobetaken = false;
+		map_->GetItem()->isabletobetaken = false;
 	}
 
 #ifdef _DEBUG
@@ -187,21 +187,21 @@ void Player::CheckItemCollision() {
 
 
 void Player::CheckItemBring() {
-	if (map->GetItem()->isTaken) {
+	if (map_->GetItem()->isTaken) {
 		//所持しているとき手に持つ
-		map->GetItem()->model.transform.translate = GetItemFrontVector();
+		map_->GetItem()->model.transform.translate = GetItemFrontVector();
 		//PlayerのRotateと同期
-		map->GetItem()->model.transform.rotate = model.transform.rotate;
+		map_->GetItem()->model.transform.rotate = model.transform.rotate;
 
 		//
 		if (KeyInput::GetInstance()->PushKey(DIK_G)) {//Drop処理
-			map->GetItem()->isTaken = false;
+			map_->GetItem()->isTaken = false;
 			//足元に落とす & リセット
-			map->GetItem()->model.transform.translate = GetFrontVector(0.7f);
-			map->GetItem()->model.transform.translate.y = 0.0f;
-			map->GetItem()->model.transform.scale = { 1.0f,1.0f,1.0f };
-			map->GetItem()->model.transform.rotate.x = {};
-			map->GetItem()->model.transform.rotate.z = {};
+			map_->GetItem()->model.transform.translate = GetFrontVector(0.7f);
+			map_->GetItem()->model.transform.translate.y = 0.0f;
+			map_->GetItem()->model.transform.scale = { 1.0f,1.0f,1.0f };
+			map_->GetItem()->model.transform.rotate.x = {};
+			map_->GetItem()->model.transform.rotate.z = {};
 		}
 	}
 }
