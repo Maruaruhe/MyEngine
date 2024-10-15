@@ -12,7 +12,7 @@
 class Sprite
 {
 public:
-	void Initialize(Vector2 leftTop,Vector2 rightBot, std::string textureFilePath);
+	void Initialize(Vector2 size, std::string textureFilePath);
 
 	void Update();
 
@@ -37,7 +37,7 @@ private:
 
 	void CreateIndexResource();
 
-	void CreateVertexData(Vector2 leftTop, Vector2 rightBot);
+	void CreateVertexData(Vector2 size);
 
 public:
 	Transform transform;
@@ -47,6 +47,7 @@ public:
 	bool isActive;
 
 	Vector2 anchorPoint = { 0.0f,0.0f };
+	Vector2 size_;
 
 private:
 	uint32_t textureIndex = 0;

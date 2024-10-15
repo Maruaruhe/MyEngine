@@ -1,8 +1,10 @@
 #include "Sprite.h"
 #include "../../Base/GraphicsRenderer/GraphicsRenderer.h"
 
-void Sprite::Initialize(Vector2 leftTop, Vector2 rightBot, std::string textureFilePath) {
+void Sprite::Initialize(Vector2 size, std::string textureFilePath) {
 	transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
+
+	size_ = size;
 
 	uvTransform = {
 		{1.0f,1.0f,1.0f},
@@ -16,7 +18,7 @@ void Sprite::Initialize(Vector2 leftTop, Vector2 rightBot, std::string textureFi
 	CreateVertexBufferView();
 	CreateTransformationMatrixResource();
 	CreateIndexResource();
-	CreateVertexData(leftTop, rightBot);
+	CreateVertexData(size);
 
 	TextureManager::GetInstance()->LoadTexture(textureFilePath);
 	textureIndex = TextureManager::GetInstance()->GetTextureIndexByFilePath(textureFilePath);
@@ -26,15 +28,17 @@ void Sprite::Update() {
 }
 
 void Sprite::Draw() {
-	float left = 0.0f - anchorPoint.x;
-	float right = 1.0f - anchorPoint.x;
-	float top = 0.0f - anchorPoint.y;
-	float bot = 1.0f - anchorPoint.y;
+	float left = (0.0f - anchorPoint.x) * size_.x;
+	float right = (1.0f - anchorPoint.x) * size_.x;
+	float top = (0.0f - anchorPoint.y) * size_.y;
+	float bot = (1.0f - anchorPoint.y) * size_.y;
 
-	//vertexData[0].position = { left,bot,0.0f,1.0f };
-	//vertexData[1].position = { left, top, 0.0f,1.0f };
-	//vertexData[2].position = { right, bot, 0.0f, 1.0f };
-	//vertexData[3].position = { right, top, 0.0f, 1.0f};
+	vertexData[0].position = { left,bot,0.0f,1.0f };
+	vertexData[1].position = { left, top, 0.0f,1.0f };
+	vertexData[2].position = { right, bot, 0.0f, 1.0f };
+	vertexData[3].position = { right, top, 0.0f, 1.0f};
+
+	transform.translate.x;
 
 	//Update
 	materialData_->uvTransform = MakeIdentity4x4();
@@ -124,23 +128,23 @@ void Sprite::CreateIndexResource() {
 	indexData[5] = 2;
 }
 
-void Sprite::CreateVertexData(Vector2 leftTop, Vector2 rightBot) {
+void Sprite::CreateVertexData(Vector2 size) {
 	vertexData = nullptr;
 	vertexResource->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
 	//左上									   
-	vertexData[1].position = { leftTop.x, leftTop.y, 0.0f, 1.0f };
+	vertexData[1].position = { 0.0f, 0.0f, 0.0f, 1.0f };
 	vertexData[1].texcoord = { 0.0f,0.0f };
 	vertexData[1].normal = { 0.0f,0.0f,-1.0f };
 	//左下
-	vertexData[0].position = { leftTop.x, rightBot.y, 0.0f, 1.0f };
+	vertexData[0].position = { 0.0f, size.y, 0.0f, 1.0f };
 	vertexData[0].texcoord = { 0.0f,1.0f };
 	vertexData[0].normal = { 0.0f,0.0f,-1.0f };
 	//右上
-	vertexData[3].position = { rightBot.x,leftTop.y, 0.0f, 1.0f };
+	vertexData[3].position = { size.x,0.0f, 0.0f, 1.0f };
 	vertexData[3].texcoord = { 1.0f, 0.0f };
 	vertexData[3].normal = { 0.0f,0.0f,-1.0f };
 	//右下								
-	vertexData[2].position = { rightBot.x,rightBot.y, 0.0f, 1.0f };
+	vertexData[2].position = { size.x,size.y, 0.0f, 1.0f };
 	vertexData[2].texcoord = { 1.0f,1.0f };
 	vertexData[2].normal = { 0.0f,0.0f,-1.0f };
 }

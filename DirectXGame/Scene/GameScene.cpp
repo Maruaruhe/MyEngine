@@ -20,7 +20,7 @@ void GameScene::Initialize() {
 
 	//trace.Initialize({ {1.0f,1.0f,1.0f}, {0.0f,0.0f,0.0f}, { -10.0f, 0.0f, 1.0f } });
 
-	sprite.Initialize({}, { 360,180 }, "Resources/explain.png");
+	sprite.Initialize({ 360,180 }, "Resources/explain.png");
 }
 
 void GameScene::Update() {

@@ -2,8 +2,8 @@
 #include "../Manager/ModelManager.h"
 
 TitleScene::~TitleScene() {
-	for (tmpParticle* enemy : blacks) {
-		delete enemy;
+	for (tmpParticle* s : blacks) {
+		delete s;
 	}
 }
 
@@ -11,46 +11,52 @@ void TitleScene::Initialize() {
 	input = KeyInput::GetInstance();
 
 	TextureManager::GetInstance()->LoadTexture("Resources/Title/title.png");
-	title.Initialize({0,0}, {1280,720}, "Resources/Title/title.png");
+	title.Initialize({1280,720}, "Resources/Title/title.png");
+	title.transform.translate = { 640,360 ,0};
+	title.anchorPoint = { 0.5f,0.5f };
 
-	TextureManager::GetInstance()->LoadTexture("Resources/Title/aaa.png");
+	TextureManager::GetInstance()->LoadTexture("Resources/Title/titleHeart.png");
 
-	tScope.min = 0.0f;
-	tScope.max = 1280.0f;
-	
-	yScope.min = 0.0f;
-	yScope.max = 620.0f;
+	transXScope.min = -100.0f;
+	transXScope.max = 1280.0f;
 
-	lScope.min = 30.0f;
-	lScope.max = 60.0f;
+	timeScope.min = 30.0f;
+	timeScope.max = 60.0f;
 
 	sScope.min = 0.3f;
 	sScope.max = 1.0f;
 
-	vScope.min = 0.3f;
-	vScope.max = 1.3f;
+	vScope.min = 5.3f;
+	vScope.max = 7.3f;
 
-	rScope.min = -0.3f;
-	rScope.max = -0.3f;
+	setTime = 15;
+
+	sceneChangeFrame = 0;
+	startChanging = false;
+	howManyParticle = 1;
 }
 
 void TitleScene::Update() {
 	bUpdate();
+	blacks.remove_if([](tmpParticle* enemy) {
+		if (enemy->sprite->transform.translate.y <= -enemy->sprite->size_.y) {
+			delete enemy;
+			return true;
+		}
+		return false;
+		});
 }
 
 void TitleScene::Draw() {
 	title.Draw();
 	for (tmpParticle* b : blacks) {
 		b->sprite->transform.translate.y -= b->velocity;
-		//b->sprite->transform.rotate.z -= b->rotate;
-		//b->sprite->transform.scale *= 0.97f;
-
 		b->sprite->Draw();
 	}
 }
 
 void TitleScene::SceneChange() {
-	if (KeyInput::GetInstance()->TriggerKey(DIK_SPACE)) {
+	if (sceneChangeFrame >= 600) {
 		sceneNo = INGAME;
 	}
 }
@@ -63,38 +69,61 @@ void TitleScene::bUpdate(){
 	ct--;
 
 	if (ct <= 0) {
-		tmpParticle* b = new tmpParticle();
-		b->sprite = new Sprite();
-
-		float x = RandomGenerator::GetInstance()->getRandom(tScope);
-		float y = RandomGenerator::GetInstance()->getRandom(yScope);
-		float s = RandomGenerator::GetInstance()->getRandom(sScope);
-
-		float ro = RandomGenerator::GetInstance()->getRandom(rScope);
-
-		float r = RandomGenerator::GetInstance()->getRandom(lScope);
-
-		float v = RandomGenerator::GetInstance()->getRandom(vScope);
-
-		if (x >= 200 && x <= 1080 && y >= 200 && y<= 400) {
-			ct = 0;
-		}
-		else {
-			//b->sprite->Initialize({ x - 100,y }, { x, y + 100 }, "Resources/Title/aaa.png");
-			b->sprite->Initialize({ 0, 0 }, { 100, 100 }, "Resources/Title/aaa.png");
-			//b->sprite->anchorPoint = { 0.5f,0.5f };
-
-			b->sprite->transform.translate.x = x;
-			b->sprite->transform.translate.y = y;
-
-			b->velocity = v;
-			//b->rotate = ro;
-			b->sprite->transform.scale *= s;
-			blacks.push_back(b);
-
-			ct = int(r);
-			ct = int(180);
+		for (int i = 0; i < howManyParticle; i++) {
+			CreateParticle();
 		}
 	}
+	//シーン遷移スタート
+	if (KeyInput::GetInstance()->TriggerKey(DIK_SPACE)) {
+		startChanging = true;
+	}
 
+	//フレーム計算
+	if (startChanging) {
+		sceneChangeFrame++;
+		
+		if (sceneChangeFrame >= 0) {
+			howManyParticle = 3;
+			setTime = 3;
+		}
+
+		if (sceneChangeFrame >= 120) {
+			howManyParticle = 8;
+			setTime = 2;
+		}
+		if (sceneChangeFrame >= 360) {
+			howManyParticle = 3;
+			setTime = 4;
+		}
+		if (sceneChangeFrame >= 480) {
+			howManyParticle = 1;
+			setTime = 30;
+		}
+
+
+	}
+
+}
+
+void TitleScene::CreateParticle() {
+	tmpParticle* b = new tmpParticle();
+	b->sprite = new Sprite();
+
+	float x = RandomGenerator::GetInstance()->getRandom(transXScope);
+	float s = RandomGenerator::GetInstance()->getRandom(sScope);
+
+	float v = RandomGenerator::GetInstance()->getRandom(vScope);
+
+	//b->sprite->Initialize({ x - 100,y }, { x, y + 100 }, "Resources/Title/aaa.png");
+	b->sprite->Initialize({ 100, 100 }, "Resources/Title/titleHeart.png");
+
+	b->sprite->transform.translate.x = x;
+	b->sprite->transform.translate.y = 720;
+
+	b->velocity = v;
+	b->sprite->transform.scale *= s;
+	blacks.push_back(b);
+
+	ct = int(setTime);
+	//ct = int(0);
 }

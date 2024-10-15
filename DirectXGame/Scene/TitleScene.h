@@ -28,6 +28,7 @@ public:
 
 	void bInit();
 	void bUpdate();
+	void CreateParticle();
 	
 	~TitleScene();
 
@@ -41,12 +42,16 @@ private:
 	std::list<tmpParticle*> blacks;
 	int ct;
 
+	int sceneChangeFrame;
+	bool startChanging;
+	int howManyParticle;
+
+	int setTime;
+
 	Model model;
 
-	Scope tScope;
-	Scope lScope;
-	Scope yScope;
-	Scope rScope;
+	Scope transXScope;
+	Scope timeScope;
 	Scope sScope;
 
 	Scope vScope;
