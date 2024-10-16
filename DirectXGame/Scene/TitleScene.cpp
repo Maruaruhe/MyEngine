@@ -59,9 +59,9 @@ void TitleScene::SceneChange() {
 	if (sceneChangeFrame >= 600) {
 		sceneNo = INGAME;
 
-		for (tmpParticle* s : blacks) {
-			delete s;
-		}
+		//for (tmpParticle* s : blacks) {
+		//	delete s;
+		//}
 	}
 }
 

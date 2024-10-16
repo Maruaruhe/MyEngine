@@ -12,11 +12,20 @@ void Player::Initialize() {
 
 	kInput = KeyInput::GetInstance();
 	pInput = GamePadInput::GetInstance();
+
+	state_.HP;
+	state_.isDash;
+	state_.isJump = false;
+	state_.kMapSpeed;
+	state_.moveSpeed;
+	state_.stamina;
+	state_.weight;
 }
 
 void Player::Update() {
 	LightUpdate();
 	Move();
+	//Jump();
 
 	CheckItemCollision();
 	CheckItemBring();
@@ -51,10 +60,25 @@ void Player::Move() {
 	if (kInput->PushKey(DIK_A)) {
 		move.x -= 0.1f;
 	}
+
 	if (kInput->PushKey(DIK_D)) {
 		move.x += 0.1f;
 	}
 
+	//Jump
+	if (!state_.isJump) {
+		if (kInput->PushKey(DIK_SPACE)) {
+			state_.velocity.y = 0.2f;
+			state_.isJump = true;
+		}
+	}
+	else {
+		//Jumping
+		state_.velocity.y -= 0.02f;
+	}
+
+
+	//rotate
 	Vector2 rotate{};
 
 	if (kInput->PushKey(DIK_LEFT)) {
@@ -82,7 +106,7 @@ void Player::Move() {
 	move = {
 		move.x * wM.m[0][0] + move.z * wM.m[2][0],
 		//move.x * wM.m[0][1] + move.y * wM.m[2][1],
-		0,
+		state_.velocity.y,
 		move.x * wM.m[0][2] + move.z * wM.m[2][2]
 	};
 
@@ -100,8 +124,35 @@ void Player::Move() {
 
 	// 最後に当たり判定をチェック
 	Vector3 fixVector{};
-	map_->CheckCollision(GetCollision(), { move.x,move.z }, &fixVector);
+	map_->CheckCollision(GetCollision(), { move.x, state_.velocity.y, move.z }, &fixVector);
 	model.transform.translate += fixVector;
+}
+
+void Player::Jump() {
+	//Jump
+	if (!state_.isJump) {
+		if (kInput->PushKey(DIK_SPACE)) {
+			state_.velocity.y = 0.2f;
+			state_.isJump = true;
+		}
+	}
+	else {
+		//Jumping
+		state_.velocity.y -= 0.02f;
+	}
+
+	model.transform.translate += state_.velocity;
+
+	// 最後に当たり判定をチェック
+	Vector3 fixVector{};
+	map_->CheckCollision(GetCollision(), { 0, state_.velocity.y, 0 }, &fixVector);
+	model.transform.translate += fixVector;
+
+	if (fixVector.y != 0) {
+		state_.isJump = false;
+		state_.velocity.y = 0.0f;
+	}
+
 }
 
 AABB Player::GetCollision() {
@@ -174,7 +225,7 @@ void Player::CheckItemCollision() {
 
 	ImGui::Begin("Item");
 
-	Vector3 aa = map->GetItem()->model.transform.translate;
+	Vector3 aa = map_->GetItem()->model.transform.translate;
 	ImGui::DragFloat3("pos", &aa.x);
 	ImGui::DragFloat3("sight.start", &playerSight.start.x);
 	ImGui::DragFloat3("sight.end", &playerSight.end.x);

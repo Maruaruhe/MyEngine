@@ -18,7 +18,7 @@ public:
 
 	void Draw();
 
-	void CheckCollision(AABB pAABB, Vector2 move, Vector3* fixVector);
+	void CheckCollision(AABB pAABB, Vector3 move, Vector3* fixVector);
 
 	SmallItem* GetItem() { return sItem.get(); }
 	std::vector<Wall> GetWall() { return walls; }

@@ -31,9 +31,9 @@ void Map::Update(){
     //mapModel.Update();
     dish.Update();
 
-    if (KeyInput::GetInstance()->TriggerKey(DIK_SPACE)) {
-        Initialize(camera_);
-    }
+    //if (KeyInput::GetInstance()->TriggerKey(DIK_SPACE)) {
+    //    Initialize(camera_);
+    //}
 }
 
 void Map::Draw(){
@@ -177,7 +177,7 @@ void Map::CreateRoof(Camera* camera) {
     roof.model.SetCamera(camera);
 }
 
-void Map::CheckCollision(AABB pAABB, Vector2 move, Vector3* fixVector) {
+void Map::CheckCollision(AABB pAABB, Vector3 move, Vector3* fixVector) {
     Vector3 distance{};
 
     for (Wall wall : walls) {
@@ -213,14 +213,39 @@ void Map::CheckCollision(AABB pAABB, Vector2 move, Vector3* fixVector) {
             //Z軸の当たり判定
             if (pAABB.max.z < wallAABB.max.z) {//壁に前方面へ衝突
                 distance.z = pAABB.max.z - wallAABB.min.z;
-                if (fabs(move.y) + dis >= fabs(distance.z)) {//移動量が差分より大きかったら調整
+                if (fabs(move.z) + dis >= fabs(distance.z)) {//移動量が差分より大きかったら調整
                     fixVector->z = -fabs(distance.z);
                 }
             }
             else {//後方面へ
                 distance.z = pAABB.min.z - wallAABB.max.z;
-                if (fabs(move.y) + dis >= fabs(distance.z)) {//移動量が差分より大きかったら調整
+                if (fabs(move.z) + dis >= fabs(distance.z)) {//移動量が差分より大きかったら調整
                     fixVector->z = fabs(distance.z);
+                }
+            }
+        }
+    }
+
+    //fixVectorに応じてpAABBの座標の調整
+    //pAABB.min.z += fixVector->z;
+    //pAABB.max.z += fixVector->z;
+
+    for (Wall wall : walls) {
+        AABB wallAABB;
+        wallAABB.CreateModelAABB(wall.model.transform);
+
+        if (wallAABB.CheckCollision(pAABB)) {
+            //Z軸の当たり判定
+            if (pAABB.max.y < wallAABB.max.y) {//壁に前方面へ衝突
+                distance.y = pAABB.max.y - wallAABB.min.y;
+                if (fabs(move.y) + dis >= fabs(distance.y)) {//移動量が差分より大きかったら調整
+                    fixVector->y = -fabs(distance.y);
+                }
+            }
+            else {//後方面へ
+                distance.y = pAABB.min.y - wallAABB.max.y;
+                if (fabs(move.y) + dis >= fabs(distance.y)) {//移動量が差分より大きかったら調整
+                    fixVector->y = fabs(distance.y);
                 }
             }
         }

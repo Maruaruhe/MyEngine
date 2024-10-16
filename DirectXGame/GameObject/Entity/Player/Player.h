@@ -13,7 +13,7 @@ struct State {
 	bool isJump; //ジャンプ状態
 	float weight; //重量
 	float HP; //体力
-
+	Vector3 velocity;
 };
 
 class Player {
@@ -37,6 +37,8 @@ public:
 	AABB GetCollision();
 private:
 	void Move();
+	void Jump();
+
 	Vector3 CheckLineOfSightCollision();
 	Vector3 GetItemFrontVector();
 
@@ -50,4 +52,5 @@ private:
 	//MapInfo
 	Map* map_;
 	SpotLight sLight;
+	State state_;
 };
