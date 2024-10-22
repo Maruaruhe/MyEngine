@@ -14,6 +14,7 @@ struct State {
 	float weight; //重量
 	float HP; //体力
 	Vector3 velocity;
+	bool isUsingLight;
 };
 
 class Player {

@@ -4,6 +4,7 @@ void Player::Initialize() {
 	ModelManager::GetInstance()->LoadModel("player");
 	model.Initialize("player");
 	model.transform.translate = { 24.0f,1.5f,-48.0f };
+	model.transform.scale.y *= 2.0f;
 
 	view.Initialize("player");
 	view.transform.scale *= 0.25f;
@@ -16,6 +17,7 @@ void Player::Initialize() {
 	state_.HP;
 	state_.isDash;
 	state_.isJump = false;
+	state_.isUsingLight = true;
 	state_.kMapSpeed;
 	state_.moveSpeed;
 	state_.stamina;
@@ -36,6 +38,17 @@ void Player::Update() {
 }
 
 void Player::LightUpdate() {
+	if (kInput->TriggerKey(DIK_Q)) {
+		if (state_.isUsingLight) {
+			state_.isUsingLight = false;
+			sLight.light->color = { 0.0f,0.0f,0.0f,0.0f };
+		}
+		else {
+			state_.isUsingLight = true;
+			sLight.light->color = { 1.0f,1.0f,1.0f,1.0f };
+		}
+	}
+
 	sLight.light->position = model.transform.translate;
 	sLight.light->direction = GetFrontLightVector(1.0f);
 	sLight.Update();
@@ -131,13 +144,15 @@ void Player::Jump() {
 	model.transform.translate += state_.velocity;
 
 	Vector3 fixVector{};
-	if (state_.isJump) {
+
 		if (map_->CheckCollisionWithFloor(GetCollision(), state_.velocity, &fixVector)) {
 			Vector3 a = fixVector;
 			state_.isJump = false;
 			state_.velocity.y = 0.0f;
 		}
-	}
+		else {
+			state_.isJump = true;
+		}
 
 	model.transform.translate += fixVector;
 }

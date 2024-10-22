@@ -43,6 +43,7 @@ void GameScene::Update() {
 	//trace.Update();
 
 	camera2.get()->transform.translate = player.model.transform.translate;
+	camera2.get()->transform.translate.y += 1.0f;
 	camera2.get()->transform.rotate = player.model.transform.rotate;
 
 	sprite.Update();
@@ -65,7 +66,7 @@ void GameScene::Draw() {
 
 	sprite.Draw();
 	if (isS) {
-		s.Draw();
+	//	s.Draw();
 	}
 }
 
