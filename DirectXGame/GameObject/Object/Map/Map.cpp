@@ -229,6 +229,10 @@ void Map::CheckCollision(AABB pAABB, Vector3 move, Vector3* fixVector) {
     //fixVectorに応じてpAABBの座標の調整
     //pAABB.min.z += fixVector->z;
     //pAABB.max.z += fixVector->z;
+}
+
+bool Map::CheckCollisionWithFloor(AABB pAABB, Vector3 move, Vector3* fixVector) {
+    Vector3 distance{};
 
     for (Wall wall : walls) {
         AABB wallAABB;
@@ -236,20 +240,22 @@ void Map::CheckCollision(AABB pAABB, Vector3 move, Vector3* fixVector) {
 
         if (wallAABB.CheckCollision(pAABB)) {
             //Z軸の当たり判定
-            if (pAABB.max.y < wallAABB.max.y) {//壁に前方面へ衝突
+            if (pAABB.max.y < wallAABB.max.y) {//壁に下方面へ衝突
                 distance.y = pAABB.max.y - wallAABB.min.y;
                 if (fabs(move.y) + dis >= fabs(distance.y)) {//移動量が差分より大きかったら調整
                     fixVector->y = -fabs(distance.y);
                 }
             }
-            else {//後方面へ
+            else {//上方面へ
                 distance.y = pAABB.min.y - wallAABB.max.y;
                 if (fabs(move.y) + dis >= fabs(distance.y)) {//移動量が差分より大きかったら調整
                     fixVector->y = fabs(distance.y);
                 }
             }
+            return true;
         }
     }
+    return false;
 }
 
 void Map::CreateItem(Camera* camera) {

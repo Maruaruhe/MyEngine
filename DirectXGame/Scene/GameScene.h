@@ -41,5 +41,10 @@ private:
 	Sprite sprite;
 
 	Trace trace;
+
+	bool isS;
+	int sFlame;
+
+	Sprite s;
 };
 
