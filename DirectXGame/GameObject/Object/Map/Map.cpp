@@ -234,9 +234,8 @@ void Map::CheckCollision(AABB pAABB, Vector3 move, Vector3* fixVector) {
 bool Map::CheckCollisionWithFloor(AABB pAABB, Vector3 move, Vector3* fixVector) {
     Vector3 distance{};
 
-    for (Wall wall : walls) {
         AABB wallAABB;
-        wallAABB.CreateModelAABB(wall.model.transform);
+        wallAABB.CreateModelAABB(floor.model.transform);
 
         if (wallAABB.CheckCollision(pAABB)) {
             //Z軸の当たり判定
@@ -254,7 +253,6 @@ bool Map::CheckCollisionWithFloor(AABB pAABB, Vector3 move, Vector3* fixVector) 
             }
             return true;
         }
-    }
     return false;
 }
 

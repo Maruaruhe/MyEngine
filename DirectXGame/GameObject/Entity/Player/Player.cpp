@@ -131,10 +131,13 @@ void Player::Jump() {
 	model.transform.translate += state_.velocity;
 
 	Vector3 fixVector{};
+	if (state_.isJump) {
 		if (map_->CheckCollisionWithFloor(GetCollision(), state_.velocity, &fixVector)) {
 			Vector3 a = fixVector;
-			int as = 0;
+			state_.isJump = false;
+			state_.velocity.y = 0.0f;
 		}
+	}
 
 	model.transform.translate += fixVector;
 }
