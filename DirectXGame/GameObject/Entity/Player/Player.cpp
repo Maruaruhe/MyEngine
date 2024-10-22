@@ -17,7 +17,8 @@ void Player::Initialize() {
 	state_.HP;
 	state_.isDash;
 	state_.isJump = false;
-	state_.isUsingLight = true;
+	state_.isUsingLight = false;
+	state_.isAlive = true;
 	state_.kMapSpeed;
 	state_.moveSpeed;
 	state_.stamina;
