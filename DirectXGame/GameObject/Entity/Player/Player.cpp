@@ -4,6 +4,7 @@ void Player::Initialize() {
 	ModelManager::GetInstance()->LoadModel("player");
 	model.Initialize("player");
 	model.transform.translate = { 24.0f,1.5f,-48.0f };
+	model.transform.scale.y *= 2.0f;
 
 	view.Initialize("player");
 	view.transform.scale *= 0.25f;
@@ -16,6 +17,8 @@ void Player::Initialize() {
 	state_.HP;
 	state_.isDash;
 	state_.isJump = false;
+	state_.isUsingLight = false;
+	state_.isAlive = true;
 	state_.kMapSpeed;
 	state_.moveSpeed;
 	state_.stamina;
@@ -25,7 +28,7 @@ void Player::Initialize() {
 void Player::Update() {
 	LightUpdate();
 	Move();
-	//Jump();
+	Jump();
 
 	CheckItemCollision();
 	CheckItemBring();
@@ -36,6 +39,17 @@ void Player::Update() {
 }
 
 void Player::LightUpdate() {
+	if (kInput->TriggerKey(DIK_Q)) {
+		if (state_.isUsingLight) {
+			state_.isUsingLight = false;
+			sLight.light->color = { 0.0f,0.0f,0.0f,0.0f };
+		}
+		else {
+			state_.isUsingLight = true;
+			sLight.light->color = { 1.0f,1.0f,1.0f,1.0f };
+		}
+	}
+
 	sLight.light->position = model.transform.translate;
 	sLight.light->direction = GetFrontLightVector(1.0f);
 	sLight.Update();
@@ -65,19 +79,6 @@ void Player::Move() {
 		move.x += 0.1f;
 	}
 
-	//Jump
-	//if (!state_.isJump) {
-	//	if (kInput->PushKey(DIK_SPACE)) {
-	//		state_.velocity.y = 0.2f;
-	//		state_.isJump = true;
-	//	}
-	//}
-	//else {
-	//	//Jumping
-	//	state_.velocity.y -= 0.02f;
-	//}
-
-
 	//rotate
 	Vector2 rotate{};
 
@@ -106,7 +107,7 @@ void Player::Move() {
 	move = {
 		move.x * wM.m[0][0] + move.z * wM.m[2][0],
 		//move.x * wM.m[0][1] + move.y * wM.m[2][1],
-		state_.velocity.y,
+		{},
 		move.x * wM.m[0][2] + move.z * wM.m[2][2]
 	};
 
@@ -129,6 +130,7 @@ void Player::Move() {
 }
 
 void Player::Jump() {
+
 	//Jump
 	if (!state_.isJump) {
 		if (kInput->PushKey(DIK_SPACE)) {
@@ -140,19 +142,20 @@ void Player::Jump() {
 		//Jumping
 		state_.velocity.y -= 0.02f;
 	}
-
 	model.transform.translate += state_.velocity;
 
-	// 最後に当たり判定をチェック
 	Vector3 fixVector{};
-	map_->CheckCollision(GetCollision(), { 0, state_.velocity.y, 0 }, &fixVector);
+
+		if (map_->CheckCollisionWithFloor(GetCollision(), state_.velocity, &fixVector)) {
+			Vector3 a = fixVector;
+			state_.isJump = false;
+			state_.velocity.y = 0.0f;
+		}
+		else {
+			state_.isJump = true;
+		}
+
 	model.transform.translate += fixVector;
-
-	if (fixVector.y != 0) {
-		state_.isJump = false;
-		state_.velocity.y = 0.0f;
-	}
-
 }
 
 AABB Player::GetCollision() {

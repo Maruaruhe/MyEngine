@@ -14,6 +14,8 @@ struct State {
 	float weight; //重量
 	float HP; //体力
 	Vector3 velocity;
+	bool isUsingLight;
+	bool isAlive;
 };
 
 class Player {
@@ -38,6 +40,9 @@ public:
 private:
 	void Move();
 	void Jump();
+
+	void DeathUpdate();
+	int deathCount;
 
 	Vector3 CheckLineOfSightCollision();
 	Vector3 GetItemFrontVector();

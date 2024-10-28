@@ -21,6 +21,12 @@ void GameScene::Initialize() {
 	//trace.Initialize({ {1.0f,1.0f,1.0f}, {0.0f,0.0f,0.0f}, { -10.0f, 0.0f, 1.0f } });
 
 	sprite.Initialize({ 360,180 }, "Resources/explain.png");
+	s.Initialize({ 100,100 }, "Resources/Title/titleHeart.png");
+	s.transform.translate = { 640,360, 0 };
+	s.anchorPoint = { 0.5,0.5 };
+
+	isS = true;
+	sFlame = 0;
 }
 
 void GameScene::Update() {
@@ -37,10 +43,18 @@ void GameScene::Update() {
 	//trace.Update();
 
 	camera2.get()->transform.translate = player.model.transform.translate;
+	camera2.get()->transform.translate.y += 1.0f;
 	camera2.get()->transform.rotate = player.model.transform.rotate;
 
 	sprite.Update();
 
+	if (isS) {
+		sFlame++;
+		s.transform.scale *= 1.2f;
+		if (sFlame >= 45) {
+			isS = false;
+		}
+	}
 }
 
 void GameScene::Draw() {
@@ -51,6 +65,9 @@ void GameScene::Draw() {
 	//trace.Draw();
 
 	sprite.Draw();
+	if (isS) {
+	//	s.Draw();
+	}
 }
 
 void GameScene::SceneChange() {
