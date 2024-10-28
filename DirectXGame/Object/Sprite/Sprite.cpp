@@ -22,6 +22,8 @@ void Sprite::Initialize(Vector2 size, std::string textureFilePath) {
 
 	TextureManager::GetInstance()->LoadTexture(textureFilePath);
 	textureIndex = TextureManager::GetInstance()->GetTextureIndexByFilePath(textureFilePath);
+
+	materialData_->color = { 1.0f,1.0f,1.0f,1.0f };
 }
 
 void Sprite::Update() {
@@ -47,7 +49,7 @@ void Sprite::Draw() {
 	Matrix4x4 projectionMatrix = MakeOrthographicMatrix(0.0f, 0.0f, float(kCliantWidth), float(kClientHeight), 0.0f, 100.0f);
 	Matrix4x4 worldViewProjectionMatrix = Multiply(transformationMatrix->World, Multiply(viewMatrix, projectionMatrix));
 	transformationMatrix->WVP = worldViewProjectionMatrix;
-	materialData_->color = { 1.0f,1.0f,1.0f,1.0f };
+	//materialData_->color = { 1.0f,1.0f,1.0f,1.0f };
 
 	Matrix4x4 uvTransformMatrix = MakeScaleMatrix(uvTransform.scale);
 	uvTransformMatrix = Multiply(uvTransformMatrix, MakeRotateZMatrix(uvTransform.rotate.z));

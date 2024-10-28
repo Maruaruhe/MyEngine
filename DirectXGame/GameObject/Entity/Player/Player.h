@@ -1,5 +1,6 @@
 #include "../../../Object/Anime/Anime.h"
 #include "../../../Object/Model/Model.h"
+#include "../../../Object/Sprite/Sprite.h"
 #include "../../../Base/Input/Input.h"
 
 #include "../../Object/Map/Map.h"
@@ -31,7 +32,11 @@ public:
 	void SetMap(Map* map) { this->map_ = map; }
 
 	Model model;
+	Model deadModel;
 	Model view;
+
+	Transform tForCamera;
+	Transform deadCamera;
 
 	Vector3 GetFrontVector(float length);
 	Vector3 GetFrontLightVector(float length);
@@ -58,4 +63,7 @@ private:
 	Map* map_;
 	SpotLight sLight;
 	State state_;
+
+	int deadFlame;
+	Sprite deads;
 };

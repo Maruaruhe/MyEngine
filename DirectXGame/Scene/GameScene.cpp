@@ -16,12 +16,14 @@ void GameScene::Initialize() {
 	player.Initialize();
 	player.SetMap(&map);
 	player.model.SetCamera(camera2.get());
+	player.deadModel.SetCamera(camera2.get());
 	player.view.SetCamera(camera2.get());
 
 	//trace.Initialize({ {1.0f,1.0f,1.0f}, {0.0f,0.0f,0.0f}, { -10.0f, 0.0f, 1.0f } });
 
 	sprite.Initialize({ 360,180 }, "Resources/explain.png");
 	s.Initialize({ 100,100 }, "Resources/Title/titleHeart.png");
+
 	s.transform.translate = { 640,360, 0 };
 	s.anchorPoint = { 0.5,0.5 };
 
@@ -42,9 +44,9 @@ void GameScene::Update() {
 
 	//trace.Update();
 
-	camera2.get()->transform.translate = player.model.transform.translate;
-	camera2.get()->transform.translate.y += 1.0f;
-	camera2.get()->transform.rotate = player.model.transform.rotate;
+	camera2.get()->transform.translate = player.tForCamera.translate;
+	camera2.get()->transform.translate.y += 0.5f;
+	camera2.get()->transform.rotate = player.tForCamera.rotate;
 
 	sprite.Update();
 
@@ -64,7 +66,7 @@ void GameScene::Draw() {
 
 	//trace.Draw();
 
-	sprite.Draw();
+	//sprite.Draw();
 	if (isS) {
 	//	s.Draw();
 	}

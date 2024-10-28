@@ -2,9 +2,11 @@
 
 void Player::Initialize() {
 	ModelManager::GetInstance()->LoadModel("player");
+	ModelManager::GetInstance()->LoadModel("Entity/player/deadbody");
 	model.Initialize("player");
+	deadModel.Initialize("Entity/player/deadbody");
 	model.transform.translate = { 24.0f,1.5f,-48.0f };
-	model.transform.scale.y *= 2.0f;
+	model.transform.scale.y *= 1.0f;
 
 	view.Initialize("player");
 	view.transform.scale *= 0.25f;
@@ -23,12 +25,23 @@ void Player::Initialize() {
 	state_.moveSpeed;
 	state_.stamina;
 	state_.weight;
+
+	tForCamera = {};
+	deadCamera = {};
+
+	deads.Initialize({ 1280,720 }, "Resources/Dead/youdied.png");
 }
 
 void Player::Update() {
 	LightUpdate();
-	Move();
-	Jump();
+	if (state_.isAlive) {
+		Move();
+		Jump();
+	}
+	else {
+	DeathUpdate();
+	}
+
 
 	CheckItemCollision();
 	CheckItemBring();
@@ -36,27 +49,54 @@ void Player::Update() {
 	model.Update();
 	view.Update();
 	view.transform.translate = GetFrontVector(2.0f);
+
+	if (kInput->TriggerKey(DIK_T)) {
+		state_.isAlive = false; 
+		deadFlame = 0;
+	}
+	if (kInput->TriggerKey(DIK_Y)) {
+		state_.isAlive = true;
+	}
+	if (state_.isAlive) {
+		tForCamera = model.transform;
+	}
+	else {
+		tForCamera = deadCamera;
+	}
+#ifdef _DEBUG
+	ImGui::Begin("Player");
+	ImGui::SliderFloat3("translate", &model.transform.translate.x, -15, 15);
+	ImGui::SliderFloat3("rotate", &model.transform.rotate.x, -3.0f, 3.0f);
+	ImGui::SliderFloat3("scale", &model.transform.scale.x, 1.0f, 10.0f);
+	ImGui::End();
+#endif
 }
 
 void Player::LightUpdate() {
-	if (kInput->TriggerKey(DIK_Q)) {
-		if (state_.isUsingLight) {
-			state_.isUsingLight = false;
-			sLight.light->color = { 0.0f,0.0f,0.0f,0.0f };
+	if (state_.isAlive) {
+		if (kInput->TriggerKey(DIK_Q)) {
+			if (state_.isUsingLight) {
+				state_.isUsingLight = false;
+				sLight.light->color = { 0.0f,0.0f,0.0f,0.0f };
+			}
+			else {
+				state_.isUsingLight = true;
+				sLight.light->color = { 1.0f,1.0f,1.0f,1.0f };
+			}
 		}
-		else {
-			state_.isUsingLight = true;
-			sLight.light->color = { 1.0f,1.0f,1.0f,1.0f };
-		}
-	}
 
-	sLight.light->position = model.transform.translate;
-	sLight.light->direction = GetFrontLightVector(1.0f);
+		sLight.light->position = model.transform.translate;
+		sLight.light->direction = GetFrontLightVector(1.0f);
+	}
 	sLight.Update();
 }
 
 void Player::Draw() {
 	//model.Draw();
+	if (!state_.isAlive) {
+		deadModel.Draw();
+		deads.Draw();
+	}
 #ifdef _DEBUG
 	view.Draw();
 #endif // DEBUG
@@ -258,4 +298,35 @@ void Player::CheckItemBring() {
 			map_->GetItem()->model.transform.rotate.z = {};
 		}
 	}
+}
+
+void Player::DeathUpdate() {
+	if (!state_.isAlive) {
+		deadFlame++;
+		if (deadFlame >= 180) {
+			deadFlame = 180;
+		}
+
+		deadCamera.translate = model.transform.translate;
+		deadCamera.translate.y = 4.0f + float(3 * deadFlame)/180.0f;
+		deadCamera.rotate.x = 1.27f;
+
+		deadModel.transform.translate = model.transform.translate;
+		deadModel.transform.rotate.y = 1.77f;
+
+		deads.materialData_->color.w = float(1+deadFlame)/180.0f;
+	}
+
+#ifdef _DEBUG
+
+	ImGui::Begin("DeathCamera");
+	ImGui::SliderFloat3("translate", &deadCamera.translate.x, -15, 15);
+	ImGui::SliderFloat3("rotate", &deadCamera.rotate.x, -3.0f, 3.0f);
+	ImGui::SliderFloat3("scale", &deadCamera.scale.x, 1.0f, 10.0f);
+
+	ImGui::SliderFloat3("deadModeltranslate", &deadModel.transform.translate.x, -15, 15);
+	ImGui::SliderFloat3("deadModelrotate", &deadModel.transform.rotate.x, -3.0f, 3.0f);
+	ImGui::SliderFloat3("deadModelscale", &deadModel.transform.scale.x, 1.0f, 10.0f);
+	ImGui::End();
+#endif // DEBUG_
 }
