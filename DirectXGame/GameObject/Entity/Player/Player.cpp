@@ -29,6 +29,8 @@ void Player::Initialize() {
 	tForCamera = {};
 	deadCamera = {};
 
+	deadFlame = 0;
+
 	deads.Initialize({ 1280,720 }, "Resources/Dead/youdied.png");
 }
 
@@ -50,7 +52,7 @@ void Player::Update() {
 	view.Update();
 	view.transform.translate = GetFrontVector(2.0f);
 
-	if (kInput->TriggerKey(DIK_T)) {
+	if (kInput->TriggerKey(DIK_SPACE)) {
 		state_.isAlive = false; 
 		deadFlame = 0;
 	}

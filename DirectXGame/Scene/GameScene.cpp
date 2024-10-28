@@ -86,4 +86,8 @@ void GameScene::SceneChange() {
 	else {
 		clearCount = 0;
 	}
+
+	if (player.deadFlame >= 180) {
+			sceneNo = TITLE;
+	}
 }

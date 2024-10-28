@@ -37,6 +37,7 @@ public:
 
 	Transform tForCamera;
 	Transform deadCamera;
+	int deadFlame;
 
 	Vector3 GetFrontVector(float length);
 	Vector3 GetFrontLightVector(float length);
@@ -64,6 +65,5 @@ private:
 	SpotLight sLight;
 	State state_;
 
-	int deadFlame;
 	Sprite deads;
 };
