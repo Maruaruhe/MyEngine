@@ -66,16 +66,16 @@ void Player::Move() {
 	}
 
 	//Jump
-	if (!state_.isJump) {
-		if (kInput->PushKey(DIK_SPACE)) {
-			state_.velocity.y = 0.2f;
-			state_.isJump = true;
-		}
-	}
-	else {
-		//Jumping
-		state_.velocity.y -= 0.02f;
-	}
+	//if (!state_.isJump) {
+	//	if (kInput->PushKey(DIK_SPACE)) {
+	//		state_.velocity.y = 0.2f;
+	//		state_.isJump = true;
+	//	}
+	//}
+	//else {
+	//	//Jumping
+	//	state_.velocity.y -= 0.02f;
+	//}
 
 
 	//rotate
