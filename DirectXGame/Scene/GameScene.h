@@ -39,6 +39,8 @@ private:
 	Lighting light;
 
 	std::unique_ptr<Camera> camera2;
+
+	Map outsideMap;
 	Map insideMap;
 
 	int clearCount;

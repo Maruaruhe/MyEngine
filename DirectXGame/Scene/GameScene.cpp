@@ -11,6 +11,7 @@ void GameScene::Initialize() {
 
 	light.Initialize();
 
+	outsideMap.Initialize(camera2.get(), "50x50");
 	insideMap.Initialize(camera2.get(), "50x50");
 
 	player.Initialize();
