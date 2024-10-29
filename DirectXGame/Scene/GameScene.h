@@ -20,6 +20,12 @@
 
 #include "../GameObject/Entity/Enemy/Trace/Trace.h"
 
+enum Stage {
+	SHIP = 0,
+	OUTSIDE = 1,
+	INSIDE = 2
+};
+
 class GameScene : public IScene
 {
 public:
@@ -33,7 +39,7 @@ private:
 	Lighting light;
 
 	std::unique_ptr<Camera> camera2;
-	Map map;
+	Map insideMap;
 
 	int clearCount;
 
@@ -46,5 +52,8 @@ private:
 	int sFlame;
 
 	Sprite s;
+
+	Stage stage;
+	Stage preStage;
 };
 

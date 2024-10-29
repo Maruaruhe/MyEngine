@@ -12,7 +12,7 @@ enum BlockType {
 class Map
 {
 public:
-	void Initialize(Camera* camera);
+	void Initialize(Camera* camera, std::string filepath);
 
 	void Update();
 

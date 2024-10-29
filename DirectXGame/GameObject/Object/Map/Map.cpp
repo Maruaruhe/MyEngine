@@ -4,8 +4,8 @@
 #include "../../../Manager/TextureManager.h"
 
 
-void Map::Initialize(Camera* camera) {
-        mapData = LoadMapData("50x50");
+void Map::Initialize(Camera* camera, std::string filepath) {
+        mapData = LoadMapData(filepath);
 
         walls.clear();
         camera_ = camera;

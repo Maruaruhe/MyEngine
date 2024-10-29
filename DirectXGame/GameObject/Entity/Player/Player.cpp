@@ -6,7 +6,7 @@ void Player::Initialize() {
 	model.Initialize("player");
 	deadModel.Initialize("Entity/player/deadbody");
 	model.transform.translate = { 24.0f,1.5f,-48.0f };
-	model.transform.scale.y *= 1.0f;
+	model.transform.scale.y *= 2.0f;
 
 	view.Initialize("player");
 	view.transform.scale *= 0.25f;
@@ -30,11 +30,16 @@ void Player::Initialize() {
 	deadCamera = {};
 
 	deadFlame = 0;
+	aliveFrame = 0;
 
 	deads.Initialize({ 1280,720 }, "Resources/Dead/youdied.png");
 }
 
 void Player::Update() {
+	//aliveFrame++;
+	if (aliveFrame >= 180) {
+		state_.isAlive = false;
+	}
 	LightUpdate();
 	if (state_.isAlive) {
 		Move();
@@ -52,7 +57,7 @@ void Player::Update() {
 	view.Update();
 	view.transform.translate = GetFrontVector(2.0f);
 
-	if (kInput->TriggerKey(DIK_SPACE)) {
+	if (kInput->TriggerKey(DIK_T)) {
 		state_.isAlive = false; 
 		deadFlame = 0;
 	}

@@ -34,10 +34,12 @@ public:
 	Model model;
 	Model deadModel;
 	Model view;
+	State state_;
 
 	Transform tForCamera;
 	Transform deadCamera;
 	int deadFlame;
+	int aliveFrame;
 
 	Vector3 GetFrontVector(float length);
 	Vector3 GetFrontLightVector(float length);
@@ -63,7 +65,6 @@ private:
 	//MapInfo
 	Map* map_;
 	SpotLight sLight;
-	State state_;
 
 	Sprite deads;
 };

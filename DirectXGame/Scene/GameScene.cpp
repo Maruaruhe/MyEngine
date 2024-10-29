@@ -11,10 +11,10 @@ void GameScene::Initialize() {
 
 	light.Initialize();
 
-	map.Initialize(camera2.get());
+	insideMap.Initialize(camera2.get(), "50x50");
 
 	player.Initialize();
-	player.SetMap(&map);
+	player.SetMap(&insideMap);
 	player.model.SetCamera(camera2.get());
 	player.deadModel.SetCamera(camera2.get());
 	player.view.SetCamera(camera2.get());
@@ -29,53 +29,68 @@ void GameScene::Initialize() {
 
 	isS = true;
 	sFlame = 0;
+
+	stage = SHIP;
 }
 
 void GameScene::Update() {
-	GlobalVariables::GetInstance()->Update();
+	preStage = stage;
 
-	light.Update();
-
-	camera2->Update();
-
-	map.Update();
-
-	player.Update();
-
-	//trace.Update();
-
-	camera2.get()->transform.translate = player.tForCamera.translate;
-	camera2.get()->transform.translate.y += 0.5f;
-	camera2.get()->transform.rotate = player.tForCamera.rotate;
-
-	sprite.Update();
-
-	if (isS) {
-		sFlame++;
-		s.transform.scale *= 1.2f;
-		if (sFlame >= 45) {
-			isS = false;
+	if (stage == SHIP) {
+		if(input->TriggerKey(DIK_SPACE)){
+			stage = INSIDE;
 		}
+	}
+
+	if (stage == OUTSIDE) {
+
+	}
+
+	if (stage == INSIDE) {
+		GlobalVariables::GetInstance()->Update();
+
+		light.Update();
+
+		camera2->Update();
+
+		insideMap.Update();
+
+		player.Update();
+
+		//trace.Update();
+
+		camera2.get()->transform.translate = player.tForCamera.translate;
+		camera2.get()->transform.translate.y += 0.5f;
+		camera2.get()->transform.rotate = player.tForCamera.rotate;
+
+		sprite.Update();
 	}
 }
 
 void GameScene::Draw() {
-	map.Draw();
+	if (stage == SHIP) {
 
-	player.Draw();
+	}
+
+	if (stage == OUTSIDE) {
+
+	}
+
+	if (stage == INSIDE) {
+		insideMap.Draw();
+
+		player.Draw();
+	}
 
 	//trace.Draw();
 
 	//sprite.Draw();
-	if (isS) {
-	//	s.Draw();
-	}
 }
 
 void GameScene::SceneChange() {
-	if (map.GetItem()->model.transform.translate.x >= 17.00f && map.GetItem()->model.transform.translate.x <= 19.00f) {
-		if (map.GetItem()->model.transform.translate.z >= -12.5f && map.GetItem()->model.transform.translate.z <= -10.5f) {
-			if (map.GetItem()->isTaken == false) {
+	if (insideMap.GetItem()->model.transform.translate.x >= 17.00f && insideMap.GetItem()->model.transform.translate.x <= 19.00f) {
+		if (insideMap.GetItem()->model.transform.translate.z >= -12.5f && insideMap.GetItem()->model.transform.translate.z <= -10.5f) {
+			if (insideMap.GetItem()->isTaken == false) {
 				clearCount++;
 				if (clearCount >= 60) {
 					sceneNo = CLEAR;
