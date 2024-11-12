@@ -18,7 +18,6 @@ void ShipStage::Initialize(int prevStage) {
 	player_.deadModel.SetCamera(camera2.get());
 	player_.view.SetCamera(camera2.get());
 	player_.model.transform.translate = { 3.0f,1.5f,-4.0f };
-
 }
 
 
@@ -42,6 +41,8 @@ void ShipStage::Draw() {
 
 	player_.Draw();
 }
+
+
 void ShipStage::StageChange() {
 	if(KeyInput::GetInstance()->TriggerKey(DIK_1)){
 		stageNo = OUTSIDE;

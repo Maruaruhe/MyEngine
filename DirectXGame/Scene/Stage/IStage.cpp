@@ -1,6 +1,7 @@
 #include "IStage.h"
 
 int IStage::stageNo = SHIP;
+bool IStage::isFirstLoad = true;
 
 Player IStage::player_ = {};
 

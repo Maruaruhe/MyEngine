@@ -10,6 +10,8 @@ void OutsideStage::Initialize(int prevStage) {
 	player_.model.SetCamera(camera2.get());
 	player_.deadModel.SetCamera(camera2.get());
 	player_.view.SetCamera(camera2.get());
+
+	//直前のStageによってPositionを設定
 	if (prevStage == SHIP) {
 		player_.model.transform.translate = { 0,0,0 };
 	}

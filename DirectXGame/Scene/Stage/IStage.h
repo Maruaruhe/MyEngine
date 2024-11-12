@@ -29,7 +29,11 @@ enum Stage {
 class IStage
 {
 protected:
+	//現在のステージ
 	static int stageNo;
+
+	//初回ロードかどうか
+	static bool isFirstLoad;
 
 	static Player player_;
 
