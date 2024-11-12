@@ -61,6 +61,10 @@
     <ClCompile Include="DirectXGame\GameObject\Entity\Enemy\Trace\Trace.cpp" />
     <ClCompile Include="DirectXGame\Object\PointLight\PointLight.cpp" />
     <ClCompile Include="DirectXGame\Scene\ClearScene.cpp" />
+    <ClCompile Include="DirectXGame\Scene\Stage\IStage.cpp" />
+    <ClCompile Include="DirectXGame\Scene\Stage\ShipStage.cpp" />
+    <ClCompile Include="DirectXGame\Scene\Stage\OutsideStage.cpp" />
+    <ClCompile Include="DirectXGame\Scene\Stage\InsideStage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Object\AABB\AABB.h" />
@@ -120,6 +124,10 @@
     <ClInclude Include="DirectXGame\GameObject\Entity\Enemy\Trace\Trace.h" />
     <ClInclude Include="DirectXGame\Object\PointLight\PointLight.h" />
     <ClInclude Include="DirectXGame\Scene\ClearScene.h" />
+    <ClInclude Include="DirectXGame\Scene\Stage\IStage.h" />
+    <ClInclude Include="DirectXGame\Scene\Stage\ShipStage.h" />
+    <ClInclude Include="DirectXGame\Scene\Stage\OutsideStage.h" />
+    <ClInclude Include="DirectXGame\Scene\Stage\InsideStage.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shader\Object3d.hlsli" />

@@ -10,7 +10,6 @@
 #include "../Object/Camera/Camera.h"
 #include "../Object/Model/Model.h"
 #include "../Object/Anime/Anime.h"
-#include "../Object/Particle/Particle.h"
 
 #include "../GameObject/Skydome/Skydome.h"
 #include "../GameObject/Object/Map/Map.h"

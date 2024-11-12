@@ -64,6 +64,7 @@ private:
 
 	//MapInfo
 	Map* map_;
+	Map* outside_;
 	SpotLight sLight;
 
 	Sprite deads;

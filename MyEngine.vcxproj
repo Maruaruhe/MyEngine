@@ -133,6 +133,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="DirectXGame\GameObject\Object\Map\Item\ItemManager.cpp" />
     <ClCompile Include="DirectXGame\Manager\FileManager.cpp" />
     <ClCompile Include="DirectXGame\GameObject\Entity\Enemy\IEnemy.cpp" />
+    <ClCompile Include="DirectXGame\Scene\Stage\IStage.cpp" />
+    <ClCompile Include="DirectXGame\Scene\Stage\InsideStage.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="DirectXGame\Base\GraphicsRenderer\GraphicsRenderer.cpp" />
     <ClCompile Include="DirectXGame\Base\WindowsAPI\WindowsAPI.cpp" />
@@ -152,6 +154,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="DirectXGame\Object\SpotLight\SpotLight.cpp" />
     <ClCompile Include="DirectXGame\GameObject\Entity\Enemy\Trace\Trace.cpp" />
     <ClCompile Include="DirectXGame\Object\PointLight\PointLight.cpp" />
+    <ClCompile Include="DirectXGame\Scene\Stage\OutsideStage.cpp" />
+    <ClCompile Include="DirectXGame\Scene\Stage\ShipStage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shader\Object3d.PS.hlsl">
@@ -247,6 +251,10 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="DirectXGame\GameObject\Entity\Enemy\IEnemy.h" />
     <ClInclude Include="DirectXGame\GameObject\Entity\Enemy\Trace\Trace.h" />
     <ClInclude Include="DirectXGame\Object\PointLight\PointLight.h" />
+    <ClInclude Include="DirectXGame\Scene\Stage\IStage.h" />
+    <ClInclude Include="DirectXGame\Scene\Stage\InsideStage.h" />
+    <ClInclude Include="DirectXGame\Scene\Stage\OutsideStage.h" />
+    <ClInclude Include="DirectXGame\Scene\Stage\ShipStage.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt" />

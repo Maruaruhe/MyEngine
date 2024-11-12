@@ -11,11 +11,11 @@ void GameScene::Initialize() {
 
 	light.Initialize();
 
-	outsideMap.Initialize(camera2.get(), "50x50");
+	outsideMap.Initialize(camera2.get(), "outside");
 	insideMap.Initialize(camera2.get(), "50x50");
 
 	player.Initialize();
-	player.SetMap(&insideMap);
+	player.SetMap(&outsideMap);
 	player.model.SetCamera(camera2.get());
 	player.deadModel.SetCamera(camera2.get());
 	player.view.SetCamera(camera2.get());
@@ -31,7 +31,7 @@ void GameScene::Initialize() {
 	isS = true;
 	sFlame = 0;
 
-	stage = SHIP;
+	stage = OUTSIDE;
 }
 
 void GameScene::Update() {
@@ -44,10 +44,36 @@ void GameScene::Update() {
 	}
 
 	if (stage == OUTSIDE) {
+		if (input->TriggerKey(DIK_LEFT)) {
+			stage = INSIDE;
+			player.SetMap(&insideMap);
+		}
 
+		GlobalVariables::GetInstance()->Update();
+
+		light.Update();
+
+		camera2->Update();
+
+		outsideMap.Update();
+
+		player.Update();
+
+		//trace.Update();
+
+		camera2.get()->transform.translate = player.tForCamera.translate;
+		camera2.get()->transform.translate.y += 0.5f;
+		camera2.get()->transform.rotate = player.tForCamera.rotate;
+
+		sprite.Update();
 	}
 
 	if (stage == INSIDE) {
+		if (input->TriggerKey(DIK_RIGHT)) {
+			stage = OUTSIDE;
+			player.SetMap(&outsideMap);
+		}
+
 		GlobalVariables::GetInstance()->Update();
 
 		light.Update();
@@ -74,7 +100,9 @@ void GameScene::Draw() {
 	}
 
 	if (stage == OUTSIDE) {
+		outsideMap.Draw();
 
+		player.Draw();
 	}
 
 	if (stage == INSIDE) {
