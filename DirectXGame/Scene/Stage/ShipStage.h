@@ -3,7 +3,8 @@
 
 class ShipStage : public IStage
 {
-	void Initialize() override;
+public:
+	void Initialize(int prevStage) override;
 	void Update() override;
 	void Draw() override;
 	void StageChange() override;

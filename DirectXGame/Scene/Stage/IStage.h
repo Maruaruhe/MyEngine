@@ -35,11 +35,13 @@ protected:
 
 	static Lighting light_;
 
-	static 	std::unique_ptr<Camera> camera2;
+	static std::unique_ptr<Camera> camera2;
+
 	//static 
+	Map map_;
 
 public:
-	virtual void Initialize() = 0;
+	virtual void Initialize(int prevStage) = 0;
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
 	virtual void StageChange() = 0;
@@ -48,6 +50,5 @@ public:
 	int GetStageNo() { return stageNo; }
 
 private :
-	Map map_;
 };
 

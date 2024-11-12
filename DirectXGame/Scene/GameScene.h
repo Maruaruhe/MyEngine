@@ -1,29 +1,17 @@
 #pragma once
 #include "IScene.h"
 #include "../Base/Input/Input.h"
-#include "../Base/GlobalVariables/GlobalVariables.h"
 
-#include "../Object/Sprite/Sprite.h"
-#include "../Object/Sphere/Sphere.h"
-#include "../Object/Light/Lighting.h"
-#include "../Object/SpotLight/SpotLight.h"
-#include "../Object/Camera/Camera.h"
-#include "../Object/Model/Model.h"
-#include "../Object/Anime/Anime.h"
+#include "Stage/IStage.h"
+#include "Stage/ShipStage.h"
+#include "Stage/OutsideStage.h"
+#include "Stage/InsideStage.h"
 
-#include "../GameObject/Skydome/Skydome.h"
-#include "../GameObject/Object/Map/Map.h"
-#include "../GameObject/Object/Map/Wall/Wall.h"
-#include "../GameObject/Object/Map/Item/SmallItem/SmallItem.h"
-#include "../GameObject/Entity/Player/Player.h"
-
-#include "../GameObject/Entity/Enemy/Trace/Trace.h"
-
-enum Stage {
-	SHIP = 0,
-	OUTSIDE = 1,
-	INSIDE = 2
-};
+//enum StageA {
+//	A = 0,
+//	B = 1,
+//	C = 2
+//};
 
 class GameScene : public IScene
 {
@@ -34,27 +22,33 @@ public:
 	void SceneChange() override;
 
 private:
-	KeyInput* input = nullptr;
-	Lighting light;
+	//Scene
+	std::unique_ptr<IStage> stageArr[4];
+
+	//KeyInput* input = nullptr;
+	//Lighting light;
 
 	std::unique_ptr<Camera> camera2;
 
-	Map outsideMap;
-	Map insideMap;
+	//Map outsideMap;
+	//Map insideMap;
 
-	int clearCount;
+	//int clearCount;
 
-	Player player;
-	Sprite sprite;
+	//Player player;
+	//Sprite sprite;
 
-	Trace trace;
+	//Trace trace;
 
-	bool isS;
-	int sFlame;
+	//bool isS;
+	//int sFlame;
 
-	Sprite s;
+	//Sprite s;
 
-	Stage stage;
-	Stage preStage;
+	//StageA stage;
+	//StageA preStage;
+
+	int currentStageNo;
+	int prevStageNo;
 };
 

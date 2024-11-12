@@ -3,135 +3,45 @@
 #include "../Base/Input/Input.h"
 
 void GameScene::Initialize() {
-	input = KeyInput::GetInstance();
-
-	camera2 = std::make_unique<Camera>();
-	camera2->Initialize();
-	camera2->transform.translate.z = -10.0f;
-
-	light.Initialize();
-
-	outsideMap.Initialize(camera2.get(), "outside");
-	insideMap.Initialize(camera2.get(), "50x50");
-
-	player.Initialize();
-	player.SetMap(&outsideMap);
-	player.model.SetCamera(camera2.get());
-	player.deadModel.SetCamera(camera2.get());
-	player.view.SetCamera(camera2.get());
-
-	//trace.Initialize({ {1.0f,1.0f,1.0f}, {0.0f,0.0f,0.0f}, { -10.0f, 0.0f, 1.0f } });
-
-	sprite.Initialize({ 360,180 }, "Resources/explain.png");
-	s.Initialize({ 100,100 }, "Resources/Title/titleHeart.png");
-
-	s.transform.translate = { 640,360, 0 };
-	s.anchorPoint = { 0.5,0.5 };
-
-	isS = true;
-	sFlame = 0;
-
-	stage = OUTSIDE;
+	stageArr[SHIP] = std::make_unique<ShipStage>();
+	stageArr[OUTSIDE] = std::make_unique<OutsideStage>();
+	stageArr[INSIDE] = std::make_unique<InsideStage>();
 }
 
 void GameScene::Update() {
-	preStage = stage;
+	//Stageのチェック
+	prevStageNo = currentStageNo;
+	currentStageNo = stageArr[currentStageNo]->GetStageNo();
 
-	if (stage == SHIP) {
-		if(input->TriggerKey(DIK_SPACE)){
-			stage = INSIDE;
-		}
+	//シーンが前フレームと異なったら初期化
+	if (prevStageNo != currentStageNo) {
+		stageArr[currentStageNo]->Initialize(prevStageNo);
 	}
 
-	if (stage == OUTSIDE) {
-		if (input->TriggerKey(DIK_LEFT)) {
-			stage = INSIDE;
-			player.SetMap(&insideMap);
-		}
-
-		GlobalVariables::GetInstance()->Update();
-
-		light.Update();
-
-		camera2->Update();
-
-		outsideMap.Update();
-
-		player.Update();
-
-		//trace.Update();
-
-		camera2.get()->transform.translate = player.tForCamera.translate;
-		camera2.get()->transform.translate.y += 0.5f;
-		camera2.get()->transform.rotate = player.tForCamera.rotate;
-
-		sprite.Update();
-	}
-
-	if (stage == INSIDE) {
-		if (input->TriggerKey(DIK_RIGHT)) {
-			stage = OUTSIDE;
-			player.SetMap(&outsideMap);
-		}
-
-		GlobalVariables::GetInstance()->Update();
-
-		light.Update();
-
-		camera2->Update();
-
-		insideMap.Update();
-
-		player.Update();
-
-		//trace.Update();
-
-		camera2.get()->transform.translate = player.tForCamera.translate;
-		camera2.get()->transform.translate.y += 0.5f;
-		camera2.get()->transform.rotate = player.tForCamera.rotate;
-
-		sprite.Update();
-	}
+	stageArr[currentStageNo]->StageChange();
+	stageArr[currentStageNo]->Update();
 }
 
 void GameScene::Draw() {
-	if (stage == SHIP) {
-
-	}
-
-	if (stage == OUTSIDE) {
-		outsideMap.Draw();
-
-		player.Draw();
-	}
-
-	if (stage == INSIDE) {
-		insideMap.Draw();
-
-		player.Draw();
-	}
-
-	//trace.Draw();
-
-	//sprite.Draw();
+	stageArr[currentStageNo]->Draw();
 }
 
 void GameScene::SceneChange() {
-	if (insideMap.GetItem()->model.transform.translate.x >= 17.00f && insideMap.GetItem()->model.transform.translate.x <= 19.00f) {
-		if (insideMap.GetItem()->model.transform.translate.z >= -12.5f && insideMap.GetItem()->model.transform.translate.z <= -10.5f) {
-			if (insideMap.GetItem()->isTaken == false) {
-				clearCount++;
-				if (clearCount >= 60) {
-					sceneNo = CLEAR;
-				}
-			}
-		}
-	}
-	else {
-		clearCount = 0;
-	}
+	//if (insideMap.GetItem()->model.transform.translate.x >= 17.00f && insideMap.GetItem()->model.transform.translate.x <= 19.00f) {
+	//	if (insideMap.GetItem()->model.transform.translate.z >= -12.5f && insideMap.GetItem()->model.transform.translate.z <= -10.5f) {
+	//		if (insideMap.GetItem()->isTaken == false) {
+	//			clearCount++;
+	//			if (clearCount >= 60) {
+	//				sceneNo = CLEAR;
+	//			}
+	//		}
+	//	}
+	//}
+	//else {
+	//	clearCount = 0;
+	//}
 
-	if (player.deadFlame >= 180) {
-			sceneNo = TITLE;
-	}
+	//if (player.deadFlame >= 180) {
+	//		sceneNo = TITLE;
+	//}
 }

@@ -5,7 +5,8 @@ void Player::Initialize() {
 	ModelManager::GetInstance()->LoadModel("Entity/player/deadbody");
 	model.Initialize("player");
 	deadModel.Initialize("Entity/player/deadbody");
-	model.transform.translate = { 24.0f,1.5f,-48.0f };
+	//model.transform.translate = { 24.0f,1.5f,-48.0f };
+	model.transform.translate = { 0.0f,0.0f,0.0f };
 	model.transform.scale.y *= 2.0f;
 
 	view.Initialize("player");
