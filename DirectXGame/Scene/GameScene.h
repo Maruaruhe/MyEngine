@@ -25,29 +25,6 @@ private:
 	//Scene
 	std::unique_ptr<IStage> stageArr[4];
 
-	//KeyInput* input = nullptr;
-	//Lighting light;
-
-	std::unique_ptr<Camera> camera2;
-
-	//Map outsideMap;
-	//Map insideMap;
-
-	//int clearCount;
-
-	//Player player;
-	//Sprite sprite;
-
-	//Trace trace;
-
-	//bool isS;
-	//int sFlame;
-
-	//Sprite s;
-
-	//StageA stage;
-	//StageA preStage;
-
 	int currentStageNo;
 	int prevStageNo;
 };

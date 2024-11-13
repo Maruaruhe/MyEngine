@@ -4,8 +4,8 @@
 #include "../../../Manager/TextureManager.h"
 
 
-void Map::Initialize(Camera* camera, std::string filepath) {
-        mapData = LoadMapData(filepath);
+void Map::Initialize(Camera* camera) {
+       // mapData = LoadMapData(filepath);
 
         walls.clear();
         camera_ = camera;
@@ -53,7 +53,7 @@ std::vector<std::vector<int>> Map::LoadMapData(const std::string& filename) {
 
     std::vector<std::vector<int>> map;//配列の読み込み先
 
-    std::string file = directoryPath + filename + ".csv";
+    std::string file = "Resources/csv/" + filename + ".csv";
     std::ifstream stageifs(file);
     std::string line;
 

@@ -27,21 +27,5 @@ void GameScene::Draw() {
 }
 
 void GameScene::SceneChange() {
-	//if (insideMap.GetItem()->model.transform.translate.x >= 17.00f && insideMap.GetItem()->model.transform.translate.x <= 19.00f) {
-	//	if (insideMap.GetItem()->model.transform.translate.z >= -12.5f && insideMap.GetItem()->model.transform.translate.z <= -10.5f) {
-	//		if (insideMap.GetItem()->isTaken == false) {
-	//			clearCount++;
-	//			if (clearCount >= 60) {
-	//				sceneNo = CLEAR;
-	//			}
-	//		}
-	//	}
-	//}
-	//else {
-	//	clearCount = 0;
-	//}
 
-	//if (player.deadFlame >= 180) {
-	//		sceneNo = TITLE;
-	//}
 }

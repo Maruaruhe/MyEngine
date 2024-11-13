@@ -4,7 +4,12 @@ InsideStage::~InsideStage() {}
 
 void InsideStage::Initialize(int prevStage) {
 	//StageごとのInitialize
-	map_.Initialize(camera2.get(), "50x50");
+	if (isFirstLoad) {
+		map_.mapData = map_.LoadMapData("50x50");
+		isFirstLoad = false;
+	}
+
+	map_.Initialize(camera2.get());
 
 	player_.SetMap(&map_);
 	player_.model.SetCamera(camera2.get());

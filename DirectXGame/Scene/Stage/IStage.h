@@ -33,7 +33,7 @@ protected:
 	static int stageNo;
 
 	//初回ロードかどうか
-	static bool isFirstLoad;
+	bool isFirstLoad = true;
 
 	static Player player_;
 

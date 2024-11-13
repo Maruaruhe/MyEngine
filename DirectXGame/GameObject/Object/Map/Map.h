@@ -12,11 +12,13 @@ enum BlockType {
 class Map
 {
 public:
-	void Initialize(Camera* camera, std::string filepath);
+	void Initialize(Camera* camera);
 
 	void Update();
 
 	void Draw();
+
+	std::vector<std::vector<int>> LoadMapData(const std::string& filename);
 
 	void CheckCollision(AABB pAABB, Vector3 move, Vector3* fixVector);
 	bool CheckCollisionWithFloor(AABB pAABB, Vector3 move, Vector3* fixVector);
@@ -24,8 +26,10 @@ public:
 	SmallItem* GetItem() { return sItem.get(); }
 	std::vector<Wall> GetWall() { return walls; }
 
+	//Map情報
+	std::vector<std::vector<int>> mapData;
+
 private:
-	std::vector<std::vector<int>> LoadMapData(const std::string& filename);
 
 	void CreateWall(Camera* camera);
 	void CreateFloor(Camera* camera);
@@ -38,8 +42,7 @@ private:
 private:
 	const std::string directoryPath = "Resources/csv/";
 
-	//Map情報
-	std::vector<std::vector<int>> mapData;
+
 
 	//Wallのリスト
 	std::vector<Wall> walls;

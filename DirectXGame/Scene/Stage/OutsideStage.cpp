@@ -4,7 +4,12 @@ OutsideStage::~OutsideStage() {}
 
 void OutsideStage::Initialize(int prevStage) {
 	//StageごとのInitialize
-	map_.Initialize(camera2.get(), "outside");
+	if (isFirstLoad) {
+		map_.mapData = map_.LoadMapData("outside");
+		isFirstLoad = false;
+	}
+
+	map_.Initialize(camera2.get());
 
 	player_.SetMap(&map_);
 	player_.model.SetCamera(camera2.get());
@@ -13,7 +18,7 @@ void OutsideStage::Initialize(int prevStage) {
 
 	//直前のStageによってPositionを設定
 	if (prevStage == SHIP) {
-		player_.model.transform.translate = { 0,0,0 };
+		player_.model.transform.translate = { 10,0,-40 };
 	}
 	else if (prevStage == INSIDE) {
 		player_.model.transform.translate = { 10,0,-10 };

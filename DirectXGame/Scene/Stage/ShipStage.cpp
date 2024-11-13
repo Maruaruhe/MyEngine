@@ -11,8 +11,12 @@ void ShipStage::Initialize(int prevStage) {
 	light_.Initialize();
 
 	//StageごとのInitialize
-	map_.Initialize(camera2.get(), "ship");
+	if (isFirstLoad) {
+		map_.mapData = map_.LoadMapData( "ship");
+		isFirstLoad = false;
+	}
 
+	map_.Initialize(camera2.get());
 	player_.SetMap(&map_);
 	player_.model.SetCamera(camera2.get());
 	player_.deadModel.SetCamera(camera2.get());
@@ -37,7 +41,7 @@ void ShipStage::Update() {
 
 
 void ShipStage::Draw() {
-	map_.Draw();
+	//map_.Draw();
 
 	player_.Draw();
 }
