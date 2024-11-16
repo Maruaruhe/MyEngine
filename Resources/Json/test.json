@@ -1,0 +1,47 @@
+{
+    "name": "scene",
+    "objects": [
+        {
+            "type": "MESH",
+            "name": "Cube",
+            "transform": {
+                "translation": [
+                    2.101372718811035,
+                    2.0495829582214355,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "Json/test",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": true,
+            "to_right": true,
+            "to_top": true,
+            "to_bot": true,
+            "children": []
+        }
+    ]
+}

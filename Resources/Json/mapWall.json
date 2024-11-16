@@ -102,7 +102,7 @@
                     1.0
                 ]
             },
-            "file_name": "mapWall",
+            "file_name": "Json/mapWall",
             "collder": {
                 "type": "collider_EMPTY",
                 "center": "collider_EMPTY",

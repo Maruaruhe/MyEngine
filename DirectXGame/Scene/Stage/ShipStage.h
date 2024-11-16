@@ -12,6 +12,9 @@ public:
 	~ShipStage();
 
 private:
-	void CreateModels();
-	Model mapModel;
+	int stageChangeCount;
+	Sprite noise0;
+
+	//Model mapModel;
+	//Model a;
 };

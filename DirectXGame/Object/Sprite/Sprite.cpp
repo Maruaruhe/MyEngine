@@ -69,6 +69,8 @@ void Sprite::Draw() {
 		DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
 
 		DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(2, TextureManager::GetInstance()->GetSrvHandleGPU(textureIndex));
+
+		//DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootDescriptorTable(7, TextureManager::GetInstance()->GetSrvHandleGPU(textureIndex));
 		
 		//描画！　（DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
 		DirectX12::GetInstance()->GetCommandList()->DrawIndexedInstanced(6, 1, 0, 0, 0);

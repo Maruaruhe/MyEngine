@@ -139,11 +139,17 @@ void GraphicsRenderer::MakeRootSignature() {
 	descriptorRange[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
 	descriptorRange[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
 
-	D3D12_DESCRIPTOR_RANGE descriptorRangeTexture[1] = {};
-	descriptorRangeTexture[0].BaseShaderRegister = 1;
-	descriptorRangeTexture[0].NumDescriptors = 1;
-	descriptorRangeTexture[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
-	descriptorRangeTexture[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
+	D3D12_DESCRIPTOR_RANGE descriptorRangeEnvTexture[1] = {};
+	descriptorRangeEnvTexture[0].BaseShaderRegister = 1;
+	descriptorRangeEnvTexture[0].NumDescriptors = 1;
+	descriptorRangeEnvTexture[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
+	descriptorRangeEnvTexture[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
+
+	D3D12_DESCRIPTOR_RANGE descriptorRangeMaskTexture[1] = {};
+	descriptorRangeMaskTexture[0].BaseShaderRegister = 2;
+	descriptorRangeMaskTexture[0].NumDescriptors = 1;
+	descriptorRangeMaskTexture[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
+	descriptorRangeMaskTexture[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
 
 	rootParameters[0] = {};
 	rootParameters[1] = {};
@@ -177,8 +183,13 @@ void GraphicsRenderer::MakeRootSignature() {
 
 	rootParameters[6].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
 	rootParameters[6].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
-	rootParameters[6].DescriptorTable.pDescriptorRanges = descriptorRangeTexture;
-	rootParameters[6].DescriptorTable.NumDescriptorRanges = _countof(descriptorRangeTexture);
+	rootParameters[6].DescriptorTable.pDescriptorRanges = descriptorRangeEnvTexture;
+	rootParameters[6].DescriptorTable.NumDescriptorRanges = _countof(descriptorRangeEnvTexture);
+	
+	rootParameters[7].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
+	rootParameters[7].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+	rootParameters[7].DescriptorTable.pDescriptorRanges = descriptorRangeMaskTexture;
+	rootParameters[7].DescriptorTable.NumDescriptorRanges = _countof(descriptorRangeMaskTexture);
 
 	descriptionRootSignature.pParameters = rootParameters;
 	descriptionRootSignature.NumParameters = _countof(rootParameters);

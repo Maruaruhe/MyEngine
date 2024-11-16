@@ -69,7 +69,7 @@ private:
 	IDxcIncludeHandler* includeHandler;
 	//MakeRootSignature
 	D3D12_ROOT_SIGNATURE_DESC descriptionRootSignature{};
-	D3D12_ROOT_PARAMETER rootParameters[7];
+	D3D12_ROOT_PARAMETER rootParameters[8];
 	//MakeRootSignature
 	D3D12_ROOT_SIGNATURE_DESC descriptionRootSignatureForParticle{};
 	D3D12_ROOT_PARAMETER rootParametersForParticle[3];

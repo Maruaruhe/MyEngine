@@ -44,7 +44,7 @@ void Player::Update() {
 	LightUpdate();
 	if (state_.isAlive) {
 		Move();
-		//Jump();
+		Jump();
 	}
 	else {
 	DeathUpdate();
@@ -173,7 +173,7 @@ void Player::Move() {
 
 	// 最後に当たり判定をチェック
 	Vector3 fixVector{};
-	//map_->CheckCollision(GetCollision(), { move.x, state_.velocity.y, move.z }, &fixVector);
+	map_->CheckCollision(GetCollision(), { move.x, state_.velocity.y, move.z }, &fixVector);
 	model.transform.translate += fixVector;
 }
 
