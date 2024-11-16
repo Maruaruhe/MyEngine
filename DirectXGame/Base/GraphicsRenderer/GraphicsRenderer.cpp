@@ -126,6 +126,10 @@ void GraphicsRenderer::SetRootSignatureAndPSO(int n) {
 		directX12->GetCommandList()->SetGraphicsRootSignature(rootSignatureForSkinning.Get());
 		directX12->GetCommandList()->SetPipelineState(graphicsPipelineStateForSkinning.Get());
 	}
+	else if (n == SPRITE) {
+		directX12->GetCommandList()->SetGraphicsRootSignature(rootSignatureForSprite.Get());
+		directX12->GetCommandList()->SetPipelineState(graphicsPipelineStateForSprite.Get());
+	}
 }
 
 
@@ -144,12 +148,6 @@ void GraphicsRenderer::MakeRootSignature() {
 	descriptorRangeEnvTexture[0].NumDescriptors = 1;
 	descriptorRangeEnvTexture[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
 	descriptorRangeEnvTexture[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
-
-	D3D12_DESCRIPTOR_RANGE descriptorRangeMaskTexture[1] = {};
-	descriptorRangeMaskTexture[0].BaseShaderRegister = 2;
-	descriptorRangeMaskTexture[0].NumDescriptors = 1;
-	descriptorRangeMaskTexture[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
-	descriptorRangeMaskTexture[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
 
 	rootParameters[0] = {};
 	rootParameters[1] = {};
@@ -185,11 +183,6 @@ void GraphicsRenderer::MakeRootSignature() {
 	rootParameters[6].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
 	rootParameters[6].DescriptorTable.pDescriptorRanges = descriptorRangeEnvTexture;
 	rootParameters[6].DescriptorTable.NumDescriptorRanges = _countof(descriptorRangeEnvTexture);
-	
-	rootParameters[7].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
-	rootParameters[7].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
-	rootParameters[7].DescriptorTable.pDescriptorRanges = descriptorRangeMaskTexture;
-	rootParameters[7].DescriptorTable.NumDescriptorRanges = _countof(descriptorRangeMaskTexture);
 
 	descriptionRootSignature.pParameters = rootParameters;
 	descriptionRootSignature.NumParameters = _countof(rootParameters);
@@ -361,6 +354,85 @@ void GraphicsRenderer::MakeRootSignatureForSkinning() {
 	}
 	rootSignatureForSkinning = nullptr;
 	hr = directX12->GetDevice()->CreateRootSignature(0, signatureBlob->GetBufferPointer(), signatureBlob->GetBufferSize(), IID_PPV_ARGS(&rootSignatureForSkinning));
+	assert(SUCCEEDED(hr));
+}
+
+void GraphicsRenderer::MakeRootSignatureForSprite() {
+	descriptionRootSignatureForSprite = {};
+	descriptionRootSignatureForSprite.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
+
+	D3D12_DESCRIPTOR_RANGE descriptorRange[1] = {};
+	descriptorRange[0].BaseShaderRegister = 0;
+	descriptorRange[0].NumDescriptors = 1;
+	descriptorRange[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
+	descriptorRange[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
+
+	D3D12_DESCRIPTOR_RANGE descriptorRangeEnvTexture[1] = {};
+	descriptorRangeEnvTexture[0].BaseShaderRegister = 1;
+	descriptorRangeEnvTexture[0].NumDescriptors = 1;
+	descriptorRangeEnvTexture[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
+	descriptorRangeEnvTexture[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
+
+	rootParametersForSprite[0] = {};
+	rootParametersForSprite[1] = {};
+	rootParametersForSprite[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
+	rootParametersForSprite[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+	rootParametersForSprite[0].Descriptor.ShaderRegister = 0;
+
+	rootParametersForSprite[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
+	rootParametersForSprite[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX;
+	rootParametersForSprite[1].Descriptor.ShaderRegister = 0;
+
+	rootParametersForSprite[2].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
+	rootParametersForSprite[2].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+	rootParametersForSprite[2].DescriptorTable.pDescriptorRanges = descriptorRange;
+	rootParametersForSprite[2].DescriptorTable.NumDescriptorRanges = _countof(descriptorRange);
+
+	//CAmera
+	rootParametersForSprite[3].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
+	rootParametersForSprite[3].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+	rootParametersForSprite[3].Descriptor.ShaderRegister = 1;
+
+	//Light
+	rootParametersForSprite[4].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
+	rootParametersForSprite[4].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+	rootParametersForSprite[4].Descriptor.ShaderRegister = 2;
+
+	//SpotLight
+	rootParametersForSprite[5].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
+	rootParametersForSprite[5].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+	rootParametersForSprite[5].Descriptor.ShaderRegister = 3;
+
+	rootParametersForSprite[6].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
+	rootParametersForSprite[6].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+	rootParametersForSprite[6].DescriptorTable.pDescriptorRanges = descriptorRangeEnvTexture;
+	rootParametersForSprite[6].DescriptorTable.NumDescriptorRanges = _countof(descriptorRangeEnvTexture);
+
+	descriptionRootSignatureForSprite.pParameters = rootParametersForSprite;
+	descriptionRootSignatureForSprite.NumParameters = _countof(rootParametersForSprite);
+
+	D3D12_STATIC_SAMPLER_DESC staticSamplers[1] = {};
+	staticSamplers[0].Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR;
+	staticSamplers[0].AddressU = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+	staticSamplers[0].AddressV = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+	staticSamplers[0].AddressW = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
+	staticSamplers[0].ComparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
+	staticSamplers[0].MaxLOD = D3D12_FLOAT32_MAX;
+	staticSamplers[0].ShaderRegister = 0;
+	staticSamplers[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+
+	descriptionRootSignatureForSprite.pStaticSamplers = staticSamplers;
+	descriptionRootSignatureForSprite.NumStaticSamplers = _countof(staticSamplers);
+
+	signatureBlob = nullptr;
+	errorBlob = nullptr;
+	hr = D3D12SerializeRootSignature(&descriptionRootSignatureForSprite, D3D_ROOT_SIGNATURE_VERSION_1, &signatureBlob, &errorBlob);
+	if (FAILED(hr)) {
+		LogText(reinterpret_cast<char*>(errorBlob->GetBufferPointer()));
+		assert(false);
+	}
+	rootSignatureForSprite = nullptr;
+	hr = directX12->GetDevice()->CreateRootSignature(0, signatureBlob->GetBufferPointer(), signatureBlob->GetBufferSize(), IID_PPV_ARGS(&rootSignatureForSprite));
 	assert(SUCCEEDED(hr));
 }
 

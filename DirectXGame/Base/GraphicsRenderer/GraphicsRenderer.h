@@ -19,7 +19,8 @@
 enum Type {
 	MODEL = 0,
 	PARTICLE = 1,
-	ANIME = 2
+	ANIME = 2,
+	SPRITE = 3
 };
 
 class GraphicsRenderer
@@ -41,6 +42,7 @@ public:
 	void MakeRootSignature();
 	void MakeRootSignatureForParticle();
 	void MakeRootSignatureForSkinning();
+	void MakeRootSignatureForSprite();
 
 
 	void SetInputLayout();
@@ -53,6 +55,7 @@ public:
 	void MakePSO();
 	void MakePSOForParticle();
 	void MakePSOForSkinning();
+	void MakePSOForSprite();
 
 	void SetRootSignatureAndPSO(int n);
 
@@ -67,15 +70,20 @@ private:
 	IDxcUtils* dxcUtils =nullptr;
 	IDxcCompiler3* dxcCompiler;
 	IDxcIncludeHandler* includeHandler;
+
 	//MakeRootSignature
 	D3D12_ROOT_SIGNATURE_DESC descriptionRootSignature{};
-	D3D12_ROOT_PARAMETER rootParameters[8];
+	D3D12_ROOT_PARAMETER rootParameters[7];
 	//MakeRootSignature
 	D3D12_ROOT_SIGNATURE_DESC descriptionRootSignatureForParticle{};
 	D3D12_ROOT_PARAMETER rootParametersForParticle[3];
 	//MakeRootSignature
 	D3D12_ROOT_SIGNATURE_DESC descriptionRootSignatureForSkinning{};
 	D3D12_ROOT_PARAMETER rootParametersForSkinning[8];
+
+	//MakeRootSignature
+	D3D12_ROOT_SIGNATURE_DESC descriptionRootSignatureForSprite{};
+	D3D12_ROOT_PARAMETER rootParametersForSprite[8];
 
 
 	ID3DBlob* signatureBlob;
@@ -85,6 +93,8 @@ private:
 	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignature;
 	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignatureForParticle;
 	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignatureForSkinning;
+	Microsoft::WRL::ComPtr<ID3D12RootSignature> rootSignatureForSprite;
+
 	//SetInputLayout
 	D3D12_INPUT_ELEMENT_DESC inputElementDescs[3] = {};
 	D3D12_INPUT_ELEMENT_DESC inputElementDescsForSkinning[5] = {};
@@ -112,6 +122,9 @@ private:
 
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC graphicsPipelineStateDescForSkinning{};
 	Microsoft::WRL::ComPtr<ID3D12PipelineState> graphicsPipelineStateForSkinning;
+	
+	D3D12_GRAPHICS_PIPELINE_STATE_DESC graphicsPipelineStateDescForSprite{};
+	Microsoft::WRL::ComPtr<ID3D12PipelineState> graphicsPipelineStateForSprite;
 
 
 	//MakeVertexResource
