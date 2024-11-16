@@ -7,12 +7,6 @@
 #include "Stage/OutsideStage.h"
 #include "Stage/InsideStage.h"
 
-//enum StageA {
-//	A = 0,
-//	B = 1,
-//	C = 2
-//};
-
 class GameScene : public IScene
 {
 public:

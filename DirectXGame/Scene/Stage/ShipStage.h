@@ -10,4 +10,8 @@ public:
 	void StageChange() override;
 
 	~ShipStage();
+
+private:
+	void CreateModels();
+	Model mapModel;
 };
