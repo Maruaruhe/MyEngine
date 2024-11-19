@@ -38,9 +38,9 @@ void TitleScene::Initialize() {
 
 void TitleScene::Update() {
 	bUpdate();
-	blacks.remove_if([](tmpParticle* enemy) {
-		if (enemy->sprite->transform.translate.y <= -enemy->sprite->size_.y) {
-			delete enemy;
+	blacks.remove_if([](tmpParticle* black) {
+		if (black->sprite->transform.translate.y <= -black->sprite->size_.y) {
+			delete black;
 			return true;
 		}
 		return false;
