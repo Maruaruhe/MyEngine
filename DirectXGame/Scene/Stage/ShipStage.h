@@ -15,6 +15,6 @@ private:
 	int stageChangeCount;
 	Sprite noise0;
 
-	//Model mapModel;
+	Model mapModel;
 	//Model a;
 };

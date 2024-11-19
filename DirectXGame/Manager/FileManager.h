@@ -18,12 +18,18 @@ struct ColliderData {
 	Vector3 center;
 	Vector3 size;
 };
+
 struct LevelData {
 
 	struct ObjectData {
 		std::string type;
 		std::string file_name;
 		Transform transform;
+		bool isItem;
+		bool toLeft;
+		bool toRight;
+		bool toTop;
+		bool toBot;
 		std::map<std::string, std::unique_ptr<ObjectData>> children;
 	};
 	std::map<std::string, std::unique_ptr<ObjectData>> objects;

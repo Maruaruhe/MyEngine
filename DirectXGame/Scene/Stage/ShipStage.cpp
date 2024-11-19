@@ -28,6 +28,12 @@ void ShipStage::Initialize(int prevStage) {
 
 	TextureManager::GetInstance()->LoadTexture("Resources/noise0.png");
 	noise0.Initialize({ 1280,720 }, "Resources/noise0.png");
+
+	 FileManager::GetInstance()->LoadJsonFile("Json/", "test");
+	 ModelManager::GetInstance()->LoadModel("Json/test");
+	 mapModel.Initialize("Json/test");
+	 mapModel.SetCamera(camera2.get());
+	 mapModel.transform = FileManager::GetInstance()->GetObjectTransform("Json/test");
 }
 
 
@@ -45,15 +51,19 @@ void ShipStage::Update() {
 	camera2.get()->transform.rotate = player_.tForCamera.rotate;
 
 	noise0.Update();
+
+	mapModel.Update();
 }
 
 
 void ShipStage::Draw() {
-	map_.Draw();
+	//map_.Draw();
 
 	player_.Draw();
 
 	//noise0.Draw();
+
+	mapModel.Draw();
 }
 
 

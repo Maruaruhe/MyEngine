@@ -173,7 +173,7 @@ void Player::Move() {
 
 	// 最後に当たり判定をチェック
 	Vector3 fixVector{};
-	map_->CheckCollision(GetCollision(), { move.x, state_.velocity.y, move.z }, &fixVector);
+	//map_->CheckCollision(GetCollision(), { move.x, state_.velocity.y, move.z }, &fixVector);
 	model.transform.translate += fixVector;
 }
 
@@ -190,7 +190,7 @@ void Player::Jump() {
 		//Jumping
 		state_.velocity.y -= 0.02f;
 	}
-	model.transform.translate += state_.velocity;
+	//model.transform.translate += state_.velocity;
 
 	Vector3 fixVector{};
 
