@@ -18,11 +18,6 @@ void TestScene::Initialize() {
 
 	FileManager::GetInstance()->LoadJsonFile("Json/", "testJ");
 
-	testJson.Initialize();
-	testJson.model->SetCamera(camera2.get());
-	testJson.model2->SetCamera(camera2.get());
-	testJson.model3->SetCamera(camera2.get());
-
 	s.Initialize();
 	s.camera = camera2.get();
 	test.model.SetCamera(camera2.get());
@@ -34,13 +29,11 @@ void TestScene::Update() {
 	light.Update();
 	camera2->Update();
 
-	testJson.Update();
 	test.Update();
 	s.Update();
 }
 
 void TestScene::Draw() {
-	testJson.Draw();
 	test.Draw();
 	//s.Draw();
 }

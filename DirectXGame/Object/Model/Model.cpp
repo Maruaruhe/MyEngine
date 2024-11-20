@@ -52,10 +52,6 @@ void Model::ApplyGlobalVariables() {
 
 void Model::Update() {
 	//ApplyGlobalVariables();
-
-}
-
-void Model::Draw() {
 	//Update
 	worldMatrix = MakeAffineMatrix(transform.scale, transform.rotate, transform.translate);
 	Matrix4x4 worldViewProjectionMatrix;
@@ -81,6 +77,9 @@ void Model::Draw() {
 	uvTransformMatrix = Multiply(uvTransformMatrix, MakeTranslateMatrix(uvTransform.translate));
 	material->uvTransform = uvTransformMatrix;
 
+}
+
+void Model::Draw()  const {
 	//Draw
 	DirectX12::GetInstance()->GetCommandList()->IASetVertexBuffers(0, 1, &vertexBufferView);	//VBVを設定
 	//形状を設定。PSOに設定しているものとはまた別。同じものを設定すると考えておけばよい

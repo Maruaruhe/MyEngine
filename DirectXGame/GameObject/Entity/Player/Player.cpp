@@ -100,7 +100,7 @@ void Player::LightUpdate() {
 }
 
 void Player::Draw() {
-	//model.Draw();
+	model.Draw();
 	if (!state_.isAlive) {
 		deadModel.Draw();
 		deads.Draw();

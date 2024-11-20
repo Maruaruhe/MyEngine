@@ -1,5 +1,4 @@
 #include "ShipStage.h"
-#include "../../Manager/FileManager.h"
 
 ShipStage::~ShipStage(){}
 
@@ -29,11 +28,10 @@ void ShipStage::Initialize(int prevStage) {
 	TextureManager::GetInstance()->LoadTexture("Resources/noise0.png");
 	noise0.Initialize({ 1280,720 }, "Resources/noise0.png");
 
-	 FileManager::GetInstance()->LoadJsonFile("Json/", "test");
-	 ModelManager::GetInstance()->LoadModel("Json/test");
-	 mapModel.Initialize("Json/test");
-	 mapModel.SetCamera(camera2.get());
-	 mapModel.transform = FileManager::GetInstance()->GetObjectTransform("Json/test");
+	 level = FileManager::GetInstance()->LoadJsonFile("Json/", "test");
+	 for (ObjectData& model : level.objects) {
+		 model.model.SetCamera(camera2.get());
+	 }
 }
 
 
@@ -52,7 +50,10 @@ void ShipStage::Update() {
 
 	noise0.Update();
 
-	mapModel.Update();
+	//mapModel.Update();
+	for (ObjectData& model : level.objects) {
+		model.model.Update();
+	}
 }
 
 
@@ -63,7 +64,10 @@ void ShipStage::Draw() {
 
 	//noise0.Draw();
 
-	mapModel.Draw();
+	//mapModel.Draw();
+	for (const ObjectData& model : level.objects) {
+		model.model.Draw();
+	}
 }
 
 

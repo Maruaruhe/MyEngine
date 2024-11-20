@@ -1,5 +1,7 @@
 #pragma once
 #include "IStage.h"
+#include "../../Manager/FileManager.h"
+
 
 class ShipStage : public IStage
 {
@@ -15,6 +17,7 @@ private:
 	int stageChangeCount;
 	Sprite noise0;
 
-	Model mapModel;
+	//Model mapModel;
 	//Model a;
+	LevelData level;
 };

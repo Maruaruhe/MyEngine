@@ -1,15 +1,15 @@
 #include "FileManager.h"
-
+#include "ModelManager.h"
 
 
 // 初期化処理
 void FileManager::Initialize()
 {
-	levelData_ = std::make_unique<LevelData>();
+	//levelData_ = std::make_unique<LevelData>();
 }
 
 // JSONファイル読み込み
-void FileManager::LoadJsonFile(const std::string& routeFilePath, const std::string& fileName)
+LevelData FileManager::LoadJsonFile(const std::string& routeFilePath, const std::string& fileName)
 {
 	/* ---------- JSOnファイルを読み込んでみる ---------- */
 
@@ -49,7 +49,7 @@ void FileManager::LoadJsonFile(const std::string& routeFilePath, const std::stri
 	/* ---------- オブジェクトの走査 ---------- */
 
 	 // レベルデータ格納用インスタンスを生成
-	auto levelData = std::make_unique<LevelData>();
+	LevelData level;
 
 	// "objects"の全オブジェクトを走査
 	if (deserialized.contains("objects") && deserialized["objects"].is_array()) {
@@ -57,18 +57,16 @@ void FileManager::LoadJsonFile(const std::string& routeFilePath, const std::stri
 		// 走査してく
 		for (nlohmann::json& object : deserialized["objects"]) {
 
-			ScanningObjects(object, levelData->objects);
+			ScanningObjects(object, &level.objects);
 		}
 	}
 
-
-	// とりあえず読み込んだ情報を変数に保存しておく
-	levelData_ = move(levelData);
+	return level;
 }
 
 
 // オブジェクトの走査
-void FileManager::ScanningObjects(nlohmann::json& object, std::map<std::string, std::unique_ptr<LevelData::ObjectData>>& objects)
+void FileManager::ScanningObjects(nlohmann::json& object, std::vector<ObjectData>* objects)
 {
 	// 各オブジェクトには必ず "type"データを入れているので
 	// "type"が検出できなければ不正として実行を停止する
@@ -83,65 +81,59 @@ void FileManager::ScanningObjects(nlohmann::json& object, std::map<std::string, 
 	if (type.compare("MESH") == 0) {
 
 		// 新しくオブジェクトを作成
-		auto objectData = std::make_unique<LevelData::ObjectData>();
-
-
-		if (object.contains("type")) {
-
-			// タイプ
-			objectData->type = object["type"];
-		}
-		if (object.contains("file_name")) {
-
-			// ファイル名
-			objectData->file_name = object["file_name"];
-		}
-
+		ObjectData objectData;
 
 		// トランスフォームのパラメータ読み込み
 		if (object.contains("transform")) {
 
 			nlohmann::json& transform = object["transform"];
 			// 平行移動
-			objectData->transform.translate.x = (float)transform["translation"][0];
-			objectData->transform.translate.y = (float)transform["translation"][2];
-			objectData->transform.translate.z = (float)transform["translation"][1];
+			objectData.transform.translate.x = (float)transform["translation"][0];
+			objectData.transform.translate.y = (float)transform["translation"][2];
+			objectData.transform.translate.z = (float)transform["translation"][1];
 			// 回転角
-			objectData->transform.rotate.x = -(float)transform["rotation"][0]; //*(float(std::numbers::pi) / 180.0f);
-			objectData->transform.rotate.y = -(float)transform["rotation"][2];// *(float(std::numbers::pi) / 180.0f);
-			objectData->transform.rotate.z = -(float)transform["rotation"][1];// *(float(std::numbers::pi) / 180.0f);
+			objectData.transform.rotate.x = -(float)transform["rotation"][0]; //*(float(std::numbers::pi) / 180.0f);
+			objectData.transform.rotate.y = -(float)transform["rotation"][2];// *(float(std::numbers::pi) / 180.0f);
+			objectData.transform.rotate.z = -(float)transform["rotation"][1];// *(float(std::numbers::pi) / 180.0f);
 			// スケーリング
-			objectData->transform.scale.x = (float)transform["scaling"][0];
-			objectData->transform.scale.y = (float)transform["scaling"][2];
-			objectData->transform.scale.z = (float)transform["scaling"][1];
+			objectData.transform.scale.x = (float)transform["scaling"][0];
+			objectData.transform.scale.y = (float)transform["scaling"][2];
+			objectData.transform.scale.z = (float)transform["scaling"][1];
 		}
 
-
-		// TODO : コライダーの読み込み
-
-
-
-		/* ---------- ツリー構造の走査 ---------- */
-		if (object.contains("children") && object["children"].is_array()) {
-
-			for (nlohmann::json& child : object["children"]) {
-				ScanningObjects(child, objectData->children);
-			}
+		//種類分け
+		if (object.contains("is_item")) {
+			objectData.isItem = object["is_item"];
 		}
+		if (object.contains("to_left")) {
+			objectData.toLeft = object["to_left"];
+		}
+		if (object.contains("to_right")) {
+			objectData.toLeft = object["to_right"];
+		}
+		if (object.contains("to_top")) {
+			objectData.toLeft = object["to_top"];
+		}
+		if (object.contains("to_bot")) {
+			objectData.toLeft = object["to_bot"];
+		}
+
+		ModelManager::GetInstance()->LoadModel("Map/wall");
+		objectData.model.Initialize("Map/wall");
 
 		// オブジェクトを追加
-		objects[objectData->file_name] = std::move(objectData);
+		objects->push_back(objectData);
 	}
 }
 
-void FileManager::CreateModels() {
-	// レベルデータからオブジェクトを生成、配置
-	for (auto& objectData : levelData_->objects) {
-
-		// ファイル名から登録済みモデルを検索
-		Model model;
-		model.Initialize("Box");
-		model.transform = FileManager::GetInstance()->GetObjectTransform("key");
-		levelModels.push_back(model);
-	}
-}
+//void FileManager::CreateModels() {
+//	// レベルデータからオブジェクトを生成、配置
+//	for (auto& objectData : levelData_->objects) {
+//
+//		// ファイル名から登録済みモデルを検索
+//		Model model;
+//		model.Initialize("Box");
+//		model.transform = FileManager::GetInstance()->GetObjectTransform("key");
+//		levelModels.push_back(model);
+//	}
+//}
