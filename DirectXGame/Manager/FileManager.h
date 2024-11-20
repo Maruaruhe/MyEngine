@@ -20,7 +20,6 @@ struct ColliderData {
 };
 
 struct ObjectData {
-	Transform transform;
 	bool isItem;
 	bool toLeft;
 	bool toRight;

@@ -28,7 +28,7 @@ void ShipStage::Initialize(int prevStage) {
 	TextureManager::GetInstance()->LoadTexture("Resources/noise0.png");
 	noise0.Initialize({ 1280,720 }, "Resources/noise0.png");
 
-	 level = FileManager::GetInstance()->LoadJsonFile("Json/", "test");
+	 level = FileManager::GetInstance()->LoadJsonFile("Json/", "test3rd");
 	 for (ObjectData& model : level.objects) {
 		 model.model.SetCamera(camera2.get());
 	 }

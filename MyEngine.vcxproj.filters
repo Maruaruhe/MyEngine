@@ -66,6 +66,7 @@
     <ClCompile Include="DirectXGame\Scene\Stage\ShipStage.cpp" />
     <ClCompile Include="DirectXGame\Scene\Stage\OutsideStage.cpp" />
     <ClCompile Include="DirectXGame\Scene\Stage\InsideStage.cpp" />
+    <ClCompile Include="DirectXGame\GameObject\Object\Map\MapJson.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Object\AABB\AABB.h" />
@@ -128,6 +129,8 @@
     <ClInclude Include="DirectXGame\Scene\Stage\ShipStage.h" />
     <ClInclude Include="DirectXGame\Scene\Stage\OutsideStage.h" />
     <ClInclude Include="DirectXGame\Scene\Stage\InsideStage.h" />
+    <ClInclude Include="JsonMap.h" />
+    <ClInclude Include="DirectXGame\GameObject\Object\Map\MapJson.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shader\Object3d.hlsli" />

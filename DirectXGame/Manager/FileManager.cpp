@@ -82,23 +82,25 @@ void FileManager::ScanningObjects(nlohmann::json& object, std::vector<ObjectData
 
 		// 新しくオブジェクトを作成
 		ObjectData objectData;
+		ModelManager::GetInstance()->LoadModel("Map/wall");
+		objectData.model.Initialize("Map/wall");
 
 		// トランスフォームのパラメータ読み込み
 		if (object.contains("transform")) {
 
 			nlohmann::json& transform = object["transform"];
 			// 平行移動
-			objectData.transform.translate.x = (float)transform["translation"][0];
-			objectData.transform.translate.y = (float)transform["translation"][2];
-			objectData.transform.translate.z = (float)transform["translation"][1];
+			objectData.model.transform.translate.x = (float)transform["translation"][0];
+			objectData.model.transform.translate.y = (float)transform["translation"][2];
+			objectData.model.transform.translate.z = (float)transform["translation"][1];
 			// 回転角
-			objectData.transform.rotate.x = -(float)transform["rotation"][0]; //*(float(std::numbers::pi) / 180.0f);
-			objectData.transform.rotate.y = -(float)transform["rotation"][2];// *(float(std::numbers::pi) / 180.0f);
-			objectData.transform.rotate.z = -(float)transform["rotation"][1];// *(float(std::numbers::pi) / 180.0f);
+			objectData.model.transform.rotate.x = -(float)transform["rotation"][0]; //*(float(std::numbers::pi) / 180.0f);
+			objectData.model.transform.rotate.y = -(float)transform["rotation"][2];// *(float(std::numbers::pi) / 180.0f);
+			objectData.model.transform.rotate.z = -(float)transform["rotation"][1];// *(float(std::numbers::pi) / 180.0f);
 			// スケーリング
-			objectData.transform.scale.x = (float)transform["scaling"][0];
-			objectData.transform.scale.y = (float)transform["scaling"][2];
-			objectData.transform.scale.z = (float)transform["scaling"][1];
+			objectData.model.transform.scale.x = (float)transform["scaling"][0];
+			objectData.model.transform.scale.y = (float)transform["scaling"][2];
+			objectData.model.transform.scale.z = (float)transform["scaling"][1];
 		}
 
 		//種類分け
@@ -117,9 +119,6 @@ void FileManager::ScanningObjects(nlohmann::json& object, std::vector<ObjectData
 		if (object.contains("to_bot")) {
 			objectData.toLeft = object["to_bot"];
 		}
-
-		ModelManager::GetInstance()->LoadModel("Map/wall");
-		objectData.model.Initialize("Map/wall");
 
 		// オブジェクトを追加
 		objects->push_back(objectData);
