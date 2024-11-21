@@ -6,8 +6,8 @@
             "name": "Cube",
             "transform": {
                 "translation": [
-                    2.119513988494873,
-                    2.104346752166748,
+                    -0.14046049118041992,
+                    15.366381645202637,
                     0.0
                 ],
                 "rotation": [
@@ -16,12 +16,12 @@
                     0.0
                 ],
                 "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
+                    2.4867303371429443,
+                    2.4867303371429443,
+                    2.4867303371429443
                 ]
             },
-            "file_name": "Json/test",
+            "file_name": "DEFAULT",
             "collider": {
                 "type": "AABB",
                 "center": [
@@ -36,11 +36,11 @@
                 ]
             },
             "load_model": true,
-            "is_item": false,
-            "to_left": true,
-            "to_right": true,
-            "to_top": true,
-            "to_bot": true,
+            "is_item": true,
+            "to_left": false,
+            "to_right": false,
+            "to_top": false,
+            "to_bot": false,
             "children": []
         }
     ]

@@ -22,7 +22,7 @@ public:
 
 	void Update();
 
-	void Draw();
+	void Draw() const;
 
 	Vector3 GetWorldPosition(){
 		return { worldMatrix.m[3][0],worldMatrix.m[3][1] ,worldMatrix.m[3][2] };

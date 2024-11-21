@@ -1,5 +1,4 @@
 #include "ShipStage.h"
-#include "../../Manager/FileManager.h"
 
 ShipStage::~ShipStage(){}
 
@@ -28,6 +27,11 @@ void ShipStage::Initialize(int prevStage) {
 
 	TextureManager::GetInstance()->LoadTexture("Resources/noise0.png");
 	noise0.Initialize({ 1280,720 }, "Resources/noise0.png");
+
+	 level = FileManager::GetInstance()->LoadJsonFile("Json/", "test3rd");
+	 for (ObjectData& model : level.objects) {
+		 model.model.SetCamera(camera2.get());
+	 }
 }
 
 
@@ -46,6 +50,11 @@ void ShipStage::Update() {
 
 	noise0.Update();
 
+	//mapModel.Update();
+	for (ObjectData& model : level.objects) {
+		model.model.Update();
+	}
+
 	if (KeyInput::GetInstance()->TriggerKey(DIK_SPACE)) {
 		toClearScene = true;
 	}
@@ -53,11 +62,16 @@ void ShipStage::Update() {
 
 
 void ShipStage::Draw() {
-	map_.Draw();
+	//map_.Draw();
 
 	player_.Draw();
 
 	//noise0.Draw();
+
+	//mapModel.Draw();
+	for (const ObjectData& model : level.objects) {
+		model.model.Draw();
+	}
 }
 
 

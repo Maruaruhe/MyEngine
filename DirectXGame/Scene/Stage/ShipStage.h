@@ -1,5 +1,7 @@
 #pragma once
 #include "IStage.h"
+#include "../../Manager/FileManager.h"
+
 
 class ShipStage : public IStage
 {
@@ -17,4 +19,5 @@ private:
 
 	//Model mapModel;
 	//Model a;
+	LevelData level;
 };

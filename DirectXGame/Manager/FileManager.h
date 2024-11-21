@@ -18,17 +18,19 @@ struct ColliderData {
 	Vector3 center;
 	Vector3 size;
 };
-struct LevelData {
 
-	struct ObjectData {
-		std::string type;
-		std::string file_name;
-		Transform transform;
-		std::map<std::string, std::unique_ptr<ObjectData>> children;
-	};
-	std::map<std::string, std::unique_ptr<ObjectData>> objects;
+struct ObjectData {
+	bool isItem;
+	bool toLeft;
+	bool toRight;
+	bool toTop;
+	bool toBot;
+	Model model;
 };
 
+struct LevelData {
+	std::vector<ObjectData> objects;
+};
 
 /* FileManagerクラス */
 class FileManager {
@@ -53,34 +55,11 @@ public:
 	void Initialize();
 
 	// JSONファイル読み込み
-	void LoadJsonFile(const std::string& routeFilePath, const std::string& fileName);
+	//void LoadJsonFile(const std::string& routeFilePath, const std::string& fileName);
+	LevelData LoadJsonFile(const std::string& routeFilePath, const std::string& fileName);
 
 
 #pragma region Get
-
-	LevelData::ObjectData* GetObjectData(const std::string& key) const {
-
-		if (!levelData_) {
-			return nullptr;
-		}
-
-		auto it = levelData_->objects.find(key);
-		if (it != levelData_->objects.end()) {
-			return it->second.get();
-		}
-
-		return nullptr;
-	}
-
-	Transform GetObjectTransform(const std::string& key) const {
-
-		auto it = levelData_->objects.find(key);
-		if (it != levelData_->objects.end()) {
-			return it->second.get()->transform;
-		}
-
-		return Transform();
-	}
 
 #pragma endregion 
 
@@ -92,19 +71,21 @@ public:
 private:
 
 	// オブジェクトの走査
-	void ScanningObjects(nlohmann::json& object, std::map<std::string, std::unique_ptr<LevelData::ObjectData>>& objects);
+	void ScanningObjects(nlohmann::json& object, std::vector<ObjectData>* objects);
 
 	void CreateModels();
 
 private:
 
+public:
+
 	// JSONファイルから読み込んだ情報をまとめおく変数
-	std::unique_ptr<LevelData> levelData_;
-
-//	std::vector
-
-	// 配置するための変数
-	std::vector<Model> levelModels;
+//	std::unique_ptr<LevelData> levelData_;
+//
+////	std::vector
+//
+//	// 配置するための変数
+//	std::vector<Model> levelModels;
 //	std::map<const std::string, std::unique_ptr<LevelObject>> levelObjectMap_;
 };
 

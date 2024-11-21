@@ -149,13 +149,13 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="DirectXGame\GameObject\Entity\Player\Player.cpp" />
     <ClCompile Include="DirectXGame\GameObject\Object\Map\Item\SmallItem\SmallItem.cpp" />
     <ClCompile Include="DirectXGame\Object\Skybox\Skybox.cpp" />
-    <ClCompile Include="DirectXGame\GameObject\Entity\TestJsonObject\TestJsonObject.cpp" />
     <ClCompile Include="DirectXGame\Scene\TitleScene.cpp" />
     <ClCompile Include="DirectXGame\Object\SpotLight\SpotLight.cpp" />
     <ClCompile Include="DirectXGame\GameObject\Entity\Enemy\Trace\Trace.cpp" />
     <ClCompile Include="DirectXGame\Object\PointLight\PointLight.cpp" />
     <ClCompile Include="DirectXGame\Scene\Stage\OutsideStage.cpp" />
     <ClCompile Include="DirectXGame\Scene\Stage\ShipStage.cpp" />
+    <ClCompile Include="DirectXGame\GameObject\Object\Map\MapJson.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shader\Object2D.PS.hlsl">
@@ -249,7 +249,6 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="DirectXGame\GameObject\Entity\TestObject\TestObject.h" />
     <ClInclude Include="DirectXGame\Object\Skybox\Skybox.h" />
     <ClInclude Include="DirectXGame\Manager\FileManager.h" />
-    <ClInclude Include="DirectXGame\GameObject\Entity\TestJsonObject\TestJsonObject.h" />
     <ClInclude Include="DirectXGame\Scene\GameScene.h" />
     <ClInclude Include="DirectXGame\GameObject\Object\Map\Wall\Wall.h" />
     <ClInclude Include="DirectXGame\Base\Load\LoadCSV.h" />
@@ -267,6 +266,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="DirectXGame\Scene\Stage\InsideStage.h" />
     <ClInclude Include="DirectXGame\Scene\Stage\OutsideStage.h" />
     <ClInclude Include="DirectXGame\Scene\Stage\ShipStage.h" />
+    <ClInclude Include="JsonMap.h" />
+    <ClInclude Include="DirectXGame\GameObject\Object\Map\MapJson.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt" />
