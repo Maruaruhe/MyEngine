@@ -32,6 +32,8 @@ protected:
 	//現在のステージ
 	static int stageNo;
 
+	static bool toClearScene;
+
 	//初回ロードかどうか
 	bool isFirstLoad = true;
 
@@ -52,6 +54,7 @@ public:
 
 	virtual ~IStage();
 	int GetStageNo() { return stageNo; }
+	bool GetToClear() {return toClearScene;}
 
 private :
 };

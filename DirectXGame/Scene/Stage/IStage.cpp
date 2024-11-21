@@ -2,6 +2,8 @@
 
 int IStage::stageNo = SHIP;
 
+bool IStage::toClearScene = false;
+
 Player IStage::player_ = {};
 
 Lighting IStage::light_ = {};

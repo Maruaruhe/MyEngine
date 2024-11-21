@@ -6,14 +6,20 @@ void ClearScene::Initialize() {
 
 	TextureManager::GetInstance()->LoadTexture("Resources/Title/clear.png");
 	title.Initialize({ 1280,720 }, "Resources/Title/clear.png");
+
+	TextureManager::GetInstance()->LoadTexture("Resources/Title/black.png");
+	black.Initialize({ 1280,720 }, "Resources/Title/black.png");
 }
 
 void ClearScene::Update() {
 	title.Update();
+	black.Update();
+	black.materialData_->color.w -= 0.005f;
 }
 
 void ClearScene::Draw() {
 	title.Draw();
+	black.Draw();
 }
 
 void ClearScene::SceneChange() {

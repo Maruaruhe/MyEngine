@@ -22,6 +22,8 @@ private:
 	KeyInput* input = nullptr;
 
 	Sprite title;
+	Sprite black;
+
 	Model model;
 
 	std::unique_ptr<Camera> camera2;

@@ -45,6 +45,10 @@ void ShipStage::Update() {
 	camera2.get()->transform.rotate = player_.tForCamera.rotate;
 
 	noise0.Update();
+
+	if (KeyInput::GetInstance()->TriggerKey(DIK_SPACE)) {
+		toClearScene = true;
+	}
 }
 
 
