@@ -8,7 +8,8 @@
 #include <numbers>
 
 void Particle::InitializePosition() {
-	modelData = ModelManager::GetInstance()->GetModel("plane");
+	ModelManager::GetInstance()->LoadModel("box");
+	modelData = ModelManager::GetInstance()->GetModel("box");
 	vertexResource = DirectX12::GetInstance()->CreateBufferResource(sizeof(VertexData) * modelData.vertices.size());
 }
 
@@ -20,7 +21,7 @@ void Particle::Initialize(const std::string& filename) {
 	CreateSRV();
 
 	emitter_.count = 3;
-	emitter_.frequency = 60.0f;
+	emitter_.frequency = 5.0f;
 	emitter_.frequencyTime = 0.0f;
 
 	TextureManager::GetInstance()->LoadTexture(filename);
@@ -30,6 +31,8 @@ void Particle::Initialize(const std::string& filename) {
 void Particle::Update() {
 	material->uvTransform = MakeIdentity4x4();
 
+#ifdef _DEBUG
+
 	ImGui::Begin("Particle");
 	if (ImGui::Button("Add Particle")) {
 		particles.splice(particles.end(), Emit(emitter_));
@@ -38,6 +41,8 @@ void Particle::Update() {
 	ImGui::Text("ListSize %d", particles.size());
 	ImGui::Text("instanceNum %d", numInstance);
 	ImGui::End();
+
+#endif
 
 	emitter_.frequencyTime += 1.0f;
 	if (emitter_.frequency <= emitter_.frequencyTime) {
@@ -83,7 +88,9 @@ void Particle::Update() {
 				//instancingData[numInstance].color = { 0.0f,1.0f,1.0f,1.0f };
 				instancingData[numInstance].color.w = (*particleIterator).color.w;
 
+#ifdef _DEBUG
 				ImGui::DragFloat4("ALPHA", &(*particleIterator).color.x);
+#endif // _DEBUG
 				//instancingData[index].color = particles[index].color;
 
 
@@ -121,16 +128,21 @@ ParticleInfo Particle::MakeNewParticle() {
 	Scope scope = { -0.01f,0.01f };
 	Vector3 r = RandomGenerator::GetInstance()->getRandom({ scope, scope, scope });
 
+	Scope sX{ 10.5f,10.5f };
+	float s = RandomGenerator::GetInstance()->getRandom(scope);
+
 	ParticleInfo particleInfo;
 	particleInfo.transform.translate = r + emitter_.transform.translate;
 	particleInfo.transform.scale = { 1.0f,1.0f,1.0f };
 	particleInfo.transform.rotate = {};
 	particleInfo.velocity = r;
+	particleInfo.velocity.x = 0.05f;
 
 	Scope color = { 0,255 };
 	ScopeVec4 colorVec4 = { color,color,color,{255,255} };
 
 	particleInfo.color = RandomGenerator::getColorRandom(colorVec4);
+	particleInfo.color = {};
 
 	Scope lScope = { 6.0f,18.0f };
 	float randomLife = RandomGenerator::GetInstance()->getRandom(lScope);

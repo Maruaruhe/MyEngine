@@ -32,6 +32,9 @@ void ShipStage::Initialize(int prevStage) {
 	 for (ObjectData& model : level.objects) {
 		 model.model.SetCamera(camera2.get());
 	 }
+
+	 p.Initialize("Resources/white.png");
+	 p.SetCamera(camera2.get());
 }
 
 
@@ -58,6 +61,8 @@ void ShipStage::Update() {
 	if (KeyInput::GetInstance()->TriggerKey(DIK_SPACE)) {
 		toClearScene = true;
 	}
+
+	p.Update();
 }
 
 
@@ -72,6 +77,8 @@ void ShipStage::Draw() {
 	for (const ObjectData& model : level.objects) {
 		model.model.Draw();
 	}
+
+	p.Draw();
 }
 
 

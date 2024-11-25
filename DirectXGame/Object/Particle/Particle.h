@@ -66,6 +66,7 @@ private:
 
 public:
 	Material* material = nullptr;
+	Camera* camera_ = nullptr;
 
 	//ParticleInfo particles[kNumInstance];
 	std::list<ParticleInfo> particles;
@@ -83,7 +84,6 @@ private:
 	KeyInput* input_ = nullptr;
 	ModelData modelData;
 	VertexData* vertexData = nullptr;
-	Camera* camera_ = nullptr;
 
 	uint32_t descriptorSizeSRV{};
 
