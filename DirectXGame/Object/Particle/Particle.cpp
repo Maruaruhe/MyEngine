@@ -23,6 +23,9 @@ void Particle::Initialize(const std::string& filename) {
 	emitter_.count = 3;
 	emitter_.frequency = 5.0f;
 	emitter_.frequencyTime = 0.0f;
+	emitter_.transform.translate.z = -3.0f;
+	emitter_.transform.translate.y = 2.0f;
+	emitter_.transform.translate.x = 0.5f;
 
 	TextureManager::GetInstance()->LoadTexture(filename);
 	textureIndex = TextureManager::GetInstance()->GetTextureIndexByFilePath(filename);

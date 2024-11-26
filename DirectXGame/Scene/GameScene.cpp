@@ -28,6 +28,6 @@ void GameScene::Draw() {
 
 void GameScene::SceneChange() {
 	if (stageArr[currentStageNo]->GetToClear()) {
-		sceneNo = CLEAR;
+		//sceneNo = CLEAR;
 	}
 }
