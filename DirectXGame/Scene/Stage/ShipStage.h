@@ -3,6 +3,8 @@
 #include "../../Manager/FileManager.h"
 #include "../../Object/Particle/Particle.h"
 
+#include "../../GameObject/Object/Map/MapJson.h"
+
 
 class ShipStage : public IStage
 {
@@ -21,6 +23,8 @@ private:
 	//Model mapModel;
 	//Model a;
 	LevelData level;
+
+	MapJson json;
 
 	Particle p;
 };

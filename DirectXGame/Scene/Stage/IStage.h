@@ -43,7 +43,6 @@ protected:
 
 	static std::unique_ptr<Camera> camera2;
 
-	//static 
 	Map map_;
 
 public:

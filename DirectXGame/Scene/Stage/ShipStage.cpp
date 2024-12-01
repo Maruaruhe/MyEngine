@@ -28,10 +28,7 @@ void ShipStage::Initialize(int prevStage) {
 	TextureManager::GetInstance()->LoadTexture("Resources/noise0.png");
 	noise0.Initialize({ 1280,720 }, "Resources/noise0.png");
 
-	 level = FileManager::GetInstance()->LoadJsonFile("Json/", "test3rd");
-	 for (ObjectData& model : level.objects) {
-		 model.model.SetCamera(camera2.get());
-	 }
+	json.Initialize(camera2.get());
 
 	 p.Initialize("Resources/white.png");
 	 p.SetCamera(camera2.get());
@@ -53,10 +50,7 @@ void ShipStage::Update() {
 
 	noise0.Update();
 
-	//mapModel.Update();
-	for (ObjectData& model : level.objects) {
-		model.model.Update();
-	}
+	json.Update();
 
 	if (KeyInput::GetInstance()->TriggerKey(DIK_SPACE)) {
 		toClearScene = true;
@@ -73,10 +67,7 @@ void ShipStage::Draw() {
 
 	//noise0.Draw();
 
-	//mapModel.Draw();
-	for (const ObjectData& model : level.objects) {
-		model.model.Draw();
-	}
+	json.Draw();
 
 	p.Draw();
 }
