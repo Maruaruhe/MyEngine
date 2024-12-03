@@ -4,6 +4,7 @@
 #include "../../../Base/Input/Input.h"
 
 #include "../../Object/Map/Map.h"
+#include "../../Object/Map/MapJson.h"
 #include "../../../Object/SpotLight/SpotLight.h"
 
 struct State {
@@ -30,6 +31,7 @@ public:
 	void Draw();
 
 	void SetMap(Map* map) { this->map_ = map; }
+	void SetMap(MapJson* map) { this->mapJson_ = map; }
 
 	Model model;
 	Model deadModel;
@@ -64,7 +66,8 @@ private:
 
 	//MapInfo
 	Map* map_;
-	Map* outside_;
+	MapJson* mapJson_;
+
 	SpotLight sLight;
 
 	Sprite deads;

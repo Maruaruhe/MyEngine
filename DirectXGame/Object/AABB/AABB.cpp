@@ -24,6 +24,9 @@ void AABB::CreateEntityAABB(Transform transform) {
 	max.x += transform.translate.x;
 	max.y += transform.translate.y;
 	max.z += transform.translate.z;
+
+	this->transform.scale = transform.scale;
+	this->transform.translate = transform.translate;
 }
 
 void AABB::CreateModelAABB(Transform transform) {
@@ -43,6 +46,7 @@ void AABB::CreateModelAABB(Transform transform) {
 	this->transform.scale = transform.scale;
 	//mid
 	this->transform.translate = { (min.x + max.x) / 2,(min.y + max.y) / 2 ,(min.z + max.z) / 2 };
+	this->transform.translate = transform.translate;
 }
 
 bool AABB::CheckLineCollision(const Segment& segment) {

@@ -82,8 +82,8 @@ void FileManager::ScanningObjects(nlohmann::json& object, std::vector<ObjectData
 
 		// 新しくオブジェクトを作成
 		ObjectData objectData;
-		ModelManager::GetInstance()->LoadModel("Map/wall");
-		objectData.model.Initialize("Map/wall");
+		ModelManager::GetInstance()->LoadModel("Cube");
+		objectData.model.Initialize("Cube");
 
 		// トランスフォームのパラメータ読み込み
 		if (object.contains("transform")) {

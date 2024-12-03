@@ -5,9 +5,7 @@
 
 
 void MapJson::Initialize(Camera* camera) {
-    //level = levelData;
-
-    level = FileManager::GetInstance()->LoadJsonFile("Json/", "test3rd");
+    level = FileManager::GetInstance()->LoadJsonFile("Json/", "mu");
     for (auto& object : level.objects) {
         object.model.SetCamera(camera);
     }
@@ -25,56 +23,56 @@ void MapJson::Draw() {
     }
 }
 
-//void MapJson::CheckCollision(AABB pAABB, Vector3 move, Vector3* fixVector) {
-//    Vector3 distance{};
-//
-//    for (ObjectData& wall : level.objects) {
-//        AABB wallAABB;
-//        wallAABB.CreateEntityAABB(wall.model.transform);
-//
-//        if (wallAABB.CheckCollision(pAABB)) {
-//            //X軸の当たり判定
-//            if (pAABB.max.x < wallAABB.max.x && wall.toRight) {//壁に対して右方面へ衝突してる時
-//                distance.x = pAABB.max.x - wallAABB.min.x;
-//                if (fabs(move.x) + dis >= fabs(distance.x)) {//移動量が差分より大きかったら調整
-//                    fixVector->x = -fabs(distance.x);
-//                }
-//            }
-//            if (pAABB.max.x >= wallAABB.max.x && wall.toLeft) {//左方面へ衝突してる時
-//                distance.x = pAABB.min.x - wallAABB.max.x;
-//                if (fabs(move.x) + dis >= fabs(distance.x)) {//移動量が差分より大きかったら調整
-//                    fixVector->x = fabs(distance.x);
-//                }
-//            }
-//        }
-//    }
-//
-//    //fixVectorに応じてpAABBの座標の調整
-//    pAABB.min.x += fixVector->x;
-//    pAABB.max.x += fixVector->x;
-//
-//    for (ObjectData& wall : level.objects) {
-//        AABB wallAABB;
-//        wallAABB.CreateModelAABB(wall.model.transform);
-//
-//        if (wallAABB.CheckCollision(pAABB)) {
-//            //Z軸の当たり判定
-//            if (pAABB.max.z < wallAABB.max.z && wall.toTop) {//壁に前方面へ衝突
-//                distance.z = pAABB.max.z - wallAABB.min.z;
-//                if (fabs(move.z) + dis >= fabs(distance.z)) {//移動量が差分より大きかったら調整
-//                    fixVector->z = -fabs(distance.z);
-//                }
-//            }
-//            if (pAABB.max.z >= wallAABB.max.z && wall.toBot) {//後方面へ
-//                distance.z = pAABB.min.z - wallAABB.max.z;
-//                if (fabs(move.z) + dis >= fabs(distance.z)) {//移動量が差分より大きかったら調整
-//                    fixVector->z = fabs(distance.z);
-//                }
-//            }
-//        }
-//    }
-//
-//    //fixVectorに応じてpAABBの座標の調整
-//    //pAABB.min.z += fixVector->z;
-//    //pAABB.max.z += fixVector->z;
-//}
+void MapJson::CheckCollision(AABB pAABB, Vector3 move, Vector3* fixVector) {
+    Vector3 distance{};
+
+    for (ObjectData& wall : level.objects) {
+        AABB wallAABB;
+        wallAABB.CreateEntityAABB(wall.model.transform);
+
+        if (wallAABB.CheckCollision(pAABB)) {
+            //X軸の当たり判定
+            if (pAABB.max.x < wallAABB.max.x/* && wall.toRight*/) {//壁に対して右方面へ衝突してる時
+                distance.x = pAABB.max.x - wallAABB.min.x;
+                if (fabs(move.x) + dis >= fabs(distance.x)) {//移動量が差分より大きかったら調整
+                    fixVector->x = -fabs(distance.x);
+                }
+            }
+            if (pAABB.max.x >= wallAABB.max.x/* && wall.toLeft*/) {//左方面へ衝突してる時
+                distance.x = pAABB.min.x - wallAABB.max.x;
+                if (fabs(move.x) + dis >= fabs(distance.x)) {//移動量が差分より大きかったら調整
+                    fixVector->x = fabs(distance.x);
+                }
+            }
+        }
+    }
+
+    //fixVectorに応じてpAABBの座標の調整
+    pAABB.min.x += fixVector->x;
+    pAABB.max.x += fixVector->x;
+
+    for (ObjectData& wall : level.objects) {
+        AABB wallAABB;
+        wallAABB.CreateEntityAABB(wall.model.transform);
+
+        if (wallAABB.CheckCollision(pAABB)) {
+            //Z軸の当たり判定
+            if (pAABB.max.z < wallAABB.max.z/* && wall.toTop*/) {//壁に前方面へ衝突
+                distance.z = pAABB.max.z - wallAABB.min.z;
+                if (fabs(move.z) + dis >= fabs(distance.z)) {//移動量が差分より大きかったら調整
+                    fixVector->z = -fabs(distance.z);
+                }
+            }
+            if (pAABB.max.z >= wallAABB.max.z/* && wall.toBot*/) {//後方面へ
+                distance.z = pAABB.min.z - wallAABB.max.z;
+                if (fabs(move.z) + dis >= fabs(distance.z)) {//移動量が差分より大きかったら調整
+                    fixVector->z = fabs(distance.z);
+                }
+            }
+        }
+    }
+
+    //fixVectorに応じてpAABBの座標の調整
+    //pAABB.min.z += fixVector->z;
+    //pAABB.max.z += fixVector->z;
+}

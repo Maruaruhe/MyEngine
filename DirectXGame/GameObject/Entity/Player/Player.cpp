@@ -5,6 +5,7 @@ void Player::Initialize() {
 	ModelManager::GetInstance()->LoadModel("Entity/player/deadbody");
 	model.Initialize("player");
 	deadModel.Initialize("Entity/player/deadbody");
+	
 	//model.transform.translate = { 24.0f,1.5f,-48.0f };
 	model.transform.translate = { 0.0f,0.0f,0.0f };
 	model.transform.scale.y *= 2.0f;
@@ -175,6 +176,10 @@ void Player::Move() {
 	Vector3 fixVector{};
 	//map_->CheckCollision(GetCollision(), { move.x, state_.velocity.y, move.z }, &fixVector);
 	model.transform.translate += fixVector;
+
+	Vector3 fixVec{};
+	mapJson_->CheckCollision(GetCollision(), { move.x, state_.velocity.y, move.z }, & fixVec);
+	model.transform.translate += fixVec;
 }
 
 void Player::Jump() {

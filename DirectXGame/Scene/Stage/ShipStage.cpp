@@ -30,8 +30,10 @@ void ShipStage::Initialize(int prevStage) {
 
 	json.Initialize(camera2.get());
 
-	 p.Initialize("Resources/white.png");
-	 p.SetCamera(camera2.get());
+	player_.SetMap(&json);
+
+	/* p.Initialize("Resources/white.png");
+	 p.SetCamera(camera2.get());*/
 }
 
 
@@ -56,7 +58,7 @@ void ShipStage::Update() {
 		toClearScene = true;
 	}
 
-	p.Update();
+	//p.Update();
 }
 
 
@@ -69,7 +71,7 @@ void ShipStage::Draw() {
 
 	json.Draw();
 
-	p.Draw();
+	//p.Draw();
 }
 
 
