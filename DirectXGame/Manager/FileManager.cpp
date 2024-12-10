@@ -113,6 +113,12 @@ void FileManager::ScanningObjects(nlohmann::json& object, std::vector<ObjectData
 		if (object.contains("to_right")) {
 			objectData.toLeft = object["to_right"];
 		}
+		if (object.contains("to_front")) {
+			objectData.toFront = object["to_front"];
+		}
+		if (object.contains("to_back")) {
+			objectData.toBack = object["to_back"];
+		}
 		if (object.contains("to_top")) {
 			objectData.toLeft = object["to_top"];
 		}

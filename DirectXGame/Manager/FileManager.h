@@ -23,6 +23,8 @@ struct ObjectData {
 	bool isItem;
 	bool toLeft;
 	bool toRight;
+	bool toFront;
+	bool toBack;
 	bool toTop;
 	bool toBot;
 	Model model;
