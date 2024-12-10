@@ -63,7 +63,7 @@ void ShipStage::Update() {
 
 
 void ShipStage::Draw() {
-	map_.Draw();
+	//map_.Draw();
 
 	player_.Draw();
 

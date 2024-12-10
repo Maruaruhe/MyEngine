@@ -52,6 +52,8 @@ public: // ** メンバ関数 ** //
 
 	void CreateModelAABB(Transform transform);
 
+	void CreateWallAABB(Transform transform);
+
 	//Vector3 NearestPoint(const Segment& segment);
 
 private: // ** プライベートなメンバ関数（上で宣言した関数内に全部詰め込まないこと） ** //

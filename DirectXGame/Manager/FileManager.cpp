@@ -82,8 +82,8 @@ void FileManager::ScanningObjects(nlohmann::json& object, std::vector<ObjectData
 
 		// 新しくオブジェクトを作成
 		ObjectData objectData;
-		ModelManager::GetInstance()->LoadModel("Cube");
-		objectData.model.Initialize("Cube");
+		ModelManager::GetInstance()->LoadModel("2x2cube");
+		objectData.model.Initialize("2x2cube");
 
 		// トランスフォームのパラメータ読み込み
 		if (object.contains("transform")) {
@@ -111,7 +111,7 @@ void FileManager::ScanningObjects(nlohmann::json& object, std::vector<ObjectData
 			objectData.toLeft = object["to_left"];
 		}
 		if (object.contains("to_right")) {
-			objectData.toLeft = object["to_right"];
+			objectData.toRight = object["to_right"];
 		}
 		if (object.contains("to_front")) {
 			objectData.toFront = object["to_front"];
@@ -120,10 +120,10 @@ void FileManager::ScanningObjects(nlohmann::json& object, std::vector<ObjectData
 			objectData.toBack = object["to_back"];
 		}
 		if (object.contains("to_top")) {
-			objectData.toLeft = object["to_top"];
+			objectData.toTop = object["to_top"];
 		}
 		if (object.contains("to_bot")) {
-			objectData.toLeft = object["to_bot"];
+			objectData.toBot = object["to_bot"];
 		}
 
 		// オブジェクトを追加

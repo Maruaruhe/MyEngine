@@ -5,7 +5,7 @@
 
 
 void MapJson::Initialize(Camera* camera) {
-    level = FileManager::GetInstance()->LoadJsonFile("Json/", "test3rd");
+    level = FileManager::GetInstance()->LoadJsonFile("Json/", "complate");
     for (auto& object : level.objects) {
         object.model.SetCamera(camera);
     }
@@ -28,7 +28,7 @@ void MapJson::CheckCollision(AABB pAABB, Vector3 move, Vector3* fixVector) {
 
     for (ObjectData& wall : level.objects) {
         AABB wallAABB;
-        wallAABB.CreateEntityAABB(wall.model.transform);
+        wallAABB.CreateWallAABB(wall.model.transform);
 
         if (wallAABB.CheckCollision(pAABB)) {
             //X軸の当たり判定
@@ -53,17 +53,17 @@ void MapJson::CheckCollision(AABB pAABB, Vector3 move, Vector3* fixVector) {
 
     for (ObjectData& wall : level.objects) {
         AABB wallAABB;
-        wallAABB.CreateEntityAABB(wall.model.transform);
+        wallAABB.CreateWallAABB(wall.model.transform);
 
         if (wallAABB.CheckCollision(pAABB)) {
             //Z軸の当たり判定
-            if (pAABB.max.z < wallAABB.max.z && wall.toTop) {//壁に前方面へ衝突
+            if (pAABB.max.z < wallAABB.max.z && wall.toFront) {//壁に前方面へ衝突
                 distance.z = pAABB.max.z - wallAABB.min.z;
                 if (fabs(move.z) + dis >= fabs(distance.z)) {//移動量が差分より大きかったら調整
                     fixVector->z = -fabs(distance.z);
                 }
             }
-            if (pAABB.max.z >= wallAABB.max.z && wall.toBot) {//後方面へ
+            if (pAABB.max.z >= wallAABB.max.z && wall.toBack) {//後方面へ
                 distance.z = pAABB.min.z - wallAABB.max.z;
                 if (fabs(move.z) + dis >= fabs(distance.z)) {//移動量が差分より大きかったら調整
                     fixVector->z = fabs(distance.z);

@@ -1,0 +1,137 @@
+{
+    "name": "scene",
+    "objects": [
+        {
+            "type": "MESH",
+            "name": "Floor",
+            "transform": {
+                "translation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    10.0,
+                    10.0,
+                    0.5
+                ]
+            },
+            "file_name": "DEFAULT",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": false,
+            "to_right": false,
+            "to_front": false,
+            "to_back": false,
+            "to_top": true,
+            "to_bot": true,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "立方体",
+            "transform": {
+                "translation": [
+                    0.0,
+                    -5.759215831756592,
+                    1.018498182296753
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    6.0,
+                    0.5,
+                    0.5
+                ]
+            },
+            "file_name": "DEFAULT",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": true,
+            "to_right": true,
+            "to_front": true,
+            "to_back": true,
+            "to_top": false,
+            "to_bot": true,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "立方体.001",
+            "transform": {
+                "translation": [
+                    0.0,
+                    4.461154460906982,
+                    3.78812313079834
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    3.0,
+                    3.0,
+                    3.0
+                ]
+            },
+            "file_name": "DEFAULT",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": true,
+            "to_right": true,
+            "to_front": true,
+            "to_back": true,
+            "to_top": false,
+            "to_bot": false,
+            "children": []
+        }
+    ]
+}

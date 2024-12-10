@@ -49,6 +49,26 @@ void AABB::CreateModelAABB(Transform transform) {
 	this->transform.translate = transform.translate;
 }
 
+void AABB::CreateWallAABB(Transform transform) {
+	min = {
+	-1.0f * transform.scale.x, -1.0f * transform.scale.y,
+	-1.0f * transform.scale.z };
+	max = {
+		1.0f * transform.scale.x, 1.0f * transform.scale.y,
+		1.0f * transform.scale.z };
+
+	min.x += transform.translate.x;
+	min.y += transform.translate.y;
+	min.z += transform.translate.z;
+
+	max.x += transform.translate.x;
+	max.y += transform.translate.y;
+	max.z += transform.translate.z;
+
+	this->transform.scale = transform.scale;
+	this->transform.translate = transform.translate;
+}
+
 bool AABB::CheckLineCollision(const Segment& segment) {
 
 	//x
