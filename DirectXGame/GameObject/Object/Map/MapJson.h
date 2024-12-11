@@ -12,6 +12,7 @@ public:
 	void Draw();
 
 	void CheckCollision(AABB pAABB, Vector3 move, Vector3* fixVector);
+	void CheckCollisionFloor(AABB pAABB, Vector3 move, Vector3* fixVector, bool* isFloor);
 
 private:
 

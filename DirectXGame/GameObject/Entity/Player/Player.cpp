@@ -195,11 +195,13 @@ void Player::Jump() {
 		//Jumping
 		state_.velocity.y -= 0.02f;
 	}
-	//model.transform.translate += state_.velocity;
+	model.transform.translate += state_.velocity;
 
 	Vector3 fixVector{};
 
-		if (map_->CheckCollisionWithFloor(GetCollision(), state_.velocity, &fixVector)) {
+		//if (map_->CheckCollisionWithFloor(GetCollision(), state_.velocity, &fixVector)) {
+	mapJson_->CheckCollisionFloor(GetCollision(), state_.velocity, &fixVector, &state_.isJump);
+		if (!state_.isJump) {
 			Vector3 a = fixVector;
 			state_.isJump = false;
 			state_.velocity.y = 0.0f;
