@@ -13,6 +13,7 @@ struct State {
 	float stamina; //スタミナ
 	bool isDash; //ダッシュ状態
 	bool isJump; //ジャンプ状態
+	bool onFloor; //地面か空中か
 	float weight; //重量
 	float HP; //体力
 	Vector3 velocity;

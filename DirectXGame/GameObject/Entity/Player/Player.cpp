@@ -18,9 +18,11 @@ void Player::Initialize() {
 	kInput = KeyInput::GetInstance();
 	pInput = GamePadInput::GetInstance();
 
+	//State Initialize
 	state_.HP;
 	state_.isDash;
 	state_.isJump = false;
+	state_.onFloor = false;
 	state_.isUsingLight = false;
 	state_.isAlive = true;
 	state_.kMapSpeed;
@@ -77,6 +79,7 @@ void Player::Update() {
 	ImGui::SliderFloat3("translate", &model.transform.translate.x, -15, 15);
 	ImGui::SliderFloat3("rotate", &model.transform.rotate.x, -3.0f, 3.0f);
 	ImGui::SliderFloat3("scale", &model.transform.scale.x, 1.0f, 10.0f);
+	ImGui::Text("%d", state_.onFloor);
 	ImGui::End();
 #endif
 }
@@ -191,24 +194,20 @@ void Player::Jump() {
 			state_.isJump = true;
 		}
 	}
-	else {
-		//Jumping
-		state_.velocity.y -= 0.02f;
-	}
+
 	model.transform.translate += state_.velocity;
 
 	Vector3 fixVector{};
 
-		//if (map_->CheckCollisionWithFloor(GetCollision(), state_.velocity, &fixVector)) {
-	mapJson_->CheckCollisionFloor(GetCollision(), state_.velocity, &fixVector, &state_.isJump);
-		if (!state_.isJump) {
-			Vector3 a = fixVector;
-			state_.isJump = false;
-			state_.velocity.y = 0.0f;
-		}
-		else {
-			state_.isJump = true;
-		}
+	mapJson_->CheckCollisionFloor(GetCollision(), state_.velocity, &fixVector, &state_.onFloor);
+
+	if (!state_.onFloor) { //空中
+		state_.velocity.y -= 0.02f;
+	}
+	else { //地上
+		state_.velocity.y = 0.0f;
+		state_.isJump = false;
+	}
 
 	model.transform.translate += fixVector;
 }

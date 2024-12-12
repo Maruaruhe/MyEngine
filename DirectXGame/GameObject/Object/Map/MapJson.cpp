@@ -79,6 +79,7 @@ void MapJson::CheckCollision(AABB pAABB, Vector3 move, Vector3* fixVector) {
 
 void MapJson::CheckCollisionFloor(AABB pAABB, Vector3 move, Vector3* fixVector, bool* isFloor) {
     Vector3 distance{};
+    int collisoinCount = 0;
 
     for (ObjectData& wall : level.objects) {
         AABB wallAABB;
@@ -101,10 +102,11 @@ void MapJson::CheckCollisionFloor(AABB pAABB, Vector3 move, Vector3* fixVector, 
                     }
                 }
                 *isFloor = true;
-            }
-            else {            
-              *isFloor = false;    
+                collisoinCount++;
             }
         }
+    }
+    if (collisoinCount <= 0) {
+        *isFloor = false;
     }
 }
