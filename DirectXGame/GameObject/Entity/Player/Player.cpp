@@ -176,10 +176,6 @@ void Player::Move() {
 	model.transform.translate += move;
 
 	// 最後に当たり判定をチェック
-	Vector3 fixVector{};
-	//map_->CheckCollision(GetCollision(), { move.x, state_.velocity.y, move.z }, &fixVector);
-	model.transform.translate += fixVector;
-
 	Vector3 fixVec{};
 	mapJson_->CheckCollision(GetCollision(), { move.x, state_.velocity.y, move.z }, & fixVec);
 	model.transform.translate += fixVec;

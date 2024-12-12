@@ -22,6 +22,7 @@ void ShipStage::Initialize(int prevStage) {
 	player_.deadModel.SetCamera(camera2.get());
 	player_.view.SetCamera(camera2.get());
 	player_.model.transform.translate = { 4.0f,1.5f,-11.0f };
+	player_.model.transform.translate = { 0.0f,1.5f,0.0f };
 
 	stageChangeCount = 0;
 
