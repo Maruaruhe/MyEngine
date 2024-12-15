@@ -156,6 +156,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="DirectXGame\Scene\Stage\OutsideStage.cpp" />
     <ClCompile Include="DirectXGame\Scene\Stage\ShipStage.cpp" />
     <ClCompile Include="DirectXGame\GameObject\Object\Map\MapJson.cpp" />
+    <ClCompile Include="DirectXGame\Manager\TextureConverter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\Shader\Object2D.PS.hlsl">
@@ -268,6 +269,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="DirectXGame\Scene\Stage\ShipStage.h" />
     <ClInclude Include="JsonMap.h" />
     <ClInclude Include="DirectXGame\GameObject\Object\Map\MapJson.h" />
+    <ClInclude Include="DirectXGame\Manager\TextureConverter.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt" />

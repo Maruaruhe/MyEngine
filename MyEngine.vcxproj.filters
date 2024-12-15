@@ -67,6 +67,7 @@
     <ClCompile Include="DirectXGame\Scene\Stage\OutsideStage.cpp" />
     <ClCompile Include="DirectXGame\Scene\Stage\InsideStage.cpp" />
     <ClCompile Include="DirectXGame\GameObject\Object\Map\MapJson.cpp" />
+    <ClCompile Include="DirectXGame\Manager\TextureConverter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Object\AABB\AABB.h" />
@@ -131,6 +132,7 @@
     <ClInclude Include="DirectXGame\Scene\Stage\InsideStage.h" />
     <ClInclude Include="JsonMap.h" />
     <ClInclude Include="DirectXGame\GameObject\Object\Map\MapJson.h" />
+    <ClInclude Include="DirectXGame\Manager\TextureConverter.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shader\Object3d.hlsli" />
