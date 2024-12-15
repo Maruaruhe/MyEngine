@@ -3,7 +3,7 @@
 #include <locale>
 #include <codecvt>
 
-#include "../../Externals/DirectXTex/DirectXTex.h"
+#include "../../externals/DirectXTex/DirectXTex.h"
 
 
 /* テクスチャコンバータクラス */

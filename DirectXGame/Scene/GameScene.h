@@ -17,9 +17,6 @@ public:
 
 private:
 	//Scene
-	std::unique_ptr<IStage> stageArr[4];
-
-	int currentStageNo;
-	int prevStageNo;
+	Sprite s;
 };
 

@@ -3,31 +3,20 @@
 #include "../Base/Input/Input.h"
 
 void GameScene::Initialize() {
-	stageArr[SHIP] = std::make_unique<ShipStage>();
-	stageArr[OUTSIDE] = std::make_unique<OutsideStage>();
-	stageArr[INSIDE] = std::make_unique<InsideStage>();
+	TextureManager::GetInstance()->LoadTexture("Resources/Title/title.dds");
+	s.Initialize({ 1280,720 }, "Resources/Title/title.dds");
+	s.transform.translate = { 640,360 ,0 };
+	s.anchorPoint = { 0.5f,0.5f };
 }
 
 void GameScene::Update() {
-	//Stageのチェック
-	prevStageNo = currentStageNo;
-	currentStageNo = stageArr[currentStageNo]->GetStageNo();
-
-	//シーンが前フレームと異なったら初期化
-	if (prevStageNo != currentStageNo) {
-		stageArr[currentStageNo]->Initialize(prevStageNo);
-	}
-
-	stageArr[currentStageNo]->StageChange();
-	stageArr[currentStageNo]->Update();
+	s.Update();
 }
 
 void GameScene::Draw() {
-	stageArr[currentStageNo]->Draw();
+	s.Draw();
 }
 
 void GameScene::SceneChange() {
-	if (stageArr[currentStageNo]->GetToClear()) {
-		//sceneNo = CLEAR;
-	}
+
 }

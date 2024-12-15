@@ -27,7 +27,30 @@ void TextureManager::LoadTexture(const std::string& filePath) {
 	DirectX::ScratchImage image{};
 	std::wstring filePathW = ConvertString(filePath);
 	//HRESULT hr = DirectX::LoadFromWICFile(filePathW.c_str(), DirectX::WIC_FLAGS_FORCE_SRGB, nullptr, image);
-	HRESULT hr = DirectX::LoadFromWICFile(filePathW.c_str(), DirectX::WIC_FLAGS_NONE, nullptr, image);
+
+	// 区切り文字 '.' が出てくる一番最後の部分を検索
+	size_t pos1 = filePath.rfind('.');
+	// 検索がヒットしたら
+	std::wstring fileExt_;
+
+	if (pos1 != std::wstring::npos) {
+		// 区切り文字の後ろをファイル拡張子として保存
+		fileExt_ = filePathW.substr(pos1 + 1, filePathW.size() - pos1 - 1);
+	}
+	else {
+		fileExt_ = L"";
+	}
+
+	std::string end = ConvertString(fileExt_);
+
+	HRESULT hr;
+
+	if (!end.compare("dds")) {//DDS
+		hr = DirectX::LoadFromDDSFile(filePathW.c_str(), DirectX::DDS_FLAGS_NONE, nullptr, image);
+	}
+	else {//WIC
+		hr = DirectX::LoadFromWICFile(filePathW.c_str(), DirectX::WIC_FLAGS_NONE, nullptr, image);
+	}
 	assert(SUCCEEDED(hr));
 
 	DirectX::ScratchImage mipImages{};
