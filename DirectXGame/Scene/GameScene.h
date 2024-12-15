@@ -18,5 +18,8 @@ public:
 private:
 	//Scene
 	Sprite s;
+
+	Camera camera;
+	Model model;
 };
 

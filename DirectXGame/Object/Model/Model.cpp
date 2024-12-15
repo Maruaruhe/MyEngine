@@ -42,6 +42,9 @@ void Model::Initialize(const std::string& filename) {
 
 	TextureManager::GetInstance()->LoadTexture("Resources/uvChecker.png");
 	textureIndex = TextureManager::GetInstance()->GetTextureIndexByFilePath("Resources/uvChecker.png");
+
+	TextureManager::GetInstance()->LoadTexture("Resources/Title/title.dds");
+	textureIndex = TextureManager::GetInstance()->GetTextureIndexByFilePath("Resources/Title/title.dds");
 }
 
 void Model::ApplyGlobalVariables() {

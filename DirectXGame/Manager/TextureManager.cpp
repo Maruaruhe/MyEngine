@@ -54,7 +54,12 @@ void TextureManager::LoadTexture(const std::string& filePath) {
 	assert(SUCCEEDED(hr));
 
 	DirectX::ScratchImage mipImages{};
-	hr = DirectX::GenerateMipMaps(image.GetImages(), image.GetImageCount(), image.GetMetadata(), DirectX::TEX_FILTER_SRGB, 0, mipImages);
+	if (DirectX::IsCompressed(image.GetMetadata().format)) {
+		mipImages = std::move(image);
+	}
+	else {
+		hr = DirectX::GenerateMipMaps(image.GetImages(), image.GetImageCount(), image.GetMetadata(), DirectX::TEX_FILTER_SRGB, 0, mipImages);
+	}
 	assert(SUCCEEDED(hr));
 
 	textureDatas.resize(textureDatas.size() + 1 + kSRVIndexTop);
