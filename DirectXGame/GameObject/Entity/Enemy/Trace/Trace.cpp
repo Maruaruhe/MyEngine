@@ -34,6 +34,7 @@ void Trace::FindPlayer() {
 			AABB wallAABB;
 			wallAABB.CreateModelAABB(wall.model.transform);
 
+			//視線と壁の当たり判定
 			if (wallAABB.CheckLineCollision(PtoE)) {
 				numWallCollision++;
 			}
@@ -47,7 +48,7 @@ void Trace::FindPlayer() {
 void Trace::ChasePlayer(){
 	if (isChase) {
 
-		if (!isAttacking) {
+		if (!isAttacking) { //追跡中
 			isAttacking = true;
 			tracingTime = 0;
 
@@ -56,7 +57,7 @@ void Trace::ChasePlayer(){
 
 			chaseSpeed = firstSpeed;
 		}
-		else {
+		else { //非追跡中
 			tracingTime++;
 			velocity = Normalize(distance) * chaseSpeed;
 

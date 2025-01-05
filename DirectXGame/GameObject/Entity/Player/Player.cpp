@@ -45,6 +45,8 @@ void Player::Update() {
 		state_.isAlive = false;
 	}
 	LightUpdate();
+
+	//移動関連
 	if (state_.isAlive) {
 		Move();
 		Jump();
@@ -86,11 +88,13 @@ void Player::Update() {
 
 void Player::LightUpdate() {
 	if (state_.isAlive) {
+		//ON
 		if (kInput->TriggerKey(DIK_Q)) {
 			if (state_.isUsingLight) {
 				state_.isUsingLight = false;
 				sLight.light->color = { 0.0f,0.0f,0.0f,0.0f };
 			}
+			//OFF
 			else {
 				state_.isUsingLight = true;
 				sLight.light->color = { 1.0f,1.0f,1.0f,1.0f };
@@ -195,6 +199,7 @@ void Player::Jump() {
 
 	Vector3 fixVector{};
 
+	//床との当たり判定
 	mapJson_->CheckCollisionFloor(GetCollision(), state_.velocity, &fixVector, &state_.onFloor);
 
 	if (!state_.onFloor) { //空中
@@ -265,6 +270,8 @@ void Player::CheckItemCollision() {
 	playerSight.end = GetFrontVector(2.0f);
 
 	int count = 0;
+
+	//視線との当たり判定
 	if (itemAABB.CheckLineCollision(playerSight)) {
 		count += 1;
 		map_->GetItem()->isabletobetaken = true;
