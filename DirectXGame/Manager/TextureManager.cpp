@@ -1,6 +1,6 @@
 #include "TextureManager.h"
 
-uint32_t TextureManager::kSRVIndexTop_ = 1;
+uint32_t TextureManager::kSRVIndexTop = 1;
 
 void TextureManager::Initialize() {
 	textureDatas_.reserve(DirectX12::kMaxSRVCount);
@@ -34,7 +34,7 @@ void TextureManager::LoadTexture(const std::string& filePath) {
 	hr = DirectX::GenerateMipMaps(image.GetImages(), image.GetImageCount(), image.GetMetadata(), DirectX::TEX_FILTER_SRGB, 0, mipImages);
 	assert(SUCCEEDED(hr));
 
-	textureDatas_.resize(textureDatas_.size() + 1 + kSRVIndexTop_);
+	textureDatas_.resize(textureDatas_.size() + 1 + kSRVIndexTop);
 	TextureData& textureData = textureDatas_.back();
 
 	textureData.filePath = filePath;
@@ -53,7 +53,7 @@ void TextureManager::LoadTexture(const std::string& filePath) {
 		assert(SUCCEEDED(hr));
 	}
 
-	uint32_t srvIndex = static_cast<uint32_t>(textureDatas_.size() - 1) + kSRVIndexTop_;
+	uint32_t srvIndex = static_cast<uint32_t>(textureDatas_.size() - 1) + kSRVIndexTop;
 	textureData.srvHandleCPU = GetCPUDescriptorHandle(srvIndex);
 	textureData.srvHandleGPU = GetGPUDescriptorHandle(srvIndex);
 

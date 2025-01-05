@@ -63,16 +63,16 @@ void WindowsAPI::WindowSize() {
 void WindowsAPI::WindowCreate() {
 	//ウインドウの生成
 	hwnd_ = CreateWindow(
-		wc.lpszClassName,		//利用するクラス名
+		wc_.lpszClassName,		//利用するクラス名
 		L"廃品回収",			//タイトルバーの文字
 		WS_OVERLAPPEDWINDOW,	//よく見るウインドウスタイル
 		CW_USEDEFAULT,			//表示X座標（Windowsに任せる）
 		CW_USEDEFAULT,			//表示Y座標（Windowsに任せる）
-		wrc.right - wrc.left,	//ウインドウ横幅
-		wrc.bottom - wrc.top,	//ウインドウ縦幅
+		wrc_.right - wrc_.left,	//ウインドウ横幅
+		wrc_.bottom - wrc_.top,	//ウインドウ縦幅
 		nullptr,				//ウインドウハンドル
 		nullptr,				//メニューハンドル
-		wc.hInstance,			//インスタンスハンドル
+		wc_.hInstance,			//インスタンスハンドル
 		nullptr
 	);
 

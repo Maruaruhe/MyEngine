@@ -185,7 +185,7 @@ void GraphicsRenderer::MakeRootSignature() {
 	rootParameters_[6].DescriptorTable.NumDescriptorRanges = _countof(descriptorRangeEnvTexture);
 
 	descriptionRootSignature_.pParameters = rootParameters_;
-	descriptionRootSignature_.NumParameters = _countof(rootParameters);
+	descriptionRootSignature_.NumParameters = _countof(rootParameters_);
 
 	D3D12_STATIC_SAMPLER_DESC staticSamplers[1] = {};
 	staticSamplers[0].Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR;
@@ -247,7 +247,7 @@ void GraphicsRenderer::MakeRootSignatureForParticle() {
 	//rootParametersForParticle[4].Descriptor.ShaderRegister = 2;
 
 	descriptionRootSignatureForParticle_.pParameters = rootParametersForParticle_;
-	descriptionRootSignatureForParticle_.NumParameters = _countof(rootParametersForParticle);
+	descriptionRootSignatureForParticle_.NumParameters = _countof(rootParametersForParticle_);
 
 	D3D12_STATIC_SAMPLER_DESC staticSamplers[1] = {};
 	staticSamplers[0].Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR;
@@ -330,7 +330,7 @@ void GraphicsRenderer::MakeRootSignatureForSkinning() {
 	rootParametersForSkinning_[7].DescriptorTable.NumDescriptorRanges = _countof(descriptorRangeTexture);
 
 	descriptionRootSignatureForSkinning_.pParameters = rootParametersForSkinning_;
-	descriptionRootSignatureForSkinning_.NumParameters = _countof(rootParametersForSkinning);
+	descriptionRootSignatureForSkinning_.NumParameters = _countof(rootParametersForSkinning_);
 
 	D3D12_STATIC_SAMPLER_DESC staticSamplers[1] = {};
 	staticSamplers[0].Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR;
@@ -409,7 +409,7 @@ void GraphicsRenderer::MakeRootSignatureForSprite() {
 	rootParametersForSprite_[6].DescriptorTable.NumDescriptorRanges = _countof(descriptorRangeEnvTexture);
 
 	descriptionRootSignatureForSprite_.pParameters = rootParametersForSprite_;
-	descriptionRootSignatureForSprite_.NumParameters = _countof(rootParametersForSprite);
+	descriptionRootSignatureForSprite_.NumParameters = _countof(rootParametersForSprite_);
 
 	D3D12_STATIC_SAMPLER_DESC staticSamplers[1] = {};
 	staticSamplers[0].Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR;
@@ -454,7 +454,7 @@ void GraphicsRenderer::SetInputLayout() {
 
 	inputLayoutDesc_ = {};
 	inputLayoutDesc_.pInputElementDescs = inputElementDescs_;
-	inputLayoutDesc_.NumElements = _countof(inputElementDescs);
+	inputLayoutDesc_.NumElements = _countof(inputElementDescs_);
 }
 
 void GraphicsRenderer::SetInputLayoutForSkinning() {
@@ -487,7 +487,7 @@ void GraphicsRenderer::SetInputLayoutForSkinning() {
 
 	inputLayoutDescForSkinning_ = {};
 	inputLayoutDescForSkinning_.pInputElementDescs = inputElementDescsForSkinning_;
-	inputLayoutDescForSkinning_.NumElements = _countof(inputElementDescsForSkinning);
+	inputLayoutDescForSkinning_.NumElements = _countof(inputElementDescsForSkinning_);
 }
 
 void GraphicsRenderer::SetBlendState() {
