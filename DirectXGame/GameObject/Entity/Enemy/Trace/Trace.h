@@ -2,6 +2,8 @@
 #include "../IEnemy.h"
 
 class Wall;
+
+//TraceEnemyクラス
 class Trace : public IEnemy
 {
 public:

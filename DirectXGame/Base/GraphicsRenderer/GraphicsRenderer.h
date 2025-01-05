@@ -23,6 +23,7 @@ enum Type {
 	SPRITE = 3
 };
 
+//GraphicsRenderer
 class GraphicsRenderer
 {
 public:

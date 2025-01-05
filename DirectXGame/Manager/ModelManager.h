@@ -33,7 +33,7 @@ struct Skelton {
 	std::vector<Joint> joints;
 };
 
-
+//ModelManagerクラス
 class ModelManager
 {
 public:

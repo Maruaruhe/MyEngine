@@ -2,6 +2,7 @@
 #include "../../../../Object/Model/Model.h"
 #include "../../../../Object/Camera/Camera.h"
 
+//アイテム基底クラス
 class IItem
 {
 public:

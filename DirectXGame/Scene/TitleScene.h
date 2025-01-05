@@ -18,6 +18,7 @@ struct tmpParticle {
 	float rotate;
 };
 
+//TitleScene
 class TitleScene : public IScene
 {
 public:

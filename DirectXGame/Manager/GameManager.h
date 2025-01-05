@@ -21,6 +21,7 @@ class DirectX12;
 class WindowsAPI;
 class GraphicsRenderer;
 
+//GameManagerクラス
 class GameManager
 {
 public:

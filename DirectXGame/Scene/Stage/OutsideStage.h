@@ -1,6 +1,7 @@
 #pragma once
 #include "IStage.h"
 
+//OutsideStage
 class OutsideStage : public IStage
 {
 public:

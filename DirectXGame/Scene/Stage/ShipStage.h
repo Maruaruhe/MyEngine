@@ -5,7 +5,7 @@
 
 #include "../../GameObject/Object/Map/MapJson.h"
 
-
+//ShipStage
 class ShipStage : public IStage
 {
 public:

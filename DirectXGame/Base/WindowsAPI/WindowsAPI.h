@@ -8,6 +8,7 @@
 static const int32_t kCliantWidth = 1280;
 static const int32_t kClientHeight = 720;
 
+//WindowsAPI
 class WindowsAPI
 {
 public:

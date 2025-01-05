@@ -8,6 +8,7 @@
 class Player;
 class Map;
 
+//Enemy基底クラス
 class IEnemy
 {
 public:

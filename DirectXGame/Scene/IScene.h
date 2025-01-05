@@ -10,7 +10,7 @@ enum SCENE {
 	CLEAR = 5
 };
 
-
+//Scene基底クラス
 class IScene
 {
 protected:

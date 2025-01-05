@@ -2,6 +2,7 @@
 #include "../../../Manager/FileManager.h"
 #include "../../../Object/AABB/AABB.h"
 
+//JsonMapクラス
 class MapJson
 {
 public:

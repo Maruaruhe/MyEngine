@@ -20,6 +20,8 @@
 //#include "../../Math/struct.h"
 #include "../../Math/MathOperator.h"
 
+
+//Keyboard Input
 class KeyInput
 {
 public:
@@ -86,6 +88,7 @@ enum class PadData {
 	Y = 0x8000,
 };
 
+//GamePad Input
 class GamePadInput {
 
 public: // メンバ関数

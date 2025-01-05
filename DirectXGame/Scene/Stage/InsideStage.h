@@ -1,6 +1,7 @@
 #pragma once
 #include "IStage.h"
 
+//InsideStage
 class InsideStage : public IStage
 {
 public:

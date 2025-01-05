@@ -3,6 +3,7 @@
 #include "../../../../Object/Model/Model.h"
 #include "../../../../Base/Input/Input.h"
 
+//Wallクラス
 class Wall
 {
 public:

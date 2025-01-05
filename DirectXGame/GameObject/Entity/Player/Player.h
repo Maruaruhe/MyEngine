@@ -21,6 +21,7 @@ struct State {
 	bool isAlive;
 };
 
+//プレイヤークラス
 class Player {
 public:
 	/// <summary>

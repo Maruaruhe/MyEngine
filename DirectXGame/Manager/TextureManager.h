@@ -9,6 +9,7 @@
 #include "../Base/DirextX12/DirectX12.h"
 #include "../Base/Log/Log.h"
 
+//TextureManagerクラス
 class TextureManager
 {
 public:

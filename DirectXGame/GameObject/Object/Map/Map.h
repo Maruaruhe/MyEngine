@@ -9,6 +9,7 @@ enum BlockType {
 	WALL = 1,
 };
 
+//マップクラス
 class Map
 {
 public:

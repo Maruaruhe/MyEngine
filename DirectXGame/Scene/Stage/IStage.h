@@ -26,6 +26,7 @@ enum Stage {
 	INSIDE = 3
 };
 
+//Stage基底クラス
 class IStage
 {
 protected:

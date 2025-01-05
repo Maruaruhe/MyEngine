@@ -10,6 +10,7 @@
 #include "../Object/Model/Model.h"
 #include "../Object/Anime/Anime.h"
 
+//ClearScene
 class ClearScene : public IScene
 {
 public:
