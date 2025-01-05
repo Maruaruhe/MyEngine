@@ -46,12 +46,27 @@ protected:
 	Map map_;
 
 public:
+	/// <summary>
+	/// Initialize
+	/// </summary>
+	/// <param name="prevStage"></param>
 	virtual void Initialize(int prevStage) = 0;
+	/// <summary>
+	/// Update
+	/// </summary>
 	virtual void Update() = 0;
+	/// <summary>
+	/// Draw
+	/// </summary>
 	virtual void Draw() = 0;
+	/// <summary>
+	/// Stage変更
+	/// </summary>
 	virtual void StageChange() = 0;
 
 	virtual ~IStage();
+
+	//Getter
 	int GetStageNo() { return stageNo; }
 	bool GetToClear() {return toClearScene;}
 

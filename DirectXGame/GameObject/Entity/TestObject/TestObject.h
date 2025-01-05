@@ -5,10 +5,19 @@
 class TestObject {
 public:
 
+	/// <summary>
+	/// Initialize
+	/// </summary>
 	void Initialize();
 
+	/// <summary>
+	/// Update
+	/// </summary>
 	void Update();
 
+	/// <summary>
+	/// Draw
+	/// </summary>
 	void Draw();
 
 

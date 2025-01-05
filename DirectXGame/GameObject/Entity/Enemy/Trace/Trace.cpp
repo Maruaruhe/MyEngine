@@ -3,36 +3,36 @@
 #include "../../../Entity/Player/Player.h"
 
 void Trace::Initialize(Transform transform) {
-	isChase = false;
-	isAlive = true;
-	isAttacking = false;
+	isChase_ = false;
+	isAlive_ = true;
+	isAttacking_ = false;
 
 	ModelManager::GetInstance()->LoadModel("Entity/Enemy/trace");
-	model.Initialize("Entity/Enemy/trace");
-	model.transform = transform;
+	model_.Initialize("Entity/Enemy/trace");
+	model_.transform = transform;
 }
 
 void Trace::Update() {
 	FindPlayer();
 	ChasePlayer();
 
-	model.Update();
+	model_.Update();
 }
 void Trace::Draw() {
-	model.Draw();
+	model_.Draw();
 }
 
 void Trace::FindPlayer() {
-	if (!isChase) {//未発見時
+	if (!isChase_) {//未発見時
 		Segment PtoE;
-		PtoE.start = player->model.transform.translate;
-		PtoE.end = model.transform.translate;
+		PtoE.start = player_->model.transform.translate;
+		PtoE.end = model_.transform.translate;
 
 		int numWallCollision = 0;
 
-		for (Wall wall : walls) {
+		for (Wall wall : walls_) {
 			AABB wallAABB;
-			wallAABB.CreateModelAABB(wall.model.transform);
+			wallAABB.CreateModelAABB(wall.model_.transform);
 
 			//視線と壁の当たり判定
 			if (wallAABB.CheckLineCollision(PtoE)) {
@@ -41,47 +41,47 @@ void Trace::FindPlayer() {
 		}
 
 		if (numWallCollision == 0) {
-			isChase = true;
+			isChase_ = true;
 		}
 	}
 }
 void Trace::ChasePlayer(){
-	if (isChase) {
+	if (isChase_) {
 
-		if (!isAttacking) { //追跡中
-			isAttacking = true;
-			tracingTime = 0;
+		if (!isAttacking_) { //追跡中
+			isAttacking_ = true;
+			tracingTime_ = 0;
 
-			distance = player->model.transform.translate - model.transform.translate;
-			distance.y = 0.0f;
+			distance_ = player_->model.transform.translate - model_.transform.translate;
+			distance_.y = 0.0f;
 
-			chaseSpeed = firstSpeed;
+			chaseSpeed_ = firstSpeed_;
 		}
 		else { //非追跡中
-			tracingTime++;
-			velocity = Normalize(distance) * chaseSpeed;
+			tracingTime_++;
+			velocity_ = Normalize(distance_) * chaseSpeed_;
 
-			chaseSpeed += 0.0005f;
-			if (chaseSpeed >= maxSpeed) {
-				chaseSpeed = maxSpeed;
+			chaseSpeed_ += 0.0005f;
+			if (chaseSpeed_ >= maxSpeed_) {
+				chaseSpeed_ = maxSpeed_;
 			}
 
-			model.transform.translate += velocity;
+			model_.transform.translate += velocity_;
 
 			// 最後に当たり判定をチェック
 			Vector3 fixVector{};
 			Vector3 zeroVector{};
 			AABB enemyAABB;
-			enemyAABB.CreateEntityAABB(model.transform);
+			enemyAABB.CreateEntityAABB(model_.transform);
 
-			map->CheckCollision(enemyAABB, { velocity.x,velocity.z }, &fixVector);
-			model.transform.translate += fixVector;
+			map_->CheckCollision(enemyAABB, { velocity_.x,velocity_.z }, &fixVector);
+			model_.transform.translate += fixVector;
 
 			//壁と当たったら
 			if (fixVector.x !=0.0f || fixVector.z != 0.0f) {
-				velocity = {};
-				isAttacking = false;
-				isChase = false;
+				velocity_ = {};
+				isAttacking_ = false;
+				isChase_ = false;
 			}
 
 			//Playerと当たったら
@@ -92,10 +92,10 @@ void Trace::ChasePlayer(){
 			}*/
 
 			//時間経過
-			if (tracingTime >= 240) {
-				velocity = {};
-				isAttacking = false;
-				isChase = false;
+			if (tracingTime_ >= 240) {
+				velocity_ = {};
+				isAttacking_ = false;
+				isChase_ = false;
 			}
 		}
 	}

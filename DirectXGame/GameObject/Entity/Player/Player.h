@@ -23,14 +23,23 @@ struct State {
 
 class Player {
 public:
-
+	/// <summary>
+	/// Initialize
+	/// </summary>
 	void Initialize();
 
+	/// <summary>
+	/// Update
+	/// </summary>
 	void Update();
 	void LightUpdate();
 
+	/// <summary>
+	/// Draw
+	/// </summary>
 	void Draw();
 
+	//Setter
 	void SetMap(Map* map) { this->map_ = map; }
 	void SetMap(MapJson* map) { this->mapJson_ = map; }
 
@@ -44,32 +53,44 @@ public:
 	int deadFlame;
 	int aliveFrame;
 
+	//Getter
 	Vector3 GetFrontVector(float length);
 	Vector3 GetFrontLightVector(float length);
 
 	AABB GetCollision();
 private:
+	/// <summary>
+	/// 移動
+	/// </summary>
 	void Move();
+	/// <summary>
+	/// ジャンプ
+	/// </summary>
 	void Jump();
-
+	/// <summary>
+	/// 死亡時
+	/// </summary>
 	void DeathUpdate();
 	int deathCount;
 
+	//視線判定
 	Vector3 CheckLineOfSightCollision();
+	//アイテムのVector
 	Vector3 GetItemFrontVector();
 
+	//Item判定
 	void CheckItemCollision();
 	void CheckItemBring();
 
 private:
-	GamePadInput* pInput;
-	KeyInput* kInput;
+	GamePadInput* pInput_;
+	KeyInput* kInput_;
 
 	//MapInfo
 	Map* map_;
 	MapJson* mapJson_;
 
-	SpotLight sLight;
+	SpotLight sLight_;
 
-	Sprite deads;
+	Sprite deads_;
 };

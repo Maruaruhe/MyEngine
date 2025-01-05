@@ -14,17 +14,28 @@ class TextureManager
 public:
 	static TextureManager* GetInstance();
 
+	/// <summary>
+	/// Initialize
+	/// </summary>
 	void Initialize();
+	/// <summary>
+	/// LoadTexture
+	/// </summary>
+	/// <param name="filePath"></param>
 	void LoadTexture(const std::string& filePath);
+	/// <summary>
+	/// テクスチャリソースの作成
+	/// </summary>
+	/// <param name="matadata"></param>
+	/// <returns></returns>
 	Microsoft::WRL::ComPtr<ID3D12Resource> CreateTextureResource(const DirectX::TexMetadata& matadata);
+
+	//Getter
 	uint32_t GetTextureIndexByFilePath(const std::string& filePath);
 	D3D12_GPU_DESCRIPTOR_HANDLE GetSrvHandleGPU(uint32_t textureIndex);
-
 	D3D12_CPU_DESCRIPTOR_HANDLE GetCPUDescriptorHandle(uint32_t index);
 	D3D12_GPU_DESCRIPTOR_HANDLE GetGPUDescriptorHandle(uint32_t index);
 
-	ID3D12Resource* UploadTextureData(ID3D12Resource* texture, const DirectX::ScratchImage& mipImages, ID3D12Device* device, ID3D12GraphicsCommandList* commandlist);
-	void CreateFence();
 private:
 
 	struct TextureData{
@@ -37,7 +48,7 @@ private:
 
 	static uint32_t kSRVIndexTop;
 
-	std::vector<TextureData> textureDatas;
+	std::vector<TextureData> textureDatas_;
 
 	// Fence
 	Microsoft::WRL::ComPtr<ID3D12Fence> fence_;

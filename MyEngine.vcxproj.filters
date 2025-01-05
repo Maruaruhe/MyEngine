@@ -1,145 +1,444 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <FxCompile Include="Resources\Shader\Object3d.PS.hlsl" />
-    <FxCompile Include="Resources\Shader\Object3d.VS.hlsl" />
-    <FxCompile Include="Resources\Shader\Particle.PS.hlsl" />
-    <FxCompile Include="Resources\Shader\Particle.VS.hlsl" />
-    <FxCompile Include="Resources\Shader\SkinningObject3D.VS.hlsl" />
-    <FxCompile Include="Resources\Shader\Skybox.VS.hlsl" />
-    <FxCompile Include="Resources\Shader\Object2D.PS.hlsl" />
-    <FxCompile Include="Resources\Shader\Object2D.VS.hlsl" />
+    <FxCompile Include="Resources\Shader\Object2D.VS.hlsl">
+      <Filter>Resources\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\Object3d.PS.hlsl">
+      <Filter>Resources\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\Object3d.VS.hlsl">
+      <Filter>Resources\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\Object2D.PS.hlsl">
+      <Filter>Resources\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\Particle.PS.hlsl">
+      <Filter>Resources\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\Particle.VS.hlsl">
+      <Filter>Resources\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\SkinningObject3D.VS.hlsl">
+      <Filter>Resources\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shader\Skybox.VS.hlsl">
+      <Filter>Resources\Shaders</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DirectXGame\Object\AABB\AABB.cpp" />
-    <ClCompile Include="DirectXGame\Object\Anime\Anime.cpp" />
-    <ClCompile Include="DirectXGame\Object\Animation\Animation.cpp" />
-    <ClCompile Include="DirectXGame\Math\Vector3.cpp" />
-    <ClCompile Include="DirectXGame\Object\Camera\Camera.cpp" />
-    <ClCompile Include="DirectXGame\Base\DirextX12\DirectX12.cpp" />
-    <ClCompile Include="externals\imgui\imgui.cpp" />
-    <ClCompile Include="externals\imgui\imgui_demo.cpp" />
-    <ClCompile Include="externals\imgui\imgui_draw.cpp" />
-    <ClCompile Include="externals\imgui\imgui_impl_dx12.cpp" />
-    <ClCompile Include="externals\imgui\imgui_impl_win32.cpp" />
-    <ClCompile Include="externals\imgui\imgui_tables.cpp" />
-    <ClCompile Include="externals\imgui\imgui_widgets.cpp" />
-    <ClCompile Include="DirectXGame\Base\GlobalVariables\GlobalVariables.cpp" />
-    <ClCompile Include="DirectXGame\Base\ImGui\ImGuiWND.cpp" />
-    <ClCompile Include="DirectXGame\Base\Input\Input.cpp" />
-    <ClCompile Include="DirectXGame\Object\Light\Lighting.cpp" />
-    <ClCompile Include="DirectXGame\Math\Matrix4x4.cpp" />
-    <ClCompile Include="DirectXGame\Object\Model\Model.cpp" />
-    <ClCompile Include="DirectXGame\Object\Sphere\Sphere.cpp" />
-    <ClCompile Include="DirectXGame\Object\Sprite\Sprite.cpp" />
-    <ClCompile Include="DirectXGame\Object\Texture\Texture.cpp" />
-    <ClCompile Include="DirectXGame\Object\Triangle\Triangle.cpp" />
-    <ClCompile Include="DirectXGame\Base\Log\Log.cpp" />
-    <ClCompile Include="DirectXGame\Scene\IScene.cpp" />
-    <ClCompile Include="DirectXGame\Manager\GameManager.cpp" />
-    <ClCompile Include="DirectXGame\Scene\GameScene.cpp" />
-    <ClCompile Include="DirectXGame\Base\Load\LoadCSV.cpp" />
-    <ClCompile Include="DirectXGame\GameObject\Object\Map\Item\IItem.cpp" />
-    <ClCompile Include="DirectXGame\GameObject\Object\Map\Item\ItemManager.cpp" />
-    <ClCompile Include="DirectXGame\Manager\FileManager.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="DirectXGame\Base\GraphicsRenderer\GraphicsRenderer.cpp" />
-    <ClCompile Include="DirectXGame\Base\WindowsAPI\WindowsAPI.cpp" />
-    <ClCompile Include="DirectXGame\Manager\TextureManager.cpp" />
-    <ClCompile Include="DirectXGame\Scene\TestScene.cpp" />
-    <ClCompile Include="DirectXGame\Manager\ModelManager.cpp" />
-    <ClCompile Include="DirectXGame\Object\Particle\Particle.cpp" />
-    <ClCompile Include="DirectXGame\Scene\SubTestScene.cpp" />
-    <ClCompile Include="DirectXGame\GameObject\Entity\TestObject\TestObject.cpp" />
-    <ClCompile Include="DirectXGame\GameObject\Object\Map\Wall\Wall.cpp" />
-    <ClCompile Include="DirectXGame\GameObject\Object\Map\Map.cpp" />
-    <ClCompile Include="DirectXGame\GameObject\Entity\Player\Player.cpp" />
-    <ClCompile Include="DirectXGame\GameObject\Object\Map\Item\SmallItem\SmallItem.cpp" />
-    <ClCompile Include="DirectXGame\Object\Skybox\Skybox.cpp" />
-    <ClCompile Include="DirectXGame\Scene\TitleScene.cpp" />
-    <ClCompile Include="DirectXGame\Object\SpotLight\SpotLight.cpp" />
-    <ClCompile Include="DirectXGame\GameObject\Entity\Enemy\IEnemy.cpp" />
-    <ClCompile Include="DirectXGame\GameObject\Entity\Enemy\Trace\Trace.cpp" />
-    <ClCompile Include="DirectXGame\Object\PointLight\PointLight.cpp" />
-    <ClCompile Include="DirectXGame\Scene\ClearScene.cpp" />
-    <ClCompile Include="DirectXGame\Scene\Stage\IStage.cpp" />
-    <ClCompile Include="DirectXGame\Scene\Stage\ShipStage.cpp" />
-    <ClCompile Include="DirectXGame\Scene\Stage\OutsideStage.cpp" />
-    <ClCompile Include="DirectXGame\Scene\Stage\InsideStage.cpp" />
-    <ClCompile Include="DirectXGame\GameObject\Object\Map\MapJson.cpp" />
+    <ClCompile Include="DirectXGame\Object\AABB\AABB.cpp">
+      <Filter>DirectXGame\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Object\Animation\Animation.cpp">
+      <Filter>DirectXGame\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Object\Anime\Anime.cpp">
+      <Filter>DirectXGame\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Object\Camera\Camera.cpp">
+      <Filter>DirectXGame\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Scene\ClearScene.cpp">
+      <Filter>DirectXGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Base\DirextX12\DirectX12.cpp">
+      <Filter>DirectXGame\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Manager\FileManager.cpp">
+      <Filter>DirectXGame\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Manager\GameManager.cpp">
+      <Filter>DirectXGame\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Scene\GameScene.cpp">
+      <Filter>DirectXGame\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Base\GlobalVariables\GlobalVariables.cpp">
+      <Filter>DirectXGame\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Base\GraphicsRenderer\GraphicsRenderer.cpp">
+      <Filter>DirectXGame\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\GameObject\Entity\Enemy\IEnemy.cpp">
+      <Filter>DirectXGame\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\GameObject\Object\Map\Item\IItem.cpp">
+      <Filter>DirectXGame\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="externals\imgui\imgui.cpp">
+      <Filter>externals</Filter>
+    </ClCompile>
+    <ClCompile Include="externals\imgui\imgui_demo.cpp">
+      <Filter>externals</Filter>
+    </ClCompile>
+    <ClCompile Include="externals\imgui\imgui_draw.cpp">
+      <Filter>externals</Filter>
+    </ClCompile>
+    <ClCompile Include="externals\imgui\imgui_impl_win32.cpp">
+      <Filter>externals</Filter>
+    </ClCompile>
+    <ClCompile Include="externals\imgui\imgui_tables.cpp">
+      <Filter>externals</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Base\ImGui\ImGuiWND.cpp">
+      <Filter>externals</Filter>
+    </ClCompile>
+    <ClCompile Include="externals\imgui\imgui_widgets.cpp">
+      <Filter>externals</Filter>
+    </ClCompile>
+    <ClCompile Include="externals\imgui\imgui_impl_dx12.cpp">
+      <Filter>externals</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Base\Input\Input.cpp">
+      <Filter>DirectXGame\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Scene\Stage\InsideStage.cpp">
+      <Filter>DirectXGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Scene\Stage\IStage.cpp">
+      <Filter>DirectXGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Scene\IScene.cpp">
+      <Filter>DirectXGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\GameObject\Object\Map\Item\ItemManager.cpp">
+      <Filter>DirectXGame\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Object\Light\Lighting.cpp">
+      <Filter>DirectXGame\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Base\Load\LoadCSV.cpp">
+      <Filter>DirectXGame\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Base\Log\Log.cpp">
+      <Filter>DirectXGame\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\GameObject\Object\Map\Map.cpp">
+      <Filter>DirectXGame\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\GameObject\Object\Map\MapJson.cpp">
+      <Filter>DirectXGame\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Math\Matrix4x4.cpp">
+      <Filter>DirectXGame\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Object\Model\Model.cpp">
+      <Filter>DirectXGame\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Manager\ModelManager.cpp">
+      <Filter>DirectXGame\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Scene\Stage\OutsideStage.cpp">
+      <Filter>DirectXGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Object\Particle\Particle.cpp">
+      <Filter>DirectXGame\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\GameObject\Entity\Player\Player.cpp">
+      <Filter>DirectXGame\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Object\PointLight\PointLight.cpp">
+      <Filter>DirectXGame\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Scene\Stage\ShipStage.cpp">
+      <Filter>DirectXGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Object\Skybox\Skybox.cpp">
+      <Filter>DirectXGame\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\GameObject\Object\Map\Item\SmallItem\SmallItem.cpp">
+      <Filter>DirectXGame\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Object\SpotLight\SpotLight.cpp">
+      <Filter>DirectXGame\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Scene\SubTestScene.cpp">
+      <Filter>DirectXGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Object\Sphere\Sphere.cpp">
+      <Filter>DirectXGame\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>DirectXGame\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Object\Sprite\Sprite.cpp">
+      <Filter>DirectXGame\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\GameObject\Entity\TestObject\TestObject.cpp">
+      <Filter>DirectXGame\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Scene\TestScene.cpp">
+      <Filter>DirectXGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Object\Texture\Texture.cpp">
+      <Filter>DirectXGame\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Scene\TitleScene.cpp">
+      <Filter>DirectXGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\GameObject\Entity\Enemy\Trace\Trace.cpp">
+      <Filter>DirectXGame\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\GameObject\Object\Map\Wall\Wall.cpp">
+      <Filter>DirectXGame\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Manager\TextureManager.cpp">
+      <Filter>DirectXGame\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Math\Vector3.cpp">
+      <Filter>DirectXGame\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Base\WindowsAPI\WindowsAPI.cpp">
+      <Filter>DirectXGame\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectXGame\Object\Triangle\Triangle.cpp">
+      <Filter>DirectXGame\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DirectXGame\Object\AABB\AABB.h" />
-    <ClInclude Include="DirectXGame\Math\math.h" />
-    <ClInclude Include="DirectXGame\Object\Anime\Anime.h" />
-    <ClInclude Include="DirectXGame\Object\Animation\Animation.h" />
-    <ClInclude Include="DirectXGame\Math\MathOperator.h" />
-    <ClInclude Include="DirectXGame\Math\RandomGenerator.h" />
-    <ClInclude Include="DirectXGame\Object\Camera\Camera.h" />
-    <ClInclude Include="DirectXGame\Base\DirextX12\DirectX12.h" />
-    <ClInclude Include="externals\imgui\imconfig.h" />
-    <ClInclude Include="externals\imgui\imgui.h" />
-    <ClInclude Include="externals\imgui\imgui_impl_dx12.h" />
-    <ClInclude Include="externals\imgui\imgui_impl_win32.h" />
-    <ClInclude Include="externals\imgui\imgui_internal.h" />
-    <ClInclude Include="externals\imgui\imstb_rectpack.h" />
-    <ClInclude Include="externals\imgui\imstb_textedit.h" />
-    <ClInclude Include="externals\imgui\imstb_truetype.h" />
-    <ClInclude Include="DirectXGame\Base\GlobalVariables\GlobalVariables.h" />
-    <ClInclude Include="DirectXGame\Base\ImGui\ImGuiWND.h" />
-    <ClInclude Include="DirectXGame\Base\Input\Input.h" />
-    <ClInclude Include="DirectXGame\Object\Light\Lighting.h" />
-    <ClInclude Include="DirectXGame\Math\Matrix4x4.h" />
-    <ClInclude Include="DirectXGame\Object\Model\Model.h" />
-    <ClInclude Include="DirectXGame\Object\Sphere\Sphere.h" />
-    <ClInclude Include="DirectXGame\Object\Sprite\Sprite.h" />
-    <ClInclude Include="DirectXGame\Math\struct.h" />
-    <ClInclude Include="DirectXGame\Object\Texture\Texture.h" />
-    <ClInclude Include="DirectXGame\Math\TransformationMatrix.h" />
-    <ClInclude Include="DirectXGame\Object\Triangle\Triangle.h" />
-    <ClInclude Include="DirectXGame\Base\Log\Log.h" />
-    <ClInclude Include="DirectXGame\Base\GraphicsRenderer\GraphicsRenderer.h" />
-    <ClInclude Include="DirectXGame\Math\Vector4.h" />
-    <ClInclude Include="DirectXGame\Base\WindowsAPI\WindowsAPI.h" />
-    <ClInclude Include="DirectXGame\Manager\TextureManager.h" />
-    <ClInclude Include="DirectXGame\Scene\IScene.h" />
-    <ClInclude Include="DirectXGame\Manager\GameManager.h" />
-    <ClInclude Include="DirectXGame\Scene\TestScene.h" />
-    <ClInclude Include="DirectXGame\Manager\ModelManager.h" />
-    <ClInclude Include="DirectXGame\Object\Particle\Particle.h" />
-    <ClInclude Include="DirectXGame\Scene\SubTestScene.h" />
-    <ClInclude Include="DirectXGame\GameObject\Entity\TestObject\TestObject.h" />
-    <ClInclude Include="DirectXGame\Object\Skybox\Skybox.h" />
-    <ClInclude Include="DirectXGame\Manager\FileManager.h" />
-    <ClInclude Include="DirectXGame\Scene\GameScene.h" />
-    <ClInclude Include="DirectXGame\GameObject\Object\Map\Wall\Wall.h" />
-    <ClInclude Include="DirectXGame\Base\Load\LoadCSV.h" />
-    <ClInclude Include="DirectXGame\GameObject\Object\Map\Map.h" />
-    <ClInclude Include="DirectXGame\GameObject\Entity\Player\Player.h" />
-    <ClInclude Include="DirectXGame\GameObject\Object\Map\Item\IItem.h" />
-    <ClInclude Include="DirectXGame\GameObject\Object\Map\Item\SmallItem\SmallItem.h" />
-    <ClInclude Include="DirectXGame\GameObject\Object\Map\Item\ItemManager.h" />
-    <ClInclude Include="DirectXGame\Scene\TitleScene.h" />
-    <ClInclude Include="DirectXGame\Object\SpotLight\SpotLight.h" />
-    <ClInclude Include="DirectXGame\GameObject\Entity\Enemy\IEnemy.h" />
-    <ClInclude Include="DirectXGame\GameObject\Entity\Enemy\Trace\Trace.h" />
-    <ClInclude Include="DirectXGame\Object\PointLight\PointLight.h" />
-    <ClInclude Include="DirectXGame\Scene\ClearScene.h" />
-    <ClInclude Include="DirectXGame\Scene\Stage\IStage.h" />
-    <ClInclude Include="DirectXGame\Scene\Stage\ShipStage.h" />
-    <ClInclude Include="DirectXGame\Scene\Stage\OutsideStage.h" />
-    <ClInclude Include="DirectXGame\Scene\Stage\InsideStage.h" />
-    <ClInclude Include="JsonMap.h" />
-    <ClInclude Include="DirectXGame\GameObject\Object\Map\MapJson.h" />
+    <ClInclude Include="DirectXGame\Object\AABB\AABB.h">
+      <Filter>DirectXGame\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Object\Animation\Animation.h">
+      <Filter>DirectXGame\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Object\Anime\Anime.h">
+      <Filter>DirectXGame\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Object\Camera\Camera.h">
+      <Filter>DirectXGame\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Scene\ClearScene.h">
+      <Filter>DirectXGame\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Base\DirextX12\DirectX12.h">
+      <Filter>DirectXGame\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Manager\FileManager.h">
+      <Filter>DirectXGame\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Manager\GameManager.h">
+      <Filter>DirectXGame\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Scene\GameScene.h">
+      <Filter>DirectXGame\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Base\GlobalVariables\GlobalVariables.h">
+      <Filter>DirectXGame\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Base\GraphicsRenderer\GraphicsRenderer.h">
+      <Filter>DirectXGame\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\GameObject\Entity\Enemy\IEnemy.h">
+      <Filter>DirectXGame\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\GameObject\Object\Map\Item\IItem.h">
+      <Filter>DirectXGame\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="externals\imgui\imconfig.h">
+      <Filter>externals</Filter>
+    </ClInclude>
+    <ClInclude Include="externals\imgui\imgui.h">
+      <Filter>externals</Filter>
+    </ClInclude>
+    <ClInclude Include="externals\imgui\imgui_impl_dx12.h">
+      <Filter>externals</Filter>
+    </ClInclude>
+    <ClInclude Include="externals\imgui\imgui_impl_win32.h">
+      <Filter>externals</Filter>
+    </ClInclude>
+    <ClInclude Include="externals\imgui\imgui_internal.h">
+      <Filter>externals</Filter>
+    </ClInclude>
+    <ClInclude Include="externals\imgui\imstb_rectpack.h">
+      <Filter>externals</Filter>
+    </ClInclude>
+    <ClInclude Include="externals\imgui\imstb_truetype.h">
+      <Filter>externals</Filter>
+    </ClInclude>
+    <ClInclude Include="externals\imgui\imstb_textedit.h">
+      <Filter>externals</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Base\ImGui\ImGuiWND.h">
+      <Filter>externals</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Base\Input\Input.h">
+      <Filter>DirectXGame\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Scene\Stage\InsideStage.h">
+      <Filter>DirectXGame\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Scene\IScene.h">
+      <Filter>DirectXGame\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Scene\Stage\IStage.h">
+      <Filter>DirectXGame\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\GameObject\Object\Map\Item\ItemManager.h">
+      <Filter>DirectXGame\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Object\Light\Lighting.h">
+      <Filter>DirectXGame\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Base\Load\LoadCSV.h">
+      <Filter>DirectXGame\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Base\Log\Log.h">
+      <Filter>DirectXGame\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\GameObject\Object\Map\Map.h">
+      <Filter>DirectXGame\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\GameObject\Object\Map\MapJson.h">
+      <Filter>DirectXGame\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Math\math.h">
+      <Filter>DirectXGame\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Math\MathOperator.h">
+      <Filter>DirectXGame\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Math\Matrix4x4.h">
+      <Filter>DirectXGame\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Object\Model\Model.h">
+      <Filter>DirectXGame\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Manager\ModelManager.h">
+      <Filter>DirectXGame\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonMap.h">
+      <Filter>DirectXGame\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Scene\Stage\OutsideStage.h">
+      <Filter>DirectXGame\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Object\Particle\Particle.h">
+      <Filter>DirectXGame\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\GameObject\Entity\Player\Player.h">
+      <Filter>DirectXGame\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Object\PointLight\PointLight.h">
+      <Filter>DirectXGame\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Math\RandomGenerator.h">
+      <Filter>DirectXGame\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Scene\Stage\ShipStage.h">
+      <Filter>DirectXGame\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Object\Skybox\Skybox.h">
+      <Filter>DirectXGame\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\GameObject\Object\Map\Item\SmallItem\SmallItem.h">
+      <Filter>DirectXGame\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Object\SpotLight\SpotLight.h">
+      <Filter>DirectXGame\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Scene\SubTestScene.h">
+      <Filter>DirectXGame\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Math\struct.h">
+      <Filter>DirectXGame\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Object\Sphere\Sphere.h">
+      <Filter>DirectXGame\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Object\Sprite\Sprite.h">
+      <Filter>DirectXGame\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\GameObject\Entity\TestObject\TestObject.h">
+      <Filter>DirectXGame\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Scene\TestScene.h">
+      <Filter>DirectXGame\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Object\Texture\Texture.h">
+      <Filter>DirectXGame\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Scene\TitleScene.h">
+      <Filter>DirectXGame\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\GameObject\Entity\Enemy\Trace\Trace.h">
+      <Filter>DirectXGame\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\GameObject\Object\Map\Wall\Wall.h">
+      <Filter>DirectXGame\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Manager\TextureManager.h">
+      <Filter>DirectXGame\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Math\TransformationMatrix.h">
+      <Filter>DirectXGame\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Math\Vector4.h">
+      <Filter>DirectXGame\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Base\WindowsAPI\WindowsAPI.h">
+      <Filter>DirectXGame\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectXGame\Object\Triangle\Triangle.h">
+      <Filter>DirectXGame\Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Shader\Object3d.hlsli" />
-    <None Include="Resources\Shader\Particle.hlsli" />
-    <None Include="Resources\Shader\Skybox.hlsli" />
-    <None Include="Resources\Shader\Skybox.PS.hlsl" />
-    <None Include="Resources\Shader\Object2D.hlsli" />
+    <None Include="Resources\Shader\Object2D.hlsli">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shader\Object3d.hlsli">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shader\Skybox.PS.hlsl">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shader\Particle.hlsli">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="Resources\Shader\Skybox.hlsli">
+      <Filter>Resources\Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="externals\imgui\LICENSE.txt" />
+    <Filter Include="DirectXGame">
+      <UniqueIdentifier>{22066c5a-0cdf-4f32-b617-422669ef746a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DirectXGame\Base">
+      <UniqueIdentifier>{57687179-2611-42cc-92d6-5b1c9f28bc3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DirectXGame\GameObject">
+      <UniqueIdentifier>{066637da-e652-4a60-bfba-25e1e82d34eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DirectXGame\Manager">
+      <UniqueIdentifier>{10fd08a9-cbad-4c5b-b5c5-a865e4f8cec9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DirectXGame\Math">
+      <UniqueIdentifier>{69b05c55-0d7d-4bec-b818-6e15a828dc3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DirectXGame\Object">
+      <UniqueIdentifier>{0f13acce-31c8-4a1b-986a-4ddf2f2dc19e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DirectXGame\Scene">
+      <UniqueIdentifier>{19cf8ae7-fafc-42ee-b2fa-f41cc0826eff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="externals">
+      <UniqueIdentifier>{596ef534-f97c-4604-9f6e-4409e1c24239}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{8ebceae3-098c-44e7-a07c-c77caf4717a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Shaders">
+      <UniqueIdentifier>{5c09eab1-55ed-4577-bf68-50ddc59656e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Json">
+      <UniqueIdentifier>{fa7d5be0-c654-4308-ae16-cad3da999080}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="externals\imgui\LICENSE.txt">
+      <Filter>externals</Filter>
+    </Text>
   </ItemGroup>
 </Project>

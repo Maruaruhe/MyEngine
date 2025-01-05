@@ -15,26 +15,35 @@ struct Group {
 	std::map<std::string, Item> items;
 };
 
+//グローバル変数
 class GlobalVariables
 {
 public:
 	static GlobalVariables* GetInstance();
 
+	//Update
 	void Update();
 
+	//グループの作成
 	void CreateGroup(const std::string& groupName);
+	//ファイルのセーブ
 	void SaveFile(const std::string& groupName);
+	//全ファイルロード
 	void LoadFiles();
+	//ファイルロード
 	void LoadFile(const std::string& groupName);
 
+	//Setter
 	void SetValue(const std::string& groupName, const std::string& key, int32_t value);
 	void SetValue(const std::string& groupName, const std::string& key, float value);
 	void SetValue(const std::string& groupName, const std::string& key, const Vector3& value);
 
+	//変数の追加
 	void AddItem(const std::string& groupName, const std::string& key, int32_t value);
 	void AddItem(const std::string& groupName, const std::string& key, float value);
 	void AddItem(const std::string& groupName, const std::string& key, const Vector3& value);
 
+	//Getter
 	int32_t GetIntValue(const std::string& groupName, const std::string& key)const;
 	float GetFloatValue(const std::string& groupName, const std::string& key)const;
 	Vector3 GetVector3Value(const std::string& groupName, const std::string& key)const;

@@ -2,13 +2,13 @@
 #include <numbers>
 
 void PointLight::Initialize() {
-	pointLightResource = DirectX12::GetInstance()->CreateBufferResource(sizeof(Point));
-	light = nullptr;
-	pointLightResource->Map(0, nullptr, reinterpret_cast<void**>(&light));
+	pointLightResource_ = DirectX12::GetInstance()->CreateBufferResource(sizeof(Point));
+	light_ = nullptr;
+	pointLightResource_->Map(0, nullptr, reinterpret_cast<void**>(&light_));
 
-	light->color = { 1.0f,1.0f,1.0f,1.0f };
-	light->position = { 2.0f,2.0f,2.0f };
-	light->intensity = 1.5f;
+	light_->color = { 1.0f,1.0f,1.0f,1.0f };
+	light_->position = { 2.0f,2.0f,2.0f };
+	light_->intensity = 1.5f;
 }
 
 void PointLight::Update() {
@@ -22,5 +22,5 @@ void PointLight::Update() {
 	ImGui::End();
 
 #endif // DEBUG
-	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(6, pointLightResource->GetGPUVirtualAddress());
+	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(6, pointLightResource_->GetGPUVirtualAddress());
 }

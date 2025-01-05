@@ -1,9 +1,9 @@
 #include "TextureManager.h"
 
-uint32_t TextureManager::kSRVIndexTop = 1;
+uint32_t TextureManager::kSRVIndexTop_ = 1;
 
 void TextureManager::Initialize() {
-	textureDatas.reserve(DirectX12::kMaxSRVCount);
+	textureDatas_.reserve(DirectX12::kMaxSRVCount);
 }
 
 TextureManager* TextureManager::GetInstance() {
@@ -14,15 +14,15 @@ TextureManager* TextureManager::GetInstance() {
 
 void TextureManager::LoadTexture(const std::string& filePath) {
 	auto it = std::find_if(
-		textureDatas.begin(),
-		textureDatas.end(),
+		textureDatas_.begin(),
+		textureDatas_.end(),
 		[&](TextureData& textureData) {return textureData.filePath == filePath; }
 	);
-	if (it != textureDatas.end()) {
+	if (it != textureDatas_.end()) {
 		return;
 	}
 
-	assert(textureDatas.size() + kSRVIndexTop < DirectX12::kMaxSRVCount);
+	assert(textureDatas_.size() + kSRVIndexTop_ < DirectX12::kMaxSRVCount);
 
 	DirectX::ScratchImage image{};
 	std::wstring filePathW = ConvertString(filePath);
@@ -34,8 +34,8 @@ void TextureManager::LoadTexture(const std::string& filePath) {
 	hr = DirectX::GenerateMipMaps(image.GetImages(), image.GetImageCount(), image.GetMetadata(), DirectX::TEX_FILTER_SRGB, 0, mipImages);
 	assert(SUCCEEDED(hr));
 
-	textureDatas.resize(textureDatas.size() + 1 + kSRVIndexTop);
-	TextureData& textureData = textureDatas.back();
+	textureDatas_.resize(textureDatas_.size() + 1 + kSRVIndexTop_);
+	TextureData& textureData = textureDatas_.back();
 
 	textureData.filePath = filePath;
 	textureData.metaData = mipImages.GetMetadata();
@@ -53,7 +53,7 @@ void TextureManager::LoadTexture(const std::string& filePath) {
 		assert(SUCCEEDED(hr));
 	}
 
-	uint32_t srvIndex = static_cast<uint32_t>(textureDatas.size() - 1) + kSRVIndexTop;
+	uint32_t srvIndex = static_cast<uint32_t>(textureDatas_.size() - 1) + kSRVIndexTop_;
 	textureData.srvHandleCPU = GetCPUDescriptorHandle(srvIndex);
 	textureData.srvHandleGPU = GetGPUDescriptorHandle(srvIndex);
 
@@ -108,13 +108,13 @@ D3D12_GPU_DESCRIPTOR_HANDLE TextureManager::GetGPUDescriptorHandle(uint32_t inde
 
 uint32_t TextureManager::GetTextureIndexByFilePath(const std::string& filePath) {
 	auto it = std::find_if(
-		textureDatas.begin(),
-		textureDatas.end(),
+		textureDatas_.begin(),
+		textureDatas_.end(),
 		[&](TextureData& textureData) {return textureData.filePath == filePath; }
 	);
 
-	if (it != textureDatas.end()) {
-		uint32_t textureIndex = static_cast<uint32_t>(std::distance(textureDatas.begin(), it));
+	if (it != textureDatas_.end()) {
+		uint32_t textureIndex = static_cast<uint32_t>(std::distance(textureDatas_.begin(), it));
 		return textureIndex;
 	}
 	assert(0);
@@ -124,6 +124,6 @@ uint32_t TextureManager::GetTextureIndexByFilePath(const std::string& filePath) 
 D3D12_GPU_DESCRIPTOR_HANDLE TextureManager::GetSrvHandleGPU(uint32_t textureIndex) {
 	assert(textureIndex < DirectX12::kMaxSRVCount);
 
-	TextureData& textureData = textureDatas[textureIndex];
+	TextureData& textureData = textureDatas_[textureIndex];
 	return textureData.srvHandleGPU;
 }

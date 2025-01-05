@@ -21,11 +21,17 @@ struct Spot {
 class SpotLight
 {
 public:
+	/// <summary>
+	/// Initialize
+	/// </summary>
 	void Initialize();
+	/// <summary>
+	/// Update
+	/// </summary>
 	void Update();
 
-	Spot* light;
-	Microsoft::WRL::ComPtr<ID3D12Resource> spotLightResource;
+	Spot* light_;
+	Microsoft::WRL::ComPtr<ID3D12Resource> spotLightResource_;
 private:
 
 };

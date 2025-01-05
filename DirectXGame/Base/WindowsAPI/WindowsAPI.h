@@ -12,30 +12,34 @@ class WindowsAPI
 {
 public:
 	static WindowsAPI* GetInstance();
-
+	//Initialize
 	void Init();
 
+	//Window Setting
 	void WindowClass();
+	//Window Size
 	void WindowSize();
+	//Window Create
 	void WindowCreate();
 
 	static LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
 
+	//Getter
+	HWND GetHwnd() const { return hwnd_; }
+	HINSTANCE GetHInstance() { return wc_.hInstance; }
 
-	HWND GetHwnd() const { return hwnd; }
-	HINSTANCE GetHInstance() { return wc.hInstance; }
-
+	//Finalize
 	void Finalize();
 
 private:
 	static WindowsAPI* instance;
 	//ウインドウクラスの設定
-	WNDCLASS wc{};
+	WNDCLASS wc_{};
 
 	//ウインドウサイズを表す構造体にクライアント領域を入れる
-	RECT wrc;
+	RECT wrc_;
 
-	HWND hwnd = {};
+	HWND hwnd_ = {};
 
 	WindowsAPI() = default;
 	~WindowsAPI() = default;

@@ -17,9 +17,24 @@ protected:
 	static int sceneNo;
 
 public:
+	/// <summary>
+	/// Initialize
+	/// </summary>
 	virtual void Initialize() = 0;
+
+	/// <summary>
+	/// Update
+	/// </summary>
 	virtual void Update() = 0;
+
+	/// <summary>
+	/// Draw
+	/// </summary>
 	virtual void Draw() = 0;
+
+	/// <summary>
+	/// シーン変更
+	/// </summary>
 	virtual void SceneChange() = 0;
 
 	virtual ~IScene();

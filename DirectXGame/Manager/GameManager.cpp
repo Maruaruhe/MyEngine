@@ -22,11 +22,11 @@ GameManager::GameManager() {
 	ModelManager::GetInstance()->Initialize();
 	FileManager::GetInstance()->Initialize();
 
-	sceneArr[TEST] = std::make_unique<TestScene>();
-	sceneArr[SUBTEST] = std::make_unique<SubTestScene>();
-	sceneArr[TITLE] = std::make_unique<TitleScene>();
-	sceneArr[INGAME] = std::make_unique<GameScene>();
-	sceneArr[CLEAR] = std::make_unique<ClearScene>();
+	sceneArr_[TEST] = std::make_unique<TestScene>();
+	sceneArr_[SUBTEST] = std::make_unique<SubTestScene>();
+	sceneArr_[TITLE] = std::make_unique<TitleScene>();
+	sceneArr_[INGAME] = std::make_unique<GameScene>();
+	sceneArr_[CLEAR] = std::make_unique<ClearScene>();
 }
 
 GameManager::~GameManager() {
@@ -55,20 +55,20 @@ void GameManager::Run() {
 			KeyInput::GetInstance()->Update();
 			GamePadInput::GetInstance()->BeginFrame();
 			//シーンのチェック
-			prevSceneNo = currentSceneNo;
-			currentSceneNo = sceneArr[currentSceneNo]->GetSceneNo();
+			prevSceneNo_ = currentSceneNo_;
+			currentSceneNo_ = sceneArr_[currentSceneNo_]->GetSceneNo();
 
 			//シーンが前フレームと異なったら初期化
-			if (prevSceneNo != currentSceneNo) {
-				sceneArr[currentSceneNo]->Initialize();
+			if (prevSceneNo_ != currentSceneNo_) {
+				sceneArr_[currentSceneNo_]->Initialize();
 			}
 
 			BeginFrame();
-			sceneArr[currentSceneNo]->Update();
+			sceneArr_[currentSceneNo_]->Update();
 			ImGui::Render();
-			sceneArr[currentSceneNo]->Draw();
+			sceneArr_[currentSceneNo_]->Draw();
 			EndFrame();
-			sceneArr[currentSceneNo]->SceneChange();
+			sceneArr_[currentSceneNo_]->SceneChange();
 		}
 	}
 	Finalize();

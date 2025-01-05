@@ -75,6 +75,7 @@ private:
 	// オブジェクトの走査
 	void ScanningObjects(nlohmann::json& object, std::vector<ObjectData>* objects);
 
+	//モデルの生成
 	void CreateModels();
 
 private:

@@ -4,29 +4,29 @@
 
 void SmallItem::Initialize(Transform transform, Camera* camera) {
 	ModelManager::GetInstance()->LoadModel("Map/Item/smallItem");
-	model.Initialize("Map/Item/smallItem");
+	model_.Initialize("Map/Item/smallItem");
 	TextureManager::GetInstance()->LoadTexture("Resources/pizza.png");
-	model.textureIndex = TextureManager::GetInstance()->GetTextureIndexByFilePath("Resources/pizza.png");
-	model.SetCamera(camera);
-	model.transform = transform;
+	model_.textureIndex = TextureManager::GetInstance()->GetTextureIndexByFilePath("Resources/pizza.png");
+	model_.SetCamera(camera);
+	model_.transform = transform;
 }
 
 void SmallItem::Update() {
-	model.Update();
+	model_.Update();
 }
 
 void SmallItem::Draw() {
-	model.Draw();
+	model_.Draw();
 }
 
 void SmallItem::CheckLineCollision(Segment segment) {
 	//アイテムのAABBを生成
 	AABB aabb;
-	aabb.CreateEntityAABB(model.transform);
+	aabb.CreateEntityAABB(model_.transform);
 
 	//線分との当たり判定チェック
 	if (aabb.CheckLineCollision(segment)) {
-		isabletobetaken = true;
+		isabletobetaken_ = true;
 	}
 
 }

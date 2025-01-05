@@ -11,22 +11,31 @@ class Map;
 class IEnemy
 {
 public:
+	/// <summary>
+	/// 初期化
+	/// </summary>
 	virtual void Initialize(Transform transform);
 
+	/// <summary>
+	/// Update
+	/// </summary>
 	virtual void Update();
 
+	/// <summary>
+	/// Draw
+	/// </summary>
 	virtual void Draw();
 
-	bool isAlive;
-	bool isChase;
-	bool isAttacking;
+	bool isAlive_;
+	bool isChase_;
+	bool isAttacking_;
 
-	Model model;
-	AABB collision;
+	Model model_;
+	AABB collision_;
 protected:
-	Camera* camera;
+	Camera* camera_;
 
-	Map* map;
-	Player* player;
+	Map* map_;
+	Player* player_;
 };
 

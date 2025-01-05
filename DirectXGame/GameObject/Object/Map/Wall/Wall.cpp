@@ -3,12 +3,12 @@
 
 void Wall::Initialize(const Vector3 pos, const Vector3 scale) {
 	ModelManager::GetInstance()->LoadModel("Map/wall");
-	model.Initialize("Map/wall");
-	model.transform.translate = pos;
-	model.transform.scale = scale;
+	model_.Initialize("Map/wall");
+	model_.transform.translate = pos;
+	model_.transform.scale = scale;
 
 	TextureManager::GetInstance()->LoadTexture("Resources/Map/wall.png");
-	model.textureIndex = TextureManager::GetInstance()->GetTextureIndexByFilePath("Resources/Map/wall.png");
+	model_.textureIndex = TextureManager::GetInstance()->GetTextureIndexByFilePath("Resources/Map/wall.png");
 
 	//model.material->uvTransform.m[0][0] = scale.y;
 	//if (scale.x != 1.0f) {
@@ -20,9 +20,9 @@ void Wall::Initialize(const Vector3 pos, const Vector3 scale) {
 }
 
 void Wall::Update() {
-	model.Update();
+	model_.Update();
 }
 
 void Wall::Draw() {
-	model.Draw();
+	model_.Draw();
 }

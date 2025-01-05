@@ -32,22 +32,27 @@ private:
 	GraphicsRenderer* graphicsRenderer_ = nullptr;
 
 	//Scene
-	std::unique_ptr<IScene> sceneArr[6];
+	std::unique_ptr<IScene> sceneArr_[6];
 
-	int currentSceneNo;
-	int prevSceneNo;
+	int currentSceneNo_;
+	int prevSceneNo_;
 
 public:
 	GameManager();
 	~GameManager();
 
+	//実行中
 	void Run();
 
 private:
+	//初期化
 	void Initialize();
 
+	//フレームスタート
 	void BeginFrame();
+	//フレームエンド
 	void EndFrame();
+	//Finalize
 	void Finalize();
 };
 

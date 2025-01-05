@@ -43,26 +43,26 @@ void WindowsAPI::WindowClass() {
 
 
 	//ウインドウプロシージャ	
-	wc.lpfnWndProc = WindowProc;
+	wc_.lpfnWndProc = WindowProc;
 	//ウインドウクラス名（なんでもいい）
-	wc.lpszClassName = L"廃品回収";
+	wc_.lpszClassName = L"廃品回収";
 	//インスタンスハンドル
-	wc.hInstance = GetModuleHandle(nullptr);
+	wc_.hInstance = GetModuleHandle(nullptr);
 	//カーソル
-	wc.hCursor = LoadCursor(nullptr, IDC_ARROW);
+	wc_.hCursor = LoadCursor(nullptr, IDC_ARROW);
 
 	//ウインドウクラスを登録する
-	RegisterClass(&wc);
+	RegisterClass(&wc_);
 }
 
 void WindowsAPI::WindowSize() {
-	wrc = { 0,0,kCliantWidth,kClientHeight };
-	AdjustWindowRect(&wrc, WS_OVERLAPPEDWINDOW, false);
+	wrc_ = { 0,0,kCliantWidth,kClientHeight };
+	AdjustWindowRect(&wrc_, WS_OVERLAPPEDWINDOW, false);
 }
 
 void WindowsAPI::WindowCreate() {
 	//ウインドウの生成
-	hwnd = CreateWindow(
+	hwnd_ = CreateWindow(
 		wc.lpszClassName,		//利用するクラス名
 		L"廃品回収",			//タイトルバーの文字
 		WS_OVERLAPPEDWINDOW,	//よく見るウインドウスタイル
@@ -78,7 +78,7 @@ void WindowsAPI::WindowCreate() {
 
 	/*directX12->DebugLayer();*/
 
-	ShowWindow(hwnd, SW_SHOW);
+	ShowWindow(hwnd_, SW_SHOW);
 }
 
 

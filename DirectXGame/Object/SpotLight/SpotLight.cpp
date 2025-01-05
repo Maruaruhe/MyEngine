@@ -2,17 +2,17 @@
 #include <numbers>
 
 void SpotLight::Initialize() {
-	spotLightResource = DirectX12::GetInstance()->CreateBufferResource(sizeof(Spot));
-	light = nullptr;
-	spotLightResource->Map(0, nullptr, reinterpret_cast<void**>(&light));
+	spotLightResource_ = DirectX12::GetInstance()->CreateBufferResource(sizeof(Spot));
+	light_ = nullptr;
+	spotLightResource_->Map(0, nullptr, reinterpret_cast<void**>(&light_));
 
-	light->color = { 1.0f,1.0f,1.0f,1.0f };
-	light->direction = { 0.0f,0.0f,1.0f };
-	light->position = { 2.0f,2.0f,2.0f };
-	light->distance = 50.0f;
-	light->intensity = 1.5f;
-	light->decay = 7.0f;
-	light->cosAngle = 0.45f;
+	light_->color = { 1.0f,1.0f,1.0f,1.0f };
+	light_->direction = { 0.0f,0.0f,1.0f };
+	light_->position = { 2.0f,2.0f,2.0f };
+	light_->distance = 50.0f;
+	light_->intensity = 1.5f;
+	light_->decay = 7.0f;
+	light_->cosAngle = 0.45f;
 }
 
 void SpotLight::Update() {
@@ -31,5 +31,5 @@ void SpotLight::Update() {
 	ImGui::End();
 
 #endif // DEBUG
-	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(5, spotLightResource->GetGPUVirtualAddress());
+	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(5, spotLightResource_->GetGPUVirtualAddress());
 }

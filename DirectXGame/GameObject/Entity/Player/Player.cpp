@@ -13,10 +13,10 @@ void Player::Initialize() {
 	view.Initialize("player");
 	view.transform.scale *= 0.25f;
 
-	sLight.Initialize();
+	sLight_.Initialize();
 
-	kInput = KeyInput::GetInstance();
-	pInput = GamePadInput::GetInstance();
+	kInput_ = KeyInput::GetInstance();
+	pInput_ = GamePadInput::GetInstance();
 
 	//State Initialize
 	state_.HP;
@@ -36,7 +36,7 @@ void Player::Initialize() {
 	deadFlame = 0;
 	aliveFrame = 0;
 
-	deads.Initialize({ 1280,720 }, "Resources/Dead/youdied.png");
+	deads_.Initialize({ 1280,720 }, "Resources/Dead/youdied.png");
 }
 
 void Player::Update() {
@@ -63,11 +63,11 @@ void Player::Update() {
 	view.Update();
 	view.transform.translate = GetFrontVector(2.0f);
 
-	if (kInput->TriggerKey(DIK_T)) {
+	if (kInput_->TriggerKey(DIK_T)) {
 		state_.isAlive = false; 
 		deadFlame = 0;
 	}
-	if (kInput->TriggerKey(DIK_Y)) {
+	if (kInput_->TriggerKey(DIK_Y)) {
 		state_.isAlive = true;
 	}
 	if (state_.isAlive) {
@@ -89,29 +89,29 @@ void Player::Update() {
 void Player::LightUpdate() {
 	if (state_.isAlive) {
 		//ON
-		if (kInput->TriggerKey(DIK_Q)) {
+		if (kInput_->TriggerKey(DIK_Q)) {
 			if (state_.isUsingLight) {
 				state_.isUsingLight = false;
-				sLight.light->color = { 0.0f,0.0f,0.0f,0.0f };
+				sLight_.light_->color = { 0.0f,0.0f,0.0f,0.0f };
 			}
 			//OFF
 			else {
 				state_.isUsingLight = true;
-				sLight.light->color = { 1.0f,1.0f,1.0f,1.0f };
+				sLight_.light_->color = { 1.0f,1.0f,1.0f,1.0f };
 			}
 		}
 
-		sLight.light->position = model.transform.translate;
-		sLight.light->direction = GetFrontLightVector(1.0f);
+		sLight_.light_->position = model.transform.translate;
+		sLight_.light_->direction = GetFrontLightVector(1.0f);
 	}
-	sLight.Update();
+	sLight_.Update();
 }
 
 void Player::Draw() {
 	model.Draw();
 	if (!state_.isAlive) {
 		deadModel.Draw();
-		deads.Draw();
+		deads_.Draw();
 	}
 #ifdef _DEBUG
 	view.Draw();
@@ -121,33 +121,33 @@ void Player::Draw() {
 void Player::Move() {
 	Vector3 move{};
 
-	if (kInput->PushKey(DIK_W)) {
+	if (kInput_->PushKey(DIK_W)) {
 		move.z += 0.1f;
 	}
-	if (kInput->PushKey(DIK_S)) {
+	if (kInput_->PushKey(DIK_S)) {
 		move.z -= 0.1f;
 	}
-	if (kInput->PushKey(DIK_A)) {
+	if (kInput_->PushKey(DIK_A)) {
 		move.x -= 0.1f;
 	}
 
-	if (kInput->PushKey(DIK_D)) {
+	if (kInput_->PushKey(DIK_D)) {
 		move.x += 0.1f;
 	}
 
 	//rotate
 	Vector2 rotate{};
 
-	if (kInput->PushKey(DIK_LEFT)) {
+	if (kInput_->PushKey(DIK_LEFT)) {
 		rotate.y -= 0.03f;
 	}
-	if (kInput->PushKey(DIK_RIGHT)) {
+	if (kInput_->PushKey(DIK_RIGHT)) {
 		rotate.y += 0.03f;
 	}
-	if (kInput->PushKey(DIK_UP)) {
+	if (kInput_->PushKey(DIK_UP)) {
 		rotate.x -= 0.03f;
 	}
-	if (kInput->PushKey(DIK_DOWN)) {
+	if (kInput_->PushKey(DIK_DOWN)) {
 		rotate.x += 0.03f;
 	}
 
@@ -189,7 +189,7 @@ void Player::Jump() {
 
 	//Jump
 	if (!state_.isJump) {
-		if (kInput->PushKey(DIK_SPACE)) {
+		if (kInput_->PushKey(DIK_SPACE)) {
 			state_.velocity.y = 0.2f;
 			state_.isJump = true;
 		}
@@ -263,7 +263,7 @@ Vector3 Player::GetItemFrontVector() {
 
 void Player::CheckItemCollision() {
 	AABB itemAABB;
-	itemAABB.CreateEntityAABB(map_->GetItem()->model.transform);
+	itemAABB.CreateEntityAABB(map_->GetItem()->model_.transform);
 
 	Segment playerSight;
 	playerSight.start = model.transform.translate;
@@ -274,11 +274,11 @@ void Player::CheckItemCollision() {
 	//視線との当たり判定
 	if (itemAABB.CheckLineCollision(playerSight)) {
 		count += 1;
-		map_->GetItem()->isabletobetaken = true;
+		map_->GetItem()->isabletobetaken_ = true;
 		map_->GetItem()->TakenItem();
 	}
 	else {
-		map_->GetItem()->isabletobetaken = false;
+		map_->GetItem()->isabletobetaken_ = false;
 	}
 
 #ifdef _DEBUG
@@ -298,21 +298,21 @@ void Player::CheckItemCollision() {
 
 
 void Player::CheckItemBring() {
-	if (map_->GetItem()->isTaken) {
+	if (map_->GetItem()->isTaken_) {
 		//所持しているとき手に持つ
-		map_->GetItem()->model.transform.translate = GetItemFrontVector();
+		map_->GetItem()->model_.transform.translate = GetItemFrontVector();
 		//PlayerのRotateと同期
-		map_->GetItem()->model.transform.rotate = model.transform.rotate;
+		map_->GetItem()->model_.transform.rotate = model.transform.rotate;
 
 		//
 		if (KeyInput::GetInstance()->PushKey(DIK_G)) {//Drop処理
-			map_->GetItem()->isTaken = false;
+			map_->GetItem()->isTaken_ = false;
 			//足元に落とす & リセット
-			map_->GetItem()->model.transform.translate = GetFrontVector(0.7f);
-			map_->GetItem()->model.transform.translate.y = 0.0f;
-			map_->GetItem()->model.transform.scale = { 1.0f,1.0f,1.0f };
-			map_->GetItem()->model.transform.rotate.x = {};
-			map_->GetItem()->model.transform.rotate.z = {};
+			map_->GetItem()->model_.transform.translate = GetFrontVector(0.7f);
+			map_->GetItem()->model_.transform.translate.y = 0.0f;
+			map_->GetItem()->model_.transform.scale = { 1.0f,1.0f,1.0f };
+			map_->GetItem()->model_.transform.rotate.x = {};
+			map_->GetItem()->model_.transform.rotate.z = {};
 		}
 	}
 }
@@ -331,7 +331,7 @@ void Player::DeathUpdate() {
 		deadModel.transform.translate = model.transform.translate;
 		deadModel.transform.rotate.y = 1.77f;
 
-		deads.materialData_->color.w = float(1+deadFlame)/180.0f;
+		deads_.materialData_->color.w = float(1+deadFlame)/180.0f;
 	}
 
 #ifdef _DEBUG

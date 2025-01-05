@@ -39,6 +39,11 @@ public: // ** メンバ関数 ** //
 
 	bool CheckCollision(AABB a);
 
+	/// <summary>
+	/// 線との当たり判定
+	/// </summary>
+	/// <param name="segment"></param>
+	/// <returns></returns>
 	bool CheckLineCollision(const Segment& segment);
 
 	//bool CheckLineCollision(const Segment& segment);

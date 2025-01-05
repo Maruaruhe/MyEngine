@@ -16,11 +16,17 @@ struct Point {
 class PointLight
 {
 public:
+	/// <summary>
+	/// Initialize
+	/// </summary>
 	void Initialize();
+	/// <summary>
+	/// Update
+	/// </summary>
 	void Update();
 
-	Point* light;
-	Microsoft::WRL::ComPtr<ID3D12Resource> pointLightResource;
+	Point* light_;
+	Microsoft::WRL::ComPtr<ID3D12Resource> pointLightResource_;
 private:
 
 };

@@ -5,20 +5,20 @@
 
 
 void MapJson::Initialize(Camera* camera) {
-    level = FileManager::GetInstance()->LoadJsonFile("Json/", "complate");
-    for (auto& object : level.objects) {
+    level_ = FileManager::GetInstance()->LoadJsonFile("Json/", "complate");
+    for (auto& object : level_.objects) {
         object.model.SetCamera(camera);
     }
 }
 
 void MapJson::Update() {
-    for (auto& object : level.objects) {
+    for (auto& object : level_.objects) {
         object.model.Update();
     }
 }
 
 void MapJson::Draw() {
-    for (auto& object : level.objects) {
+    for (auto& object : level_.objects) {
         object.model.Draw();
     }
 }
@@ -26,7 +26,7 @@ void MapJson::Draw() {
 void MapJson::CheckCollision(AABB pAABB, Vector3 move, Vector3* fixVector) {
     Vector3 distance{};
 
-    for (ObjectData& wall : level.objects) {
+    for (ObjectData& wall : level_.objects) {
         AABB wallAABB;
         wallAABB.CreateWallAABB(wall.model.transform);
 
@@ -51,7 +51,7 @@ void MapJson::CheckCollision(AABB pAABB, Vector3 move, Vector3* fixVector) {
     pAABB.min.x += fixVector->x;
     pAABB.max.x += fixVector->x;
 
-    for (ObjectData& wall : level.objects) {
+    for (ObjectData& wall : level_.objects) {
         AABB wallAABB;
         wallAABB.CreateWallAABB(wall.model.transform);
 
@@ -81,7 +81,7 @@ void MapJson::CheckCollisionFloor(AABB pAABB, Vector3 move, Vector3* fixVector, 
     Vector3 distance{};
     int collisoinCount = 0;
 
-    for (ObjectData& wall : level.objects) {
+    for (ObjectData& wall : level_.objects) {
         AABB wallAABB;
         wallAABB.CreateWallAABB(wall.model.transform);
         if (wall.toTop || wall.toBot) {

@@ -7,7 +7,7 @@
 void Map::Initialize(Camera* camera) {
        // mapData = LoadMapData(filepath);
 
-        walls.clear();
+        walls_.clear();
         camera_ = camera;
 
         CreateWall(camera);
@@ -20,7 +20,7 @@ void Map::Initialize(Camera* camera) {
 }
 
 void Map::Update(){
-	for (Wall wall : walls) {
+	for (Wall wall : walls_) {
 		wall.Update();
 	}
     floor.Update();
@@ -37,7 +37,7 @@ void Map::Update(){
 }
 
 void Map::Draw(){
-	for (Wall wall : walls) {
+	for (Wall wall : walls_) {
 		wall.Draw();
 	}
     floor.Draw();
@@ -102,9 +102,9 @@ void Map::CreateWall(Camera* camera) {
                     i = 0;
 
                     newWall.Initialize(transform.translate, transform.scale);
-                    newWall.model.SetCamera(camera);
-                    newWall.model.material->enableLighting = true;
-                    walls.push_back(newWall);
+                    newWall.model_.SetCamera(camera);
+                    newWall.model_.material->enableLighting = true;
+                    walls_.push_back(newWall);
                 }
                 else { //一つしか続かなかったら生成しない
                     i = 0;
@@ -138,9 +138,9 @@ void Map::CreateWall(Camera* camera) {
                     i = 0;
 
                     newWall.Initialize(transform.translate, transform.scale);
-                    newWall.model.SetCamera(camera);
-                    newWall.model.material->enableLighting = true;
-                    walls.push_back(newWall);
+                    newWall.model_.SetCamera(camera);
+                    newWall.model_.material->enableLighting = true;
+                    walls_.push_back(newWall);
                 }
             }
         }
@@ -158,8 +158,8 @@ void Map::CreateFloor(Camera* camera) {
     transform.rotate = { 0.0f,0.0f,0.0f };
 
     floor.Initialize(transform.translate, transform.scale);
-    floor.model.material->enableLighting = true;
-    floor.model.SetCamera(camera);
+    floor.model_.material->enableLighting = true;
+    floor.model_.SetCamera(camera);
 }
 
 void Map::CreateRoof(Camera* camera) {
@@ -173,16 +173,16 @@ void Map::CreateRoof(Camera* camera) {
     transform.rotate = { 0.0f,0.0f,0.0f };
 
     roof.Initialize(transform.translate, transform.scale);
-    roof.model.material->enableLighting = true;
-    roof.model.SetCamera(camera);
+    roof.model_.material->enableLighting = true;
+    roof.model_.SetCamera(camera);
 }
 
 void Map::CheckCollision(AABB pAABB, Vector3 move, Vector3* fixVector) {
     Vector3 distance{};
 
-    for (Wall wall : walls) {
+    for (Wall wall : walls_) {
         AABB wallAABB;
-        wallAABB.CreateModelAABB(wall.model.transform);
+        wallAABB.CreateModelAABB(wall.model_.transform);
 
         if (wallAABB.CheckCollision(pAABB)) {
             //X軸の当たり判定
@@ -205,9 +205,9 @@ void Map::CheckCollision(AABB pAABB, Vector3 move, Vector3* fixVector) {
     pAABB.min.x += fixVector->x;
     pAABB.max.x += fixVector->x;
 
-    for (Wall wall : walls) {
+    for (Wall wall : walls_) {
         AABB wallAABB;
-        wallAABB.CreateModelAABB(wall.model.transform);
+        wallAABB.CreateModelAABB(wall.model_.transform);
 
         if (wallAABB.CheckCollision(pAABB)) {
             //Z軸の当たり判定
@@ -235,7 +235,7 @@ bool Map::CheckCollisionWithFloor(AABB pAABB, Vector3 move, Vector3* fixVector) 
     Vector3 distance{};
 
         AABB wallAABB;
-        wallAABB.CreateModelAABB(floor.model.transform);
+        wallAABB.CreateModelAABB(floor.model_.transform);
 
         if (wallAABB.CheckCollision(pAABB)) {
             //Z軸の当たり判定
@@ -264,7 +264,7 @@ void Map::CreateItem(Camera* camera) {
 
     sItem = std::make_unique<SmallItem>();
     sItem->Initialize(trans, camera);
-    sItem->model.material->enableLighting = true;
+    sItem->model_.material->enableLighting = true;
 }
 
 void Map::CreateModels(Camera* camera) {

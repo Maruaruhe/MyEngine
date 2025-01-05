@@ -5,12 +5,23 @@
 class MapJson
 {
 public:
+	/// <summary>
+	/// Initialize
+	/// </summary>
+	/// <param name="camera"></param>
 	void Initialize(Camera* camera);
 
+	/// <summary>
+	/// Update
+	/// </summary>
 	void Update();
 
+	/// <summary>
+	/// Draw
+	/// </summary>
 	void Draw();
 
+	//当たり判定
 	void CheckCollision(AABB pAABB, Vector3 move, Vector3* fixVector);
 	void CheckCollisionFloor(AABB pAABB, Vector3 move, Vector3* fixVector, bool* isFloor);
 
@@ -21,7 +32,7 @@ private:
 
 	Camera* camera_;
 
-	LevelData level;
+	LevelData level_;
 
 	//
 	const float kMapHeight = 10.0f;

@@ -8,11 +8,11 @@ void IItem::Update(){}
 void IItem::Draw(){}
 
 void IItem::TakenItem() {
-	if (isabletobetaken && !isTaken) { // 取得可能状態
+	if (isabletobetaken_ && !isTaken_) { // 取得可能状態
 		if (KeyInput::GetInstance()->PushKey(DIK_F)) { //かつキーを押された場合
-			isTaken = true;
+			isTaken_ = true;
 
-			model.transform.scale *= 0.75f;;
+			model_.transform.scale *= 0.75f;;
 		}
 	}
 }
