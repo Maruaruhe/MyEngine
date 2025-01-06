@@ -6,7 +6,7 @@
 #include <vector>
 
 class Player;
-class Map;
+class MapJson;
 
 //Enemy基底クラス
 class IEnemy
@@ -27,6 +27,9 @@ public:
 	/// </summary>
 	virtual void Draw();
 
+	void SetPlayer(Player* player) { player_ = player; }
+	void SetMap(MapJson* map) { map_ = map; }
+
 	bool isAlive_;
 	bool isChase_;
 	bool isAttacking_;
@@ -36,7 +39,7 @@ public:
 protected:
 	Camera* camera_;
 
-	Map* map_;
+	MapJson* map_;
 	Player* player_;
 };
 

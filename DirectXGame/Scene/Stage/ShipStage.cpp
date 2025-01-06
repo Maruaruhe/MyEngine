@@ -22,7 +22,7 @@ void ShipStage::Initialize(int prevStage) {
 	player_.deadModel.SetCamera(camera2.get());
 	player_.view.SetCamera(camera2.get());
 	player_.model.transform.translate = { 4.0f,1.5f,-11.0f };
-	player_.model.transform.translate = { 0.0f,1.5f,0.0f };
+	player_.model.transform.translate = { 0.0f,1.5f,-5.0f };
 
 	stageChangeCount = 0;
 
@@ -32,6 +32,11 @@ void ShipStage::Initialize(int prevStage) {
 	json.Initialize(camera2.get());
 
 	player_.SetMap(&json);
+
+	trace_.Initialize({});
+	trace_.SetPlayer(&player_);
+	trace_.SetMap(&json);
+	trace_.model_.SetCamera(camera2.get());
 
 	/* p.Initialize("Resources/white.png");
 	 p.SetCamera(camera2.get());*/
@@ -46,6 +51,8 @@ void ShipStage::Update() {
 	map_.Update();
 
 	player_.Update();
+
+	trace_.Update();
 
 	camera2.get()->transform.translate = player_.tForCamera.translate;
 	camera2.get()->transform.translate.y += 0.5f;
@@ -67,6 +74,8 @@ void ShipStage::Draw() {
 	//map_.Draw();
 
 	player_.Draw();
+
+	trace_.Draw();
 
 	//noise0.Draw();
 

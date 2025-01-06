@@ -27,4 +27,6 @@ private:
 	MapJson json;
 
 	Particle p;
+
+	Trace trace_;
 };
