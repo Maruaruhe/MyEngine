@@ -20,14 +20,14 @@ void SpotLight::Update() {
 
 
 	ImGui::Begin("SpotLight");
-	ImGui::DragFloat4("color", &light->color.x, 0.1f);
-	ImGui::DragFloat3("position", &light->position.x, 0.1f);
-	ImGui::SliderFloat3("direction", &light->direction.x, -1.0f, 1.0f);
-	light->direction = Normalize(light->direction);
-	ImGui::DragFloat("intensity", &light->intensity, 0.1f);
-	ImGui::DragFloat("distance", &light->distance, 0.1f);
-	ImGui::DragFloat("decay", &light->decay, 0.1f);
-	ImGui::DragFloat("cosAngle", &light->cosAngle, 0.01f);
+	ImGui::DragFloat4("color", &light_->color.x, 0.1f);
+	ImGui::DragFloat3("position", &light_->position.x, 0.1f);
+	ImGui::SliderFloat3("direction", &light_->direction.x, -1.0f, 1.0f);
+	light_->direction = Normalize(light_->direction);
+	ImGui::DragFloat("intensity", &light_->intensity, 0.1f);
+	ImGui::DragFloat("distance", &light_->distance, 0.1f);
+	ImGui::DragFloat("decay", &light_->decay, 0.1f);
+	ImGui::DragFloat("cosAngle", &light_->cosAngle, 0.01f);
 	ImGui::End();
 
 #endif // DEBUG

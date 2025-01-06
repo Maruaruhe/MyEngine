@@ -16,9 +16,9 @@ void PointLight::Update() {
 
 
 	ImGui::Begin("SpotLight");
-	ImGui::DragFloat4("color", &light->color.x, 0.1f);
-	ImGui::DragFloat3("position", &light->position.x, 0.1f);
-	ImGui::DragFloat("intensity", &light->intensity, 0.1f);
+	ImGui::DragFloat4("color", &light_->color.x, 0.1f);
+	ImGui::DragFloat3("position", &light_->position.x, 0.1f);
+	ImGui::DragFloat("intensity", &light_->intensity, 0.1f);
 	ImGui::End();
 
 #endif // DEBUG

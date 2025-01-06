@@ -11,4 +11,7 @@ public:
 	void StageChange() override;
 
 	~OutsideStage();
+
+private:
+	Trace trace_;
 };

@@ -23,6 +23,9 @@ void OutsideStage::Initialize(int prevStage) {
 	else if (prevStage == INSIDE) {
 		player_.model.transform.translate = { 10,0,-10 };
 	}
+
+	trace_.Initialize({});
+	trace_.model_.SetCamera(camera2.get());
 }
 
 
@@ -35,6 +38,8 @@ void OutsideStage::Update() {
 
 	player_.Update();
 
+	trace_.Update();
+
 	camera2.get()->transform.translate = player_.tForCamera.translate;
 	camera2.get()->transform.translate.y += 0.5f;
 	camera2.get()->transform.rotate = player_.tForCamera.rotate;
@@ -45,6 +50,8 @@ void OutsideStage::Draw() {
 	map_.Draw();
 
 	player_.Draw();
+
+	trace_.Draw();
 }
 void OutsideStage::StageChange() {
 	if (KeyInput::GetInstance()->TriggerKey(DIK_2)) {

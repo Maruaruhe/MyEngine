@@ -169,10 +169,10 @@ void Player::Move() {
 
 	//y
 #ifdef _DEBUG
-	if (kInput->PushKey(DIK_Q)) {
+	if (kInput_->PushKey(DIK_Q)) {
 		move.y += 0.1f;
 	}
-	if (kInput->PushKey(DIK_E)) {
+	if (kInput_->PushKey(DIK_E)) {
 		move.y -= 0.1f;
 	}
 #endif // DEBUG
@@ -285,7 +285,7 @@ void Player::CheckItemCollision() {
 
 	ImGui::Begin("Item");
 
-	Vector3 aa = map_->GetItem()->model.transform.translate;
+	Vector3 aa = map_->GetItem()->model_.transform.translate;
 	ImGui::DragFloat3("pos", &aa.x);
 	ImGui::DragFloat3("sight.start", &playerSight.start.x);
 	ImGui::DragFloat3("sight.end", &playerSight.end.x);

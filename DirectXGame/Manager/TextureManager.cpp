@@ -22,7 +22,7 @@ void TextureManager::LoadTexture(const std::string& filePath) {
 		return;
 	}
 
-	assert(textureDatas_.size() + kSRVIndexTop_ < DirectX12::kMaxSRVCount);
+	assert(textureDatas_.size() + kSRVIndexTop < DirectX12::kMaxSRVCount);
 
 	DirectX::ScratchImage image{};
 	std::wstring filePathW = ConvertString(filePath);
