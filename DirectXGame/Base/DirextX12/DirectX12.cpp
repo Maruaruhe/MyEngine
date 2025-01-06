@@ -2,7 +2,7 @@
 #include "../Log/Log.h"
 #include "../../Object/Texture/Texture.h"
 
-#include <thread>https://lh3.googleusercontent.com/drive-storage/AJQWtBMdNuy5hChOUQAQ2PbQWfj1tZa4GvVyyMRxHBOoRZtDx6oe4Ai4-DEqrgC3Sp4E5xFxI08l-3lYR-pu_ptY1N5KXPKIHIibZf--rmCfL_PzIXM=w1919-h910
+#include <thread>
 
 DirectX12* DirectX12::instance = nullptr;
 
