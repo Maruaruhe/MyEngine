@@ -1,5 +1,7 @@
 #include "TextureManager.h"
 
+using namespace MyEngine;
+
 uint32_t TextureManager::kSRVIndexTop = 1;
 
 void TextureManager::Initialize() {

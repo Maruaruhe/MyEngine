@@ -17,7 +17,7 @@
 #include "../Scene/GameScene.h"
 #include "../Scene/ClearScene.h"
 
-class DirectX12;
+//class DirectX12;
 class WindowsAPI;
 class GraphicsRenderer;
 
@@ -28,7 +28,7 @@ public:
 	static GameManager* GetInstance();
 private:
 	//
-	DirectX12* directX12 = nullptr;
+	MyEngine::DirectX12* directX12 = nullptr;
 	WindowsAPI* windowsAPI = nullptr;
 	GraphicsRenderer* graphicsRenderer_ = nullptr;
 

@@ -2,6 +2,8 @@
 #include "../Object/Sphere/Sphere.h"
 #include "../Object/Model/Model.h"
 
+using namespace MyEngine;
+
 void ModelManager::Initialize() {
 
 }

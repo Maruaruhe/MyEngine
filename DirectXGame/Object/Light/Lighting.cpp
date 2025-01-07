@@ -1,5 +1,7 @@
 #include "Lighting.h"
 
+using namespace MyEngine;
+
 void Lighting::Initialize() {
 	//light = std::make_unique<DirectionalLight>();
 	directionalLightResource = DirectX12::GetInstance()->CreateBufferResource(sizeof(DirectionalLight));

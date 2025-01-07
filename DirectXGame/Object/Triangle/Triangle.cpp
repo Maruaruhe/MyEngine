@@ -1,5 +1,7 @@
 #include "Triangle.h"
 
+using namespace MyEngine;
+
 void Triangle::Initialize(TriangleData triangleData) {
 	directX12 = DirectX12::GetInstance();
 	transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };

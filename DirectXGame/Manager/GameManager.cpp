@@ -1,5 +1,7 @@
 #include "GameManager.h"
 
+using namespace MyEngine;
+
 GameManager* GameManager::GetInstance() {
 	static GameManager instance;
 	return &instance;

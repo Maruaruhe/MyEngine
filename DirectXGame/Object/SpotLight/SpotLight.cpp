@@ -1,6 +1,8 @@
 #include "SpotLight.h"
 #include <numbers>
 
+using namespace MyEngine;
+
 void SpotLight::Initialize() {
 	spotLightResource_ = DirectX12::GetInstance()->CreateBufferResource(sizeof(Spot));
 	light_ = nullptr;

@@ -1,6 +1,8 @@
 #include "Camera.h"
 #include "../../Base/GraphicsRenderer/GraphicsRenderer.h"
 
+using namespace MyEngine;
+
 void Camera::Initialize() {
 	input = KeyInput::GetInstance();
 

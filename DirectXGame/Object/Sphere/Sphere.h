@@ -40,7 +40,7 @@ public:
 	Material* materialData;
 
 private:
-	DirectX12* directX12 = nullptr;
+	MyEngine::DirectX12* directX12 = nullptr;
 	Camera* camera = nullptr;
 
 	TransformationMatrix* transformationMatrix;

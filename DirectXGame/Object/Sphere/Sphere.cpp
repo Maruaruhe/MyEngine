@@ -1,5 +1,7 @@
 #include "Sphere.h"
 
+using namespace MyEngine;
+
 void Sphere::InitializePosition() {
 		const uint32_t kSubdivision = 16;
 		const float kLonEvery = (2 * pi) / kSubdivision;

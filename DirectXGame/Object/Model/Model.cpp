@@ -7,6 +7,8 @@
 
 #include "../../Math/MathOperator.h"
 
+using namespace MyEngine;
+
 void Model::InitializePosition(const std::string& filename) {
 	modelData = ModelManager::GetInstance()->GetModel(filename);
 	vertexResource = DirectX12::GetInstance()->CreateBufferResource(sizeof(VertexData) * modelData.vertices.size());

@@ -1,6 +1,8 @@
 #include "Sprite.h"
 #include "../../Base/GraphicsRenderer/GraphicsRenderer.h"
 
+using namespace MyEngine;
+
 void Sprite::Initialize(Vector2 size, std::string textureFilePath) {
 	transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
 

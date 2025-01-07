@@ -4,6 +4,8 @@
 
 #include "../../Manager/TextureManager.h"
 
+using namespace MyEngine;
+
 void Skybox::Initialize() {
 	TextureManager::GetInstance()->LoadTexture("Resources/rostock_laage_airport_4k.dds");
 	textureIndex = TextureManager::GetInstance()->GetTextureIndexByFilePath("Resources/rostock_laage_airport_4k.dds");

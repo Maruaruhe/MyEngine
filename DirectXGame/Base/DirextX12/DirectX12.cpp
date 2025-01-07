@@ -4,6 +4,8 @@
 
 #include <thread>
 
+using namespace MyEngine;
+
 DirectX12* DirectX12::instance = nullptr;
 
 DirectX12* DirectX12::GetInstance() {

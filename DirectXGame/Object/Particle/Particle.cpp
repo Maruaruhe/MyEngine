@@ -5,6 +5,8 @@
 #include "../../Manager/TextureManager.h"
 #include "../../Manager/ModelManager.h"
 
+using namespace MyEngine;
+
 #include <numbers>
 
 void Particle::InitializePosition() {

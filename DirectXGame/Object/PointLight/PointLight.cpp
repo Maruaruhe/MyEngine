@@ -1,6 +1,8 @@
 #include "PointLight.h"
 #include <numbers>
 
+using namespace MyEngine;
+
 void PointLight::Initialize() {
 	pointLightResource_ = DirectX12::GetInstance()->CreateBufferResource(sizeof(Point));
 	light_ = nullptr;

@@ -1,6 +1,8 @@
 #include "GraphicsRenderer.h"
 #include <assert.h>
 
+using namespace MyEngine;
+
 GraphicsRenderer* GraphicsRenderer::GetInstance() {
 	static GraphicsRenderer instance;
 
