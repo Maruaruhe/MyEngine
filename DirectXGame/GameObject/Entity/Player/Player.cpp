@@ -264,59 +264,59 @@ Vector3 Player::GetItemFrontVector() {
 }
 
 void Player::CheckItemCollision() {
-	AABB itemAABB;
-	itemAABB.CreateEntityAABB(map_->GetItem()->model_.transform);
-
-	Segment playerSight;
-	playerSight.start = model.transform.translate;
-	playerSight.end = GetFrontVector(2.0f);
-
-	int count = 0;
-
-	//視線との当たり判定
-	if (itemAABB.CheckLineCollision(playerSight)) {
-		count += 1;
-		map_->GetItem()->isabletobetaken_ = true;
-		map_->GetItem()->TakenItem();
-	}
-	else {
-		map_->GetItem()->isabletobetaken_ = false;
-	}
-
-#ifdef _DEBUG
-
-	ImGui::Begin("Item");
-
-	Vector3 aa = map_->GetItem()->model_.transform.translate;
-	ImGui::DragFloat3("pos", &aa.x);
-	ImGui::DragFloat3("sight.start", &playerSight.start.x);
-	ImGui::DragFloat3("sight.end", &playerSight.end.x);
-	ImGui::DragInt("count", &count);
-
-	ImGui::End();
-
-#endif // DEBUG
+//	AABB itemAABB;
+//	itemAABB.CreateEntityAABB(map_->GetItem()->model_.transform);
+//
+//	Segment playerSight;
+//	playerSight.start = model.transform.translate;
+//	playerSight.end = GetFrontVector(2.0f);
+//
+//	int count = 0;
+//
+//	//視線との当たり判定
+//	if (itemAABB.CheckLineCollision(playerSight)) {
+//		count += 1;
+//		map_->GetItem()->isabletobetaken_ = true;
+//		map_->GetItem()->TakenItem();
+//	}
+//	else {
+//		map_->GetItem()->isabletobetaken_ = false;
+//	}
+//
+//#ifdef _DEBUG
+//
+//	ImGui::Begin("Item");
+//
+//	Vector3 aa = map_->GetItem()->model_.transform.translate;
+//	ImGui::DragFloat3("pos", &aa.x);
+//	ImGui::DragFloat3("sight.start", &playerSight.start.x);
+//	ImGui::DragFloat3("sight.end", &playerSight.end.x);
+//	ImGui::DragInt("count", &count);
+//
+//	ImGui::End();
+//
+//#endif // DEBUG
 }
 
 
 void Player::CheckItemBring() {
-	if (map_->GetItem()->isTaken_) {
-		//所持しているとき手に持つ
-		map_->GetItem()->model_.transform.translate = GetItemFrontVector();
-		//PlayerのRotateと同期
-		map_->GetItem()->model_.transform.rotate = model.transform.rotate;
+	//if (map_->GetItem()->isTaken_) {
+	//	//所持しているとき手に持つ
+	//	map_->GetItem()->model_.transform.translate = GetItemFrontVector();
+	//	//PlayerのRotateと同期
+	//	map_->GetItem()->model_.transform.rotate = model.transform.rotate;
 
-		//
-		if (KeyInput::GetInstance()->PushKey(DIK_G)) {//Drop処理
-			map_->GetItem()->isTaken_ = false;
-			//足元に落とす & リセット
-			map_->GetItem()->model_.transform.translate = GetFrontVector(0.7f);
-			map_->GetItem()->model_.transform.translate.y = 0.0f;
-			map_->GetItem()->model_.transform.scale = { 1.0f,1.0f,1.0f };
-			map_->GetItem()->model_.transform.rotate.x = {};
-			map_->GetItem()->model_.transform.rotate.z = {};
-		}
-	}
+	//	//
+	//	if (KeyInput::GetInstance()->PushKey(DIK_G)) {//Drop処理
+	//		map_->GetItem()->isTaken_ = false;
+	//		//足元に落とす & リセット
+	//		map_->GetItem()->model_.transform.translate = GetFrontVector(0.7f);
+	//		map_->GetItem()->model_.transform.translate.y = 0.0f;
+	//		map_->GetItem()->model_.transform.scale = { 1.0f,1.0f,1.0f };
+	//		map_->GetItem()->model_.transform.rotate.x = {};
+	//		map_->GetItem()->model_.transform.rotate.z = {};
+	//	}
+	//}
 }
 
 void Player::DeathUpdate() {

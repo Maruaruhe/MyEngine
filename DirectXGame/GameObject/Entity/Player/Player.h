@@ -41,7 +41,6 @@ public:
 	void Draw();
 
 	//Setter
-	void SetMap(Map* map) { this->map_ = map; }
 	void SetMap(MapJson* map) { this->mapJson_ = map; }
 
 	Model model;
@@ -88,7 +87,6 @@ private:
 	MyEngine::KeyInput* kInput_;
 
 	//MapInfo
-	Map* map_;
 	MapJson* mapJson_;
 
 	SpotLight sLight_;

@@ -12,14 +12,6 @@ void ShipStage::Initialize(int prevStage) {
 
 	light_.Initialize();
 
-	//StageごとのInitialize
-	if (isFirstLoad) {
-		map_.mapData = map_.LoadMapData( "ship");
-		isFirstLoad = false;
-	}
-
-	map_.Initialize(camera2.get());
-	player_.SetMap(&map_);
 	player_.model.SetCamera(camera2.get());
 	player_.deadModel.SetCamera(camera2.get());
 	player_.view.SetCamera(camera2.get());
@@ -31,17 +23,14 @@ void ShipStage::Initialize(int prevStage) {
 	TextureManager::GetInstance()->LoadTexture("Resources/noise0.png");
 	noise0.Initialize({ 1280,720 }, "Resources/noise0.png");
 
-	json.Initialize(camera2.get(), "complate");
+	mapJson_.Initialize(camera2.get(), "complate");
 
-	player_.SetMap(&json);
+	player_.SetMap(&mapJson_);
 
 	trace_.Initialize({});
 	trace_.SetPlayer(&player_);
-	trace_.SetMap(&json);
+	trace_.SetMap(&mapJson_);
 	trace_.model_.SetCamera(camera2.get());
-
-	/* p.Initialize("Resources/white.png");
-	 p.SetCamera(camera2.get());*/
 }
 
 
@@ -49,8 +38,6 @@ void ShipStage::Update() {
 	light_.Update();
 
 	camera2->Update();
-
-	map_.Update();
 
 	player_.Update();
 
@@ -62,28 +49,20 @@ void ShipStage::Update() {
 
 	noise0.Update();
 
-	json.Update();
+	mapJson_.Update();
 
 	if (KeyInput::GetInstance()->TriggerKey(DIK_SPACE)) {
 		toClearScene = true;
 	}
-
-	//p.Update();
 }
 
 
 void ShipStage::Draw() {
-	//map_.Draw();
-
 	player_.Draw();
 
 	trace_.Draw();
 
-	//noise0.Draw();
-
-	json.Draw();
-
-	//p.Draw();
+	mapJson_.Draw();
 }
 
 

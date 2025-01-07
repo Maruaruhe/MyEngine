@@ -6,14 +6,13 @@ OutsideStage::~OutsideStage() {}
 
 void OutsideStage::Initialize(int prevStage) {
 	//StageごとのInitialize
-	if (isFirstLoad) {
-		map_.mapData = map_.LoadMapData("outside");
-		isFirstLoad = false;
-	}
+	//if (isFirstLoad) {
+	//	map_.mapData = map_.LoadMapData("outside");
+	//	isFirstLoad = false;
+	//}
 
-	map_.Initialize(camera2.get());
+	//map_.Initialize(camera2.get());
 
-	player_.SetMap(&map_);
 	player_.model.SetCamera(camera2.get());
 	player_.deadModel.SetCamera(camera2.get());
 	player_.view.SetCamera(camera2.get());
@@ -33,8 +32,6 @@ void OutsideStage::Update() {
 
 	camera2->Update();
 
-	map_.Update();
-
 	player_.Update();
 
 	camera2.get()->transform.translate = player_.tForCamera.translate;
@@ -44,8 +41,6 @@ void OutsideStage::Update() {
 
 
 void OutsideStage::Draw() {
-	map_.Draw();
-
 	player_.Draw();
 
 }

@@ -5,14 +5,13 @@ InsideStage::~InsideStage() {}
 
 void InsideStage::Initialize(int prevStage) {
 	//StageごとのInitialize
-	if (isFirstLoad) {
-		map_.mapData = map_.LoadMapData("50x50");
-		isFirstLoad = false;
-	}
+	//if (isFirstLoad) {
+	//	map_.mapData = map_.LoadMapData("50x50");
+	//	isFirstLoad = false;
+	//}
 
-	map_.Initialize(camera2.get());
+	//map_.Initialize(camera2.get());
 
-	player_.SetMap(&map_);
 	player_.model.SetCamera(camera2.get());
 	player_.deadModel.SetCamera(camera2.get());
 	player_.view.SetCamera(camera2.get());
@@ -23,8 +22,6 @@ void InsideStage::Update() {
 
 	camera2->Update();
 
-	map_.Update();
-
 	player_.Update();
 
 	camera2.get()->transform.translate = player_.tForCamera.translate;
@@ -32,8 +29,6 @@ void InsideStage::Update() {
 	camera2.get()->transform.rotate = player_.tForCamera.rotate;
 }
 void InsideStage::Draw() {
-	map_.Draw();
-
 	player_.Draw();
 }
 void InsideStage::StageChange() {

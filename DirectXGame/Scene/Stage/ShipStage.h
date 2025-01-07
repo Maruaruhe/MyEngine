@@ -22,8 +22,6 @@ private:
 
 	LevelData level;
 
-	MapJson json;
-
 	Particle p;
 
 	Trace trace_;
