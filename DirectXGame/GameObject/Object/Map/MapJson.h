@@ -10,7 +10,7 @@ public:
 	/// Initialize
 	/// </summary>
 	/// <param name="camera"></param>
-	void Initialize(Camera* camera);
+	void Initialize(Camera* camera, std::string filename);
 
 	/// <summary>
 	/// Update

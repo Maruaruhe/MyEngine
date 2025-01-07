@@ -18,6 +18,13 @@ void GameScene::Update() {
 		stageArr[currentStageNo]->Initialize(prevStageNo);
 	}
 
+#ifdef _DEBUG
+	ImGui::Begin("Stage");
+	ImGui::Text("Stage : %d", currentStageNo);
+	ImGui::End();
+#endif // _DEBUG
+
+
 	stageArr[currentStageNo]->StageChange();
 	stageArr[currentStageNo]->Update();
 }

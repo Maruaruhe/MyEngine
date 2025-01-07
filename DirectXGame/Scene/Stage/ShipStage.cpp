@@ -31,7 +31,7 @@ void ShipStage::Initialize(int prevStage) {
 	TextureManager::GetInstance()->LoadTexture("Resources/noise0.png");
 	noise0.Initialize({ 1280,720 }, "Resources/noise0.png");
 
-	json.Initialize(camera2.get());
+	json.Initialize(camera2.get(), "complate");
 
 	player_.SetMap(&json);
 

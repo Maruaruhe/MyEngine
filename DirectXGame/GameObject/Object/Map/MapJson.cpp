@@ -5,8 +5,8 @@
 
 using namespace MyEngine;
 
-void MapJson::Initialize(Camera* camera) {
-    level_ = FileManager::GetInstance()->LoadJsonFile("Json/", "complate");
+void MapJson::Initialize(Camera* camera, std::string filename) {
+    level_ = FileManager::GetInstance()->LoadJsonFile("Json/", filename);
     for (auto& object : level_.objects) {
         object.model.SetCamera(camera);
     }

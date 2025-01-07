@@ -13,5 +13,5 @@ public:
 	~OutsideStage();
 
 private:
-	Trace trace_;
+
 };

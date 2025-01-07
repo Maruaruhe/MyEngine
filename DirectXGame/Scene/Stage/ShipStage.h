@@ -20,8 +20,6 @@ private:
 	int stageChangeCount;
 	Sprite noise0;
 
-	//Model mapModel;
-	//Model a;
 	LevelData level;
 
 	MapJson json;
