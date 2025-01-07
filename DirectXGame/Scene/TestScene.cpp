@@ -2,6 +2,8 @@
 #include "../Manager/ModelManager.h"
 #include "../Manager/FileManager.h"
 
+using namespace MyEngine;
+
 void TestScene::Initialize() {
 	input = KeyInput::GetInstance();
 

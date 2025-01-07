@@ -81,7 +81,6 @@ private:
 
 
 	//DirectX12* directX12 = nullptr;
-	KeyInput* input_ = nullptr;
 	ModelData modelData;
 	VertexData* vertexData = nullptr;
 

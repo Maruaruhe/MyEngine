@@ -3,6 +3,7 @@
 #include "../../../Manager/FileManager.h"
 #include "../../../Manager/TextureManager.h"
 
+using namespace MyEngine;
 
 void Map::Initialize(Camera* camera) {
        // mapData = LoadMapData(filepath);

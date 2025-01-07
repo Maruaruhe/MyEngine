@@ -34,55 +34,56 @@ struct Skelton {
 };
 
 //ModelManagerクラス
-class ModelManager
-{
-public:
-	static ModelManager* GetInstance();
+namespace MyEngine {
+	class ModelManager
+	{
+	public:
+		static ModelManager* GetInstance();
 
-	/// <summary>
-	/// Initialize
-	/// </summary>
-	void Initialize();
-	/// <summary>
-	/// モデル読み込み
-	/// </summary>
-	/// <param name="filePath"></param>
-	void LoadModel(const std::string& filePath);
-	/// <summary>
-	/// モデル読み込みGLTF
-	/// </summary>
-	/// <param name="filePath"></param>
-	void LoadGLTF(const std::string& filePath);
+		/// <summary>
+		/// Initialize
+		/// </summary>
+		void Initialize();
+		/// <summary>
+		/// モデル読み込み
+		/// </summary>
+		/// <param name="filePath"></param>
+		void LoadModel(const std::string& filePath);
+		/// <summary>
+		/// モデル読み込みGLTF
+		/// </summary>
+		/// <param name="filePath"></param>
+		void LoadGLTF(const std::string& filePath);
 
-	//Getter
-	ModelData GetModel(const std::string& filePath);
-	/// <summary>
-	/// LoadFile
-	/// </summary>
-	/// <param name="directoryPath"></param>
-	/// <param name="filename"></param>
-	/// <returns></returns>
-	ModelData LoadObjFile(const std::string& directoryPath, const std::string& filename);
-	ModelData LoadModelFile(const std::string& directoryPath, const std::string& filename);
+		//Getter
+		ModelData GetModel(const std::string& filePath);
+		/// <summary>
+		/// LoadFile
+		/// </summary>
+		/// <param name="directoryPath"></param>
+		/// <param name="filename"></param>
+		/// <returns></returns>
+		ModelData LoadObjFile(const std::string& directoryPath, const std::string& filename);
+		ModelData LoadModelFile(const std::string& directoryPath, const std::string& filename);
 
-	//Node読み込み
-	Node ReadNode(aiNode* node);
-	//Skelton作成
-	Skelton CreateSkelton(const Node& rootNode);
-	//Joint作成
-	int32_t CreateJoint(const Node& node, const std::optional<int32_t>& parent, std::vector<Joint>& joints);
-	//SkinCluster作成
-	SkinCluster CreateSkinCluster(const Skelton& skelton, const ModelData& modelData);
+		//Node読み込み
+		Node ReadNode(aiNode* node);
+		//Skelton作成
+		Skelton CreateSkelton(const Node& rootNode);
+		//Joint作成
+		int32_t CreateJoint(const Node& node, const std::optional<int32_t>& parent, std::vector<Joint>& joints);
+		//SkinCluster作成
+		SkinCluster CreateSkinCluster(const Skelton& skelton, const ModelData& modelData);
 
-	//MaterialData LoadMaterialTemplateFile(const std::string& directoryPath, const std::string& filename);
+		//MaterialData LoadMaterialTemplateFile(const std::string& directoryPath, const std::string& filename);
 
-	uint32_t index_ = 500;
-private:
-	std::map<std::string, ModelData> modelDatas;
+		uint32_t index_ = 500;
+	private:
+		std::map<std::string, ModelData> modelDatas;
 
-	ModelManager() = default;
-	~ModelManager() = default;
-	ModelManager(ModelManager&) = delete;
-	ModelManager& operator=(ModelManager&) = delete;
-};
-
+		ModelManager() = default;
+		~ModelManager() = default;
+		ModelManager(ModelManager&) = delete;
+		ModelManager& operator=(ModelManager&) = delete;
+	};
+}

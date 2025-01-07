@@ -1,5 +1,7 @@
 #include "Player.h"
 
+using namespace MyEngine;
+
 void Player::Initialize() {
 	ModelManager::GetInstance()->LoadModel("player");
 	ModelManager::GetInstance()->LoadModel("Entity/player/deadbody");

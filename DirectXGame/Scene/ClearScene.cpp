@@ -1,6 +1,8 @@
 #include "ClearScene.h"
 #include "../Manager/ModelManager.h"
 
+using namespace MyEngine;
+
 void ClearScene::Initialize() {
 	input = KeyInput::GetInstance();
 

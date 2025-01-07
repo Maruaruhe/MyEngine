@@ -1,6 +1,8 @@
 #include "SubTestScene.h"
 #include "../Manager/ModelManager.h"
 
+using namespace MyEngine;
+
 void SubTestScene::Initialize() {
 	input = KeyInput::GetInstance();
 

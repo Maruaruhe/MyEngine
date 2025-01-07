@@ -35,30 +35,31 @@ struct LevelData {
 };
 
 /* FileManagerクラス */
-class FileManager {
+namespace MyEngine {
+	class FileManager {
 
-private:
+	private:
 
-	// コンストラクタ、デストラクタ
-	FileManager() = default;
-	~FileManager() = default;
-	FileManager(const FileManager&) = delete;
-	const FileManager& operator=(const FileManager&) = delete;
+		// コンストラクタ、デストラクタ
+		FileManager() = default;
+		~FileManager() = default;
+		FileManager(const FileManager&) = delete;
+		const FileManager& operator=(const FileManager&) = delete;
 
-public:
+	public:
 
-	// インスタンスの取得
-	static FileManager* GetInstance() {
-		static FileManager instance;
-		return&instance;
-	}
+		// インスタンスの取得
+		static FileManager* GetInstance() {
+			static FileManager instance;
+			return&instance;
+		}
 
-	// 初期化処理
-	void Initialize();
+		// 初期化処理
+		void Initialize();
 
-	// JSONファイル読み込み
-	//void LoadJsonFile(const std::string& routeFilePath, const std::string& fileName);
-	LevelData LoadJsonFile(const std::string& routeFilePath, const std::string& fileName);
+		// JSONファイル読み込み
+		//void LoadJsonFile(const std::string& routeFilePath, const std::string& fileName);
+		LevelData LoadJsonFile(const std::string& routeFilePath, const std::string& fileName);
 
 
 #pragma region Get
@@ -70,25 +71,25 @@ public:
 #pragma endregion 
 
 
-private:
+	private:
 
-	// オブジェクトの走査
-	void ScanningObjects(nlohmann::json& object, std::vector<ObjectData>* objects);
+		// オブジェクトの走査
+		void ScanningObjects(nlohmann::json& object, std::vector<ObjectData>* objects);
 
-	//モデルの生成
-	void CreateModels();
+		//モデルの生成
+		void CreateModels();
 
-private:
+	private:
 
-public:
+	public:
 
-	// JSONファイルから読み込んだ情報をまとめおく変数
-//	std::unique_ptr<LevelData> levelData_;
-//
-////	std::vector
-//
-//	// 配置するための変数
-//	std::vector<Model> levelModels;
-//	std::map<const std::string, std::unique_ptr<LevelObject>> levelObjectMap_;
-};
-
+		// JSONファイルから読み込んだ情報をまとめおく変数
+	//	std::unique_ptr<LevelData> levelData_;
+	//
+	////	std::vector
+	//
+	//	// 配置するための変数
+	//	std::vector<Model> levelModels;
+	//	std::map<const std::string, std::unique_ptr<LevelObject>> levelObjectMap_;
+	};
+}

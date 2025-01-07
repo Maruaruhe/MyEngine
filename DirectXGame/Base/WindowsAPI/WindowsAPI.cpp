@@ -1,5 +1,7 @@
 #include "WindowsAPI.h"
 
+using namespace MyEngine;
+
 WindowsAPI* WindowsAPI::instance = nullptr;
 
 WindowsAPI* WindowsAPI::GetInstance() {

@@ -3,6 +3,8 @@
 #include "../../../Object/Map/MapJson.h"
 #include "../../../Entity/Player/Player.h"
 
+using namespace MyEngine;
+
 void Trace::Initialize(Transform transform) {
 	isChase_ = false;
 	isAlive_ = true;

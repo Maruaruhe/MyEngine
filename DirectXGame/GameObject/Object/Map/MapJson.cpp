@@ -3,6 +3,7 @@
 #include "../../../Manager/FileManager.h"
 #include "../../../Manager/TextureManager.h"
 
+using namespace MyEngine;
 
 void MapJson::Initialize(Camera* camera) {
     level_ = FileManager::GetInstance()->LoadJsonFile("Json/", "complate");

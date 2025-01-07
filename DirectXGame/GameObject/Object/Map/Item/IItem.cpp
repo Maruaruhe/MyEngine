@@ -1,6 +1,8 @@
 #include "IItem.h"
 #include "../../../../Base/Input/Input.h"
 
+using namespace MyEngine;
+
 void IItem::Initialize(){}
 
 void IItem::Update(){}

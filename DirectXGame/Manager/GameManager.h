@@ -18,8 +18,8 @@
 #include "../Scene/ClearScene.h"
 
 //class DirectX12;
-class WindowsAPI;
-class GraphicsRenderer;
+//class WindowsAPI;
+//class GraphicsRenderer;
 
 //GameManagerクラス
 class GameManager
@@ -29,8 +29,8 @@ public:
 private:
 	//
 	MyEngine::DirectX12* directX12 = nullptr;
-	WindowsAPI* windowsAPI = nullptr;
-	GraphicsRenderer* graphicsRenderer_ = nullptr;
+	MyEngine::WindowsAPI* windowsAPI = nullptr;
+	MyEngine::GraphicsRenderer* graphicsRenderer_ = nullptr;
 
 	//Scene
 	std::unique_ptr<IScene> sceneArr_[6];

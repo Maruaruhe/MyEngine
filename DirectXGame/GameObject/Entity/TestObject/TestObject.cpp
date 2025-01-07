@@ -1,5 +1,7 @@
 #include "TestObject.h"
 
+using namespace MyEngine;
+
 void TestObject::Initialize() {
 	ModelManager::GetInstance()->LoadGLTF("sneakWalk");
 	ModelManager::GetInstance()->LoadGLTF("simpleSkin");

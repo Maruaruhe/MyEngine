@@ -84,8 +84,8 @@ private:
 	void CheckItemBring();
 
 private:
-	GamePadInput* pInput_;
-	KeyInput* kInput_;
+	MyEngine::GamePadInput* pInput_;
+	MyEngine::KeyInput* kInput_;
 
 	//MapInfo
 	Map* map_;

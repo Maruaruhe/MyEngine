@@ -24,7 +24,7 @@ public:
 	void SceneChange() override;
 
 private:
-	KeyInput* input = nullptr;
+	MyEngine::KeyInput* input = nullptr;
 	Lighting light;
 
 	std::unique_ptr<Camera> camera2;

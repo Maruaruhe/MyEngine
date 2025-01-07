@@ -1,6 +1,7 @@
 #include "FileManager.h"
 #include "ModelManager.h"
 
+using namespace MyEngine;
 
 // 初期化処理
 void FileManager::Initialize()

@@ -2,6 +2,8 @@
 #include "../../../../../Manager/ModelManager.h"
 #include "../../../../../Manager/TextureManager.h"
 
+using namespace MyEngine;
+
 void SmallItem::Initialize(Transform transform, Camera* camera) {
 	ModelManager::GetInstance()->LoadModel("Map/Item/smallItem");
 	model_.Initialize("Map/Item/smallItem");

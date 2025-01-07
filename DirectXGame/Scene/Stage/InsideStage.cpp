@@ -1,4 +1,5 @@
 #include "InsideStage.h"
+using namespace MyEngine;
 
 InsideStage::~InsideStage() {}
 

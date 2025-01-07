@@ -34,7 +34,7 @@ public:
 	~TitleScene();
 
 private:
-	KeyInput* input = nullptr;
+	MyEngine::KeyInput* input = nullptr;
 	
 	Sprite title;
 	Sprite black;

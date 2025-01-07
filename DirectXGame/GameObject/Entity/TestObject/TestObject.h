@@ -27,6 +27,6 @@ public:
 
 	Model model;
 private:
-	GamePadInput* pInput;
-	KeyInput* kInput;
+	MyEngine::GamePadInput* pInput;
+	MyEngine::KeyInput* kInput;
 };

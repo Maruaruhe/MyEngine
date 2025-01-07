@@ -11,7 +11,7 @@ GameManager::GameManager() {
 
 	CoInitializeEx(0, COINIT_MULTITHREADED);
 	directX12 = DirectX12::GetInstance();
-	windowsAPI = WindowsAPI::GetInstance();
+	windowsAPI = MyEngine::WindowsAPI::GetInstance();
 	graphicsRenderer_ = GraphicsRenderer::GetInstance();
 
 	directX12->Initialize();

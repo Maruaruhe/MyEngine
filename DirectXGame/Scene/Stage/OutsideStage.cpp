@@ -1,5 +1,7 @@
 #include "OutsideStage.h"
 
+using namespace MyEngine;
+
 OutsideStage::~OutsideStage() {}
 
 void OutsideStage::Initialize(int prevStage) {

@@ -1,5 +1,7 @@
 #include "ShipStage.h"
 
+using namespace MyEngine;
+
 ShipStage::~ShipStage(){}
 
 void ShipStage::Initialize(int prevStage) {

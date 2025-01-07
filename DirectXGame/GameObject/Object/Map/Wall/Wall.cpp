@@ -1,6 +1,8 @@
 #include "Wall.h"
 #include "../../../DirectXGame/Manager/TextureManager.h"
 
+using namespace MyEngine;
+
 void Wall::Initialize(const Vector3 pos, const Vector3 scale) {
 	ModelManager::GetInstance()->LoadModel("Map/wall");
 	model_.Initialize("Map/wall");

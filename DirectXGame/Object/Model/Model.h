@@ -61,7 +61,6 @@ private:
 	Matrix4x4 worldMatrix;
 
 	//DirectX12* directX12 = nullptr;
-	KeyInput* input_ = nullptr;
 	ModelData modelData;
 	Camera* camera = nullptr;
 	VertexData* vertexData = nullptr;

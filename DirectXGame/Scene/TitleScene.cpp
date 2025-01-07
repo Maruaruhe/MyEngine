@@ -1,6 +1,8 @@
 #include "TitleScene.h"
 #include "../Manager/ModelManager.h"
 
+using namespace MyEngine;
+
 TitleScene::~TitleScene() {
 	for (tmpParticle* s : blacks) {
 		delete s;

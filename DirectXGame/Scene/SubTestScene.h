@@ -20,7 +20,7 @@ public:
 	void SceneChange() override;
 
 private:
-	KeyInput* input = nullptr;
+	MyEngine::KeyInput* input = nullptr;
 
 	Sprite a;
 	Sprite b;

@@ -9,44 +9,43 @@ static const int32_t kCliantWidth = 1280;
 static const int32_t kClientHeight = 720;
 
 //WindowsAPI
-class WindowsAPI
-{
-public:
-	static WindowsAPI* GetInstance();
-	//Initialize
-	void Init();
+namespace MyEngine {
+	class WindowsAPI
+	{
+	public:
+		static WindowsAPI* GetInstance();
+		//Initialize
+		void Init();
 
-	//Window Setting
-	void WindowClass();
-	//Window Size
-	void WindowSize();
-	//Window Create
-	void WindowCreate();
+		//Window Setting
+		void WindowClass();
+		//Window Size
+		void WindowSize();
+		//Window Create
+		void WindowCreate();
 
-	static LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
+		static LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam);
 
-	//Getter
-	HWND GetHwnd() const { return hwnd_; }
-	HINSTANCE GetHInstance() { return wc_.hInstance; }
+		//Getter
+		HWND GetHwnd() const { return hwnd_; }
+		HINSTANCE GetHInstance() { return wc_.hInstance; }
 
-	//Finalize
-	void Finalize();
+		//Finalize
+		void Finalize();
 
-private:
-	static WindowsAPI* instance;
-	//ウインドウクラスの設定
-	WNDCLASS wc_{};
+	private:
+		static WindowsAPI* instance;
+		//ウインドウクラスの設定
+		WNDCLASS wc_{};
 
-	//ウインドウサイズを表す構造体にクライアント領域を入れる
-	RECT wrc_;
+		//ウインドウサイズを表す構造体にクライアント領域を入れる
+		RECT wrc_;
 
-	HWND hwnd_ = {};
+		HWND hwnd_ = {};
 
-	WindowsAPI() = default;
-	~WindowsAPI() = default;
-	WindowsAPI(WindowsAPI&) = delete;
-	WindowsAPI& operator=(WindowsAPI&) = delete;
-};
-
-
-
+		WindowsAPI() = default;
+		~WindowsAPI() = default;
+		WindowsAPI(WindowsAPI&) = delete;
+		WindowsAPI& operator=(WindowsAPI&) = delete;
+	};
+}
