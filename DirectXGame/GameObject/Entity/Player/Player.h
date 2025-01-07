@@ -1,58 +1,97 @@
-#pragma once
-#include <iostream>
-#include <memory>
-#include <list>
-
-#include "../../../Base/Input/Input.h"
-#include "../../../Base/GlobalVariables/GlobalVariables.h"
-
-#include "../../../Math/Vector4.h"
+#include "../../../Object/Anime/Anime.h"
 #include "../../../Object/Model/Model.h"
-#include "Bullet/Bullet.h"
+#include "../../../Object/Sprite/Sprite.h"
+#include "../../../Base/Input/Input.h"
 
-class Player
-{
+#include "../../Object/Map/Map.h"
+#include "../../Object/Map/MapJson.h"
+#include "../../../Object/SpotLight/SpotLight.h"
+
+struct State {
+	float kMapSpeed; //移動速度制限
+	float moveSpeed; //移動速度
+	float stamina; //スタミナ
+	bool isDash; //ダッシュ状態
+	bool isJump; //ジャンプ状態
+	bool onFloor; //地面か空中か
+	float weight; //重量
+	float HP; //体力
+	Vector3 velocity;
+	bool isUsingLight;
+	bool isAlive;
+};
+
+//プレイヤークラス
+class Player {
 public:
+	/// <summary>
+	/// Initialize
+	/// </summary>
 	void Initialize();
 
-	void Update(Vector4& color, const Transform& cameraTransform, DirectionalLight& directionalLight);
+	/// <summary>
+	/// Update
+	/// </summary>
+	void Update();
+	void LightUpdate();
 
+	/// <summary>
+	/// Draw
+	/// </summary>
 	void Draw();
 
-	std::list<Bullet*> GetBullets() { return bullets; }
+	//Setter
+	void SetMap(Map* map) { this->map_ = map; }
+	void SetMap(MapJson* map) { this->mapJson_ = map; }
 
-	Transform GetTransform() { return transform_; }
-	void SetTransform(Transform transform) { transform_ = transform; }
+	Model model;
+	Model deadModel;
+	Model view;
+	State state_;
 
+	Transform tForCamera;
+	Transform deadCamera;
+	int deadFlame;
+	int aliveFrame;
+
+	//Getter
+	Vector3 GetFrontVector(float length);
+	Vector3 GetFrontLightVector(float length);
+
+	AABB GetCollision();
 private:
-
+	/// <summary>
+	/// 移動
+	/// </summary>
 	void Move();
-	void ReticleMove();
+	/// <summary>
+	/// ジャンプ
+	/// </summary>
+	void Jump();
+	/// <summary>
+	/// 死亡時
+	/// </summary>
+	void DeathUpdate();
+	int deathCount;
 
-	void ApplyGlobalVariables();
+	//視線判定
+	Vector3 CheckLineOfSightCollision();
+	//アイテムのVector
+	Vector3 GetItemFrontVector();
 
-	void Attack();
+	//Item判定
+	void CheckItemCollision();
+	void CheckItemBring();
 
 private:
-	Input* input_ = nullptr;
+	MyEngine::GamePadInput* pInput_;
+	MyEngine::KeyInput* kInput_;
 
-	Transform transform_;
-	Transform armTransform_;
+	//MapInfo
+	Map* map_;
+	MapJson* mapJson_;
 
-	std::unique_ptr<Model> body;
-	std::unique_ptr<Model> head;
-	std::unique_ptr<Model> left;
-	std::unique_ptr<Model> right;
+	SpotLight sLight_;
 
-	Transform reticleTransform_;
-	std::unique_ptr<Model> reticleModel_;
-
-	std::list<Bullet*> bullets;
-
-	bool isSee = false;
-	Vector3 velocity;
-	const float speed = 0.1f;
-
-	const int kBulletMaxCoolTime = 30;
-	int bulletCoolTime = 30;
+	Sprite deads_;
 };

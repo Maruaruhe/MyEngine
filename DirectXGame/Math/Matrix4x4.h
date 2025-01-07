@@ -18,6 +18,20 @@ struct Transform {
 	Vector3 translate;
 };
 
+struct QuaternionTransform {
+	Vector3 scale;
+	Quaternion rotate;
+	Vector3 translate;
+};
+
+struct ParticleInfo {
+	Transform transform;
+	Vector3 velocity;
+	Vector4 color;
+	float liftTime;
+	float currentTime;
+};
+
 Matrix4x4 Add(const Matrix4x4& m1, const Matrix4x4& m2);
 Matrix4x4 Subtract(const Matrix4x4& m1, const Matrix4x4& m2);
 Matrix4x4 Multiply(const Matrix4x4& m1, const Matrix4x4& m2);
@@ -31,6 +45,7 @@ Matrix4x4 MakeScaleMatrix(const Vector3& scale);
 Matrix4x4 MakeRotateXMatrix(float radian);
 Matrix4x4 MakeRotateYMatrix(float radian);
 Matrix4x4 MakeRotateZMatrix(float radian);
+Matrix4x4 MakeRotateXYZMatrix(Vector3 rotate);
 
 Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rotate, const Vector3& translate);
 
@@ -56,3 +71,17 @@ float Length(const Vector3& v);
 Vector3 Normalize(const Vector3& v);
 
 float Length(const Vector3& v);
+
+Vector3 Lerp(const Vector3& start, const Vector3& end, const float t);
+Quaternion Slerp(const Quaternion& q0, const Quaternion& q1, float t);
+float Dot(const Quaternion& q1, const Quaternion& q2);
+Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Quaternion& rotate, const Vector3& translate);
+Matrix4x4 MakeRotateMatrix(const Quaternion& q);
+
+int Min(int num1, int num2);
+float Min(float num1, float num2);
+int Max(int num1, int num2);
+float Max(float num1, float num2);
+
+
+Vector3 vecMat(const Vector3& v1, const Matrix4x4& other);

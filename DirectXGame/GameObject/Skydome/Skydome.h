@@ -9,7 +9,6 @@ public:
 
 	void Draw();
 
+	std::unique_ptr<Model> model;
 private:
-	Transform transform;
-	Model model_;
 };

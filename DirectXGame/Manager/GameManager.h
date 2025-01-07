@@ -2,6 +2,8 @@
 
 #include <memory>
 #include "TextureManager.h"
+#include "ModelManager.h"
+#include "FileManager.h"
 
 #include "../Base/GlobalVariables/GlobalVariables.h"
 #include "../Base/DirextX12/DirectX12.h"
@@ -9,42 +11,49 @@
 #include "../Base/GraphicsRenderer/GraphicsRenderer.h"
 
 #include "../Scene/IScene.h"
-#include	"../Scene/TitleScene.h"
-#include	"../Scene/GameScene.h"
+#include "../Scene/TestScene.h"
+#include "../Scene/SubTestScene.h"
+#include "../Scene/TitleScene.h"
+#include "../Scene/GameScene.h"
 #include "../Scene/ClearScene.h"
 
-class DirectX12;
-class WindowsAPI;
-class GraphicsRenderer;
+//class DirectX12;
+//class WindowsAPI;
+//class GraphicsRenderer;
 
+//GameManagerクラス
 class GameManager
 {
 public:
 	static GameManager* GetInstance();
 private:
 	//
-	DirectX12* directX12 = nullptr;
-	WindowsAPI* windowsAPI = nullptr;
-
-	GraphicsRenderer* graphicsRenderer_ = new GraphicsRenderer;
+	MyEngine::DirectX12* directX12 = nullptr;
+	MyEngine::WindowsAPI* windowsAPI = nullptr;
+	MyEngine::GraphicsRenderer* graphicsRenderer_ = nullptr;
 
 	//Scene
-	std::unique_ptr<IScene> sceneArr[4];
+	std::unique_ptr<IScene> sceneArr_[6];
 
-	int currentSceneNo;
-	int prevSceneNo;
+	int currentSceneNo_;
+	int prevSceneNo_;
 
 public:
 	GameManager();
 	~GameManager();
 
+	//実行中
 	void Run();
 
 private:
+	//初期化
 	void Initialize();
 
+	//フレームスタート
 	void BeginFrame();
+	//フレームエンド
 	void EndFrame();
+	//Finalize
 	void Finalize();
 };
 

@@ -7,6 +7,7 @@
 #include <dxcapi.h>
 #include "../../Math/Vector4.h"
 #include "../../Math/Matrix4x4.h"
+#include "../Camera/Camera.h"
 #include "../../Math/struct.h"	
 #include "../Light/Lighting.h"
 
@@ -14,46 +15,58 @@
 
 #pragma comment(lib,"dxcompiler.lib")
 
-struct ModelData {
-	std::vector<VertexData> vertices;
-	MaterialData material;
-};
-
 class Model
 {
 public:
-	ModelData LoadObjFile(const std::string& directoryPath, const std::string& filename);
-
 	void Initialize(const std::string& filename);
 
+	void Update();
+
+	void Draw() const;
+
+	Vector3 GetWorldPosition(){
+		return { worldMatrix.m[3][0],worldMatrix.m[3][1] ,worldMatrix.m[3][2] };
+	}
+
+	void SetCamera(Camera* Tcamera) { this->camera = Tcamera; }
+	Camera* GetCamera() { return camera; }
+
+	void SetModel(const std::string& filePath);
+
+private:
 	void InitializePosition(const std::string& filename);
 
 	void ApplyGlobalVariables();
-
-	void CreateVertexResource();
-
-	void CreateVertexBufferView();
-
-	void DataResource();
-
-	void Release();
 
 	void CreateMaterialResource();
 
 	void CreateTransformationMatrixResource();
 
-	void CreateDirectionalLightResource();
-
-	void Update(Vector4& color, const Transform& transform, const Transform& transform_, DirectionalLight& directionalLight);
-
-	void Draw();
+	void CreateVertexBufferView();
 
 	MaterialData LoadMaterialTemplateFile(const std::string& directoryPath, const std::string& filename);
 
+	void DrawMatrix4x4(const char* title, const Matrix4x4& matrix);
+
+public:
+	Material* material = nullptr;
+	Transform transform;
+	bool isParent;
+
+	Transform uvTransform;
+	Matrix4x4 localMatrix;
+	uint32_t textureIndex = 0;
 private:
-	DirectX12* directX12 = nullptr;
-	Input* input_ = nullptr;
+
+	Matrix4x4 worldMatrix;
+
+	//DirectX12* directX12 = nullptr;
 	ModelData modelData;
+	Camera* camera = nullptr;
+	VertexData* vertexData = nullptr;
+	TransformationMatrix* transformationMatrix = nullptr;
+
+	std::string forg;
 
 	//頂点リソース用のヒープの設定
 	D3D12_HEAP_PROPERTIES uploadHeapProperties;
@@ -69,26 +82,14 @@ private:
 
 	Microsoft::WRL::ComPtr<ID3D12Resource> materialResource_;
 
-	Material* materialData_;
-
 	Microsoft::WRL::ComPtr<ID3D12Resource> wvpResource_;
 
-	TransformationMatrix* transformationMatrix;
-	//Matrix4x4* wvpData;
-
-	Transform transform_;
-	//Matrix4x4 worldMatrix_;
-
-	DirectionalLight* directionalLight_;
 	Microsoft::WRL::ComPtr<ID3D12Resource> directionalLightResource;
 
 	const int32_t kClientWidth = 1280;
 	const int32_t kClientHeight = 720;
 
-	bool useMonsterBall = true;
-
 private:
-	VertexData* vertexData;
 
 	float num = 0.0625f;
 	const float pi = 3.14f;

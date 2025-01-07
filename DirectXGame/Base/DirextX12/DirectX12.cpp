@@ -1,6 +1,11 @@
 #include "DirectX12.h"
 #include "../Log/Log.h"
 #include "../../Object/Texture/Texture.h"
+
+#include <thread>
+
+using namespace MyEngine;
+
 DirectX12* DirectX12::instance = nullptr;
 
 DirectX12* DirectX12::GetInstance() {
@@ -14,21 +19,25 @@ DirectX12* DirectX12::GetInstance() {
 
 void DirectX12::Initialize() {
 	InitializeFixFPS();
+	DebugLayer();
 
 	windowsAPI_ = WindowsAPI::GetInstance();
 	windowsAPI_->Init();
+	DebugLayer();
+
 	DXGIFactory();
 	Adapter();
 	D3D12Device();
-	descriptorSizeSRV = device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
-	descriptorSizeRTV = device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
-	descriptorSizeDSV = device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_DSV);
-
+	descriptorSizeSRV = device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+	descriptorSizeRTV = device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
+	descriptorSizeDSV = device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_DSV);
 
 	Error();
 	Command();
 	SwapChain();
 	DescriptorHeap();
+	CreateDSV();
+	CreateDSVParticle();
 	Fence();
 
 	//ImGuiの初期化
@@ -36,12 +45,12 @@ void DirectX12::Initialize() {
 	ImGui::CreateContext();
 	ImGui::StyleColorsDark();
 	ImGui_ImplWin32_Init(windowsAPI_->GetHwnd());
-	ImGui_ImplDX12_Init(device.Get(),
-		swapChainDesc.BufferCount,
-		rtvDesc.Format,
-		srvDescriptorHeap.Get(),
-		srvDescriptorHeap->GetCPUDescriptorHandleForHeapStart(),
-		srvDescriptorHeap->GetGPUDescriptorHandleForHeapStart());
+	ImGui_ImplDX12_Init(device_.Get(),
+		swapChainDesc_.BufferCount,
+		rtvDesc_.Format,
+		srvDescriptorHeap_.Get(),
+		srvDescriptorHeap_->GetCPUDescriptorHandleForHeapStart(),
+		srvDescriptorHeap_->GetGPUDescriptorHandleForHeapStart());
 }
 
 
@@ -65,36 +74,36 @@ void DirectX12::PostDraw() {
 }
 
 void DirectX12::DXGIFactory() {
-	dxgiFactory = nullptr;
-	HRESULT hr = CreateDXGIFactory(IID_PPV_ARGS(&dxgiFactory));
+	dxgiFactory_ = nullptr;
+	HRESULT hr = CreateDXGIFactory(IID_PPV_ARGS(&dxgiFactory_));
 	assert(SUCCEEDED(hr));
 }
 
 void DirectX12::Adapter() {
-	useAdapter = nullptr;
+	useAdapter_ = nullptr;
 
-		for (UINT i = 0; dxgiFactory->EnumAdapterByGpuPreference(i, DXGI_GPU_PREFERENCE_HIGH_PERFORMANCE, IID_PPV_ARGS(&useAdapter)) != DXGI_ERROR_NOT_FOUND; ++i) {
+		for (UINT i = 0; dxgiFactory_->EnumAdapterByGpuPreference(i, DXGI_GPU_PREFERENCE_HIGH_PERFORMANCE, IID_PPV_ARGS(&useAdapter_)) != DXGI_ERROR_NOT_FOUND; ++i) {
 		//GetAdapterInfo
-		adapterDesc = {};
-		HRESULT hr = useAdapter->GetDesc3(&adapterDesc);
+		adapterDesc_ = {};
+		HRESULT hr = useAdapter_->GetDesc3(&adapterDesc_);
 		assert(SUCCEEDED(hr));
 		//ソフトウェアでなければok
-		if (!(adapterDesc.Flags & DXGI_ADAPTER_FLAG3_SOFTWARE)) {
+		if (!(adapterDesc_.Flags & DXGI_ADAPTER_FLAG3_SOFTWARE)) {
 			//logに出力
-			LogText(ConvertString(std::format(L"Use Adapter:{}\n", adapterDesc.Description)));
+			LogText(ConvertString(std::format(L"Use Adapter:{}\n", adapterDesc_.Description)));
 			break;
 		}
-		useAdapter = nullptr;
+		useAdapter_ = nullptr;
 	}
-	assert(useAdapter != nullptr);
+	assert(useAdapter_ != nullptr);
 }
 
 void DirectX12::D3D12Device() {
-	device = nullptr;
+	device_ = nullptr;
 	D3D_FEATURE_LEVEL featureLevels[] = { D3D_FEATURE_LEVEL_12_2,D3D_FEATURE_LEVEL_12_1,D3D_FEATURE_LEVEL_12_0 };
 	const char* featureLevelStrings[] = { "12.2","12.1","12.0" };
 	for (size_t i = 0; i < _countof(featureLevels); ++i) {
-		HRESULT hr = D3D12CreateDevice(useAdapter.Get(), featureLevels[i], IID_PPV_ARGS(&device));
+		HRESULT hr = D3D12CreateDevice(useAdapter_.Get(), featureLevels[i], IID_PPV_ARGS(&device_));
 		if (SUCCEEDED(hr)) {
 			LogText(std::format("FeatureLevel:{}\n", featureLevelStrings[i]));
 			break;
@@ -103,169 +112,148 @@ void DirectX12::D3D12Device() {
 }
 
 void DirectX12::Command() {
-	commandQueue = nullptr;
-	commandQueueDesc = {};
-	HRESULT hr = device->CreateCommandQueue(&commandQueueDesc, IID_PPV_ARGS(&commandQueue));
+	commandQueue_ = nullptr;
+	commandQueueDesc_ = {};
+	HRESULT hr = device_->CreateCommandQueue(&commandQueueDesc_, IID_PPV_ARGS(&commandQueue_));
 	assert(SUCCEEDED(hr));
 
-	commandAllocator = nullptr;
-	hr = device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&commandAllocator));
+	commandAllocator_ = nullptr;
+	hr = device_->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&commandAllocator_));
 	assert(SUCCEEDED(hr));
 
-	commandList = nullptr;
-	hr = device->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, commandAllocator.Get(), nullptr, IID_PPV_ARGS(&commandList));
+	commandList_ = nullptr;
+	hr = device_->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, commandAllocator_.Get(), nullptr, IID_PPV_ARGS(&commandList_));
 	assert(SUCCEEDED(hr));
 }
 
 void DirectX12::SwapChain() {
-	swapChain = nullptr;
-	swapChainDesc = {};
+	swapChain_ = nullptr;
+	swapChainDesc_ = {};
 
-	swapChainDesc.Width = kClientWidth;
-	swapChainDesc.Height = kClientHeight;
-	swapChainDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-	swapChainDesc.SampleDesc.Count = 1;
-	swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-	swapChainDesc.BufferCount = 2;
-	swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
+	swapChainDesc_.Width = kClientWidth;
+	swapChainDesc_.Height = kClientHeight;
+	swapChainDesc_.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+	swapChainDesc_.SampleDesc.Count = 1;
+	swapChainDesc_.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+	swapChainDesc_.BufferCount = 2;
+	swapChainDesc_.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
 
 
-	HRESULT hr = dxgiFactory->CreateSwapChainForHwnd(commandQueue.Get(), windowsAPI_->GetHwnd(), &swapChainDesc, nullptr, nullptr, reinterpret_cast<IDXGISwapChain1**>(swapChain.GetAddressOf()));
+	HRESULT hr = dxgiFactory_->CreateSwapChainForHwnd(commandQueue_.Get(), windowsAPI_->GetHwnd(), &swapChainDesc_, nullptr, nullptr, reinterpret_cast<IDXGISwapChain1**>(swapChain_.GetAddressOf()));
 	assert(SUCCEEDED(hr));
 }
 
 void DirectX12::DescriptorHeap() {
-	rtvDescriptorHeap = CreateDescriptorHeap(device, D3D12_DESCRIPTOR_HEAP_TYPE_RTV, 2, false);
-	rtvDescriptorHeapDesc = {};
+	//rtv
+	rtvDescriptorHeap_ = CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE_RTV, 2, false);
+	rtvDescriptorHeapDesc_ = {};
 
-	srvDescriptorHeap = CreateDescriptorHeap(device, D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, kMaxSRVCount, true);
+	rtvDescriptorHeapDesc_.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
+	rtvDescriptorHeapDesc_.NumDescriptors = 2;
 
-	rtvDescriptorHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
-	rtvDescriptorHeapDesc.NumDescriptors = 2;
-
-	HRESULT hr = device->CreateDescriptorHeap(&rtvDescriptorHeapDesc, IID_PPV_ARGS(&rtvDescriptorHeap));
+	HRESULT hr = device_->CreateDescriptorHeap(&rtvDescriptorHeapDesc_, IID_PPV_ARGS(&rtvDescriptorHeap_));
 	assert(SUCCEEDED(hr));
 
-	swapChainResource[0] = { nullptr };
-	swapChainResource[1] = { nullptr };
-	hr = swapChain->GetBuffer(0, IID_PPV_ARGS(&swapChainResource[0]));
+	swapChainResource_[0] = { nullptr };
+	swapChainResource_[1] = { nullptr };
+	hr = swapChain_->GetBuffer(0, IID_PPV_ARGS(&swapChainResource_[0]));
 	assert(SUCCEEDED(hr));
-	hr = swapChain->GetBuffer(1, IID_PPV_ARGS(&swapChainResource[1]));
+	hr = swapChain_->GetBuffer(1, IID_PPV_ARGS(&swapChainResource_[1]));
 	assert(SUCCEEDED(hr));
 
-	rtvDesc = {};
-	rtvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
-	rtvDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
+	rtvDesc_ = {};
+	rtvDesc_.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+	rtvDesc_.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
 
-	rtvStartHandle = rtvDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
+	rtvStartHandle_ = rtvDescriptorHeap_->GetCPUDescriptorHandleForHeapStart();
 
-	rtvHandle[0] = rtvStartHandle;
-	device->CreateRenderTargetView(swapChainResource[0].Get(), &rtvDesc, rtvHandle[0]);
-	rtvHandle[1].ptr = rtvHandle[0].ptr + device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
+	rtvHandle_[0] = rtvStartHandle_;
+	device_->CreateRenderTargetView(swapChainResource_[0].Get(), &rtvDesc_, rtvHandle_[0]);
+	rtvHandle_[1].ptr = rtvHandle_[0].ptr + device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
 
-	device->CreateRenderTargetView(swapChainResource[1].Get(), &rtvDesc, rtvHandle[1]);
-	//kokomadeoke
+	device_->CreateRenderTargetView(swapChainResource_[1].Get(), &rtvDesc_, rtvHandle_[1]);
+	//srv
+	srvDescriptorHeap_ = CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV, kMaxSRVCount, true);
+}
 
-	DirectX::ScratchImage mipImages = texture->LoadTexture("Resources/uvChecker.png");
-	const DirectX::TexMetadata& metadata = mipImages.GetMetadata();
-	Microsoft::WRL::ComPtr<ID3D12Resource> textureResource = texture->CreateTextureResource(device, metadata);
-	texture->UploadTextureData(textureResource, mipImages);
-	//
-	Microsoft::WRL::ComPtr<ID3D12Resource> depthStencilResource = texture->CreateDepthStencilTextureResource(device, kClientWidth, kClientHeight);
-
-
-	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
-	srvDesc.Format = metadata.format;
-	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
-	srvDesc.Texture2D.MipLevels = UINT(metadata.mipLevels);
-
-	//2maime
-	DirectX::ScratchImage mipImages2 = texture->LoadTexture("Resources/monsterBall.png");
-	const DirectX::TexMetadata& metadata2 = mipImages2.GetMetadata();
-	Microsoft::WRL::ComPtr<ID3D12Resource> textureResource2 = texture->CreateTextureResource(device, metadata2);
-	texture->UploadTextureData(textureResource2, mipImages2);
-	//secondSRV
-	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc2{};
-	srvDesc2.Format = metadata2.format;
-	srvDesc2.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-	srvDesc2.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
-	srvDesc2.Texture2D.MipLevels = UINT(metadata2.mipLevels);
-
+void DirectX12::CreateDSV() {
 	//dsv
-	dsvDescriptorHeap = CreateDescriptorHeap(device, D3D12_DESCRIPTOR_HEAP_TYPE_DSV, 1, false);
+	dsvDescriptorHeap_ = CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE_DSV, 1, false);
 
-	dsvDesc = {};
-	dsvDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
-	dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
+	dsvDesc_ = {};
+	dsvDesc_.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+	dsvDesc_.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
 
-	device->CreateDepthStencilView(depthStencilResource.Get(), &dsvDesc, dsvDescriptorHeap->GetCPUDescriptorHandleForHeapStart());
+	Microsoft::WRL::ComPtr<ID3D12Resource> depthStencilResource = texture_->CreateDepthStencilTextureResource(device_, kClientWidth, kClientHeight);
+	device_->CreateDepthStencilView(depthStencilResource.Get(), &dsvDesc_, dsvDescriptorHeap_->GetCPUDescriptorHandleForHeapStart());
 
-	depthStencilDesc.DepthEnable = true;
-	depthStencilDesc.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
-	depthStencilDesc.DepthFunc = D3D12_COMPARISON_FUNC_LESS_EQUAL;
-	//
-	D3D12_CPU_DESCRIPTOR_HANDLE textureSrvHandleCPU = srvDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
-	textureSrvHandleGPU = srvDescriptorHeap->GetGPUDescriptorHandleForHeapStart();
+	depthStencilDesc_.DepthEnable = true;
+	depthStencilDesc_.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
+	//depthStencilDesc.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;
+	depthStencilDesc_.DepthFunc = D3D12_COMPARISON_FUNC_LESS_EQUAL;
+}
+void DirectX12::CreateDSVParticle() {
+	//dsv
+	dsvDescriptorHeapForParticle_ = CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE_DSV, 1, false);
 
-	textureSrvHandleCPU.ptr += device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
-	textureSrvHandleGPU.ptr += device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+	dsvDescForParticle_ = {};
+	dsvDescForParticle_.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+	dsvDescForParticle_.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
 
-	device->CreateShaderResourceView(textureResource.Get(), &srvDesc, textureSrvHandleCPU);
+	Microsoft::WRL::ComPtr<ID3D12Resource> depthStencilResourceForParticle = texture_->CreateDepthStencilTextureResource(device_, kClientWidth, kClientHeight);
+	device_->CreateDepthStencilView(depthStencilResourceForParticle.Get(), &dsvDescForParticle_, dsvDescriptorHeapForParticle_->GetCPUDescriptorHandleForHeapStart());
 
-
-	//
-	D3D12_CPU_DESCRIPTOR_HANDLE textureSrvHandleCPU2 = GetCPUDescriptorHandle(srvDescriptorHeap.Get(), descriptorSizeSRV, 2);
-	textureSrvHandleGPU2 = GetGPUDescriptorHandle(srvDescriptorHeap.Get(), descriptorSizeSRV, 2);
-
-	device->CreateShaderResourceView(textureResource2.Get(), &srvDesc2, textureSrvHandleCPU2);
+	depthStencilDescForParticle_.DepthEnable = true;
+	//epthStencilDescForParticle.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
+	depthStencilDescForParticle_.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ZERO;
+	depthStencilDescForParticle_.DepthFunc = D3D12_COMPARISON_FUNC_LESS_EQUAL;
 }
 
 void DirectX12::GetBackBuffer() {
 	//これから書き込むバックバッファのインデックスを取得
-	backBufferIndex = swapChain->GetCurrentBackBufferIndex();
+	backBufferIndex_ = swapChain_->GetCurrentBackBufferIndex();
 }
 
 void DirectX12::RTV() {
-	D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle = dsvDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
-	commandList->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
+	D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle = dsvDescriptorHeap_->GetCPUDescriptorHandleForHeapStart();
+	commandList_->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
-	commandList->OMSetRenderTargets(1, &rtvHandle[backBufferIndex], false, &dsvHandle);
+	commandList_->OMSetRenderTargets(1, &rtvHandle_[backBufferIndex_], false, &dsvHandle);
 
 	float clearColor[] = { 0.1f,0.25f,0.5f,1.0f };
-	commandList->ClearRenderTargetView(rtvHandle[backBufferIndex], clearColor, 0, nullptr);
+	commandList_->ClearRenderTargetView(rtvHandle_[backBufferIndex_], clearColor, 0, nullptr);
 }
 
 void DirectX12::CommandKick() {
-	ID3D12CommandList* commandLists[] = { commandList.Get()};
-	commandQueue->ExecuteCommandLists(1, commandLists);
+	ID3D12CommandList* commandLists[] = { commandList_.Get()};
+	commandQueue_->ExecuteCommandLists(1, commandLists);
 
-	swapChain->Present(1, 0);
+	swapChain_->Present(1, 0);
 }
 
 void DirectX12::NextFlameCommandList() {
-	HRESULT hr = commandAllocator->Reset();
+	HRESULT hr = commandAllocator_->Reset();
 	assert(SUCCEEDED(hr));
-	hr = commandList->Reset(commandAllocator.Get(), nullptr);
+	hr = commandList_->Reset(commandAllocator_.Get(), nullptr);
 	assert(SUCCEEDED(hr));
 }
 
-//void DirectX12::DebugLayer() {
-//	#ifdef _DEBUG
-//	ID3D12Debug1* debugControllar = nullptr;
-//	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugControllar)))) {
-//		//デバッグレイヤーを有効化する
-//		debugControllar->EnableDebugLayer();
-//		//さらにGPU側でもチェックを行うようにする
-//		debugControllar->SetEnableGPUBasedValidation(TRUE);
-//	}
-//#endif // _DEBUG
-//}
+void DirectX12::DebugLayer() {
+	#ifdef _DEBUG
+	ID3D12Debug1* debugControllar = nullptr;
+	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugControllar)))) {
+		//デバッグレイヤーを有効化する
+		debugControllar->EnableDebugLayer();
+		//さらにGPU側でもチェックを行うようにする
+		debugControllar->SetEnableGPUBasedValidation(TRUE);
+	}
+#endif // _DEBUG
+}
 
 void DirectX12::Error() {
 #ifdef _DEBUG
 	ID3D12InfoQueue* infoQueue = nullptr;
-	if (SUCCEEDED(device->QueryInterface(IID_PPV_ARGS(&infoQueue)))) {
+	if (SUCCEEDED(device_->QueryInterface(IID_PPV_ARGS(&infoQueue)))) {
 		//やばいエラー時に止まる
 		infoQueue->SetBreakOnSeverity(D3D12_MESSAGE_SEVERITY_CORRUPTION, true);
 		//エラー時に止まる
@@ -295,46 +283,88 @@ void DirectX12::Error() {
 }
 
 void DirectX12::Barrier() {
-	barrier = {};
-	barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
-	barrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
-	barrier.Transition.pResource = swapChainResource[backBufferIndex].Get();
-	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT;
-	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET;
+	barrier_ = {};
+	barrier_.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+	barrier_.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
+	barrier_.Transition.pResource = swapChainResource_[backBufferIndex_].Get();
+	barrier_.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT;
+	barrier_.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET;
 
-	commandList->ResourceBarrier(1, &barrier);
+	commandList_->ResourceBarrier(1, &barrier_);
 }
 
 void DirectX12::ScreenDisplay() {
-	barrier.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;
-	barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;
-	commandList->ResourceBarrier(1, &barrier);
+	barrier_.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;
+	barrier_.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;
+	commandList_->ResourceBarrier(1, &barrier_);
 }
 
 void DirectX12::CommandConfirm() {
-	HRESULT hr = commandList->Close();
+	HRESULT hr = commandList_->Close();
 	assert(SUCCEEDED(hr));
 }
 
 void DirectX12::Fence() {
-	fence = nullptr;
-	fenceValue = 0;
-	HRESULT hr = device->CreateFence(fenceValue, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&fence));
+	fence_ = nullptr;
+	fenceValue_ = 0;
+	HRESULT hr = device_->CreateFence(fenceValue_, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&fence_));
 	assert(SUCCEEDED(hr));
 
-	fenceEvent = CreateEvent(NULL, FALSE, FALSE, NULL);
-	assert(fenceEvent != nullptr);
+	fenceEvent_ = CreateEvent(NULL, FALSE, FALSE, NULL);
+	assert(fenceEvent_ != nullptr);
 }
 
 void DirectX12::Signal() {
-	fenceValue++;
-	commandQueue->Signal(fence.Get(), fenceValue);
-	if (fence->GetCompletedValue() < fenceValue) {
-		fence->SetEventOnCompletion(fenceValue, fenceEvent);
-		WaitForSingleObject(fenceEvent, INFINITE);
+	fenceValue_++;
+	commandQueue_->Signal(fence_.Get(), fenceValue_);
+	if (fence_->GetCompletedValue() < fenceValue_) {
+		fence_->SetEventOnCompletion(fenceValue_, fenceEvent_);
+		WaitForSingleObject(fenceEvent_, INFINITE);
 	}
 }
 
+
+Microsoft::WRL::ComPtr<ID3D12Resource> DirectX12::CreateRenderTextureResource(DXGI_FORMAT format, const Vector4& clearColor) {
+	Microsoft::WRL::ComPtr<ID3D12Resource> resource;
+
+	D3D12_RESOURCE_DESC resourceDesc;
+	resourceDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_RENDER_TARGET;
+
+	D3D12_HEAP_PROPERTIES heapProperties{};
+	heapProperties.Type = D3D12_HEAP_TYPE_DEFAULT;
+
+	D3D12_CLEAR_VALUE clearValue;
+	clearValue.Format = format;
+	clearValue.Color[0] = clearColor.x;
+	clearValue.Color[1] = clearColor.y;
+	clearValue.Color[2] = clearColor.z;
+	clearValue.Color[3] = clearColor.w;
+	
+	device_->CreateCommittedResource(
+		&heapProperties,
+		D3D12_HEAP_FLAG_NONE,
+		&resourceDesc,
+		D3D12_RESOURCE_STATE_RENDER_TARGET,
+		&clearValue,
+		IID_PPV_ARGS(&resource));
+
+	return resource;
+}
+
+void DirectX12::CreateRTVForRenderTexture() {
+	const Vector4 kRenderTargetClearView{ 1.0f,1.0f,0.0f,1.0f };
+	auto renderTextureResource = CreateRenderTextureResource(DXGI_FORMAT_R8G8B8A8_UNORM_SRGB, kRenderTargetClearView);
+
+	device_->CreateRenderTargetView(renderTextureResource.Get(), &rtvDesc_, GetCPUDescriptorHandle(2));
+
+	D3D12_SHADER_RESOURCE_VIEW_DESC renderTextureSrvDesc{};
+	renderTextureSrvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+	renderTextureSrvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+	renderTextureSrvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
+	renderTextureSrvDesc.Texture2D.MipLevels = 1;
+
+	device_->CreateShaderResourceView(renderTextureResource.Get(), &renderTextureSrvDesc, GetCPUDescriptorHandle(2));
+}
 
 
 void DirectX12::ResourceLeakCheck() {
@@ -348,23 +378,12 @@ void DirectX12::ResourceLeakCheck() {
 }
 
 void DirectX12::Release() {
-	CloseHandle(fenceEvent);
-	//fence->Release();
+	CloseHandle(fenceEvent_);
 
-	//rtvDescriptorHeap->Release();
-	//swapChainResource[0]->Release();
-	//swapChainResource[1]->Release();
-	//swapChain->Release();
-	//commandList->Release();
-	//commandAllocator->Release();
-	//commandQueue->Release();
-	//device->Release();
-	//useAdapter->Release();
-	//dxgiFactory->Release();
 	CloseWindow(windowsAPI_->GetHwnd());
 }
 
-Microsoft::WRL::ComPtr<ID3D12Resource> DirectX12::CreateBufferResource(Microsoft::WRL::ComPtr<ID3D12Device> device, size_t sizeInBytes) {
+Microsoft::WRL::ComPtr<ID3D12Resource> DirectX12::CreateBufferResource(size_t sizeInBytes) {
 
 	HRESULT hr;
 	//VertexResourceを生成する--------------------------------------------------------------------------------
@@ -385,41 +404,41 @@ Microsoft::WRL::ComPtr<ID3D12Resource> DirectX12::CreateBufferResource(Microsoft
 	ResourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 	//実際に頂点リソースを作る
 	ID3D12Resource* Resource = nullptr;
-	hr = device->CreateCommittedResource(&uploadHeapProperties, D3D12_HEAP_FLAG_NONE, &ResourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&Resource));
+	hr = device_->CreateCommittedResource(&uploadHeapProperties, D3D12_HEAP_FLAG_NONE, &ResourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&Resource));
 	assert(SUCCEEDED(hr));
 
 	return Resource;
 }
 
-Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> DirectX12::CreateDescriptorHeap(Microsoft::WRL::ComPtr<ID3D12Device> device, D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible) {
+Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> DirectX12::CreateDescriptorHeap(D3D12_DESCRIPTOR_HEAP_TYPE heapType, UINT numDescriptors, bool shaderVisible) {
 	ID3D12DescriptorHeap* descriptorHeap = nullptr;
 	D3D12_DESCRIPTOR_HEAP_DESC descriptorHeapDesc{};
 	descriptorHeapDesc.Type = heapType;
 	descriptorHeapDesc.NumDescriptors = numDescriptors;
 	descriptorHeapDesc.Flags = shaderVisible ? D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE : D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
-	HRESULT hr = device->CreateDescriptorHeap(&descriptorHeapDesc, IID_PPV_ARGS(&descriptorHeap));
+	HRESULT hr = device_->CreateDescriptorHeap(&descriptorHeapDesc, IID_PPV_ARGS(&descriptorHeap));
 	assert(SUCCEEDED(hr));
 	return descriptorHeap;
 }
 
 //ImGui
 void DirectX12::SetImGuiDescriptorHeap() {
-	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descriptorHeaps[] = { srvDescriptorHeap.Get()};
-	commandList->SetDescriptorHeaps(1, descriptorHeaps->GetAddressOf());
+	ID3D12DescriptorHeap* descriptorHeaps[] = { srvDescriptorHeap_.Get() };
+	commandList_->SetDescriptorHeaps(1, descriptorHeaps);
 }
 
 void DirectX12::PushImGuiDrawCommand() {
-	ImGui_ImplDX12_RenderDrawData(ImGui::GetDrawData(), commandList.Get());
+	ImGui_ImplDX12_RenderDrawData(ImGui::GetDrawData(), commandList_.Get());
 }
 
-D3D12_CPU_DESCRIPTOR_HANDLE DirectX12::GetCPUDescriptorHandle(ID3D12DescriptorHeap* descriptorHeap, uint32_t descriptorSize, uint32_t index) {
-	D3D12_CPU_DESCRIPTOR_HANDLE handleCPU = descriptorHeap->GetCPUDescriptorHandleForHeapStart();
-	handleCPU.ptr += (descriptorSize * index);
+D3D12_CPU_DESCRIPTOR_HANDLE DirectX12::GetCPUDescriptorHandle(uint32_t index) {
+	D3D12_CPU_DESCRIPTOR_HANDLE handleCPU = srvDescriptorHeap_->GetCPUDescriptorHandleForHeapStart();
+	handleCPU.ptr += (descriptorSizeSRV * index);
 	return handleCPU;
 }
-D3D12_GPU_DESCRIPTOR_HANDLE DirectX12::GetGPUDescriptorHandle(ID3D12DescriptorHeap* descriptorHeap, uint32_t descriptorSize, uint32_t index) {
-	D3D12_GPU_DESCRIPTOR_HANDLE handleGPU = descriptorHeap->GetGPUDescriptorHandleForHeapStart();
-	handleGPU.ptr += (descriptorSize * index);
+D3D12_GPU_DESCRIPTOR_HANDLE DirectX12::GetGPUDescriptorHandle(uint32_t index) {
+	D3D12_GPU_DESCRIPTOR_HANDLE handleGPU = srvDescriptorHeap_->GetGPUDescriptorHandleForHeapStart();
+	handleGPU.ptr += (descriptorSizeSRV * index);
 	return handleGPU;
 }
 
@@ -437,7 +456,7 @@ void DirectX12::UpdataFixFPS() {
 
 	if (elapsed < kMinCheckTime) {
 		while (std::chrono::steady_clock::now() - reference_ < kMinTime) {
-			//std::this_thread::sleep_for(std::chrono::microseconds(1));
+			std::this_thread::sleep_for(std::chrono::microseconds(1));
 		}
 	}
 	reference_ = std::chrono::steady_clock::now();

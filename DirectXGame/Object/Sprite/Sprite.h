@@ -1,5 +1,6 @@
 #pragma once
 #include "../../Base/DirextX12/DirectX12.h"
+#include "../../Manager/TextureManager.h"
 #include <dxcapi.h>
 #include "../../Math/Vector4.h"
 #include "../../Math/Matrix4x4.h"
@@ -11,7 +12,7 @@
 class Sprite
 {
 public:
-	void Initialize(Vector2 leftTop,Vector2 rightBot);
+	void Initialize(Vector2 size, std::string textureFilePath);
 
 	void Update();
 
@@ -19,16 +20,14 @@ public:
 
 	void SetPosition(Vector2 translate);
 
-private:
+	void SetTexcoord(Vector2 LT, Vector2 LB, Vector2 RT, Vector2 RB);
 
-	void SetPosition(Vector2 LB, Vector2 LT, Vector2 RB, Vector2 RT);
+private:
 	VertexData GetPosition() { return vertexData[0], vertexData[1], vertexData[2], vertexData[3]; }
 
 	void CreateVertexResource();
 
 	void CreateVertexBufferView();
-
-	void DataResource();
 
 	void Release();
 
@@ -37,11 +36,21 @@ private:
 	void CreateTransformationMatrixResource();
 
 	void CreateIndexResource();
-private:
-	DirectX12* directX12 = nullptr;;
 
+	void CreateVertexData(Vector2 size);
+
+public:
 	Transform transform;
 	Transform uvTransform;
+
+	Material* materialData_;
+	bool isActive;
+
+	Vector2 anchorPoint = { 0.0f,0.0f };
+	Vector2 size_;
+
+private:
+	uint32_t textureIndex = 0;
 
 	//頂点リソース用のヒープの設定
 	D3D12_HEAP_PROPERTIES uploadHeapProperties;
@@ -59,8 +68,6 @@ private:
 
 	Microsoft::WRL::ComPtr<ID3D12Resource> materialResource_;
 
-	Material* materialData_;
-
 	Microsoft::WRL::ComPtr<ID3D12Resource> wvpResource_;
 
 	TransformationMatrix* transformationMatrix;
@@ -69,8 +76,6 @@ private:
 	Microsoft::WRL::ComPtr<ID3D12Resource> indexResource;
 	D3D12_INDEX_BUFFER_VIEW indexBufferView;
 	uint32_t* indexData;
-
-	bool isInvisible_;
 
 	const int32_t kClientWidth = 1280;
 	const int32_t kClientHeight = 720;

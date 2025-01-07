@@ -6,6 +6,7 @@
 #include "../../Math/Matrix4x4.h"
 #include "../../Math/struct.h"	
 #include "../Light/Lighting.h"
+#include "../Camera/Camera.h"
 
 #include <wrl.h>
 
@@ -17,32 +18,32 @@ class Sphere
 public:
 	void Initialize();
 
+	void Update();
+
+	void Draw();
+
+	void SetCamera(Camera* Tcamera) { this->camera = Tcamera; }
+
+private:
+
 	void InitializePosition();
 
-	void CreateVertexResource();
-
 	void CreateVertexBufferView();
-
-	void DataResource();
-
-	void Release();
 
 	void CreateMaterialResource();
 
 	void CreateTransformationMatrixResource();
 
-	void CreateDirectionalLightResource();
-
-	void Update(Vector4& color, const Transform& transform, const Transform& cameraTransform, DirectionalLight& directionalLight);
-
-	void Draw();
-
-	void SetPosition(Vector3& position) { transform.translate = position; }
-private:
-	DirectX12* directX12 = nullptr;
-
+public:
 	Transform transform;
 	Transform cameraTransform;
+	Material* materialData;
+
+private:
+	MyEngine::DirectX12* directX12 = nullptr;
+	Camera* camera = nullptr;
+
+	TransformationMatrix* transformationMatrix;
 
 	//頂点リソース用のヒープの設定
 	D3D12_HEAP_PROPERTIES uploadHeapProperties;
@@ -58,16 +59,12 @@ private:
 
 	Microsoft::WRL::ComPtr<ID3D12Resource> materialResource_;
 
-	Material* materialData_;
 
 	Microsoft::WRL::ComPtr<ID3D12Resource> wvpResource_;
-
-	TransformationMatrix* transformationMatrix;
 	//Matrix4x4* wvpData;
 
 	//Matrix4x4 worldMatrix_;
 
-	DirectionalLight* directionalLight_;
 	Microsoft::WRL::ComPtr<ID3D12Resource> directionalLightResource;
 
 	const int32_t kClientWidth = 1280;

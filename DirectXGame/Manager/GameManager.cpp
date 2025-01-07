@@ -1,24 +1,34 @@
 #include "GameManager.h"
 
+using namespace MyEngine;
+
 GameManager* GameManager::GetInstance() {
 	static GameManager instance;
 	return &instance;
 }
 
 GameManager::GameManager() {
+
+	CoInitializeEx(0, COINIT_MULTITHREADED);
 	directX12 = DirectX12::GetInstance();
-	windowsAPI = WindowsAPI::GetInstance();
+	windowsAPI = MyEngine::WindowsAPI::GetInstance();
+	graphicsRenderer_ = GraphicsRenderer::GetInstance();
 
 	directX12->Initialize();
 	graphicsRenderer_->Initialize();
-	graphicsRenderer_->ViewportScissor();
 
-	Input::GetInstance()->Initialize();
+	KeyInput::GetInstance()->Initialize();
+	GamePadInput::GetInstance()->Initialize();
 
+	TextureManager::GetInstance()->Initialize();
+	ModelManager::GetInstance()->Initialize();
+	FileManager::GetInstance()->Initialize();
 
-	sceneArr[TITLE] = std::make_unique<TitleScene>();
-	sceneArr[INGAME] = std::make_unique<GameScene>();
-	sceneArr[CLEAR] = std::make_unique<ClearScene>();
+	sceneArr_[TEST] = std::make_unique<TestScene>();
+	sceneArr_[SUBTEST] = std::make_unique<SubTestScene>();
+	sceneArr_[TITLE] = std::make_unique<TitleScene>();
+	sceneArr_[INGAME] = std::make_unique<GameScene>();
+	sceneArr_[CLEAR] = std::make_unique<ClearScene>();
 }
 
 GameManager::~GameManager() {
@@ -31,7 +41,6 @@ void GameManager::Initialize() {
 
 void GameManager::Run() {
 
-	CoInitializeEx(0, COINIT_MULTITHREADED);
 	//インスタンス
 	GameManager::GetInstance()->Initialize();
 	GlobalVariables::GetInstance()->LoadFiles();
@@ -45,22 +54,23 @@ void GameManager::Run() {
 			DispatchMessage(&msg);
 		}
 		else {
-			Input::GetInstance()->Update();
+			KeyInput::GetInstance()->Update();
+			GamePadInput::GetInstance()->BeginFrame();
 			//シーンのチェック
-			prevSceneNo = currentSceneNo;
-			currentSceneNo = sceneArr[currentSceneNo]->GetSceneNo();
+			prevSceneNo_ = currentSceneNo_;
+			currentSceneNo_ = sceneArr_[currentSceneNo_]->GetSceneNo();
 
 			//シーンが前フレームと異なったら初期化
-			if (prevSceneNo != currentSceneNo) {
-				sceneArr[currentSceneNo]->Initialize();
+			if (prevSceneNo_ != currentSceneNo_) {
+				sceneArr_[currentSceneNo_]->Initialize();
 			}
 
 			BeginFrame();
-			GlobalVariables::GetInstance()->Update();
-			sceneArr[currentSceneNo]->Update();
+			sceneArr_[currentSceneNo_]->Update();
 			ImGui::Render();
-			sceneArr[currentSceneNo]->Draw();
+			sceneArr_[currentSceneNo_]->Draw();
 			EndFrame();
+			sceneArr_[currentSceneNo_]->SceneChange();
 		}
 	}
 	Finalize();

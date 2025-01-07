@@ -1,5 +1,7 @@
 #include "Sphere.h"
 
+using namespace MyEngine;
+
 void Sphere::InitializePosition() {
 		const uint32_t kSubdivision = 16;
 		const float kLonEvery = (2 * pi) / kSubdivision;
@@ -100,33 +102,28 @@ void Sphere::Initialize() {
 	directX12 = DirectX12::GetInstance();
 	transform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,0.0f} };
 	cameraTransform = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{0.0f,0.0f,-10.0f} };
-	CreateVertexResource();
+
 	CreateMaterialResource();
 	CreateVertexBufferView();
 	CreateTransformationMatrixResource();
-	CreateDirectionalLightResource();
-	DataResource();
-
-	vertexData = nullptr;
-	vertexResource->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
 
 	InitializePosition();
 }
 
-void Sphere::Update(Vector4& color, const Transform& transform, const Transform& cameraTransform, DirectionalLight& direcionalLight) {
-	materialData_->uvTransform = MakeIdentity4x4();
-	transformationMatrix->World = MakeAffineMatrix(transform.scale, transform.rotate, transform.translate);
-	Matrix4x4 cameraMatrix = MakeAffineMatrix(cameraTransform.scale, cameraTransform.rotate, cameraTransform.translate);
-	Matrix4x4 viewMatrix = Inverse(cameraMatrix);
-	Matrix4x4 projectionMatrix = MakePerspectiveFovMatrix(0.45f, float(kClientWidth) / float(kClientHeight), 0.1f, 100.0f);
-	Matrix4x4 worldViewProjectionMatrix = Multiply(transformationMatrix->World, Multiply(viewMatrix, projectionMatrix));
-	transformationMatrix->WVP = worldViewProjectionMatrix;
-	materialData_->color = color;
-	directionalLight_->color = direcionalLight.color;
-	directionalLight_->direction = direcionalLight.direction;
-	directionalLight_->intensity = direcionalLight.intensity;
+void Sphere::Update() {
+	materialData->uvTransform = MakeIdentity4x4();
 
-	//ImGui::Checkbox("useMonsterBall", &useMonsterBall);
+	Matrix4x4 worldMatrix = MakeAffineMatrix(transform.scale, transform.rotate, transform.translate);
+	Matrix4x4 worldViewProjectionMatrix;
+	if (camera) {
+		const Matrix4x4& viewprojectionMatrix = camera->viewProjectionMatrix;
+		worldViewProjectionMatrix = Multiply(worldMatrix, viewprojectionMatrix);
+	}
+	else {
+		worldViewProjectionMatrix = worldMatrix;
+	}
+	transformationMatrix->WVP = worldViewProjectionMatrix;
+	transformationMatrix->World = worldMatrix;
 }
 
 void Sphere ::Draw() {
@@ -135,21 +132,18 @@ void Sphere ::Draw() {
 	directX12->GetCommandList()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	directX12->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResource_->GetGPUVirtualAddress());
 
-	//directX12_->GetCommandList()->SetGraphicsRootConstantBufferView(0, materialResourceSprite->GetGPUVirtualAddress());
 	//wvp用のCBufferの場所を設定
 	directX12->GetCommandList()->SetGraphicsRootConstantBufferView(1, wvpResource_->GetGPUVirtualAddress());
 
-	directX12->GetCommandList()->SetGraphicsRootDescriptorTable(2, useMonsterBall ? directX12->GetSrvHandleGPU2() : directX12->GetSrvHandleGPU());
-	directX12->GetCommandList()->SetGraphicsRootConstantBufferView(3, directionalLightResource->GetGPUVirtualAddress());
+	//directX12->GetCommandList()->SetGraphicsRootDescriptorTable(2, useMonsterBall ? directX12->GetSrvHandleGPU2() : directX12->GetSrvHandleGPU());
+	directX12->GetCommandList()->SetGraphicsRootDescriptorTable(2, directX12->GetSrvHandleGPU());
 	//描画！　（DrawCall/ドローコール)。3頂点で1つのインスタンス。インスタンスについては今後
 	directX12->GetCommandList()->DrawInstanced(1536, 1, 0, 0);
 }
 
-void Sphere::CreateVertexResource() {
-	vertexResource = directX12->CreateBufferResource(directX12->GetDevice(), sizeof(VertexData) * 1536);
-}
-
 void Sphere::CreateVertexBufferView() {
+	vertexResource = directX12->CreateBufferResource(sizeof(VertexData) * 1536);
+
 	vertexBufferView = {};
 	//リソースの先頭のアドレスから使う
 	vertexBufferView.BufferLocation = vertexResource->GetGPUVirtualAddress();
@@ -157,42 +151,29 @@ void Sphere::CreateVertexBufferView() {
 	vertexBufferView.SizeInBytes = sizeof(VertexData) * 1536;
 	//1頂点当たりのサイズ
 	vertexBufferView.StrideInBytes = sizeof(VertexData);
+
+	vertexData = nullptr;
+	//書き込むためのアドレスを取得
+	vertexResource->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
 }
 
 void Sphere::CreateMaterialResource() {
-	materialResource_ = directX12->CreateBufferResource(directX12->GetDevice(), sizeof(Material));
-	materialData_ = nullptr;
-	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&materialData_));
-	materialData_->color = Vector4(1.0f, 0.0f, 0.0f, 1.0f);
-	materialData_->enableLighting = true;
-
-	//materialResourceSprite = directX12_->CreateBufferResource(directX12_->GetDevice(), sizeof(Material));
+	materialResource_ = directX12->CreateBufferResource(sizeof(Material));
+	materialData = nullptr;
+	materialResource_->Map(0, nullptr, reinterpret_cast<void**>(&materialData));
+	materialData->color = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
+	materialData->enableLighting = true;
+	materialData->enablePhong = true;
+	materialData->shininess = 40.0f;
 }
 
 void Sphere::CreateTransformationMatrixResource() {
 	//WVP用のリソースを作る。Matrix4x4　1つ分のサイズを用意する
-	wvpResource_ = directX12->CreateBufferResource(directX12->GetDevice(), sizeof(TransformationMatrix));
+	wvpResource_ = directX12->CreateBufferResource(sizeof(TransformationMatrix));
 	//データを書き込む
 	transformationMatrix = nullptr;
 	//書き込むためのアドレスを取得
 	wvpResource_->Map(0, nullptr, reinterpret_cast<void**>(&transformationMatrix));
 	//単位行列を書き込んでおく
 	transformationMatrix->WVP = MakeIdentity4x4();
-}
-
-void Sphere::CreateDirectionalLightResource() {
-	directionalLightResource = directX12->CreateBufferResource(directX12->GetDevice(), sizeof(DirectionalLight));
-	directionalLight_ = nullptr;
-	directionalLightResource->Map(0,nullptr, reinterpret_cast<void**>(&directionalLight_));
-}
-
-void Sphere::DataResource() {
-	//書き込むためのアドレスを取得
-	vertexResource->Map(0, nullptr, reinterpret_cast<void**>(&vertexData));
-}
-
-void Sphere::Release() {
-	/*vertexResource->Release();
-	materialResource_->Release();
-	directionalLightResource->Release();*/
 }

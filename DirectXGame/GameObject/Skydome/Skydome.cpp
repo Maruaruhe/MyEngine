@@ -1,15 +1,16 @@
 #include "Skydome.h"
+#include "../../Manager/ModelManager.h"
 
 void Skydome::Initialize(const std::string& filename) {
-	model_.Initialize(filename);
-
-	transform.translate = { 0,0,0 };
-	transform.scale = { 20,20,20 };
-	transform.rotate = { 0,0,0 };
+	ModelManager::GetInstance()->LoadModel(filename);
+	model = std::make_unique<Model>();
+	model->Initialize(filename);
 }
 void Skydome::Update() {
 
+	model->Update();
+
 }
 void Skydome::Draw() {
-	model_.Draw();
+	model->Draw();
 }

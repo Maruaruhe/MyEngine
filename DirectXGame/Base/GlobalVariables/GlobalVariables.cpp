@@ -6,7 +6,8 @@ GlobalVariables* GlobalVariables::GetInstance() {
 }
 
 void GlobalVariables::Update() {
-#ifdef DEBUG
+#ifdef _DEBUG
+
 
 	if (!ImGui::Begin("Global Variables", nullptr, ImGuiWindowFlags_MenuBar)) {
 		ImGui::End();
@@ -42,6 +43,7 @@ void GlobalVariables::Update() {
 			else if (std::holds_alternative<Vector3>(item.value)) {
 				Vector3* ptr = std::get_if<Vector3>(&item.value);
 				ImGui::SliderFloat3(itemName.c_str(), reinterpret_cast<float*>(ptr), -10.0f, 10.0f);
+				//SetValue(groupName, itemName, *ptr);
 			}
 		}
 

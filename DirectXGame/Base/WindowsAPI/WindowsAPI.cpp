@@ -1,5 +1,7 @@
 #include "WindowsAPI.h"
 
+using namespace MyEngine;
+
 WindowsAPI* WindowsAPI::instance = nullptr;
 
 WindowsAPI* WindowsAPI::GetInstance() {
@@ -43,42 +45,42 @@ void WindowsAPI::WindowClass() {
 
 
 	//ウインドウプロシージャ	
-	wc.lpfnWndProc = WindowProc;
+	wc_.lpfnWndProc = WindowProc;
 	//ウインドウクラス名（なんでもいい）
-	wc.lpszClassName = L"SimpleShooter";
+	wc_.lpszClassName = L"廃品回収";
 	//インスタンスハンドル
-	wc.hInstance = GetModuleHandle(nullptr);
+	wc_.hInstance = GetModuleHandle(nullptr);
 	//カーソル
-	wc.hCursor = LoadCursor(nullptr, IDC_ARROW);
+	wc_.hCursor = LoadCursor(nullptr, IDC_ARROW);
 
 	//ウインドウクラスを登録する
-	RegisterClass(&wc);
+	RegisterClass(&wc_);
 }
 
 void WindowsAPI::WindowSize() {
-	wrc = { 0,0,kCliantWidth,kClientHeight };
-	AdjustWindowRect(&wrc, WS_OVERLAPPEDWINDOW, false);
+	wrc_ = { 0,0,kCliantWidth,kClientHeight };
+	AdjustWindowRect(&wrc_, WS_OVERLAPPEDWINDOW, false);
 }
 
 void WindowsAPI::WindowCreate() {
 	//ウインドウの生成
-	hwnd = CreateWindow(
-		wc.lpszClassName,		//利用するクラス名
-		L"SimpleShooter",			//タイトルバーの文字
+	hwnd_ = CreateWindow(
+		wc_.lpszClassName,		//利用するクラス名
+		L"廃品回収",			//タイトルバーの文字
 		WS_OVERLAPPEDWINDOW,	//よく見るウインドウスタイル
 		CW_USEDEFAULT,			//表示X座標（Windowsに任せる）
 		CW_USEDEFAULT,			//表示Y座標（Windowsに任せる）
-		wrc.right - wrc.left,	//ウインドウ横幅
-		wrc.bottom - wrc.top,	//ウインドウ縦幅
+		wrc_.right - wrc_.left,	//ウインドウ横幅
+		wrc_.bottom - wrc_.top,	//ウインドウ縦幅
 		nullptr,				//ウインドウハンドル
 		nullptr,				//メニューハンドル
-		wc.hInstance,			//インスタンスハンドル
+		wc_.hInstance,			//インスタンスハンドル
 		nullptr
 	);
 
 	/*directX12->DebugLayer();*/
 
-	ShowWindow(hwnd, SW_SHOW);
+	ShowWindow(hwnd_, SW_SHOW);
 }
 
 

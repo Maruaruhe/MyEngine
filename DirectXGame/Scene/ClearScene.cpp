@@ -1,31 +1,31 @@
 #include "ClearScene.h"
+#include "../Manager/ModelManager.h"
+
+using namespace MyEngine;
+
 void ClearScene::Initialize() {
-	input = Input::GetInstance();
-	sphere.Initialize();
+	input = KeyInput::GetInstance();
 
-	camera = std::make_unique<Camera>();
-	camera->Initialize();
+	TextureManager::GetInstance()->LoadTexture("Resources/Title/clear.png");
+	title.Initialize({ 1280,720 }, "Resources/Title/clear.png");
 
-	trans.translate = { 0,0,0 };
-	trans.rotate = { 0,4.7f,0 };
-	trans.scale = { 1,1,1 };
+	TextureManager::GetInstance()->LoadTexture("Resources/Title/black.png");
+	black.Initialize({ 1280,720 }, "Resources/Title/black.png");
 }
 
 void ClearScene::Update() {
-	if (input->TriggerKey(DIK_SPACE)) {
-		sceneNo = TITLE;
-	}
-	DirectionalLight light;
-	light.color = { 1.0f,1.0f,1.0f,1.0f };
-	light.direction = { 0.0f,-1.0f,0.0f };
-	light.intensity = 1.0f;
-	Vector4 a = { 1,1,1,1 };
-
-	trans.rotate.y += 0.02f;
-
-	sphere.Update(a, trans, camera->GetTransform(), light);
+	title.Update();
+	black.Update();
+	black.materialData_->color.w -= 0.005f;
 }
 
 void ClearScene::Draw() {
-	sphere.Draw();
+	title.Draw();
+	black.Draw();
+}
+
+void ClearScene::SceneChange() {
+	if (KeyInput::GetInstance()->TriggerKey(DIK_SPACE)) {
+		sceneNo = TITLE;
+	}
 }

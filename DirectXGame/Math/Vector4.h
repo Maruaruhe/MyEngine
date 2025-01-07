@@ -15,4 +15,9 @@ struct Vector2 final {
 	float x;
 	float y;
 };
-
+struct Quaternion final{
+	float x;
+	float y;
+	float z;
+	float w;
+};

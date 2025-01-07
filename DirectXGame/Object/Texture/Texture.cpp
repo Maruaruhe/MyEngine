@@ -41,6 +41,7 @@ Microsoft::WRL::ComPtr<ID3D12Resource> Texture::CreateTextureResource(Microsoft:
 
 	return resource;
 }
+
 void Texture::UploadTextureData(Microsoft::WRL::ComPtr<ID3D12Resource> resource, const DirectX::ScratchImage& mipImages) {
 	const DirectX::TexMetadata& metadata = mipImages.GetMetadata();
 
