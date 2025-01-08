@@ -36,6 +36,10 @@ protected:
 
 	static bool toClearScene;
 
+	//現在の時刻
+	static int flame;
+	static int time;
+
 	//初回ロードかどうか
 	bool isFirstLoad = true;
 
@@ -65,6 +69,8 @@ public:
 	/// Stage変更
 	/// </summary>
 	virtual void StageChange() = 0;
+
+	void TimeLapse();
 
 	virtual ~IStage();
 

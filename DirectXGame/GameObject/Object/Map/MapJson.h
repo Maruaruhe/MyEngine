@@ -27,6 +27,8 @@ public:
 	void CheckCollisionFloor(AABB pAABB, Vector3 move, Vector3* fixVector, bool* isFloor);
 	bool CheckCollisionWithEye(const Segment& eyeSegment);
 
+	LevelData GetLevel() { return level_; }
+
 private:
 
 private:
