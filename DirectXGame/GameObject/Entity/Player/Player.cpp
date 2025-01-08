@@ -220,6 +220,7 @@ bool Player::StageChangeByDoor() {
 	Segment playerEyeSegment;
 	playerEyeSegment.start = model.transform.translate;
 	playerEyeSegment.end = GetFrontVector(2.0f);
+	//DoorとPlayerの視線の当たり判定を取得
 	if(mapJson_->CheckCollisionWithEye(playerEyeSegment)) {
 		return true;
 	}
