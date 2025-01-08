@@ -16,14 +16,14 @@ void ShipStage::Initialize(int prevStage) {
 	player_.deadModel.SetCamera(camera2.get());
 	player_.view.SetCamera(camera2.get());
 	player_.model.transform.translate = { 4.0f,1.5f,-11.0f };
-	player_.model.transform.translate = { 0.0f,1.5f,-5.0f };
+	player_.model.transform.translate = { 0.0f,1.5f,0.0f };
 
 	stageChangeCount = 0;
 
 	TextureManager::GetInstance()->LoadTexture("Resources/noise0.png");
 	noise0.Initialize({ 1280,720 }, "Resources/noise0.png");
 
-	mapJson_.Initialize(camera2.get(), "complate");
+	mapJson_.Initialize(camera2.get(), "ShipStage");
 
 	player_.SetMap(&mapJson_);
 
@@ -67,17 +67,20 @@ void ShipStage::Draw() {
 
 
 void ShipStage::StageChange() {
+	if (player_.StageChangeByDoor()) {
+		if (KeyInput::GetInstance()->PushKey(DIK_R)) {
+			stageChangeCount++;
+			if (stageChangeCount >= 60) {
+				stageNo = OUTSIDE;
+			}
+		}
+		else {
+			stageChangeCount = 0;
+		}
+	}
+
 	if(KeyInput::GetInstance()->TriggerKey(DIK_1)){
 		stageNo = OUTSIDE;
 	}
 
-	if (KeyInput::GetInstance()->PushKey(DIK_E)) {
-		stageChangeCount++;
-		if (stageChangeCount >= 120) {
-			stageNo = OUTSIDE;
-		}
-	}
-	else {
-		stageChangeCount = 0;
-	}
 }

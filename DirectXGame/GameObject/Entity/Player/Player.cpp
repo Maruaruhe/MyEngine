@@ -215,6 +215,17 @@ void Player::Jump() {
 	model.transform.translate += fixVector;
 }
 
+bool Player::StageChangeByDoor() {
+	//ドア判定
+	Segment playerEyeSegment;
+	playerEyeSegment.start = model.transform.translate;
+	playerEyeSegment.end = GetFrontVector(2.0f);
+	if(mapJson_->CheckCollisionWithEye(playerEyeSegment)) {
+		return true;
+	}
+	return false;
+}
+
 AABB Player::GetCollision() {
 	AABB a;
 	a.CreateEntityAABB(model.transform);

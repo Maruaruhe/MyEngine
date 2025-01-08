@@ -1,5 +1,6 @@
 #include "FileManager.h"
 #include "ModelManager.h"
+#include "TextureManager.h"
 
 using namespace MyEngine;
 
@@ -84,7 +85,11 @@ void FileManager::ScanningObjects(nlohmann::json& object, std::vector<ObjectData
 		// 新しくオブジェクトを作成
 		ObjectData objectData;
 		ModelManager::GetInstance()->LoadModel("2x2cube");
+		TextureManager::GetInstance()->LoadTexture("Resources/Map/wall.png");
+
 		objectData.model.Initialize("2x2cube");
+		objectData.model.textureIndex = TextureManager::GetInstance()->GetTextureIndexByFilePath("Resources/Map/wall.png");
+		objectData.model.material->enableLighting = true;
 
 		// トランスフォームのパラメータ読み込み
 		if (object.contains("transform")) {
@@ -125,6 +130,12 @@ void FileManager::ScanningObjects(nlohmann::json& object, std::vector<ObjectData
 		}
 		if (object.contains("to_bot")) {
 			objectData.toBot = object["to_bot"];
+		}
+		if (object.contains("is_door")) {
+			objectData.isDoor = object["is_door"];
+			if (objectData.isDoor) {
+				objectData.model.textureIndex = TextureManager::GetInstance()->GetTextureIndexByFilePath("Resources/uvChecker.png");
+			}
 		}
 
 		// オブジェクトを追加

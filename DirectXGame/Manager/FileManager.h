@@ -27,6 +27,7 @@ struct ObjectData {
 	bool toBack;
 	bool toTop;
 	bool toBot;
+	bool isDoor;
 	Model model;
 };
 

@@ -111,3 +111,17 @@ void MapJson::CheckCollisionFloor(AABB pAABB, Vector3 move, Vector3* fixVector, 
         *isFloor = false;
     }
 }
+
+bool MapJson::CheckCollisionWithEye(const Segment& eyeSegment) {
+    for (ObjectData& wall : level_.objects) {
+        if (wall.isDoor) {
+            AABB wallAABB;
+            wallAABB.CreateWallAABB(wall.model.transform);
+            //線分との当たり判定チェック
+            if (wallAABB.CheckLineCollision(eyeSegment)) {
+                return true;
+            }
+        }
+    }
+    return false;
+}

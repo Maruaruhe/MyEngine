@@ -56,6 +56,7 @@ public:
 	//Getter
 	Vector3 GetFrontVector(float length);
 	Vector3 GetFrontLightVector(float length);
+	bool StageChangeByDoor();
 
 	AABB GetCollision();
 private:
@@ -67,6 +68,10 @@ private:
 	/// ジャンプ
 	/// </summary>
 	void Jump();
+	/// <summary>
+	/// マップ関連
+	/// </summary>
+
 	/// <summary>
 	/// 死亡時
 	/// </summary>
