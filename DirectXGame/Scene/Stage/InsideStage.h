@@ -11,4 +11,7 @@ public:
 	void StageChange() override;
 
 	~InsideStage();
+
+private:
+	int stageChangeCount;
 };

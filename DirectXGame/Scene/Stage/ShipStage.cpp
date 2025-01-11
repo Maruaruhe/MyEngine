@@ -31,6 +31,8 @@ void ShipStage::Initialize(int prevStage) {
 	trace_.SetPlayer(&player_);
 	trace_.SetMap(&mapJson_);
 	trace_.model_.SetCamera(camera2.get());
+
+	stageChangeCount = 0;
 }
 
 

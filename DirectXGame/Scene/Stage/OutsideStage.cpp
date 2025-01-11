@@ -21,6 +21,8 @@ void OutsideStage::Initialize(int prevStage) {
 	else if (prevStage == INSIDE) {
 		player_.model.transform.translate = { 0,1.5f,-49 };
 	}
+
+	stageChangeCount = 0;
 }
 
 
