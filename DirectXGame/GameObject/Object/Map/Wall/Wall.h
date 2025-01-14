@@ -14,7 +14,7 @@ public:
 	/// </summary>
 	/// <param name="pos"></param>
 	/// <param name="scale"></param>
-	void Initialize(const Transform transform, const Direction direction);
+	void Initialize(const Transform transform, const Direction direction, std::string filename);
 
 	/// <summary>
 	/// Update

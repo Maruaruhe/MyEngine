@@ -451,41 +451,41 @@
             "is_door": false,
             "children": []
         },
-        {
-            "type": "MESH",
-            "name": "立方体.003",
-            "transform": {
-                "translation": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    1.0,
-                    1.0
-                ]
-            },
-            "file_name": "file_name_EMPTY",
-            "collider": {
-                "type": "NONE"
-            },
-            "load_model": true,
-            "is_item": true,
-            "to_left": true,
-            "to_right": true,
-            "to_front": true,
-            "to_back": true,
-            "to_top": true,
-            "to_bot": true,
-            "is_door": true,
-            "children": []
+      {
+        "type": "MESH",
+        "name": "立方体.003",
+        "transform": {
+          "translation": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rotation": [
+            0.0,
+            -0.0,
+            0.0
+          ],
+          "scaling": [
+            1.0,
+            1.0,
+            1.0
+          ]
         },
+        "file_name": "DEFAULT",
+        "collider": {
+          "type": "NONE"
+        },
+        "load_model": true,
+        "is_item": true,
+        "to_left": true,
+        "to_right": true,
+        "to_front": true,
+        "to_back": true,
+        "to_top": true,
+        "to_bot": true,
+        "is_door": true,
+        "children": []
+      },
         {
             "type": "MESH",
             "name": "Door.001",

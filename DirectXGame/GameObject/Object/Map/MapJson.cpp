@@ -134,7 +134,7 @@ void MapJson::CreateWall(Camera* camera){
     for (int i = 0; i < level_.objects.size(); i++) {
         if (level_.objects[i].direction.toBack || level_.objects[i].direction.toBot || level_.objects[i].direction.toFront || level_.objects[i].direction.toLeft || level_.objects[i].direction.toRight || level_.objects[i].direction.toTop) {
             Wall newWall;
-            newWall.Initialize(level_.objects[i].transform, level_.objects[i].direction);
+            newWall.Initialize(level_.objects[i].transform, level_.objects[i].direction,level_.objects[i].filename);
             newWall.model_.SetCamera(camera);
 
             walls_.push_back(newWall);

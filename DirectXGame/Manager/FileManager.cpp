@@ -105,6 +105,10 @@ void FileManager::ScanningObjects(nlohmann::json& object, std::vector<ObjectData
 			objectData.transform.scale.z = (float)transform["scaling"][1];
 		}
 
+		if (object.contains("file_name")) {
+			objectData.filename = object["file_name"];
+		}
+
 		//種類分け
 		if (object.contains("is_item")) {
 			objectData.isItem = object["is_item"];

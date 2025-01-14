@@ -33,6 +33,7 @@ struct ObjectData {
 	Direction direction;
 	bool isDoor;
 	Transform transform;
+	std::string filename;
 };
 
 struct LevelData {
