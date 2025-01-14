@@ -12,6 +12,7 @@ void InsideStage::Initialize(int prevStage) {
 	player_.deadModel.SetCamera(camera2.get());
 	player_.view.SetCamera(camera2.get());
 	player_.model.transform.translate = { 0.0f,1.5f,2.0f };
+	player_.model.transform.rotate = { 0.0f,0.0f,0.0f };
 
 	stageChangeCount = 0;
 }

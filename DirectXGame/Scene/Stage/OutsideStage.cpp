@@ -17,9 +17,11 @@ void OutsideStage::Initialize(int prevStage) {
 	//直前のStageによってPositionを設定
 	if (prevStage == SHIP) {
 		player_.model.transform.translate = { 0,1.5f,-8.0f };
+		player_.model.transform.rotate = { 0.0f, 3.14f, 0.0f };
 	}
 	else if (prevStage == INSIDE) {
 		player_.model.transform.translate = { 0,1.5f,-49 };
+		player_.model.transform.rotate = { 0.0f, 0.0f, 0.0f };
 	}
 
 	stageChangeCount = 0;
