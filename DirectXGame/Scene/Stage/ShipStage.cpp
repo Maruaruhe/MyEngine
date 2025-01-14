@@ -38,8 +38,6 @@ void ShipStage::Initialize(int prevStage) {
 
 
 void ShipStage::Update() {
-	TimeLapse();
-
 	light_.Update();
 
 	camera2->Update();

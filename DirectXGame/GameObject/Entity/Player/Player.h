@@ -3,7 +3,6 @@
 #include "../../../Object/Sprite/Sprite.h"
 #include "../../../Base/Input/Input.h"
 
-#include "../../Object/Map/Map.h"
 #include "../../Object/Map/MapJson.h"
 #include "../../../Object/SpotLight/SpotLight.h"
 

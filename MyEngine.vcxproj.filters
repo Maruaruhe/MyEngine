@@ -114,9 +114,6 @@
     <ClCompile Include="DirectXGame\Base\Log\Log.cpp">
       <Filter>DirectXGame\Base</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\GameObject\Object\Map\Map.cpp">
-      <Filter>DirectXGame\GameObject</Filter>
-    </ClCompile>
     <ClCompile Include="DirectXGame\GameObject\Object\Map\MapJson.cpp">
       <Filter>DirectXGame\GameObject</Filter>
     </ClCompile>
@@ -195,6 +192,7 @@
     <ClCompile Include="DirectXGame\Object\Triangle\Triangle.cpp">
       <Filter>DirectXGame\Object</Filter>
     </ClCompile>
+    <ClCompile Include="DirectXGame\GameObject\Object\Map\Door\Door.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Object\AABB\AABB.h">
@@ -286,9 +284,6 @@
     </ClInclude>
     <ClInclude Include="DirectXGame\Base\Log\Log.h">
       <Filter>DirectXGame\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\GameObject\Object\Map\Map.h">
-      <Filter>DirectXGame\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\GameObject\Object\Map\MapJson.h">
       <Filter>DirectXGame\GameObject</Filter>
@@ -386,6 +381,7 @@
     <ClInclude Include="DirectXGame\GameObject\Entity\Player\Player.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="DirectXGame\GameObject\Object\Map\Door\Door.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shader\Object2D.hlsli">

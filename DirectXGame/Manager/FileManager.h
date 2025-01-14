@@ -19,16 +19,20 @@ struct ColliderData {
 	Vector3 size;
 };
 
-struct ObjectData {
-	bool isItem;
+struct Direction {
 	bool toLeft;
 	bool toRight;
 	bool toFront;
 	bool toBack;
 	bool toTop;
 	bool toBot;
+};
+
+struct ObjectData {
+	bool isItem;
+	Direction direction;
 	bool isDoor;
-	Model model;
+	Transform transform;
 };
 
 struct LevelData {

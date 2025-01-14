@@ -87,26 +87,22 @@ void FileManager::ScanningObjects(nlohmann::json& object, std::vector<ObjectData
 		ModelManager::GetInstance()->LoadModel("2x2cube");
 		TextureManager::GetInstance()->LoadTexture("Resources/Map/wall.png");
 
-		objectData.model.Initialize("2x2cube");
-		objectData.model.textureIndex = TextureManager::GetInstance()->GetTextureIndexByFilePath("Resources/Map/wall.png");
-		objectData.model.material->enableLighting = true;
-
 		// トランスフォームのパラメータ読み込み
 		if (object.contains("transform")) {
 
 			nlohmann::json& transform = object["transform"];
 			// 平行移動
-			objectData.model.transform.translate.x = (float)transform["translation"][0];
-			objectData.model.transform.translate.y = (float)transform["translation"][2];
-			objectData.model.transform.translate.z = (float)transform["translation"][1];
+			objectData.transform.translate.x = (float)transform["translation"][0];
+			objectData.transform.translate.y = (float)transform["translation"][2];
+			objectData.transform.translate.z = (float)transform["translation"][1];
 			// 回転角
-			objectData.model.transform.rotate.x = -(float)transform["rotation"][0]; //*(float(std::numbers::pi) / 180.0f);
-			objectData.model.transform.rotate.y = -(float)transform["rotation"][2];// *(float(std::numbers::pi) / 180.0f);
-			objectData.model.transform.rotate.z = -(float)transform["rotation"][1];// *(float(std::numbers::pi) / 180.0f);
+			objectData.transform.rotate.x = -(float)transform["rotation"][0]; //*(float(std::numbers::pi) / 180.0f);
+			objectData.transform.rotate.y = -(float)transform["rotation"][2];// *(float(std::numbers::pi) / 180.0f);
+			objectData.transform.rotate.z = -(float)transform["rotation"][1];// *(float(std::numbers::pi) / 180.0f);
 			// スケーリング
-			objectData.model.transform.scale.x = (float)transform["scaling"][0];
-			objectData.model.transform.scale.y = (float)transform["scaling"][2];
-			objectData.model.transform.scale.z = (float)transform["scaling"][1];
+			objectData.transform.scale.x = (float)transform["scaling"][0];
+			objectData.transform.scale.y = (float)transform["scaling"][2];
+			objectData.transform.scale.z = (float)transform["scaling"][1];
 		}
 
 		//種類分け
@@ -114,28 +110,25 @@ void FileManager::ScanningObjects(nlohmann::json& object, std::vector<ObjectData
 			objectData.isItem = object["is_item"];
 		}
 		if (object.contains("to_left")) {
-			objectData.toLeft = object["to_left"];
+			objectData.direction.toLeft = object["to_left"];
 		}
 		if (object.contains("to_right")) {
-			objectData.toRight = object["to_right"];
+			objectData.direction.toRight = object["to_right"];
 		}
 		if (object.contains("to_front")) {
-			objectData.toFront = object["to_front"];
+			objectData.direction.toFront = object["to_front"];
 		}
 		if (object.contains("to_back")) {
-			objectData.toBack = object["to_back"];
+			objectData.direction.toBack = object["to_back"];
 		}
 		if (object.contains("to_top")) {
-			objectData.toTop = object["to_top"];
+			objectData.direction.toTop = object["to_top"];
 		}
 		if (object.contains("to_bot")) {
-			objectData.toBot = object["to_bot"];
+			objectData.direction.toBot = object["to_bot"];
 		}
 		if (object.contains("is_door")) {
 			objectData.isDoor = object["is_door"];
-			if (objectData.isDoor) {
-				objectData.model.textureIndex = TextureManager::GetInstance()->GetTextureIndexByFilePath("Resources/uvChecker.png");
-			}
 		}
 
 		// オブジェクトを追加

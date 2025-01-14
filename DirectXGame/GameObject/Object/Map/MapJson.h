@@ -2,6 +2,9 @@
 #include "../../../Manager/FileManager.h"
 #include "../../../Object/AABB/AABB.h"
 
+#include "Wall/Wall.h"
+#include "Door/Door.h"
+
 //JsonMapクラス
 class MapJson
 {
@@ -31,12 +34,19 @@ public:
 
 private:
 
+	void CreateWall(Camera* camera);
+	void CreateWayPoint(Camera* camera);
+	void CreateItem(Camera* camera);
+	void CreateDoor(Camera* camera);
+
 private:
 	const std::string directoryPath = "Resources/csv/";
 
 	Camera* camera_;
 
 	LevelData level_;
+	std::vector<Wall> walls_;
+	std::vector<Door> doors_;
 
 	//
 	const float kMapHeight = 10.0f;

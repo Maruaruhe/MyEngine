@@ -27,6 +27,7 @@ void GameScene::Update() {
 
 	stageArr[currentStageNo]->StageChange();
 	stageArr[currentStageNo]->Update();
+	stageArr[currentStageNo]->TimeLapse();
 }
 
 void GameScene::Draw() {

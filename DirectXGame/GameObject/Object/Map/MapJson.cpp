@@ -7,39 +7,45 @@ using namespace MyEngine;
 
 void MapJson::Initialize(Camera* camera, std::string filename) {
     level_ = FileManager::GetInstance()->LoadJsonFile("Json/", filename);
-    for (auto& object : level_.objects) {
-        object.model.SetCamera(camera);
-    }
+
+    CreateWall(camera);
+    CreateDoor(camera);
 }
 
 void MapJson::Update() {
-    for (auto& object : level_.objects) {
-        object.model.Update();
+    for (Wall wall : walls_) {
+        wall.Update();
+    }
+    for (Door door : doors_) {
+        door.Update();
     }
 }
 
 void MapJson::Draw() {
-    for (auto& object : level_.objects) {
-        object.model.Draw();
+    for (Wall wall : walls_) {
+        wall.Draw();
+    }
+    for (Door door : doors_) {
+        door.Draw();
     }
 }
 
 void MapJson::CheckCollision(AABB pAABB, Vector3 move, Vector3* fixVector) {
     Vector3 distance{};
 
-    for (ObjectData& wall : level_.objects) {
+    for (Wall wall : walls_) {
         AABB wallAABB;
-        wallAABB.CreateWallAABB(wall.model.transform);
+        wallAABB.CreateWallAABB(wall.model_.transform);
 
         if (wallAABB.CheckCollision(pAABB)) {
             //X軸の当たり判定
-            if (pAABB.max.x < wallAABB.max.x && wall.toRight) {//壁に対して右方面へ衝突してる時
+            if (pAABB.max.x < wallAABB.max.x && wall.direction_.toRight) {//壁に対して右方面へ衝突してる時
                 distance.x = pAABB.max.x - wallAABB.min.x;
                 if (fabs(move.x) + dis >= fabs(distance.x)) {//移動量が差分より大きかったら調整
                     fixVector->x = -fabs(distance.x);
                 }
             }
-            if (pAABB.max.x >= wallAABB.max.x && wall.toLeft) {//左方面へ衝突してる時
+            if (pAABB.max.x >= wallAABB.max.x && wall.direction_.toLeft) {//左方面へ衝突してる時
                 distance.x = pAABB.min.x - wallAABB.max.x;
                 if (fabs(move.x) + dis >= fabs(distance.x)) {//移動量が差分より大きかったら調整
                     fixVector->x = fabs(distance.x);
@@ -52,19 +58,19 @@ void MapJson::CheckCollision(AABB pAABB, Vector3 move, Vector3* fixVector) {
     pAABB.min.x += fixVector->x;
     pAABB.max.x += fixVector->x;
 
-    for (ObjectData& wall : level_.objects) {
+    for (Wall wall : walls_) {
         AABB wallAABB;
-        wallAABB.CreateWallAABB(wall.model.transform);
+        wallAABB.CreateWallAABB(wall.model_.transform);
 
         if (wallAABB.CheckCollision(pAABB)) {
             //Z軸の当たり判定
-            if (pAABB.max.z < wallAABB.max.z && wall.toFront) {//壁に前方面へ衝突
+            if (pAABB.max.z < wallAABB.max.z && wall.direction_.toFront) {//壁に前方面へ衝突
                 distance.z = pAABB.max.z - wallAABB.min.z;
                 if (fabs(move.z) + dis >= fabs(distance.z)) {//移動量が差分より大きかったら調整
                     fixVector->z = -fabs(distance.z);
                 }
             }
-            if (pAABB.max.z >= wallAABB.max.z && wall.toBack) {//後方面へ
+            if (pAABB.max.z >= wallAABB.max.z && wall.direction_.toBack) {//後方面へ
                 distance.z = pAABB.min.z - wallAABB.max.z;
                 if (fabs(move.z) + dis >= fabs(distance.z)) {//移動量が差分より大きかったら調整
                     fixVector->z = fabs(distance.z);
@@ -82,20 +88,20 @@ void MapJson::CheckCollisionFloor(AABB pAABB, Vector3 move, Vector3* fixVector, 
     Vector3 distance{};
     int collisoinCount = 0;
 
-    for (ObjectData& wall : level_.objects) {
+    for (Wall wall : walls_) {
         AABB wallAABB;
-        wallAABB.CreateWallAABB(wall.model.transform);
-        if (wall.toTop || wall.toBot) {
+        wallAABB.CreateWallAABB(wall.model_.transform);
+        if (wall.direction_.toTop || wall.direction_.toBot) {
             if (wallAABB.CheckCollision(pAABB)) {
                 //Y軸の当たり判定
-                if (pAABB.max.y > wallAABB.max.y && wall.toBot) {//壁に下方面へ衝突
+                if (pAABB.max.y > wallAABB.max.y && wall.direction_.toBot) {//壁に下方面へ衝突
                     distance.y = pAABB.max.y - wallAABB.min.y;
                     if (fabs(move.y) + dis >= fabs(distance.y)) {//移動量が差分より大きかったら調整
                         fixVector->y = -fabs(distance.y);
                         *isFloor = true;
                     }
                 }
-                if (pAABB.max.y < wallAABB.max.y && wall.toTop) {//上方面へ
+                if (pAABB.max.y < wallAABB.max.y && wall.direction_.toTop) {//上方面へ
                     distance.y = pAABB.min.y - wallAABB.max.y;
                     if (fabs(move.y) + dis >= fabs(distance.y)) {//移動量が差分より大きかったら調整
                         fixVector->y = fabs(distance.y);
@@ -113,15 +119,45 @@ void MapJson::CheckCollisionFloor(AABB pAABB, Vector3 move, Vector3* fixVector, 
 }
 
 bool MapJson::CheckCollisionWithEye(const Segment& eyeSegment) {
-    for (ObjectData& wall : level_.objects) {
-        if (wall.isDoor) {
-            AABB wallAABB;
-            wallAABB.CreateWallAABB(wall.model.transform);
+    for (Door door : doors_) {
+            AABB doorAABB;
+            doorAABB.CreateWallAABB(door.model_.transform);
             //線分との当たり判定チェック
-            if (wallAABB.CheckLineCollision(eyeSegment)) {
+            if (doorAABB.CheckLineCollision(eyeSegment)) {
                 return true;
             }
         }
-    }
     return false;
+}
+
+void MapJson::CreateWall(Camera* camera){
+    for (int i = 0; i < level_.objects.size(); i++) {
+        if (level_.objects[i].direction.toBack || level_.objects[i].direction.toBot || level_.objects[i].direction.toFront || level_.objects[i].direction.toLeft || level_.objects[i].direction.toRight || level_.objects[i].direction.toTop) {
+            Wall newWall;
+            newWall.Initialize(level_.objects[i].transform, level_.objects[i].direction);
+            newWall.model_.SetCamera(camera);
+
+            walls_.push_back(newWall);
+        }
+    }
+}
+
+void MapJson::CreateDoor(Camera* camera){
+    for (int i = 0; i < level_.objects.size(); i++) {
+        if (level_.objects[i].isDoor){
+            Door newDoor;
+            newDoor.Initialize(level_.objects[i].transform);
+            newDoor.model_.SetCamera(camera);
+
+            doors_.push_back(newDoor);
+        }
+    }
+}
+
+void MapJson::CreateWayPoint(Camera* camera){
+
+}
+
+void MapJson::CreateItem(Camera* camera){
+
 }

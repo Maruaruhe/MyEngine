@@ -107,6 +107,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="DirectXGame\Math\Vector3.cpp" />
     <ClCompile Include="DirectXGame\Object\Camera\Camera.cpp" />
     <ClCompile Include="DirectXGame\Base\DirextX12\DirectX12.cpp" />
+    <ClCompile Include="DirectXGame\GameObject\Object\Map\Door\Door.cpp" />
     <ClCompile Include="externals\imgui\imgui.cpp" />
     <ClCompile Include="externals\imgui\imgui_demo.cpp" />
     <ClCompile Include="externals\imgui\imgui_draw.cpp" />
@@ -145,7 +146,6 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="DirectXGame\Scene\SubTestScene.cpp" />
     <ClCompile Include="DirectXGame\GameObject\Entity\TestObject\TestObject.cpp" />
     <ClCompile Include="DirectXGame\GameObject\Object\Map\Wall\Wall.cpp" />
-    <ClCompile Include="DirectXGame\GameObject\Object\Map\Map.cpp" />
     <ClCompile Include="DirectXGame\GameObject\Entity\Player\Player.cpp" />
     <ClCompile Include="DirectXGame\GameObject\Object\Map\Item\SmallItem\SmallItem.cpp" />
     <ClCompile Include="DirectXGame\Object\Skybox\Skybox.cpp" />
@@ -215,6 +215,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="DirectXGame\Math\RandomGenerator.h" />
     <ClInclude Include="DirectXGame\Object\Camera\Camera.h" />
     <ClInclude Include="DirectXGame\Base\DirextX12\DirectX12.h" />
+    <ClInclude Include="DirectXGame\GameObject\Object\Map\Door\Door.h" />
     <ClInclude Include="externals\imgui\imconfig.h" />
     <ClInclude Include="externals\imgui\imgui.h" />
     <ClInclude Include="externals\imgui\imgui_impl_dx12.h" />
@@ -252,7 +253,6 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="DirectXGame\Scene\GameScene.h" />
     <ClInclude Include="DirectXGame\GameObject\Object\Map\Wall\Wall.h" />
     <ClInclude Include="DirectXGame\Base\Load\LoadCSV.h" />
-    <ClInclude Include="DirectXGame\GameObject\Object\Map\Map.h" />
     <ClInclude Include="DirectXGame\GameObject\Entity\Player\Player.h" />
     <ClInclude Include="DirectXGame\GameObject\Object\Map\Item\IItem.h" />
     <ClInclude Include="DirectXGame\GameObject\Object\Map\Item\SmallItem\SmallItem.h" />

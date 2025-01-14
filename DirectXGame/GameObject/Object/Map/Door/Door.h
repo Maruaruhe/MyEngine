@@ -6,7 +6,7 @@
 #include "../../../../Manager/FileManager.h"
 
 //Wallクラス
-class Wall
+class Door
 {
 public:
 	/// <summary>
@@ -14,7 +14,7 @@ public:
 	/// </summary>
 	/// <param name="pos"></param>
 	/// <param name="scale"></param>
-	void Initialize(const Transform transform, const Direction direction);
+	void Initialize(const Transform transform);
 
 	/// <summary>
 	/// Update
@@ -27,7 +27,6 @@ public:
 	void Draw();
 
 	Model model_;
-	Direction direction_;
 
 private:
 };

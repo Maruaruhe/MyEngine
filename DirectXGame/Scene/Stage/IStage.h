@@ -12,7 +12,6 @@
 #include "../../Object/Anime/Anime.h"
 
 #include "../../GameObject/Skydome/Skydome.h"
-#include "../../GameObject/Object/Map/Map.h"
 #include "../../GameObject/Object/Map/MapJson.h"
 #include "../../GameObject/Object/Map/Wall/Wall.h"
 #include "../../GameObject/Object/Map/Item/SmallItem/SmallItem.h"
