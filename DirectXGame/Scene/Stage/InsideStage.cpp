@@ -6,6 +6,9 @@ InsideStage::~InsideStage() {}
 void InsideStage::Initialize(int prevStage) {
 	mapJson_.Initialize(camera2.get(), "Inside");
 
+	light_.light->direction = { 0.275f,0.944f,0.181f };
+	light_.light->intensity = 0.016f;
+
 	player_.SetMap(&mapJson_);
 
 	player_.model.SetCamera(camera2.get());

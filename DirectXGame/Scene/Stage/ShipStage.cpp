@@ -11,6 +11,8 @@ void ShipStage::Initialize(int prevStage) {
 	camera2->Initialize();
 
 	light_.Initialize();
+	light_.light->direction = { 0.275f,0.944f,0.181f };
+	light_.light->intensity = 0.016f;
 
 	player_.model.SetCamera(camera2.get());
 	player_.deadModel.SetCamera(camera2.get());

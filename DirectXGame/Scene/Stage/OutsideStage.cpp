@@ -9,6 +9,9 @@ void OutsideStage::Initialize(int prevStage) {
 
 	player_.SetMap(&mapJson_);
 
+	light_.light->direction = { 0.95f, -0.33f, -0.02f };
+	light_.light->intensity = 0.75f;
+
 
 	player_.model.SetCamera(camera2.get());
 	player_.deadModel.SetCamera(camera2.get());

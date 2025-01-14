@@ -5,7 +5,6 @@ using namespace MyEngine;
 
 void Door::Initialize(const Transform transform) {
 	ModelManager::GetInstance()->LoadModel("2x2cube");
-	TextureManager::GetInstance()->LoadTexture("Resources/Map/wall.png");
 
 	model_.Initialize("2x2cube");
 	model_.transform = transform;

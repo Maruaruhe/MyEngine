@@ -136,6 +136,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="DirectXGame\GameObject\Entity\Enemy\IEnemy.cpp" />
     <ClCompile Include="DirectXGame\Scene\Stage\IStage.cpp" />
     <ClCompile Include="DirectXGame\Scene\Stage\InsideStage.cpp" />
+    <ClCompile Include="DirectXGame\GameObject\Object\Map\Item\Item.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="DirectXGame\Base\GraphicsRenderer\GraphicsRenderer.cpp" />
     <ClCompile Include="DirectXGame\Base\WindowsAPI\WindowsAPI.cpp" />
@@ -266,6 +267,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="DirectXGame\Scene\Stage\InsideStage.h" />
     <ClInclude Include="DirectXGame\Scene\Stage\OutsideStage.h" />
     <ClInclude Include="DirectXGame\Scene\Stage\ShipStage.h" />
+    <ClInclude Include="DirectXGame\GameObject\Object\Map\Item\Item.h" />
     <ClInclude Include="JsonMap.h" />
     <ClInclude Include="DirectXGame\GameObject\Object\Map\MapJson.h" />
   </ItemGroup>

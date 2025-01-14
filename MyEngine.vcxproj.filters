@@ -193,6 +193,7 @@
       <Filter>DirectXGame\Object</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\GameObject\Object\Map\Door\Door.cpp" />
+    <ClCompile Include="DirectXGame\GameObject\Object\Map\Item\Item.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Object\AABB\AABB.h">
@@ -382,6 +383,7 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\GameObject\Object\Map\Door\Door.h" />
+    <ClInclude Include="DirectXGame\GameObject\Object\Map\Item\Item.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shader\Object2D.hlsli">
