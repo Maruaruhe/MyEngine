@@ -146,7 +146,7 @@ void MapJson::CreateDoor(Camera* camera){
     for (int i = 0; i < level_.objects.size(); i++) {
         if (level_.objects[i].isDoor){
             Door newDoor;
-            newDoor.Initialize(level_.objects[i].transform);
+            newDoor.Initialize(level_.objects[i].transform, level_.objects[i].filename);
             newDoor.model_.SetCamera(camera);
 
             doors_.push_back(newDoor);
