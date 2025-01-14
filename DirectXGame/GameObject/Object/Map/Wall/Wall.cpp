@@ -12,7 +12,7 @@ void Wall::Initialize(const Transform transform, const Direction direction, std:
 	model_.transform = transform;
 	direction_ = direction;
 
-	model_.textureIndex = TextureManager::GetInstance()->GetTextureIndexByFilePath("Resources/" + filename + ".png");
+	model_.textureIndex = TextureManager::GetInstance()->GetTextureIndexByFilePath("Resources/Map/wall.png");
 	model_.material->enableLighting = true;
 }
 
