@@ -21,7 +21,7 @@
                     0.5
                 ]
             },
-            "file_name": "DEFAULT",
+            "file_name": "ground",
             "collider": {
                 "type": "AABB",
                 "center": [
@@ -66,7 +66,7 @@
                     12.5
                 ]
             },
-            "file_name": "DEFAULT",
+            "file_name": "wall",
             "collider": {
                 "type": "AABB",
                 "center": [
@@ -111,7 +111,7 @@
                     1.25
                 ]
             },
-            "file_name": "DEFAULT",
+            "file_name": "door",
             "collider": {
                 "type": "AABB",
                 "center": [
@@ -156,7 +156,7 @@
                     1.25
                 ]
             },
-            "file_name": "DEFAULT",
+            "file_name": "door",
             "collider": {
                 "type": "AABB",
                 "center": [
@@ -201,7 +201,7 @@
                     0.5
                 ]
             },
-            "file_name": "DEFAULT",
+            "file_name": "wall",
             "collider": {
                 "type": "AABB",
                 "center": [
@@ -246,7 +246,7 @@
                     0.5
                 ]
             },
-            "file_name": "DEFAULT",
+            "file_name": "wall",
             "collider": {
                 "type": "AABB",
                 "center": [
@@ -291,7 +291,7 @@
                     2.5
                 ]
             },
-            "file_name": "DEFAULT",
+            "file_name": "wall",
             "collider": {
                 "type": "AABB",
                 "center": [
@@ -336,7 +336,7 @@
                     2.5
                 ]
             },
-            "file_name": "DEFAULT",
+            "file_name": "wall",
             "collider": {
                 "type": "AABB",
                 "center": [
@@ -381,7 +381,7 @@
                     2.5
                 ]
             },
-            "file_name": "DEFAULT",
+            "file_name": "wall",
             "collider": {
                 "type": "AABB",
                 "center": [
@@ -426,7 +426,7 @@
                     2.5
                 ]
             },
-            "file_name": "DEFAULT",
+            "file_name": "wall",
             "collider": {
                 "type": "AABB",
                 "center": [
@@ -451,41 +451,6 @@
             "is_door": false,
             "children": []
         },
-      {
-        "type": "MESH",
-        "name": "立方体.003",
-        "transform": {
-          "translation": [
-            0.0,
-            0.0,
-            0.0
-          ],
-          "rotation": [
-            0.0,
-            -0.0,
-            0.0
-          ],
-          "scaling": [
-            1.0,
-            1.0,
-            1.0
-          ]
-        },
-        "file_name": "DEFAULT",
-        "collider": {
-          "type": "NONE"
-        },
-        "load_model": true,
-        "is_item": true,
-        "to_left": true,
-        "to_right": true,
-        "to_front": true,
-        "to_back": true,
-        "to_top": true,
-        "to_bot": true,
-        "is_door": true,
-        "children": []
-      },
         {
             "type": "MESH",
             "name": "Door.001",
@@ -506,7 +471,7 @@
                     1.25
                 ]
             },
-            "file_name": "DEFAULT",
+            "file_name": "door",
             "collider": {
                 "type": "AABB",
                 "center": [
@@ -529,6 +494,681 @@
             "to_top": false,
             "to_bot": false,
             "is_door": true,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "leaf",
+            "transform": {
+                "translation": [
+                    15.0,
+                    15.0,
+                    5.097564220428467
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    3.0,
+                    3.0,
+                    1.041254997253418
+                ]
+            },
+            "file_name": "leaf",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": true,
+            "to_right": true,
+            "to_front": true,
+            "to_back": true,
+            "to_top": true,
+            "to_bot": true,
+            "is_door": false,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "leaf.001",
+            "transform": {
+                "translation": [
+                    15.0,
+                    15.0,
+                    6.741184234619141
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.9000580310821533,
+                    1.9000580310821533,
+                    0.7146648168563843
+                ]
+            },
+            "file_name": "leaf",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": true,
+            "to_right": true,
+            "to_front": true,
+            "to_back": true,
+            "to_top": true,
+            "to_bot": true,
+            "is_door": false,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "leaf.002",
+            "transform": {
+                "translation": [
+                    15.0,
+                    15.0,
+                    8.014264106750488
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.175816297531128,
+                    1.175816297531128,
+                    0.7146647572517395
+                ]
+            },
+            "file_name": "leaf",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": true,
+            "to_right": true,
+            "to_front": true,
+            "to_back": true,
+            "to_top": true,
+            "to_bot": true,
+            "is_door": false,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "wood",
+            "transform": {
+                "translation": [
+                    15.0,
+                    15.0,
+                    3.5
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    0.5,
+                    0.5,
+                    3.0
+                ]
+            },
+            "file_name": "wood",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": true,
+            "to_right": true,
+            "to_front": true,
+            "to_back": true,
+            "to_top": false,
+            "to_bot": false,
+            "is_door": false,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "leaf.005",
+            "transform": {
+                "translation": [
+                    10.087055206298828,
+                    -16.52667999267578,
+                    5.097564697265625
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    3.0,
+                    3.0,
+                    1.041254997253418
+                ]
+            },
+            "file_name": "leaf",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": true,
+            "to_right": true,
+            "to_front": true,
+            "to_back": true,
+            "to_top": true,
+            "to_bot": true,
+            "is_door": false,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "leaf.004",
+            "transform": {
+                "translation": [
+                    10.087055206298828,
+                    -16.52667999267578,
+                    6.741184711456299
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.9000580310821533,
+                    1.9000580310821533,
+                    0.7146648168563843
+                ]
+            },
+            "file_name": "leaf",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": true,
+            "to_right": true,
+            "to_front": true,
+            "to_back": true,
+            "to_top": true,
+            "to_bot": true,
+            "is_door": false,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "leaf.003",
+            "transform": {
+                "translation": [
+                    10.087055206298828,
+                    -16.52667999267578,
+                    8.014265060424805
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.175816297531128,
+                    1.175816297531128,
+                    0.7146647572517395
+                ]
+            },
+            "file_name": "leaf",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": true,
+            "to_right": true,
+            "to_front": true,
+            "to_back": true,
+            "to_top": true,
+            "to_bot": true,
+            "is_door": false,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "wood.001",
+            "transform": {
+                "translation": [
+                    10.087055206298828,
+                    -16.52667999267578,
+                    3.500000476837158
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    0.5,
+                    0.5,
+                    3.0
+                ]
+            },
+            "file_name": "wood",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": true,
+            "to_right": true,
+            "to_front": true,
+            "to_back": true,
+            "to_top": false,
+            "to_bot": false,
+            "is_door": false,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "leaf.006",
+            "transform": {
+                "translation": [
+                    -22.136398315429688,
+                    -23.680688858032227,
+                    5.999721050262451
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    3.0,
+                    3.0,
+                    1.041254997253418
+                ]
+            },
+            "file_name": "leaf",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": true,
+            "to_right": true,
+            "to_front": true,
+            "to_back": true,
+            "to_top": true,
+            "to_bot": true,
+            "is_door": false,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "leaf.007",
+            "transform": {
+                "translation": [
+                    -22.136398315429688,
+                    -23.680688858032227,
+                    7.643341064453125
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.9000580310821533,
+                    1.9000580310821533,
+                    0.7146648168563843
+                ]
+            },
+            "file_name": "leaf",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": true,
+            "to_right": true,
+            "to_front": true,
+            "to_back": true,
+            "to_top": true,
+            "to_bot": true,
+            "is_door": false,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "leaf.008",
+            "transform": {
+                "translation": [
+                    -22.136398315429688,
+                    -23.680688858032227,
+                    8.916421890258789
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.175816297531128,
+                    1.175816297531128,
+                    0.7146647572517395
+                ]
+            },
+            "file_name": "leaf",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": true,
+            "to_right": true,
+            "to_front": true,
+            "to_back": true,
+            "to_top": true,
+            "to_bot": true,
+            "is_door": false,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "wood.002",
+            "transform": {
+                "translation": [
+                    -22.136398315429688,
+                    -23.680688858032227,
+                    4.402156829833984
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    0.5,
+                    0.5,
+                    3.0
+                ]
+            },
+            "file_name": "wood",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": true,
+            "to_right": true,
+            "to_front": true,
+            "to_back": true,
+            "to_top": false,
+            "to_bot": false,
+            "is_door": false,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "立方体.003",
+            "transform": {
+                "translation": [
+                    -28.709022521972656,
+                    -30.008420944213867,
+                    0.75
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    23.521221160888672,
+                    23.521221160888672,
+                    0.25
+                ]
+            },
+            "file_name": "ground",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": true,
+            "to_right": true,
+            "to_front": true,
+            "to_back": true,
+            "to_top": false,
+            "to_bot": true,
+            "is_door": false,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "立方体.004",
+            "transform": {
+                "translation": [
+                    -34.06561279296875,
+                    -34.490352630615234,
+                    1.25
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    18.61398696899414,
+                    18.61398696899414,
+                    0.25
+                ]
+            },
+            "file_name": "ground",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": true,
+            "to_right": true,
+            "to_front": true,
+            "to_back": true,
+            "to_top": false,
+            "to_bot": true,
+            "is_door": false,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "立方体.005",
+            "transform": {
+                "translation": [
+                    -39.79120635986328,
+                    -42.68199157714844,
+                    1.75
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    13.7178955078125,
+                    13.7178955078125,
+                    0.25
+                ]
+            },
+            "file_name": "ground",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": true,
+            "to_right": true,
+            "to_front": true,
+            "to_back": true,
+            "to_top": false,
+            "to_bot": true,
+            "is_door": false,
             "children": []
         }
     ]

@@ -11,6 +11,8 @@ void Door::Initialize(const Transform transform, std::string filename) {
 
 	TextureManager::GetInstance()->LoadTexture("Resources/Map/" + filename + ".png");
 	model_.textureIndex = TextureManager::GetInstance()->GetTextureIndexByFilePath("Resources/Map/" + filename + ".png");
+	//TextureManager::GetInstance()->LoadTexture("Resources/Map/debug.png");
+	//model_.textureIndex = TextureManager::GetInstance()->GetTextureIndexByFilePath("Resources/Map/debug.png");
 
 	model_.material->enableLighting = true;
 }
