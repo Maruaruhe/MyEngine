@@ -36,9 +36,10 @@ void OutsideStage::Update() {
 
 	camera2->Update();
 
+	mapJson_.Update();
+
 	player_.Update();
 
-	mapJson_.Update();
 
 	camera2.get()->transform.translate = player_.tForCamera.translate;
 	camera2.get()->transform.translate.y += 0.5f;
@@ -50,6 +51,10 @@ void OutsideStage::Draw() {
 	player_.Draw();
 
 	mapJson_.Draw();
+}
+
+void OutsideStage::SpriteDraw() {
+	player_.SpriteDraw();
 }
 
 void OutsideStage::StageChange() {

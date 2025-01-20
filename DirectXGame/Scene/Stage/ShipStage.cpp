@@ -70,6 +70,9 @@ void ShipStage::Draw() {
 	mapJson_.Draw();
 }
 
+void ShipStage::SpriteDraw(){
+	player_.SpriteDraw();
+}
 
 void ShipStage::StageChange() {
 	if (player_.StageChangeByDoor()) {

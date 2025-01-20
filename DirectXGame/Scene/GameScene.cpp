@@ -27,11 +27,15 @@ void GameScene::Update() {
 
 	stageArr[currentStageNo]->StageChange();
 	stageArr[currentStageNo]->Update();
+
+#ifdef _DEBUG
 	stageArr[currentStageNo]->TimeLapse();
+#endif // _DEBUG
 }
 
 void GameScene::Draw() {
 	stageArr[currentStageNo]->Draw();
+	stageArr[currentStageNo]->SpriteDraw();
 }
 
 void GameScene::SceneChange() {

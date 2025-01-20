@@ -50,6 +50,8 @@ protected:
 
 	MapJson mapJson_;
 
+	static Sprite toggleLight_;
+
 public:
 	/// <summary>
 	/// Initialize
@@ -65,11 +67,16 @@ public:
 	/// </summary>
 	virtual void Draw() = 0;
 	/// <summary>
+/// Draw
+/// </summary>
+	virtual void SpriteDraw() = 0;
+	/// <summary>
 	/// Stage変更
 	/// </summary>
 	virtual void StageChange() = 0;
 
 	void TimeLapse();
+	void SpriteView();
 
 	virtual ~IStage();
 

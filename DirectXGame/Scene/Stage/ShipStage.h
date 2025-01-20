@@ -12,6 +12,7 @@ public:
 	void Initialize(int prevStage) override;
 	void Update() override;
 	void Draw() override;
+	void SpriteDraw() override;
 	void StageChange() override;
 
 	~ShipStage();

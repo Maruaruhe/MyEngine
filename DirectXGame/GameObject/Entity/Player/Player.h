@@ -20,6 +20,17 @@ struct State {
 	bool isAlive;
 };
 
+struct WASD {
+	Sprite w[2];
+	Sprite a[2];
+	Sprite s[2];
+	Sprite d[2];
+	bool isw;
+	bool isa;
+	bool iss;
+	bool isd;
+};
+
 //プレイヤークラス
 class Player {
 public:
@@ -38,6 +49,11 @@ public:
 	/// Draw
 	/// </summary>
 	void Draw();
+
+	/// <summary>
+	/// Draw
+	/// </summary>
+	void SpriteDraw();
 
 	//Setter
 	void SetMap(MapJson* map) { this->mapJson_ = map; }
@@ -97,4 +113,15 @@ private:
 
 	Sprite deads_;
 	Sprite toggleLight_;
+	Sprite holdQ_;
+
+	bool canOpenDoor_;
+
+	WASD wasd_;
+	const float kXkeys = 50;
+	const float kYkeys = 620;
+
+	WASD arrows_;
+	const float kXAkeys =1130;
+	const float kYAkeys = 620;
 };

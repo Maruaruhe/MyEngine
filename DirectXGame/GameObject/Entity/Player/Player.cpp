@@ -38,10 +38,58 @@ void Player::Initialize() {
 	deadFlame = 0;
 	aliveFrame = 0;
 
+	canOpenDoor_ = false;
+
 	//テクスチャ
 	deads_.Initialize({ 1280,720 }, "Resources/Dead/youdied.png");
 	toggleLight_.Initialize({ 214,31 }, "Resources/Entity/Player/ToggleLight.png");
-	toggleLight_.transform.translate = { 10,100,0 };
+	toggleLight_.transform.translate = { 1000,30,0 };
+
+	holdQ_.Initialize({ 358,31 }, "Resources/Entity/Player/HoldR.png");
+	holdQ_.anchorPoint = { 0.5f,0.5f };
+	holdQ_.transform.translate = { 640,360,0 };
+
+	wasd_.w[0].Initialize({ 32,32 }, "Resources/Entity/Player/falseW.png");
+	wasd_.w[1].Initialize({ 32,32 }, "Resources/Entity/Player/trueW.png");
+	wasd_.w[0].transform.translate = { 42 + kXkeys,10 + kYkeys,0 };
+	wasd_.w[1].transform.translate = { 42 + kXkeys,10 + kYkeys,0 };
+
+	wasd_.a[0].Initialize({ 32,32 }, "Resources/Entity/Player/falseA.png");
+	wasd_.a[1].Initialize({ 32,32 }, "Resources/Entity/Player/trueA.png");
+	wasd_.a[0].transform.translate = { 10 + kXkeys,42 + kYkeys,0 };
+	wasd_.a[1].transform.translate = { 10 + kXkeys,42 + kYkeys,0 };
+
+	wasd_.s[0].Initialize({ 32,32 }, "Resources/Entity/Player/falseS.png");
+	wasd_.s[1].Initialize({ 32,32 }, "Resources/Entity/Player/trueS.png");
+	wasd_.s[0].transform.translate = { 42 + kXkeys,42 + kYkeys,0 };
+	wasd_.s[1].transform.translate = { 42 + kXkeys,42 + kYkeys,0 };
+
+	wasd_.d[0].Initialize({ 32,32 }, "Resources/Entity/Player/falseD.png");
+	wasd_.d[1].Initialize({ 32,32 }, "Resources/Entity/Player/trueD.png");
+	wasd_.d[0].transform.translate = { 74 + kXkeys,42 + kYkeys,0 };
+	wasd_.d[1].transform.translate = { 74 + kXkeys,42 + kYkeys,0 };
+
+	//Arrow-------------------------------------------------------------------------------------------------------
+
+	arrows_.w[0].Initialize({ 32,32 }, "Resources/Entity/Player/falseUp.png");
+	arrows_.w[1].Initialize({ 32,32 }, "Resources/Entity/Player/trueUp.png");
+	arrows_.w[0].transform.translate = { 42 + kXAkeys,10 + kYAkeys,0 };
+	arrows_.w[1].transform.translate = { 42 + kXAkeys,10 + kYAkeys,0 };
+
+	arrows_.a[0].Initialize({ 32,32 }, "Resources/Entity/Player/falseLeft.png");
+	arrows_.a[1].Initialize({ 32,32 }, "Resources/Entity/Player/trueLeft.png");
+	arrows_.a[0].transform.translate = { 10 + kXAkeys,42 + kYAkeys,0 };
+	arrows_.a[1].transform.translate = { 10 + kXAkeys,42 + kYAkeys,0 };
+
+	arrows_.s[0].Initialize({ 32,32 }, "Resources/Entity/Player/falseDown.png");
+	arrows_.s[1].Initialize({ 32,32 }, "Resources/Entity/Player/trueDown.png");
+	arrows_.s[0].transform.translate = { 42 + kXAkeys,42 + kYAkeys,0 };
+	arrows_.s[1].transform.translate = { 42 + kXAkeys,42 + kYAkeys,0 };
+
+	arrows_.d[0].Initialize({ 32,32 }, "Resources/Entity/Player/falseRight.png");
+	arrows_.d[1].Initialize({ 32,32 }, "Resources/Entity/Player/trueRight.png");
+	arrows_.d[0].transform.translate = { 74 + kXAkeys,42 + kYAkeys,0 };
+	arrows_.d[1].transform.translate = { 74 + kXAkeys,42 + kYAkeys,0 };
 }
 
 void Player::Update() {
@@ -70,6 +118,19 @@ void Player::Update() {
 
 	//テクスチャ
 	toggleLight_.Update();
+	holdQ_.Update();
+
+	for (int i = 0; i < 2; i++) {
+		wasd_.w[i].Update();
+		wasd_.a[i].Update();
+		wasd_.s[i].Update();
+		wasd_.d[i].Update();
+
+		arrows_.w[i].Update();
+		arrows_.a[i].Update();
+		arrows_.s[i].Update();
+		arrows_.d[i].Update();
+	}
 
 
 	if (kInput_->TriggerKey(DIK_T)) {
@@ -119,8 +180,6 @@ void Player::LightUpdate() {
 void Player::Draw() {
 	model.Draw();
 
-	toggleLight_.Draw();
-
 	if (!state_.isAlive) {
 		deadModel.Draw();
 		deads_.Draw();
@@ -130,21 +189,53 @@ void Player::Draw() {
 #endif // DEBUG
 }
 
+void Player::SpriteDraw() {
+	toggleLight_.Draw();
+	if (canOpenDoor_) {
+		holdQ_.Draw();
+	}
+	wasd_.w[wasd_.isw].Draw();
+	wasd_.a[wasd_.isa].Draw();
+	wasd_.s[wasd_.iss].Draw();
+	wasd_.d[wasd_.isd].Draw();
+
+	arrows_.w[arrows_.isw].Draw();
+	arrows_.a[arrows_.isa].Draw();
+	arrows_.s[arrows_.iss].Draw();
+	arrows_.d[arrows_.isd].Draw();
+}
+
 void Player::Move() {
 	Vector3 move{};
 
 	if (kInput_->PushKey(DIK_W)) {
 		move.z += 0.1f;
+		wasd_.isw = true;
+	}
+	else {
+		wasd_.isw = false;
 	}
 	if (kInput_->PushKey(DIK_S)) {
 		move.z -= 0.1f;
+		wasd_.iss = true;
+	}
+	else {
+		wasd_.iss = false;
 	}
 	if (kInput_->PushKey(DIK_A)) {
 		move.x -= 0.1f;
+		wasd_.isa = true;
+	}
+	else {
+		wasd_.isa = false;
 	}
 
 	if (kInput_->PushKey(DIK_D)) {
 		move.x += 0.1f;
+		wasd_.isd = true;
+	}
+	else {
+		wasd_.isd = false;
 	}
 
 	//rotate
@@ -152,15 +243,31 @@ void Player::Move() {
 
 	if (kInput_->PushKey(DIK_LEFT)) {
 		rotate.y -= 0.03f;
+		arrows_.isa = true;
+	}
+	else {
+		arrows_.isa = false;
 	}
 	if (kInput_->PushKey(DIK_RIGHT)) {
 		rotate.y += 0.03f;
+		arrows_.isd = true;
+	}
+	else {
+		arrows_.isd = false;
 	}
 	if (kInput_->PushKey(DIK_UP)) {
 		rotate.x -= 0.03f;
+		arrows_.isw = true;
+	}
+	else {
+		arrows_.isw = false;
 	}
 	if (kInput_->PushKey(DIK_DOWN)) {
 		rotate.x += 0.03f;
+		arrows_.iss = true;
+	}
+	else {
+		arrows_.iss = false;
 	}
 
 	//transformにRotateを入れてく
@@ -232,7 +339,11 @@ bool Player::StageChangeByDoor() {
 	playerEyeSegment.end = GetFrontVector(2.0f);
 	//DoorとPlayerの視線の当たり判定を取得
 	if(mapJson_->CheckCollisionWithEye(playerEyeSegment)) {
+		canOpenDoor_ = true;
 		return true;
+	}
+	else {
+		canOpenDoor_ = false;
 	}
 	return false;
 }

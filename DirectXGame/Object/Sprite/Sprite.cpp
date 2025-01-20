@@ -14,6 +14,8 @@ void Sprite::Initialize(Vector2 size, std::string textureFilePath) {
 		{0.0f,0.0f,0.0f},
 	};
 
+	anchorPoint = { 0.5f,0.5f };
+
 	isActive = true;
 	CreateVertexResource();
 	CreateMaterialResource();

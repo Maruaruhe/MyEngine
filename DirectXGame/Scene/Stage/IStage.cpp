@@ -11,6 +11,8 @@ Player IStage::player_ = {};
 
 Lighting IStage::light_ = {};
 
+Sprite IStage::toggleLight_ = {};
+
 std::unique_ptr<Camera> IStage::camera2;
 
 IStage::~IStage() {}

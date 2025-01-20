@@ -42,6 +42,10 @@ void InsideStage::Draw() {
 	mapJson_.Draw();
 }
 
+void InsideStage::SpriteDraw() {
+	player_.SpriteDraw();
+}
+
 
 void InsideStage::StageChange() {
 	if (player_.StageChangeByDoor()) {
