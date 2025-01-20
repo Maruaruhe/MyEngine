@@ -4,6 +4,8 @@ using namespace MyEngine;
 
 OutsideStage::~OutsideStage() {}
 
+void OutsideStage::FirstInitialize() {}
+
 void OutsideStage::Initialize(int prevStage) {
 	mapJson_.Initialize(camera2.get(), "OutsideStage");
 

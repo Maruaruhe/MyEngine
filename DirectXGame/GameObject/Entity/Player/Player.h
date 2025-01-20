@@ -20,6 +20,11 @@ struct State {
 	bool isAlive;
 };
 
+struct KeyState {
+	Sprite sprite[2];
+	bool isUsed;
+};
+
 struct WASD {
 	Sprite w[2];
 	Sprite a[2];
@@ -124,4 +129,6 @@ private:
 	WASD arrows_;
 	const float kXAkeys =1130;
 	const float kYAkeys = 620;
+
+	KeyState space_;
 };

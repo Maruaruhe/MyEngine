@@ -90,6 +90,14 @@ void Player::Initialize() {
 	arrows_.d[1].Initialize({ 32,32 }, "Resources/Entity/Player/trueRight.png");
 	arrows_.d[0].transform.translate = { 74 + kXAkeys,42 + kYAkeys,0 };
 	arrows_.d[1].transform.translate = { 74 + kXAkeys,42 + kYAkeys,0 };
+
+	space_.sprite[0].Initialize({ 64,32 }, "Resources/Entity/Player/falseSpace.png");
+	space_.sprite[1].Initialize({ 64,32 }, "Resources/Entity/Player/trueSpace.png");
+	space_.sprite[0].transform.translate = {640,650,0};
+	space_.sprite[1].transform.translate = { 640,650,0 };
+	space_.sprite[0].transform.scale*=2;
+	space_.sprite[1].transform.scale *= 2;
+	space_.isUsed = false;
 }
 
 void Player::Update() {
@@ -130,6 +138,8 @@ void Player::Update() {
 		arrows_.a[i].Update();
 		arrows_.s[i].Update();
 		arrows_.d[i].Update();
+
+		space_.sprite[i].Update();
 	}
 
 
@@ -137,9 +147,9 @@ void Player::Update() {
 		state_.isAlive = false; 
 		deadFlame = 0;
 	}
-	if (kInput_->TriggerKey(DIK_Y)) {
-		state_.isAlive = true;
-	}
+	//if (kInput_->TriggerKey(DIK_Y)) {
+	//	state_.isAlive = true;
+	//}
 	if (state_.isAlive) {
 		tForCamera = model.transform;
 	}
@@ -203,6 +213,8 @@ void Player::SpriteDraw() {
 	arrows_.a[arrows_.isa].Draw();
 	arrows_.s[arrows_.iss].Draw();
 	arrows_.d[arrows_.isd].Draw();
+
+	space_.sprite[space_.isUsed].Draw();
 }
 
 void Player::Move() {
@@ -307,11 +319,15 @@ void Player::Move() {
 void Player::Jump() {
 
 	//Jump
-	if (!state_.isJump) {
-		if (kInput_->PushKey(DIK_SPACE)) {
+	if (kInput_->PushKey(DIK_SPACE)) {
+		if (!state_.isJump) {
 			state_.velocity.y = 0.2f;
 			state_.isJump = true;
 		}
+		space_.isUsed = true;
+	}
+	else {
+		space_.isUsed = false;
 	}
 
 	model.transform.translate += state_.velocity;

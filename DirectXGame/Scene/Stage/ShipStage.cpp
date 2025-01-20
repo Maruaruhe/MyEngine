@@ -4,6 +4,8 @@ using namespace MyEngine;
 
 ShipStage::~ShipStage(){}
 
+void ShipStage::FirstInitialize() {}
+
 void ShipStage::Initialize(int prevStage) {
 	//Static Initialize
 	player_.Initialize();

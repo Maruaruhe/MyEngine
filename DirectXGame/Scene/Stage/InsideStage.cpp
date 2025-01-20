@@ -3,6 +3,8 @@ using namespace MyEngine;
 
 InsideStage::~InsideStage() {}
 
+void InsideStage::FirstInitialize() {}
+
 void InsideStage::Initialize(int prevStage) {
 	mapJson_.Initialize(camera2.get(), "Inside");
 

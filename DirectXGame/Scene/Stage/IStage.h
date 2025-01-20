@@ -59,6 +59,11 @@ public:
 	/// <param name="prevStage"></param>
 	virtual void Initialize(int prevStage) = 0;
 	/// <summary>
+/// Initialize
+/// </summary>
+/// <param name="prevStage"></param>
+	virtual void FirstInitialize() = 0;
+	/// <summary>
 	/// Update
 	/// </summary>
 	virtual void Update() = 0;
