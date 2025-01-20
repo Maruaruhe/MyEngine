@@ -59,9 +59,8 @@ public:
 	/// <param name="prevStage"></param>
 	virtual void Initialize(int prevStage) = 0;
 	/// <summary>
-/// Initialize
+/// FirstInitialize
 /// </summary>
-/// <param name="prevStage"></param>
 	virtual void FirstInitialize() = 0;
 	/// <summary>
 	/// Update
@@ -79,6 +78,8 @@ public:
 	/// Stage変更
 	/// </summary>
 	virtual void StageChange() = 0;
+
+	void GameInitialize();
 
 	void TimeLapse();
 	void SpriteView();

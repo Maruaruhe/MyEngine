@@ -20,7 +20,6 @@ public:
 
 private:
 	int stageChangeCount;
-	Sprite noise0;
 
 	LevelData level;
 

@@ -4,11 +4,7 @@ using namespace MyEngine;
 InsideStage::~InsideStage() {}
 
 void InsideStage::FirstInitialize() {
-	if (isFirstLoad) {
-		isFirstLoad = false;
-		int a = 0;
-		mapJson_.Initialize(camera2.get(), "Inside");
-	}
+	mapJson_.Initialize(camera2.get(), "Inside");
 }
 
 void InsideStage::Initialize(int prevStage) {

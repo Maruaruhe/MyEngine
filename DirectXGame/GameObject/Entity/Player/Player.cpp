@@ -143,10 +143,10 @@ void Player::Update() {
 	}
 
 
-	if (kInput_->TriggerKey(DIK_T)) {
+	/*if (kInput_->TriggerKey(DIK_T)) {
 		state_.isAlive = false; 
 		deadFlame = 0;
-	}
+	}*/
 	//if (kInput_->TriggerKey(DIK_Y)) {
 	//	state_.isAlive = true;
 	//}

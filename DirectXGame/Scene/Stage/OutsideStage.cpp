@@ -5,10 +5,7 @@ using namespace MyEngine;
 OutsideStage::~OutsideStage() {}
 
 void OutsideStage::FirstInitialize() {
-	if (isFirstLoad) {
-		isFirstLoad = false;
-		mapJson_.Initialize(camera2.get(), "OutsideStage");
-	}
+	mapJson_.Initialize(camera2.get(), "OutsideStage");
 }
 
 void OutsideStage::Initialize(int prevStage) {

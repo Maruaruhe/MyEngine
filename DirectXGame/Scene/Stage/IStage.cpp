@@ -17,6 +17,15 @@ std::unique_ptr<Camera> IStage::camera2;
 
 IStage::~IStage() {}
 
+void IStage::GameInitialize() {
+	camera2 = std::make_unique<Camera>();
+	camera2->Initialize();
+
+	player_.Initialize();
+
+	light_.Initialize();
+}
+
 void IStage::TimeLapse() {
 	flame++;
 	if (flame % 60 == 0) {
