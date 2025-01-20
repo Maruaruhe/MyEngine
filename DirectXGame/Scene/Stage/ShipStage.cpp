@@ -4,13 +4,19 @@ using namespace MyEngine;
 
 ShipStage::~ShipStage(){}
 
-void ShipStage::FirstInitialize() {}
+void ShipStage::FirstInitialize() {
+	if (isFirstLoad) {
+		camera2 = std::make_unique<Camera>();
+		camera2->Initialize();
+
+		isFirstLoad = false;
+		mapJson_.Initialize(camera2.get(), "ShipStage");
+	}
+}
 
 void ShipStage::Initialize(int prevStage) {
 	//Static Initialize
 	player_.Initialize();
-	camera2 = std::make_unique<Camera>();
-	camera2->Initialize();
 
 	light_.Initialize();
 	light_.light->direction = { 0.275f,0.944f,0.181f };
@@ -28,7 +34,7 @@ void ShipStage::Initialize(int prevStage) {
 	TextureManager::GetInstance()->LoadTexture("Resources/noise0.png");
 	noise0.Initialize({ 1280,720 }, "Resources/noise0.png");
 
-	mapJson_.Initialize(camera2.get(), "ShipStage");
+	//mapJson_.Initialize(camera2.get(), "ShipStage");
 
 	player_.SetMap(&mapJson_);
 

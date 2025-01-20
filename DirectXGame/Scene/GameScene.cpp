@@ -15,6 +15,7 @@ void GameScene::Update() {
 
 	//シーンが前フレームと異なったら初期化
 	if (prevStageNo != currentStageNo) {
+		stageArr[currentStageNo]->FirstInitialize();
 		stageArr[currentStageNo]->Initialize(prevStageNo);
 	}
 
