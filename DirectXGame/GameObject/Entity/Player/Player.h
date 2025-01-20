@@ -96,4 +96,5 @@ private:
 	SpotLight sLight_;
 
 	Sprite deads_;
+	Sprite toggleLight_;
 };

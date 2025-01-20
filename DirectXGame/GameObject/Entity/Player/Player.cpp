@@ -38,7 +38,10 @@ void Player::Initialize() {
 	deadFlame = 0;
 	aliveFrame = 0;
 
+	//テクスチャ
 	deads_.Initialize({ 1280,720 }, "Resources/Dead/youdied.png");
+	toggleLight_.Initialize({ 214,31 }, "Resources/Entity/Player/ToggleLight.png");
+	toggleLight_.transform.translate = { 10,100,0 };
 }
 
 void Player::Update() {
@@ -64,6 +67,10 @@ void Player::Update() {
 	model.Update();
 	view.Update();
 	view.transform.translate = GetFrontVector(2.0f);
+
+	//テクスチャ
+	toggleLight_.Update();
+
 
 	if (kInput_->TriggerKey(DIK_T)) {
 		state_.isAlive = false; 
@@ -111,6 +118,9 @@ void Player::LightUpdate() {
 
 void Player::Draw() {
 	model.Draw();
+
+	toggleLight_.Draw();
+
 	if (!state_.isAlive) {
 		deadModel.Draw();
 		deads_.Draw();
