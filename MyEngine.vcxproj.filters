@@ -63,9 +63,6 @@
     <ClCompile Include="DirectXGame\GameObject\Entity\Enemy\IEnemy.cpp">
       <Filter>DirectXGame\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="DirectXGame\GameObject\Object\Map\Item\IItem.cpp">
-      <Filter>DirectXGame\GameObject</Filter>
-    </ClCompile>
     <ClCompile Include="externals\imgui\imgui.cpp">
       <Filter>externals</Filter>
     </ClCompile>
@@ -101,9 +98,6 @@
     </ClCompile>
     <ClCompile Include="DirectXGame\Scene\IScene.cpp">
       <Filter>DirectXGame\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\GameObject\Object\Map\Item\ItemManager.cpp">
-      <Filter>DirectXGame\GameObject</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Object\Light\Lighting.cpp">
       <Filter>DirectXGame\Object</Filter>
@@ -143,9 +137,6 @@
     </ClCompile>
     <ClCompile Include="DirectXGame\Object\Skybox\Skybox.cpp">
       <Filter>DirectXGame\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectXGame\GameObject\Object\Map\Item\SmallItem\SmallItem.cpp">
-      <Filter>DirectXGame\GameObject</Filter>
     </ClCompile>
     <ClCompile Include="DirectXGame\Object\SpotLight\SpotLight.cpp">
       <Filter>DirectXGame\GameObject</Filter>
@@ -232,9 +223,6 @@
     <ClInclude Include="DirectXGame\GameObject\Entity\Enemy\IEnemy.h">
       <Filter>DirectXGame\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="DirectXGame\GameObject\Object\Map\Item\IItem.h">
-      <Filter>DirectXGame\GameObject</Filter>
-    </ClInclude>
     <ClInclude Include="externals\imgui\imconfig.h">
       <Filter>externals</Filter>
     </ClInclude>
@@ -273,9 +261,6 @@
     </ClInclude>
     <ClInclude Include="DirectXGame\Scene\Stage\IStage.h">
       <Filter>DirectXGame\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\GameObject\Object\Map\Item\ItemManager.h">
-      <Filter>DirectXGame\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Object\Light\Lighting.h">
       <Filter>DirectXGame\Object</Filter>
@@ -327,9 +312,6 @@
     </ClInclude>
     <ClInclude Include="DirectXGame\Object\Skybox\Skybox.h">
       <Filter>DirectXGame\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectXGame\GameObject\Object\Map\Item\SmallItem\SmallItem.h">
-      <Filter>DirectXGame\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="DirectXGame\Object\SpotLight\SpotLight.h">
       <Filter>DirectXGame\GameObject</Filter>

@@ -14,7 +14,6 @@
 #include "../../GameObject/Skydome/Skydome.h"
 #include "../../GameObject/Object/Map/MapJson.h"
 #include "../../GameObject/Object/Map/Wall/Wall.h"
-#include "../../GameObject/Object/Map/Item/SmallItem/SmallItem.h"
 #include "../../GameObject/Entity/Player/Player.h"
 				  
 #include "../../GameObject/Entity/Enemy/Trace/Trace.h"

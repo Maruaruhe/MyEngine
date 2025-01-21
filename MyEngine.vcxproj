@@ -130,8 +130,6 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="DirectXGame\Manager\GameManager.cpp" />
     <ClCompile Include="DirectXGame\Scene\GameScene.cpp" />
     <ClCompile Include="DirectXGame\Base\Load\LoadCSV.cpp" />
-    <ClCompile Include="DirectXGame\GameObject\Object\Map\Item\IItem.cpp" />
-    <ClCompile Include="DirectXGame\GameObject\Object\Map\Item\ItemManager.cpp" />
     <ClCompile Include="DirectXGame\Manager\FileManager.cpp" />
     <ClCompile Include="DirectXGame\GameObject\Entity\Enemy\IEnemy.cpp" />
     <ClCompile Include="DirectXGame\Scene\Stage\IStage.cpp" />
@@ -148,7 +146,6 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="DirectXGame\GameObject\Entity\TestObject\TestObject.cpp" />
     <ClCompile Include="DirectXGame\GameObject\Object\Map\Wall\Wall.cpp" />
     <ClCompile Include="DirectXGame\GameObject\Entity\Player\Player.cpp" />
-    <ClCompile Include="DirectXGame\GameObject\Object\Map\Item\SmallItem\SmallItem.cpp" />
     <ClCompile Include="DirectXGame\Object\Skybox\Skybox.cpp" />
     <ClCompile Include="DirectXGame\Scene\TitleScene.cpp" />
     <ClCompile Include="DirectXGame\Object\SpotLight\SpotLight.cpp" />
@@ -255,9 +252,6 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="DirectXGame\GameObject\Object\Map\Wall\Wall.h" />
     <ClInclude Include="DirectXGame\Base\Load\LoadCSV.h" />
     <ClInclude Include="DirectXGame\GameObject\Entity\Player\Player.h" />
-    <ClInclude Include="DirectXGame\GameObject\Object\Map\Item\IItem.h" />
-    <ClInclude Include="DirectXGame\GameObject\Object\Map\Item\SmallItem\SmallItem.h" />
-    <ClInclude Include="DirectXGame\GameObject\Object\Map\Item\ItemManager.h" />
     <ClInclude Include="DirectXGame\Scene\TitleScene.h" />
     <ClInclude Include="DirectXGame\Object\SpotLight\SpotLight.h" />
     <ClInclude Include="DirectXGame\GameObject\Entity\Enemy\IEnemy.h" />

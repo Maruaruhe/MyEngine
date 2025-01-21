@@ -2162,6 +2162,51 @@
                     "children": []
                 }
             ]
+        },
+        {
+            "type": "MESH",
+            "name": "立方体",
+            "transform": {
+                "translation": [
+                    23.19999885559082,
+                    -8.149999618530273,
+                    1.0099999904632568
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    0.5,
+                    0.5,
+                    0.5
+                ]
+            },
+            "file_name": "item",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": true,
+            "to_left": false,
+            "to_right": false,
+            "to_front": false,
+            "to_back": false,
+            "to_top": false,
+            "to_bot": false,
+            "is_door": false,
+            "children": []
         }
     ]
 }
