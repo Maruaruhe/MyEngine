@@ -4,6 +4,7 @@
 
 #include "Wall/Wall.h"
 #include "Door/Door.h"
+#include "Item/Item.h"
 
 //JsonMapクラス
 class MapJson
@@ -47,6 +48,7 @@ private:
 	LevelData level_;
 	std::vector<Wall> walls_;
 	std::vector<Door> doors_;
+	std::vector<mapItem> items_;
 
 	//
 	const float kMapHeight = 10.0f;

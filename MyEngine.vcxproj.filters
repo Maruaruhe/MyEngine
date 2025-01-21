@@ -185,6 +185,7 @@
     </ClCompile>
     <ClCompile Include="DirectXGame\GameObject\Object\Map\Door\Door.cpp" />
     <ClCompile Include="DirectXGame\GameObject\Object\Map\Item\Item.cpp" />
+    <ClCompile Include="DirectXGame\GameObject\Object\Map\Item\ItemManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DirectXGame\Object\AABB\AABB.h">
@@ -366,6 +367,7 @@
     </ClInclude>
     <ClInclude Include="DirectXGame\GameObject\Object\Map\Door\Door.h" />
     <ClInclude Include="DirectXGame\GameObject\Object\Map\Item\Item.h" />
+    <ClInclude Include="DirectXGame\GameObject\Object\Map\Item\ItemManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shader\Object2D.hlsli">
