@@ -9,8 +9,8 @@ void GameScene::Initialize() {
 
 	stageArr[SHIP]->GameInitialize();
 
-	stageArr[SHIP]->FirstInitialize();
-	stageArr[OUTSIDE]->FirstInitialize();
+	//stageArr[SHIP]->FirstInitialize();
+	//stageArr[OUTSIDE]->FirstInitialize();
 	stageArr[INSIDE]->FirstInitialize();
 
 }

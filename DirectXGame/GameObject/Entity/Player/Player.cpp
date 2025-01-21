@@ -10,6 +10,8 @@ void Player::Initialize() {
 	
 	//model.transform.translate = { 24.0f,1.5f,-48.0f };
 	model.transform.translate = { 0.0f,0.0f,0.0f };
+	model.transform.scale.x *= 0.5f;
+	model.transform.scale.z *= 0.5f;
 	model.transform.scale.y *= 2.0f;
 
 	view.Initialize("player");
@@ -188,7 +190,7 @@ void Player::LightUpdate() {
 }
 
 void Player::Draw() {
-	model.Draw();
+	//model.Draw();
 
 	if (!state_.isAlive) {
 		deadModel.Draw();
@@ -321,7 +323,7 @@ void Player::Jump() {
 	//Jump
 	if (kInput_->PushKey(DIK_SPACE)) {
 		if (!state_.isJump) {
-			state_.velocity.y = 0.2f;
+			state_.velocity.y = 0.25f;
 			state_.isJump = true;
 		}
 		space_.isUsed = true;

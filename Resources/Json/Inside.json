@@ -8,7 +8,7 @@
                 "translation": [
                     0.0,
                     50.0,
-                    0.0
+                    -10.0
                 ],
                 "rotation": [
                     0.0,
@@ -170,7 +170,7 @@
                     2.0
                 ]
             },
-            "load_model": true,
+            "load_model": false,
             "is_item": false,
             "to_left": false,
             "to_right": false,
@@ -278,7 +278,7 @@
                 "translation": [
                     0.0,
                     0.0,
-                    2.0
+                    1.5
                 ],
                 "rotation": [
                     0.0,
@@ -287,7 +287,7 @@
                 ],
                 "scaling": [
                     1.0,
-                    1.5,
+                    1.25,
                     1.5
                 ]
             },
@@ -314,6 +314,1536 @@
             "to_top": false,
             "to_bot": false,
             "is_door": true,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "xDEFAULT",
+            "transform": {
+                "translation": [
+                    0.0,
+                    -10.0,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    0.25,
+                    5.0,
+                    10.0
+                ]
+            },
+            "file_name": "wall",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": true,
+            "to_right": true,
+            "to_front": false,
+            "to_back": false,
+            "to_top": false,
+            "to_bot": false,
+            "is_door": false,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "zDEFAULT",
+            "transform": {
+                "translation": [
+                    0.0,
+                    -10.0,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    5.0,
+                    0.25,
+                    10.0
+                ]
+            },
+            "file_name": "wall",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": true,
+            "to_right": true,
+            "to_front": true,
+            "to_back": true,
+            "to_top": false,
+            "to_bot": false,
+            "is_door": false,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "floor",
+            "transform": {
+                "translation": [
+                    0.0,
+                    6.25,
+                    -0.25
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    5.25,
+                    5.25,
+                    0.25
+                ]
+            },
+            "file_name": "wall",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": false,
+            "to_right": false,
+            "to_front": false,
+            "to_back": false,
+            "to_top": true,
+            "to_bot": true,
+            "is_door": false,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "zleft",
+            "transform": {
+                "translation": [
+                    -3.0,
+                    11.25,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    2.25,
+                    0.25,
+                    10.0
+                ]
+            },
+            "file_name": "wall",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": true,
+            "to_right": true,
+            "to_front": true,
+            "to_back": true,
+            "to_top": false,
+            "to_bot": false,
+            "is_door": false,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "zright.002",
+            "transform": {
+                "translation": [
+                    3.0,
+                    11.25,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    2.25,
+                    0.25,
+                    10.0
+                ]
+            },
+            "file_name": "wall",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": true,
+            "to_right": true,
+            "to_front": true,
+            "to_back": true,
+            "to_top": false,
+            "to_bot": false,
+            "is_door": false,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "xfront.002",
+            "transform": {
+                "translation": [
+                    -5.0,
+                    9.0,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    0.25,
+                    2.0,
+                    10.0
+                ]
+            },
+            "file_name": "wall",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": true,
+            "to_right": true,
+            "to_front": true,
+            "to_back": true,
+            "to_top": false,
+            "to_bot": false,
+            "is_door": false,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "xback.002",
+            "transform": {
+                "translation": [
+                    -5.0,
+                    3.25,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    0.25,
+                    2.25,
+                    10.0
+                ]
+            },
+            "file_name": "wall",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": true,
+            "to_right": true,
+            "to_front": true,
+            "to_back": true,
+            "to_top": false,
+            "to_bot": false,
+            "is_door": false,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "xback.001",
+            "transform": {
+                "translation": [
+                    5.0,
+                    3.25,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    0.25,
+                    2.25,
+                    10.0
+                ]
+            },
+            "file_name": "wall",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": true,
+            "to_right": true,
+            "to_front": true,
+            "to_back": true,
+            "to_top": false,
+            "to_bot": false,
+            "is_door": false,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "xfront.001",
+            "transform": {
+                "translation": [
+                    5.0,
+                    9.0,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    0.25,
+                    2.0,
+                    10.0
+                ]
+            },
+            "file_name": "wall",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": true,
+            "to_right": true,
+            "to_front": true,
+            "to_back": true,
+            "to_top": false,
+            "to_bot": false,
+            "is_door": false,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "zright.001",
+            "transform": {
+                "translation": [
+                    3.0,
+                    22.25,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    2.25,
+                    0.25,
+                    10.0
+                ]
+            },
+            "file_name": "wall",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": true,
+            "to_right": true,
+            "to_front": true,
+            "to_back": true,
+            "to_top": false,
+            "to_bot": false,
+            "is_door": false,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "zleft.001",
+            "transform": {
+                "translation": [
+                    -3.0,
+                    22.25,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    2.25,
+                    0.25,
+                    10.0
+                ]
+            },
+            "file_name": "wall",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": true,
+            "to_right": true,
+            "to_front": true,
+            "to_back": true,
+            "to_top": false,
+            "to_bot": false,
+            "is_door": false,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "xfront.003",
+            "transform": {
+                "translation": [
+                    -5.0,
+                    30.5,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    0.25,
+                    2.0,
+                    10.0
+                ]
+            },
+            "file_name": "wall",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": true,
+            "to_right": true,
+            "to_front": true,
+            "to_back": true,
+            "to_top": false,
+            "to_bot": false,
+            "is_door": false,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "xback.003",
+            "transform": {
+                "translation": [
+                    -5.0,
+                    24.75,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    0.25,
+                    2.25,
+                    10.0
+                ]
+            },
+            "file_name": "wall",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": true,
+            "to_right": true,
+            "to_front": true,
+            "to_back": true,
+            "to_top": false,
+            "to_bot": false,
+            "is_door": false,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "zright.003",
+            "transform": {
+                "translation": [
+                    3.0,
+                    32.75,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    2.25,
+                    0.25,
+                    10.0
+                ]
+            },
+            "file_name": "wall",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": true,
+            "to_right": true,
+            "to_front": true,
+            "to_back": true,
+            "to_top": false,
+            "to_bot": false,
+            "is_door": false,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "zright",
+            "transform": {
+                "translation": [
+                    -3.0,
+                    32.75,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    2.25,
+                    0.25,
+                    10.0
+                ]
+            },
+            "file_name": "wall",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": true,
+            "to_right": true,
+            "to_front": true,
+            "to_back": true,
+            "to_top": false,
+            "to_bot": false,
+            "is_door": false,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "立方体.001",
+            "transform": {
+                "translation": [
+                    0.0,
+                    27.25,
+                    -0.25
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    5.25,
+                    5.25,
+                    0.25
+                ]
+            },
+            "file_name": "wall",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": false,
+            "to_right": false,
+            "to_front": false,
+            "to_back": false,
+            "to_top": true,
+            "to_bot": true,
+            "is_door": false,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "xback",
+            "transform": {
+                "translation": [
+                    5.0,
+                    24.75,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    0.25,
+                    2.25,
+                    10.0
+                ]
+            },
+            "file_name": "wall",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": true,
+            "to_right": true,
+            "to_front": true,
+            "to_back": true,
+            "to_top": false,
+            "to_bot": false,
+            "is_door": false,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "xfront",
+            "transform": {
+                "translation": [
+                    5.0,
+                    30.5,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    0.25,
+                    2.0,
+                    10.0
+                ]
+            },
+            "file_name": "wall",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": true,
+            "to_right": true,
+            "to_front": true,
+            "to_back": true,
+            "to_top": false,
+            "to_bot": false,
+            "is_door": false,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "Bridge",
+            "transform": {
+                "translation": [
+                    0.0,
+                    16.75,
+                    -0.5
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    5.25,
+                    0.5
+                ]
+            },
+            "file_name": "wall",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": false,
+            "to_right": false,
+            "to_front": false,
+            "to_back": false,
+            "to_top": true,
+            "to_bot": true,
+            "is_door": false,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "pipe",
+            "transform": {
+                "translation": [
+                    1.0,
+                    16.75,
+                    0.5
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    0.10000000149011612,
+                    5.25,
+                    0.5
+                ]
+            },
+            "file_name": "wall",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": true,
+            "to_right": true,
+            "to_front": true,
+            "to_back": true,
+            "to_top": true,
+            "to_bot": true,
+            "is_door": false,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "pipe2",
+            "transform": {
+                "translation": [
+                    -1.0,
+                    16.75,
+                    0.5
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    0.10000000149011612,
+                    5.25,
+                    0.5
+                ]
+            },
+            "file_name": "wall",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": true,
+            "to_right": true,
+            "to_front": true,
+            "to_back": true,
+            "to_top": true,
+            "to_bot": true,
+            "is_door": false,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "Sidewall",
+            "transform": {
+                "translation": [
+                    5.0,
+                    16.75,
+                    5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    0.25,
+                    5.25,
+                    15.0
+                ]
+            },
+            "file_name": "wall",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": false,
+            "to_right": false,
+            "to_front": false,
+            "to_back": false,
+            "to_top": true,
+            "to_bot": true,
+            "is_door": false,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "Sidewall2",
+            "transform": {
+                "translation": [
+                    -5.0,
+                    16.75,
+                    5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    0.25,
+                    5.25,
+                    15.0
+                ]
+            },
+            "file_name": "wall",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": false,
+            "to_right": false,
+            "to_front": false,
+            "to_back": false,
+            "to_top": true,
+            "to_bot": true,
+            "is_door": false,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "zDEFAULT.001",
+            "transform": {
+                "translation": [
+                    0.0,
+                    11.25,
+                    -5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    5.25,
+                    0.25,
+                    4.5
+                ]
+            },
+            "file_name": "wall",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": true,
+            "to_right": true,
+            "to_front": true,
+            "to_back": true,
+            "to_top": false,
+            "to_bot": false,
+            "is_door": false,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "zDEFAULT.002",
+            "transform": {
+                "translation": [
+                    0.0,
+                    22.25,
+                    -5.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    5.25,
+                    0.25,
+                    4.5
+                ]
+            },
+            "file_name": "wall",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": true,
+            "to_right": true,
+            "to_front": true,
+            "to_back": true,
+            "to_top": false,
+            "to_bot": false,
+            "is_door": false,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "floor.001",
+            "transform": {
+                "translation": [
+                    10.5,
+                    6.25,
+                    -0.25
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    5.25,
+                    5.25,
+                    0.25
+                ]
+            },
+            "file_name": "wall",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": false,
+            "to_right": false,
+            "to_front": false,
+            "to_back": false,
+            "to_top": true,
+            "to_bot": true,
+            "is_door": false,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "zDEFAULT.003",
+            "transform": {
+                "translation": [
+                    10.25,
+                    3.5,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    5.0,
+                    0.25,
+                    10.0
+                ]
+            },
+            "file_name": "wall",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": true,
+            "to_right": true,
+            "to_front": true,
+            "to_back": true,
+            "to_top": false,
+            "to_bot": false,
+            "is_door": false,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "zDEFAULT.004",
+            "transform": {
+                "translation": [
+                    10.25,
+                    9.0,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    5.0,
+                    0.25,
+                    10.0
+                ]
+            },
+            "file_name": "wall",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": true,
+            "to_right": true,
+            "to_front": true,
+            "to_back": true,
+            "to_top": false,
+            "to_bot": false,
+            "is_door": false,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "xback.004",
+            "transform": {
+                "translation": [
+                    15.5,
+                    -3.0199999809265137,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    0.25,
+                    8.329999923706055,
+                    10.0
+                ]
+            },
+            "file_name": "wall",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": true,
+            "to_right": true,
+            "to_front": true,
+            "to_back": true,
+            "to_top": false,
+            "to_bot": false,
+            "is_door": false,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "xfront.004",
+            "transform": {
+                "translation": [
+                    15.5,
+                    11.14000129699707,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    0.25,
+                    3.93999981880188,
+                    10.0
+                ]
+            },
+            "file_name": "wall",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": true,
+            "to_right": true,
+            "to_front": true,
+            "to_back": true,
+            "to_top": false,
+            "to_bot": false,
+            "is_door": false,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "floor.002",
+            "transform": {
+                "translation": [
+                    21.0,
+                    2.0,
+                    -0.25
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    5.25,
+                    13.0,
+                    0.25
+                ]
+            },
+            "file_name": "wall",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": false,
+            "to_right": false,
+            "to_front": false,
+            "to_back": false,
+            "to_top": true,
+            "to_bot": true,
+            "is_door": false,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "xfront.005",
+            "transform": {
+                "translation": [
+                    26.0,
+                    2.0,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    0.25,
+                    13.0,
+                    10.0
+                ]
+            },
+            "file_name": "wall",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": true,
+            "to_right": true,
+            "to_front": true,
+            "to_back": true,
+            "to_top": false,
+            "to_bot": false,
+            "is_door": false,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "zDEFAULT.005",
+            "transform": {
+                "translation": [
+                    20.75,
+                    15.0,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    5.0,
+                    0.25,
+                    10.0
+                ]
+            },
+            "file_name": "wall",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": true,
+            "to_right": true,
+            "to_front": true,
+            "to_back": true,
+            "to_top": false,
+            "to_bot": false,
+            "is_door": false,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "zDEFAULT.006",
+            "transform": {
+                "translation": [
+                    20.75,
+                    -10.75,
+                    10.0
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    5.0,
+                    0.25,
+                    10.0
+                ]
+            },
+            "file_name": "wall",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "to_left": true,
+            "to_right": true,
+            "to_front": true,
+            "to_back": true,
+            "to_top": false,
+            "to_bot": false,
+            "is_door": false,
             "children": []
         }
     ]

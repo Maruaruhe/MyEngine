@@ -76,67 +76,81 @@ void FileManager::ScanningObjects(nlohmann::json& object, std::vector<ObjectData
 	// 種類を取得
 	std::string type = object["type"].get<std::string>();
 
+	if (object["load_model"]) {
+		/* ---------- メッシュの読み込み ---------- */
 
-	/* ---------- メッシュの読み込み ---------- */
+		// MESH
+		if (type.compare("MESH") == 0) {
 
-	// MESH
-	if (type.compare("MESH") == 0) {
+			// 新しくオブジェクトを作成
+			ObjectData objectData;
+			ModelManager::GetInstance()->LoadModel("2x2cube");
+			TextureManager::GetInstance()->LoadTexture("Resources/Map/wall.png");
 
-		// 新しくオブジェクトを作成
-		ObjectData objectData;
-		ModelManager::GetInstance()->LoadModel("2x2cube");
-		TextureManager::GetInstance()->LoadTexture("Resources/Map/wall.png");
+			// トランスフォームのパラメータ読み込み
+			if (object.contains("transform")) {
 
-		// トランスフォームのパラメータ読み込み
-		if (object.contains("transform")) {
+				nlohmann::json& transform = object["transform"];
+				// 平行移動
+				objectData.transform.translate.x = (float)transform["translation"][0];
+				objectData.transform.translate.y = (float)transform["translation"][2];
+				objectData.transform.translate.z = (float)transform["translation"][1];
+				// 回転角
+				objectData.transform.rotate.x = -(float)transform["rotation"][0]; //*(float(std::numbers::pi) / 180.0f);
+				objectData.transform.rotate.y = -(float)transform["rotation"][2];// *(float(std::numbers::pi) / 180.0f);
+				objectData.transform.rotate.z = -(float)transform["rotation"][1];// *(float(std::numbers::pi) / 180.0f);
+				// スケーリング
+				objectData.transform.scale.x = (float)transform["scaling"][0];
+				objectData.transform.scale.y = (float)transform["scaling"][2];
+				objectData.transform.scale.z = (float)transform["scaling"][1];
+			}
 
-			nlohmann::json& transform = object["transform"];
-			// 平行移動
-			objectData.transform.translate.x = (float)transform["translation"][0];
-			objectData.transform.translate.y = (float)transform["translation"][2];
-			objectData.transform.translate.z = (float)transform["translation"][1];
-			// 回転角
-			objectData.transform.rotate.x = -(float)transform["rotation"][0]; //*(float(std::numbers::pi) / 180.0f);
-			objectData.transform.rotate.y = -(float)transform["rotation"][2];// *(float(std::numbers::pi) / 180.0f);
-			objectData.transform.rotate.z = -(float)transform["rotation"][1];// *(float(std::numbers::pi) / 180.0f);
-			// スケーリング
-			objectData.transform.scale.x = (float)transform["scaling"][0];
-			objectData.transform.scale.y = (float)transform["scaling"][2];
-			objectData.transform.scale.z = (float)transform["scaling"][1];
-		}
+			if (object.contains("file_name")) {
+				objectData.filename = object["file_name"];
+			}
 
-		if (object.contains("file_name")) {
-			objectData.filename = object["file_name"];
-		}
+			//種類分け
+			if (object.contains("is_item")) {
+				objectData.isItem = object["is_item"];
+			}
+			if (object.contains("to_left")) {
+				objectData.direction.toLeft = object["to_left"];
+			}
+			if (object.contains("to_right")) {
+				objectData.direction.toRight = object["to_right"];
+			}
+			if (object.contains("to_front")) {
+				objectData.direction.toFront = object["to_front"];
+			}
+			if (object.contains("to_back")) {
+				objectData.direction.toBack = object["to_back"];
+			}
+			if (object.contains("to_top")) {
+				objectData.direction.toTop = object["to_top"];
+			}
+			if (object.contains("to_bot")) {
+				objectData.direction.toBot = object["to_bot"];
+			}
+			if (object.contains("is_door")) {
+				objectData.isDoor = object["is_door"];
+			}
 
-		//種類分け
-		if (object.contains("is_item")) {
-			objectData.isItem = object["is_item"];
-		}
-		if (object.contains("to_left")) {
-			objectData.direction.toLeft = object["to_left"];
-		}
-		if (object.contains("to_right")) {
-			objectData.direction.toRight = object["to_right"];
-		}
-		if (object.contains("to_front")) {
-			objectData.direction.toFront = object["to_front"];
-		}
-		if (object.contains("to_back")) {
-			objectData.direction.toBack = object["to_back"];
-		}
-		if (object.contains("to_top")) {
-			objectData.direction.toTop = object["to_top"];
-		}
-		if (object.contains("to_bot")) {
-			objectData.direction.toBot = object["to_bot"];
-		}
-		if (object.contains("is_door")) {
-			objectData.isDoor = object["is_door"];
-		}
+			if (object.contains("children")) {
+				nlohmann::json& child = object["children"];
+				for (int i = 0; i < child.size(); i++) {
+					// 種類を取得
+					std::string childType = child[i]["type"].get<std::string>();
 
-		// オブジェクトを追加
-		objects->push_back(objectData);
+					// MESH
+					if (childType.compare("MESH") == 0) {
+						ScanningObjects(child[i], objects);
+					}
+				}
+			}
+
+			// オブジェクトを追加
+			objects->push_back(objectData);
+		}
 	}
 }
 
