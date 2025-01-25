@@ -1,6 +1,6 @@
 #include "IStage.h"
 
-int IStage::stageNo = INSIDE;
+int IStage::stageNo = SHIP;
 
 int IStage::flame = 0;
 int IStage::time = 0;
