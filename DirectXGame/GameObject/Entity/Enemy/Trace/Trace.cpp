@@ -13,7 +13,7 @@ void Trace::Initialize(Transform transform) {
 	model_.Initialize("Entity/Enemy/trace");
 	model_.transform = transform;
 
-	model_.transform.translate = {0.0f,0.0f,0.0f};
+	//model_.transform.translate = {0.0f,0.0f,0.0f};
 	model_.transform.scale = {1.0f,1.0f,1.0f};
 	model_.transform.rotate = {0.0f,0.0f,0.0f};
 }
