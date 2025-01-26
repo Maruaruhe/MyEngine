@@ -7,6 +7,7 @@
 
 class Player;
 class MapJson;
+class Wall;
 
 //Enemy基底クラス
 class IEnemy
@@ -29,6 +30,7 @@ public:
 
 	void SetPlayer(Player* player) { player_ = player; }
 	void SetMap(MapJson* map) { map_ = map; }
+	//void SetMap(std::vector<Wall> walls) { walls_ = walls; }
 
 	bool isAlive_;
 	bool isChase_;
@@ -37,6 +39,8 @@ public:
 	Model model_;
 	AABB collision_;
 protected:
+	std::vector<Wall> walls_;
+
 	Camera* camera_;
 
 	MapJson* map_;
