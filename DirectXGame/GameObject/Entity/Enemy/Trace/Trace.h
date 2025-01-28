@@ -1,8 +1,6 @@
 #pragma once
 #include "../IEnemy.h"
 
-class Wall;
-
 //TraceEnemyクラス
 class Trace : public IEnemy
 {
@@ -30,7 +28,6 @@ private:
 	/// </summary>
 	void ChasePlayer();
 
-	std::vector<Wall> walls_;
 	Vector3 velocity_{};
 	Vector3 distance_{};
 
