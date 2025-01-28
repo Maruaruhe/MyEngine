@@ -30,7 +30,6 @@ public:
 
 	void SetPlayer(Player* player) { player_ = player; }
 	void SetMap(MapJson* map) { map_ = map; }
-	//void SetMap(std::vector<Wall> walls) { walls_ = walls; }
 
 	bool isAlive_;
 	bool isChase_;

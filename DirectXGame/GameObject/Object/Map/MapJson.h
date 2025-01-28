@@ -34,6 +34,7 @@ public:
 	bool CheckCollisionWithEye(const Segment& eyeSegment);
 
 	LevelData GetLevel() { return level_; }
+	std::vector<Wall> GetWalls() { return walls_; }
 
 	//GameSceneに持たせる
 	std::vector<std::shared_ptr<mapItem>> CreateItem(Camera* camera, std::string filename);

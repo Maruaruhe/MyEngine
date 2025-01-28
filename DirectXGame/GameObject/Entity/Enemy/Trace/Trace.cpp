@@ -23,27 +23,20 @@ void Trace::Update() {
 	ChasePlayer();
 
 	model_.Update();
-
-#ifdef _DEBUG
-	ImGui::Begin("Trace");
-	ImGui::SliderFloat3("translate", &model_.transform.translate.x, -15, 15);
-	ImGui::SliderFloat3("rotate", &model_.transform.rotate.x, -3.0f, 3.0f);
-	ImGui::SliderFloat3("scale", &model_.transform.scale.x, 1.0f, 10.0f);
-	ImGui::End();
-#endif
 }
 void Trace::Draw() {
 	model_.Draw();
 }
 
 void Trace::FindPlayer() {
+		int numWallCollision = 0;
 	if (!isChase_) {//未発見時
 		Segment PtoE;
 		PtoE.start = player_->model.transform.translate;
 		PtoE.end = model_.transform.translate;
 
-		int numWallCollision = 0;
 
+		walls_ = map_->GetWalls();
 		for (Wall wall : walls_) {
 			AABB wallAABB;
 			wallAABB.CreateModelAABB(wall.model_.transform);
@@ -57,7 +50,14 @@ void Trace::FindPlayer() {
 		if (numWallCollision == 0) {
 			isChase_ = true;
 		}
+
 	}
+#ifdef _DEBUG
+		ImGui::Begin("Trace");
+		ImGui::SliderInt("numWall", &numWallCollision, -15, 15);
+		ImGui::End();
+#endif
+
 }
 void Trace::ChasePlayer(){
 	if (isChase_) {//発見
