@@ -12,8 +12,11 @@ public:
 	void SpriteDraw() override;
 	void StageChange() override;
 
+	void SetItem(std::vector<mapItem*> items) { items_ = items; }
+
 	~OutsideStage();
 
 private:
 	int stageChangeCount;
+	std::vector<mapItem*> items_;
 };

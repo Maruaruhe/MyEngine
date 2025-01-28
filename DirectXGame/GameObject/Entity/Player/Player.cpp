@@ -203,7 +203,7 @@ void Player::Draw() {
 }
 
 void Player::SpriteDraw() {
-	if (!state_.isAlive) {
+	if (state_.isAlive) {
 		toggleLight_.Draw();
 		if (canOpenDoor_) {
 			holdQ_.Draw();
@@ -422,38 +422,41 @@ Vector3 Player::GetItemFrontVector() {
 }
 
 void Player::CheckItemCollision() {
-//	AABB itemAABB;
-//	itemAABB.CreateEntityAABB(map_->GetItem()->model_.transform);
-//
-//	Segment playerSight;
-//	playerSight.start = model.transform.translate;
-//	playerSight.end = GetFrontVector(2.0f);
-//
-//	int count = 0;
-//
-//	//視線との当たり判定
-//	if (itemAABB.CheckLineCollision(playerSight)) {
-//		count += 1;
-//		map_->GetItem()->isabletobetaken_ = true;
-//		map_->GetItem()->TakenItem();
-//	}
-//	else {
-//		map_->GetItem()->isabletobetaken_ = false;
-//	}
-//
-//#ifdef _DEBUG
-//
-//	ImGui::Begin("Item");
-//
-//	Vector3 aa = map_->GetItem()->model_.transform.translate;
-//	ImGui::DragFloat3("pos", &aa.x);
-//	ImGui::DragFloat3("sight.start", &playerSight.start.x);
-//	ImGui::DragFloat3("sight.end", &playerSight.end.x);
-//	ImGui::DragInt("count", &count);
-//
-//	ImGui::End();
-//
-//#endif // DEBUG
+	//mapからItem情報を取得
+	std::vector<mapItem*> items = mapJson_->GetItems();
+
+	for (int i = 0; i < items.size(); i++) {
+		AABB itemAABB;
+		itemAABB.CreateEntityAABB(items[i]->model_.transform);
+
+		Segment playerSight;
+		playerSight.start = model.transform.translate;
+		playerSight.end = GetFrontVector(2.0f);
+
+		//視線との当たり判定
+		if (itemAABB.CheckLineCollision(playerSight)) {
+			//拾う処理
+			items[i]->TakenItem();
+		}
+		else {
+
+		}
+
+		//Item Update
+		if (items[i]->isTaken_) {
+			items[i]->model_.transform.translate = {};
+			if (KeyInput::GetInstance()->TriggerKey(DIK_G)) {
+				items[i]->DropItem(model.transform.translate);
+			}
+		}
+	}
+#ifdef _DEBUG
+
+	ImGui::Begin("Item");
+
+	ImGui::End();
+
+#endif // DEBUG
 }
 
 

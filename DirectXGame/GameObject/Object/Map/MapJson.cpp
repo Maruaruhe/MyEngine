@@ -5,6 +5,14 @@
 
 using namespace MyEngine;
 
+MapJson::MapJson(){}
+
+MapJson::~MapJson() {
+    for (mapItem* item : items_) {
+        delete item;
+    }
+}
+
 void MapJson::Initialize(Camera* camera, std::string filename) {
     level_ = FileManager::GetInstance()->LoadJsonFile("Json/", filename);
 
@@ -20,8 +28,8 @@ void MapJson::Update() {
     for (Door door : doors_) {
         door.Update();
     }
-    for (mapItem item : items_) {
-        item.Update();
+    for (mapItem* item : items_) {
+        item->Update();
     }
 }
 
@@ -32,8 +40,8 @@ void MapJson::Draw() {
     for (Door door : doors_) {
         door.Draw();
     }
-    for (mapItem item : items_) {
-        item.Draw();
+    for (mapItem* item : items_) {
+        item->Draw();
     }
 }
 
@@ -168,9 +176,10 @@ void MapJson::CreateWayPoint(Camera* camera){
 void MapJson::CreateItem(Camera* camera){
     for (int i = 0; i < level_.objects.size(); i++) {
         if (level_.objects[i].isItem) {
-            mapItem newItem;
-            newItem.Initialize(level_.objects[i].transform, level_.objects[i].filename);
-            newItem.model_.SetCamera(camera);
+            mapItem* newItem;
+            newItem = new mapItem();
+            newItem->Initialize(level_.objects[i].transform, level_.objects[i].filename);
+            newItem->model_.SetCamera(camera);
 
             items_.push_back(newItem);
         }

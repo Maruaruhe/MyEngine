@@ -25,6 +25,8 @@ public:
 	/// </summary>
 	void TakenItem();
 
+	void DropItem(Vector3 player);
+
 	bool isTaken_ = false;
 	bool isabletobetaken_ = false;
 	Model model_;

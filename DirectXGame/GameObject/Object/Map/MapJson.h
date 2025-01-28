@@ -10,6 +10,8 @@
 class MapJson
 {
 public:
+	MapJson();
+	~MapJson();
 	/// <summary>
 	/// Initialize
 	/// </summary>
@@ -32,6 +34,7 @@ public:
 	bool CheckCollisionWithEye(const Segment& eyeSegment);
 
 	LevelData GetLevel() { return level_; }
+	std::vector<mapItem*> GetItems() { return items_; }
 
 private:
 
@@ -48,7 +51,7 @@ private:
 	LevelData level_;
 	std::vector<Wall> walls_;
 	std::vector<Door> doors_;
-	std::vector<mapItem> items_;
+	std::vector<mapItem*> items_;
 
 	//
 	const float kMapHeight = 10.0f;

@@ -12,7 +12,6 @@ void GameScene::Initialize() {
 	stageArr[SHIP]->FirstInitialize();
 	stageArr[OUTSIDE]->FirstInitialize();
 	stageArr[INSIDE]->FirstInitialize();
-
 }
 
 void GameScene::Update() {
