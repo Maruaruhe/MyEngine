@@ -20,7 +20,7 @@ std::unique_ptr<Camera> IStage::camera2;
 IStage::IStage(){}
 IStage::~IStage() {
 	for (int i = 0; i < items_.size(); i++) {
-		delete items_ [i];
+		//delete items_ [i];
 	}
 }
 
