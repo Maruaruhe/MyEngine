@@ -8,9 +8,6 @@ using namespace MyEngine;
 MapJson::MapJson(){}
 
 MapJson::~MapJson() {
-    //for (mapItem* item : items_) {
-    //    delete item;
-    //}
 }
 
 void MapJson::Initialize(Camera* camera, std::string filename) {
@@ -18,7 +15,6 @@ void MapJson::Initialize(Camera* camera, std::string filename) {
 
     CreateWall(camera);
     CreateDoor(camera);
-    //CreateItem(camera);
 }
 
 void MapJson::Update() {
@@ -28,9 +24,6 @@ void MapJson::Update() {
     for (Door door : doors_) {
         door.Update();
     }
-    //for (mapItem* item : items_) {
-    //    item->Update();
-    //}
 }
 
 void MapJson::Draw() {
@@ -40,9 +33,6 @@ void MapJson::Draw() {
     for (Door door : doors_) {
         door.Draw();
     }
-    //for (mapItem* item : items_) {
-    //    item->Draw();
-    //}
 }
 
 void MapJson::CheckCollision(AABB pAABB, Vector3 move, Vector3* fixVector) {

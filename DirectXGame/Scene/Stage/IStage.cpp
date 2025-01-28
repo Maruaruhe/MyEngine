@@ -17,7 +17,12 @@ std::vector<mapItem*> IStage::items_ = {};
 
 std::unique_ptr<Camera> IStage::camera2;
 
-IStage::~IStage() {}
+IStage::IStage(){}
+IStage::~IStage() {
+	for (int i = 0; i < items_.size(); i++) {
+		delete items_ [i];
+	}
+}
 
 void IStage::GameInitialize() {
 	camera2 = std::make_unique<Camera>();

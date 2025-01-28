@@ -6,6 +6,9 @@
 
 using namespace MyEngine;
 
+mapItem::mapItem(){}
+mapItem::~mapItem(){}
+
 void mapItem::Initialize(const Transform transform,  std::string filename) {
 	ModelManager::GetInstance()->LoadModel("2x2cube");
 

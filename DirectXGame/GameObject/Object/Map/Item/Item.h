@@ -11,6 +11,8 @@ enum nowWhere {
 class mapItem
 {
 public:
+	mapItem();
+	~mapItem();
 	/// <summary>
 	/// Initialize
 	/// </summary>

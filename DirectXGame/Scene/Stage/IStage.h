@@ -88,7 +88,8 @@ public:
 
 	void SpriteView();
 
-	virtual ~IStage();
+	IStage();
+	~IStage();
 
 	//Getter
 	int GetStageNo() { return stageNo; }
