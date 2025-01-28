@@ -44,6 +44,7 @@ void Player::Initialize() {
 
 	//テクスチャ
 	deads_.Initialize({ 1280,720 }, "Resources/Dead/youdied.png");
+	deads_.anchorPoint = {};
 	toggleLight_.Initialize({ 214,31 }, "Resources/Entity/Player/ToggleLight.png");
 	toggleLight_.transform.translate = { 1000,30,0 };
 
@@ -116,6 +117,7 @@ void Player::Update() {
 	}
 	else {
 	DeathUpdate();
+	deadModel.transform = model.transform;
 	}
 
 
@@ -145,13 +147,13 @@ void Player::Update() {
 	}
 
 
-	/*if (kInput_->TriggerKey(DIK_T)) {
+	if (kInput_->TriggerKey(DIK_T)) {
 		state_.isAlive = false; 
 		deadFlame = 0;
-	}*/
-	//if (kInput_->TriggerKey(DIK_Y)) {
-	//	state_.isAlive = true;
-	//}
+	}
+	if (kInput_->TriggerKey(DIK_Y)) {
+		state_.isAlive = true;
+	}
 	if (state_.isAlive) {
 		tForCamera = model.transform;
 	}
@@ -194,7 +196,6 @@ void Player::Draw() {
 
 	if (!state_.isAlive) {
 		deadModel.Draw();
-		deads_.Draw();
 	}
 #ifdef _DEBUG
 	view.Draw();
@@ -202,21 +203,27 @@ void Player::Draw() {
 }
 
 void Player::SpriteDraw() {
-	toggleLight_.Draw();
-	if (canOpenDoor_) {
-		holdQ_.Draw();
+	if (!state_.isAlive) {
+		toggleLight_.Draw();
+		if (canOpenDoor_) {
+			holdQ_.Draw();
+		}
+		wasd_.w[wasd_.isw].Draw();
+		wasd_.a[wasd_.isa].Draw();
+		wasd_.s[wasd_.iss].Draw();
+		wasd_.d[wasd_.isd].Draw();
+
+		arrows_.w[arrows_.isw].Draw();
+		arrows_.a[arrows_.isa].Draw();
+		arrows_.s[arrows_.iss].Draw();
+		arrows_.d[arrows_.isd].Draw();
+
+		space_.sprite[space_.isUsed].Draw();
 	}
-	wasd_.w[wasd_.isw].Draw();
-	wasd_.a[wasd_.isa].Draw();
-	wasd_.s[wasd_.iss].Draw();
-	wasd_.d[wasd_.isd].Draw();
 
-	arrows_.w[arrows_.isw].Draw();
-	arrows_.a[arrows_.isa].Draw();
-	arrows_.s[arrows_.iss].Draw();
-	arrows_.d[arrows_.isd].Draw();
-
-	space_.sprite[space_.isUsed].Draw();
+	if (!state_.isAlive) {
+		deads_.Draw();
+	}
 }
 
 void Player::Move() {
@@ -476,6 +483,7 @@ void Player::DeathUpdate() {
 		if (deadFlame >= 180) {
 			deadFlame = 180;
 		}
+		deadModel.Update();
 
 		deadCamera.translate = model.transform.translate;
 		deadCamera.translate.y = 4.0f + float(3 * deadFlame)/180.0f;

@@ -20,6 +20,12 @@ void InsideStage::Initialize(int prevStage) {
 	player_.model.transform.rotate = { 0.0f,0.0f,0.0f };
 
 	stageChangeCount = 0;
+
+	trace.Initialize({});
+	trace.model_.transform.translate = {21.0f,0.0f,-4.0f};
+	trace.SetPlayer(&player_);
+	trace.SetMap(&mapJson_);
+	trace.model_.SetCamera(camera2.get());
 }
 
 
@@ -29,6 +35,8 @@ void InsideStage::Update() {
 	camera2->Update();
 
 	player_.Update();
+
+	trace.Update();
 
 	mapJson_.Update();
 
@@ -40,6 +48,8 @@ void InsideStage::Update() {
 
 void InsideStage::Draw() {
 	player_.Draw();
+
+	trace.Draw();
 
 	mapJson_.Draw();
 }

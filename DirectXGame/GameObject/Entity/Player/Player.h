@@ -96,6 +96,7 @@ private:
 	/// 死亡時
 	/// </summary>
 	void DeathUpdate();
+	void DeathDraw();
 	int deathCount;
 
 	//視線判定
