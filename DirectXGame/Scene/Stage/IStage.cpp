@@ -13,16 +13,12 @@ Lighting IStage::light_ = {};
 
 Sprite IStage::toggleLight_ = {};
 
-std::vector<mapItem*> IStage::items_ = {};
+std::vector<std::shared_ptr<mapItem>> IStage::items_ = {};
 
 std::unique_ptr<Camera> IStage::camera2;
 
 IStage::IStage(){}
-IStage::~IStage() {
-	for (int i = 0; i < items_.size(); i++) {
-		//delete items_ [i];
-	}
-}
+IStage::~IStage() {}
 
 void IStage::GameInitialize() {
 	camera2 = std::make_unique<Camera>();
@@ -47,7 +43,7 @@ void IStage::TimeLapse() {
 }
 
 void IStage::ItemUpdate(int currentStage){
-	for (mapItem* item : items_) {
+	for (std::shared_ptr<mapItem> item : items_) {
 		if (item->isTaken_) {
 			item->nowWhere_ = nowWhere(currentStage);
 		}
@@ -57,7 +53,7 @@ void IStage::ItemUpdate(int currentStage){
 
 
 void IStage::ItemDraw(int currentStage){
-	for (mapItem* item : items_) {
+	for (std::shared_ptr<mapItem> item : items_) {
 		if (item->nowWhere_ ==  currentStage) {
 			item->Draw();
 		}

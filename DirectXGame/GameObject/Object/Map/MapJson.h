@@ -36,7 +36,7 @@ public:
 	LevelData GetLevel() { return level_; }
 
 	//GameSceneに持たせる
-	std::vector<mapItem*> CreateItem(Camera* camera, std::string filename);
+	std::vector<std::shared_ptr<mapItem>> CreateItem(Camera* camera, std::string filename);
 private:
 
 	void CreateWall(Camera* camera);

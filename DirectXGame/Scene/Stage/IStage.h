@@ -51,7 +51,7 @@ protected:
 
 	static Sprite toggleLight_;
 
-	static std::vector<mapItem*> items_;
+	static std::vector<std::shared_ptr<mapItem>> items_;
 
 public:
 	/// <summary>

@@ -163,15 +163,15 @@ void MapJson::CreateWayPoint(Camera* camera){
 
 }
 
-std::vector<mapItem*> MapJson::CreateItem(Camera* camera, std::string filename){
-    std::vector<mapItem*> items_;
+std::vector<std::shared_ptr<mapItem>> MapJson::CreateItem(Camera* camera, std::string filename){
+    std::vector<std::shared_ptr<mapItem>> items_;
 
     level_ = FileManager::GetInstance()->LoadJsonFile("Json/", filename);
 
     for (int i = 0; i < level_.objects.size(); i++) {
         if (level_.objects[i].isItem) {
-            mapItem* newItem;
-            newItem = new mapItem();
+            std::shared_ptr<mapItem> newItem;
+            newItem = std::make_shared<mapItem>();
             newItem->Initialize(level_.objects[i].transform, level_.objects[i].filename);
             newItem->model_.SetCamera(camera);
 
