@@ -10,8 +10,8 @@ void ShipStage::FirstInitialize() {
 
 void ShipStage::Initialize(int prevStage) {
 	//Static Initialize
-	light_.light->direction = { 0.275f,0.944f,0.181f };
-	light_.light->intensity = 0.016f;
+	light_.light->direction = { 0.95f, -0.33f, -0.02f };
+	light_.light->intensity = 0.75f;
 
 	player_.model.SetCamera(camera2.get());
 	player_.deadModel.SetCamera(camera2.get());
@@ -21,8 +21,6 @@ void ShipStage::Initialize(int prevStage) {
 	player_.model.transform.rotate = { 0.0f,0.0f,0.0f };
 
 	stageChangeCount = 0;
-
-	//mapJson_.Initialize(camera2.get(), "ShipStage");
 
 	player_.SetMap(&mapJson_);
 

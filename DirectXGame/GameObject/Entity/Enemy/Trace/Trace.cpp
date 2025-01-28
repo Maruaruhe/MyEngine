@@ -91,12 +91,12 @@ void Trace::ChasePlayer(){
 			map_->CheckCollision(enemyAABB, { velocity_.x,velocity_.y, velocity_.z }, &fixVector);
 			model_.transform.translate += fixVector;
 
-#ifdef _DEBUG
-			ImGui::Begin("fix");
-			ImGui::SliderFloat3("fixVector", &fixVector.x, -15, 15);
-			ImGui::SliderFloat3("velocity_", &velocity_.x, -15, 15);
-			ImGui::End();
-#endif
+//#ifdef _DEBUG
+//			ImGui::Begin("fix");
+//			ImGui::SliderFloat3("fixVector", &fixVector.x, -15, 15);
+//			ImGui::SliderFloat3("velocity_", &velocity_.x, -15, 15);
+//			ImGui::End();
+//#endif
 
 			//壁と当たったら
 			if (fixVector.x !=0.0f || fixVector.z != 0.0f) {

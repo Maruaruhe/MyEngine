@@ -15,7 +15,7 @@ void Lighting::Initialize() {
 }
 
 void Lighting::Update() {
-#ifdef _DEBUG
+//#ifdef _DEBUG
 
 
 	ImGui::Begin("Light");
@@ -25,6 +25,6 @@ void Lighting::Update() {
 	ImGui::DragFloat("intensity", &light->intensity, 0.01f);
 	ImGui::End();
 
-#endif // DEBUG
+//#endif // DEBUG
 	DirectX12::GetInstance()->GetCommandList()->SetGraphicsRootConstantBufferView(4, directionalLightResource->GetGPUVirtualAddress());
 }
