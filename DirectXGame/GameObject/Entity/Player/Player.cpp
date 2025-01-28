@@ -423,11 +423,11 @@ Vector3 Player::GetItemFrontVector() {
 
 void Player::CheckItemCollision() {
 	//mapからItem情報を取得
-	std::vector<mapItem*> items = mapJson_->GetItems();
+	//std::vector<mapItem*> items = mapJson_->GetItems();
 
-	for (int i = 0; i < items.size(); i++) {
+	for (int i = 0; i < items_.size(); i++) {
 		AABB itemAABB;
-		itemAABB.CreateEntityAABB(items[i]->model_.transform);
+		itemAABB.CreateEntityAABB(items_[i]->model_.transform);
 
 		Segment playerSight;
 		playerSight.start = model.transform.translate;
@@ -436,17 +436,17 @@ void Player::CheckItemCollision() {
 		//視線との当たり判定
 		if (itemAABB.CheckLineCollision(playerSight)) {
 			//拾う処理
-			items[i]->TakenItem();
+			items_[i]->TakenItem();
 		}
 		else {
 
 		}
 
 		//Item Update
-		if (items[i]->isTaken_) {
-			items[i]->model_.transform.translate = {};
+		if (items_[i]->isTaken_) {
+			items_[i]->model_.transform.translate = {};
 			if (KeyInput::GetInstance()->TriggerKey(DIK_G)) {
-				items[i]->DropItem(model.transform.translate);
+				items_[i]->DropItem(model.transform.translate);
 			}
 		}
 	}

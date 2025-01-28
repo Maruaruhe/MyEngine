@@ -2,6 +2,12 @@
 #include "../../../../Object/Model/Model.h"
 #include "../../../../Object/Camera/Camera.h"
 
+enum nowWhere {
+	SH = 1,
+	OU = 2,
+	INS = 3,
+};
+
 class mapItem
 {
 public:
@@ -30,8 +36,10 @@ public:
 	bool isTaken_ = false;
 	bool isabletobetaken_ = false;
 	Model model_;
+	nowWhere nowWhere_;
 
-protected:
+
+private:
 	Camera* camera_;
 
 	int weight_;

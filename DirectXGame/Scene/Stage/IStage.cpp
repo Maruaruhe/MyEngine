@@ -13,6 +13,8 @@ Lighting IStage::light_ = {};
 
 Sprite IStage::toggleLight_ = {};
 
+std::vector<mapItem*> IStage::items_ = {};
+
 std::unique_ptr<Camera> IStage::camera2;
 
 IStage::~IStage() {}
@@ -24,6 +26,9 @@ void IStage::GameInitialize() {
 	player_.Initialize();
 
 	light_.Initialize();
+
+	items_ = mapJson_.CreateItem(camera2.get(), "Inside");
+	player_.SetItems(items_);
 }
 
 void IStage::TimeLapse() {
@@ -34,4 +39,22 @@ void IStage::TimeLapse() {
 	ImGui::Begin("nowTime");
 	ImGui::Text("time : %d", time);
 	ImGui::End();
+}
+
+void IStage::ItemUpdate(int currentStage){
+	for (mapItem* item : items_) {
+		if (item->isTaken_) {
+			item->nowWhere_ = nowWhere(currentStage);
+		}
+		item->Update();
+	}
+}
+
+
+void IStage::ItemDraw(int currentStage){
+	for (mapItem* item : items_) {
+		if (item->nowWhere_ ==  currentStage) {
+			item->Draw();
+		}
+	}
 }

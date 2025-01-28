@@ -8,9 +8,9 @@ using namespace MyEngine;
 MapJson::MapJson(){}
 
 MapJson::~MapJson() {
-    for (mapItem* item : items_) {
-        delete item;
-    }
+    //for (mapItem* item : items_) {
+    //    delete item;
+    //}
 }
 
 void MapJson::Initialize(Camera* camera, std::string filename) {
@@ -18,7 +18,7 @@ void MapJson::Initialize(Camera* camera, std::string filename) {
 
     CreateWall(camera);
     CreateDoor(camera);
-    CreateItem(camera);
+    //CreateItem(camera);
 }
 
 void MapJson::Update() {
@@ -28,9 +28,9 @@ void MapJson::Update() {
     for (Door door : doors_) {
         door.Update();
     }
-    for (mapItem* item : items_) {
-        item->Update();
-    }
+    //for (mapItem* item : items_) {
+    //    item->Update();
+    //}
 }
 
 void MapJson::Draw() {
@@ -40,9 +40,9 @@ void MapJson::Draw() {
     for (Door door : doors_) {
         door.Draw();
     }
-    for (mapItem* item : items_) {
-        item->Draw();
-    }
+    //for (mapItem* item : items_) {
+    //    item->Draw();
+    //}
 }
 
 void MapJson::CheckCollision(AABB pAABB, Vector3 move, Vector3* fixVector) {
@@ -173,7 +173,11 @@ void MapJson::CreateWayPoint(Camera* camera){
 
 }
 
-void MapJson::CreateItem(Camera* camera){
+std::vector<mapItem*> MapJson::CreateItem(Camera* camera, std::string filename){
+    std::vector<mapItem*> items_;
+
+    level_ = FileManager::GetInstance()->LoadJsonFile("Json/", filename);
+
     for (int i = 0; i < level_.objects.size(); i++) {
         if (level_.objects[i].isItem) {
             mapItem* newItem;
@@ -184,4 +188,6 @@ void MapJson::CreateItem(Camera* camera){
             items_.push_back(newItem);
         }
     }
+
+    return items_;
 }

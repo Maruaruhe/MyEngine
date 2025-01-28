@@ -16,6 +16,8 @@ void mapItem::Initialize(const Transform transform,  std::string filename) {
 	model_.textureIndex = TextureManager::GetInstance()->GetTextureIndexByFilePath("Resources/Map/" + filename + ".png");
 
 	model_.material->enableLighting = true;
+
+	nowWhere_ = INS;
 }
 
 void mapItem::Update() {

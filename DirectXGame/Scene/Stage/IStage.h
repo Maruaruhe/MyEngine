@@ -51,6 +51,8 @@ protected:
 
 	static Sprite toggleLight_;
 
+	static std::vector<mapItem*> items_;
+
 public:
 	/// <summary>
 	/// Initialize
@@ -81,6 +83,9 @@ public:
 	void GameInitialize();
 
 	void TimeLapse();
+	void ItemUpdate(int currentStage);
+	void ItemDraw(int currentStage);
+
 	void SpriteView();
 
 	virtual ~IStage();

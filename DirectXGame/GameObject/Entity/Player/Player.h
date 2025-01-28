@@ -62,6 +62,7 @@ public:
 
 	//Setter
 	void SetMap(MapJson* map) { this->mapJson_ = map; }
+	void SetItems(std::vector<mapItem*> items) { items_ = items; }
 
 	Model model;
 	Model deadModel;
@@ -114,6 +115,7 @@ private:
 
 	//MapInfo
 	MapJson* mapJson_;
+	std::vector<mapItem*> items_;
 
 	SpotLight sLight_;
 

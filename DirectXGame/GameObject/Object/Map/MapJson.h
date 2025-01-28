@@ -34,13 +34,13 @@ public:
 	bool CheckCollisionWithEye(const Segment& eyeSegment);
 
 	LevelData GetLevel() { return level_; }
-	std::vector<mapItem*> GetItems() { return items_; }
 
+	//GameSceneに持たせる
+	std::vector<mapItem*> CreateItem(Camera* camera, std::string filename);
 private:
 
 	void CreateWall(Camera* camera);
 	void CreateWayPoint(Camera* camera);
-	void CreateItem(Camera* camera);
 	void CreateDoor(Camera* camera);
 
 private:
@@ -51,7 +51,7 @@ private:
 	LevelData level_;
 	std::vector<Wall> walls_;
 	std::vector<Door> doors_;
-	std::vector<mapItem*> items_;
+	//std::vector<mapItem*> items_;
 
 	//
 	const float kMapHeight = 10.0f;
