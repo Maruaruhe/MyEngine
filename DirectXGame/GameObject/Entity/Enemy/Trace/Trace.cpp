@@ -29,24 +29,25 @@ void Trace::Draw() {
 }
 
 void Trace::FindPlayer() {
+	//壁カウント用変数
 		int numWallCollision = 0;
+
 	if (!isChase_) {//未発見時
 		Segment PtoE;
 		PtoE.start = player_->model.transform.translate;
 		PtoE.end = model_.transform.translate;
-
+		PtoE.end.y = 1.0f;
 
 		walls_ = map_->GetWalls();
 		for (Wall wall : walls_) {
 			AABB wallAABB;
-			wallAABB.CreateModelAABB(wall.model_.transform);
-
+			wallAABB.CreateWallAABB(wall.model_.transform);
 			//視線と壁の当たり判定
 			if (wallAABB.CheckLineCollision(PtoE)) {
 				numWallCollision++;
 			}
 		}
-
+		//視線上に壁がなかった場合発見
 		if (numWallCollision == 0) {
 			isChase_ = true;
 		}
@@ -62,7 +63,7 @@ void Trace::FindPlayer() {
 void Trace::ChasePlayer(){
 	if (isChase_) {//発見
 
-		if (!isAttacking_) { //探索中
+		if (!isAttacking_) { //攻撃開始時初期化
 			isAttacking_ = true;
 			tracingTime_ = 0;
 
@@ -72,16 +73,16 @@ void Trace::ChasePlayer(){
 			chaseSpeed_ = firstSpeed_;
 		}
 		else { //追跡中
-			tracingTime_++;
+			tracingTime_++; //追跡時間
 			velocity_ = Normalize(distance_) * chaseSpeed_;
 
-			chaseSpeed_ += 0.0005f;
+			chaseSpeed_ += 0.0005f; // だんだんスピードはやく
 			if (chaseSpeed_ >= maxSpeed_) {
 				chaseSpeed_ = maxSpeed_;
 			}
 
 			model_.transform.translate += velocity_;
-			model_.transform.translate.y = 1.0f;
+			model_.transform.translate.y = 0.0f;
 
 			// 最後に当たり判定をチェック
 			Vector3 fixVector{};
@@ -90,13 +91,6 @@ void Trace::ChasePlayer(){
 
 			map_->CheckCollision(enemyAABB, { velocity_.x,velocity_.y, velocity_.z }, &fixVector);
 			model_.transform.translate += fixVector;
-
-//#ifdef _DEBUG
-//			ImGui::Begin("fix");
-//			ImGui::SliderFloat3("fixVector", &fixVector.x, -15, 15);
-//			ImGui::SliderFloat3("velocity_", &velocity_.x, -15, 15);
-//			ImGui::End();
-//#endif
 
 			//壁と当たったら
 			if (fixVector.x !=0.0f || fixVector.z != 0.0f) {
