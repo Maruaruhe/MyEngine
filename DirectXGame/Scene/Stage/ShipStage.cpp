@@ -4,8 +4,8 @@ using namespace MyEngine;
 
 ShipStage::~ShipStage(){}
 
-void ShipStage::FirstInitialize() {
-	mapJson_.Initialize(camera2.get(), "ShipStage");
+void ShipStage::FirstInitialize(Player* player) {
+	mapJson_.Initialize(camera2.get(), "ShipStage", player);
 }
 
 void ShipStage::Initialize(int prevStage) {
@@ -24,11 +24,6 @@ void ShipStage::Initialize(int prevStage) {
 
 	player_.SetMap(&mapJson_);
 
-	trace_.Initialize({});
-	trace_.SetPlayer(&player_);
-	trace_.SetMap(&mapJson_);
-	trace_.model_.SetCamera(camera2.get());
-
 	stageChangeCount = 0;
 }
 
@@ -39,8 +34,6 @@ void ShipStage::Update() {
 	camera2->Update();
 
 	player_.Update();
-
-	trace_.Update();
 
 	camera2.get()->transform.translate = player_.tForCamera.translate;
 	camera2.get()->transform.translate.y += 0.5f;
@@ -56,8 +49,6 @@ void ShipStage::Update() {
 
 void ShipStage::Draw() {
 	player_.Draw();
-
-	trace_.Draw();
 
 	mapJson_.Draw();
 }

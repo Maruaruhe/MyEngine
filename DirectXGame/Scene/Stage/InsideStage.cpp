@@ -3,8 +3,8 @@ using namespace MyEngine;
 
 InsideStage::~InsideStage() {}
 
-void InsideStage::FirstInitialize() {
-	mapJson_.Initialize(camera2.get(), "Inside");
+void InsideStage::FirstInitialize(Player* player) {
+	mapJson_.Initialize(camera2.get(), "Inside", player);
 }
 
 void InsideStage::Initialize(int prevStage) {
@@ -21,7 +21,8 @@ void InsideStage::Initialize(int prevStage) {
 
 	stageChangeCount = 0;
 
-	trace.Initialize({});
+	TextureManager::GetInstance()->LoadTexture("Resources/Map/enemy.png");
+	trace.Initialize({}, "enemy");
 	trace.model_.transform.translate = {21.0f,0.0f,-4.0f};
 	trace.SetPlayer(&player_);
 	trace.SetMap(&mapJson_);

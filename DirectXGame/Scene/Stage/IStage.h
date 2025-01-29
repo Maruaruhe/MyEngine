@@ -62,7 +62,7 @@ public:
 	/// <summary>
 /// FirstInitialize
 /// </summary>
-	virtual void FirstInitialize() = 0;
+	virtual void FirstInitialize(Player* player) = 0;
 	/// <summary>
 	/// Update
 	/// </summary>

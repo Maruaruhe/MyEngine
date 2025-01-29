@@ -10,11 +10,12 @@ MapJson::MapJson(){}
 MapJson::~MapJson() {
 }
 
-void MapJson::Initialize(Camera* camera, std::string filename) {
+void MapJson::Initialize(Camera* camera, std::string filename, Player* player) {
     level_ = FileManager::GetInstance()->LoadJsonFile("Json/", filename);
 
     CreateWall(camera);
     CreateDoor(camera);
+    CreateEnemy(camera, player);
 }
 
 void MapJson::Update() {
@@ -155,6 +156,19 @@ void MapJson::CreateDoor(Camera* camera){
             newDoor.model_.SetCamera(camera);
 
             doors_.push_back(newDoor);
+        }
+    }
+}
+
+void MapJson::CreateEnemy(Camera* camera, Player* player) {
+    for (int i = 0; i < level_.objects.size(); i++) {
+        if (level_.objects[i].isEnemy) {
+            Trace newDoor;
+            newDoor.Initialize(level_.objects[i].transform, level_.objects[i].filename);
+            newDoor.model_.SetCamera(camera);
+            newDoor.SetPlayer(player);
+
+            traces_.push_back(newDoor);
         }
     }
 }

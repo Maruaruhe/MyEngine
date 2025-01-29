@@ -9,7 +9,7 @@ public:
 	/// Initialize
 	/// </summary>
 	/// <param name="transform"></param>
-	void Initialize(Transform transform);
+	void Initialize(Transform transform, std::string filename);
 	/// <summary>
 	/// Update
 	/// </summary>

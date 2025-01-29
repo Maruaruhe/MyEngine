@@ -5,6 +5,8 @@
 #include "Wall/Wall.h"
 #include "Door/Door.h"
 #include "Item/Item.h"
+#include "../../Entity/Enemy/Trace/Trace.h"
+#include "../../Entity/Player/Player.h"
 
 //JsonMapクラス
 class MapJson
@@ -16,7 +18,7 @@ public:
 	/// Initialize
 	/// </summary>
 	/// <param name="camera"></param>
-	void Initialize(Camera* camera, std::string filename);
+	void Initialize(Camera* camera, std::string filename, Player* player);
 
 	/// <summary>
 	/// Update
@@ -43,15 +45,18 @@ private:
 	void CreateWall(Camera* camera);
 	void CreateWayPoint(Camera* camera);
 	void CreateDoor(Camera* camera);
+	void CreateEnemy(Camera* camera, Player* player);
 
 private:
 	const std::string directoryPath = "Resources/csv/";
 
 	Camera* camera_;
+	Player* player_;
 
 	LevelData level_;
 	std::vector<Wall> walls_;
 	std::vector<Door> doors_;
+	std::vector<Trace> traces_;
 	//std::vector<mapItem*> items_;
 
 	//

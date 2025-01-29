@@ -37,192 +37,13 @@
             },
             "load_model": true,
             "is_item": false,
+            "is_enemy": true,
             "to_left": false,
             "to_right": false,
             "to_front": false,
             "to_back": false,
             "to_top": true,
             "to_bot": true,
-            "is_door": false,
-            "children": []
-        },
-        {
-            "type": "MESH",
-            "name": "Wall",
-            "transform": {
-                "translation": [
-                    -50.0,
-                    50.0,
-                    10.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    50.0,
-                    10.0
-                ]
-            },
-            "file_name": "wall",
-            "collider": {
-                "type": "AABB",
-                "center": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "size": [
-                    2.0,
-                    2.0,
-                    2.0
-                ]
-            },
-            "load_model": true,
-            "is_item": false,
-            "to_left": true,
-            "to_right": true,
-            "to_front": false,
-            "to_back": false,
-            "to_top": false,
-            "to_bot": false,
-            "is_door": false,
-            "children": []
-        },
-        {
-            "type": "MESH",
-            "name": "Wall.001",
-            "transform": {
-                "translation": [
-                    50.0,
-                    50.0,
-                    10.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    1.0,
-                    50.0,
-                    10.0
-                ]
-            },
-            "file_name": "wall",
-            "collider": {
-                "type": "AABB",
-                "center": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "size": [
-                    2.0,
-                    2.0,
-                    2.0
-                ]
-            },
-            "load_model": true,
-            "is_item": false,
-            "to_left": true,
-            "to_right": true,
-            "to_front": false,
-            "to_back": false,
-            "to_top": false,
-            "to_bot": false,
-            "is_door": false,
-            "children": []
-        },
-        {
-            "type": "MESH",
-            "name": "Wall.002",
-            "transform": {
-                "translation": [
-                    0.0,
-                    0.0,
-                    10.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    50.0,
-                    1.0,
-                    10.0
-                ]
-            },
-            "file_name": "wall",
-            "collider": {
-                "type": "AABB",
-                "center": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "size": [
-                    2.0,
-                    2.0,
-                    2.0
-                ]
-            },
-            "load_model": false,
-            "is_item": false,
-            "to_left": false,
-            "to_right": false,
-            "to_front": true,
-            "to_back": true,
-            "to_top": false,
-            "to_bot": false,
-            "is_door": false,
-            "children": []
-        },
-        {
-            "type": "MESH",
-            "name": "Wall.003",
-            "transform": {
-                "translation": [
-                    0.0,
-                    100.0,
-                    10.0
-                ],
-                "rotation": [
-                    0.0,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    50.0,
-                    1.0,
-                    10.0
-                ]
-            },
-            "file_name": "wall",
-            "collider": {
-                "type": "AABB",
-                "center": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "size": [
-                    2.0,
-                    2.0,
-                    2.0
-                ]
-            },
-            "load_model": true,
-            "is_item": false,
-            "to_left": false,
-            "to_right": false,
-            "to_front": true,
-            "to_back": true,
-            "to_top": false,
-            "to_bot": false,
             "is_door": false,
             "children": []
         },
@@ -262,6 +83,7 @@
             },
             "load_model": true,
             "is_item": false,
+            "is_enemy": true,
             "to_left": false,
             "to_right": false,
             "to_front": false,
@@ -277,7 +99,7 @@
             "transform": {
                 "translation": [
                     0.0,
-                    0.0,
+                    0.75,
                     1.5
                 ],
                 "rotation": [
@@ -287,7 +109,7 @@
                 ],
                 "scaling": [
                     1.0,
-                    1.25,
+                    0.5,
                     1.5
                 ]
             },
@@ -307,6 +129,7 @@
             },
             "load_model": true,
             "is_item": false,
+            "is_enemy": false,
             "to_left": false,
             "to_right": false,
             "to_front": false,
@@ -321,8 +144,8 @@
             "name": "xDEFAULT",
             "transform": {
                 "translation": [
-                    0.0,
-                    -10.0,
+                    -0.7514586448669434,
+                    -50.01276779174805,
                     10.0
                 ],
                 "rotation": [
@@ -352,6 +175,7 @@
             },
             "load_model": true,
             "is_item": false,
+            "is_enemy": true,
             "to_left": true,
             "to_right": true,
             "to_front": false,
@@ -366,8 +190,8 @@
             "name": "zDEFAULT",
             "transform": {
                 "translation": [
-                    0.0,
-                    -10.0,
+                    -0.7514586448669434,
+                    -50.01276779174805,
                     10.0
                 ],
                 "rotation": [
@@ -397,6 +221,7 @@
             },
             "load_model": true,
             "is_item": false,
+            "is_enemy": true,
             "to_left": true,
             "to_right": true,
             "to_front": true,
@@ -442,6 +267,7 @@
             },
             "load_model": true,
             "is_item": false,
+            "is_enemy": true,
             "to_left": false,
             "to_right": false,
             "to_front": false,
@@ -486,6 +312,7 @@
                     },
                     "load_model": true,
                     "is_item": false,
+                    "is_enemy": true,
                     "to_left": true,
                     "to_right": true,
                     "to_front": true,
@@ -531,6 +358,7 @@
                     },
                     "load_model": true,
                     "is_item": false,
+                    "is_enemy": false,
                     "to_left": true,
                     "to_right": true,
                     "to_front": true,
@@ -576,6 +404,7 @@
                     },
                     "load_model": true,
                     "is_item": false,
+                    "is_enemy": true,
                     "to_left": true,
                     "to_right": true,
                     "to_front": true,
@@ -621,6 +450,53 @@
                     },
                     "load_model": true,
                     "is_item": false,
+                    "is_enemy": true,
+                    "to_left": true,
+                    "to_right": true,
+                    "to_front": true,
+                    "to_back": true,
+                    "to_top": false,
+                    "to_bot": false,
+                    "is_door": false,
+                    "children": []
+                },
+                {
+                    "type": "MESH",
+                    "name": "zDEFAULT.007",
+                    "transform": {
+                        "translation": [
+                            0.25,
+                            0.75,
+                            10.0
+                        ],
+                        "rotation": [
+                            0.0,
+                            -0.0,
+                            0.0
+                        ],
+                        "scaling": [
+                            5.0,
+                            0.25,
+                            10.0
+                        ]
+                    },
+                    "file_name": "wall",
+                    "collider": {
+                        "type": "AABB",
+                        "center": [
+                            0.0,
+                            0.0,
+                            0.0
+                        ],
+                        "size": [
+                            2.0,
+                            2.0,
+                            2.0
+                        ]
+                    },
+                    "load_model": true,
+                    "is_item": false,
+                    "is_enemy": true,
                     "to_left": true,
                     "to_right": true,
                     "to_front": true,
@@ -666,6 +542,7 @@
                     },
                     "load_model": true,
                     "is_item": false,
+                    "is_enemy": true,
                     "to_left": true,
                     "to_right": true,
                     "to_front": true,
@@ -711,6 +588,7 @@
                     },
                     "load_model": true,
                     "is_item": false,
+                    "is_enemy": true,
                     "to_left": true,
                     "to_right": true,
                     "to_front": true,
@@ -758,6 +636,7 @@
             },
             "load_model": true,
             "is_item": false,
+            "is_enemy": true,
             "to_left": true,
             "to_right": true,
             "to_front": true,
@@ -803,6 +682,7 @@
             },
             "load_model": true,
             "is_item": false,
+            "is_enemy": true,
             "to_left": true,
             "to_right": true,
             "to_front": true,
@@ -848,6 +728,7 @@
             },
             "load_model": true,
             "is_item": false,
+            "is_enemy": true,
             "to_left": true,
             "to_right": true,
             "to_front": true,
@@ -893,6 +774,7 @@
             },
             "load_model": true,
             "is_item": false,
+            "is_enemy": true,
             "to_left": true,
             "to_right": true,
             "to_front": true,
@@ -938,6 +820,7 @@
             },
             "load_model": true,
             "is_item": false,
+            "is_enemy": true,
             "to_left": true,
             "to_right": true,
             "to_front": true,
@@ -983,6 +866,7 @@
             },
             "load_model": true,
             "is_item": false,
+            "is_enemy": true,
             "to_left": true,
             "to_right": true,
             "to_front": true,
@@ -1028,6 +912,7 @@
             },
             "load_model": true,
             "is_item": false,
+            "is_enemy": true,
             "to_left": false,
             "to_right": false,
             "to_front": false,
@@ -1073,6 +958,7 @@
             },
             "load_model": true,
             "is_item": false,
+            "is_enemy": true,
             "to_left": true,
             "to_right": true,
             "to_front": true,
@@ -1118,6 +1004,7 @@
             },
             "load_model": true,
             "is_item": false,
+            "is_enemy": true,
             "to_left": true,
             "to_right": true,
             "to_front": true,
@@ -1163,6 +1050,7 @@
             },
             "load_model": true,
             "is_item": false,
+            "is_enemy": true,
             "to_left": false,
             "to_right": false,
             "to_front": false,
@@ -1208,6 +1096,7 @@
             },
             "load_model": true,
             "is_item": false,
+            "is_enemy": true,
             "to_left": true,
             "to_right": true,
             "to_front": true,
@@ -1253,6 +1142,7 @@
             },
             "load_model": true,
             "is_item": false,
+            "is_enemy": true,
             "to_left": true,
             "to_right": true,
             "to_front": true,
@@ -1298,6 +1188,7 @@
             },
             "load_model": true,
             "is_item": false,
+            "is_enemy": true,
             "to_left": false,
             "to_right": false,
             "to_front": false,
@@ -1343,6 +1234,7 @@
             },
             "load_model": true,
             "is_item": false,
+            "is_enemy": true,
             "to_left": false,
             "to_right": false,
             "to_front": false,
@@ -1388,6 +1280,7 @@
             },
             "load_model": true,
             "is_item": false,
+            "is_enemy": true,
             "to_left": true,
             "to_right": true,
             "to_front": true,
@@ -1433,6 +1326,7 @@
             },
             "load_model": true,
             "is_item": false,
+            "is_enemy": true,
             "to_left": true,
             "to_right": true,
             "to_front": true,
@@ -1478,6 +1372,7 @@
             },
             "load_model": true,
             "is_item": false,
+            "is_enemy": true,
             "to_left": false,
             "to_right": false,
             "to_front": false,
@@ -1523,6 +1418,7 @@
             },
             "load_model": true,
             "is_item": false,
+            "is_enemy": true,
             "to_left": true,
             "to_right": true,
             "to_front": true,
@@ -1568,6 +1464,7 @@
             },
             "load_model": true,
             "is_item": false,
+            "is_enemy": true,
             "to_left": true,
             "to_right": true,
             "to_front": true,
@@ -1613,6 +1510,7 @@
             },
             "load_model": true,
             "is_item": false,
+            "is_enemy": true,
             "to_left": true,
             "to_right": true,
             "to_front": true,
@@ -1658,6 +1556,7 @@
             },
             "load_model": true,
             "is_item": false,
+            "is_enemy": true,
             "to_left": true,
             "to_right": true,
             "to_front": true,
@@ -1703,6 +1602,7 @@
             },
             "load_model": true,
             "is_item": false,
+            "is_enemy": true,
             "to_left": false,
             "to_right": false,
             "to_front": false,
@@ -1748,6 +1648,7 @@
             },
             "load_model": true,
             "is_item": false,
+            "is_enemy": true,
             "to_left": true,
             "to_right": true,
             "to_front": true,
@@ -1793,6 +1694,7 @@
             },
             "load_model": true,
             "is_item": false,
+            "is_enemy": true,
             "to_left": true,
             "to_right": true,
             "to_front": true,
@@ -1838,6 +1740,7 @@
             },
             "load_model": true,
             "is_item": false,
+            "is_enemy": true,
             "to_left": true,
             "to_right": true,
             "to_front": true,
@@ -1883,6 +1786,7 @@
             },
             "load_model": true,
             "is_item": false,
+            "is_enemy": true,
             "to_left": false,
             "to_right": false,
             "to_front": false,
@@ -1927,6 +1831,7 @@
                     },
                     "load_model": true,
                     "is_item": false,
+                    "is_enemy": true,
                     "to_left": true,
                     "to_right": true,
                     "to_front": true,
@@ -1972,6 +1877,7 @@
                     },
                     "load_model": true,
                     "is_item": false,
+                    "is_enemy": true,
                     "to_left": true,
                     "to_right": true,
                     "to_front": true,
@@ -2017,6 +1923,7 @@
                     },
                     "load_model": true,
                     "is_item": false,
+                    "is_enemy": true,
                     "to_left": true,
                     "to_right": true,
                     "to_front": true,
@@ -2062,6 +1969,7 @@
                     },
                     "load_model": true,
                     "is_item": false,
+                    "is_enemy": true,
                     "to_left": true,
                     "to_right": true,
                     "to_front": true,
@@ -2107,6 +2015,7 @@
                     },
                     "load_model": true,
                     "is_item": false,
+                    "is_enemy": true,
                     "to_left": true,
                     "to_right": true,
                     "to_front": true,
@@ -2152,6 +2061,7 @@
                     },
                     "load_model": true,
                     "is_item": false,
+                    "is_enemy": true,
                     "to_left": true,
                     "to_right": true,
                     "to_front": true,
@@ -2199,6 +2109,53 @@
             },
             "load_model": true,
             "is_item": true,
+            "is_enemy": true,
+            "to_left": false,
+            "to_right": false,
+            "to_front": false,
+            "to_back": false,
+            "to_top": false,
+            "to_bot": false,
+            "is_door": false,
+            "children": []
+        },
+        {
+            "type": "MESH",
+            "name": "立方体.002",
+            "transform": {
+                "translation": [
+                    19.817922592163086,
+                    6.891874313354492,
+                    1.5642590522766113
+                ],
+                "rotation": [
+                    0.0,
+                    -0.0,
+                    0.0
+                ],
+                "scaling": [
+                    1.0,
+                    1.0,
+                    1.0
+                ]
+            },
+            "file_name": "enemy",
+            "collider": {
+                "type": "AABB",
+                "center": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "size": [
+                    2.0,
+                    2.0,
+                    2.0
+                ]
+            },
+            "load_model": true,
+            "is_item": false,
+            "is_enemy": true,
             "to_left": false,
             "to_right": false,
             "to_front": false,

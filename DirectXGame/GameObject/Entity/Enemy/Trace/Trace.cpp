@@ -4,7 +4,7 @@
 
 using namespace MyEngine;
 
-void Trace::Initialize(Transform transform) {
+void Trace::Initialize(Transform transform, std::string filename) {
 	isChase_ = false;
 	isAlive_ = true;
 	isAttacking_ = false;
@@ -12,6 +12,9 @@ void Trace::Initialize(Transform transform) {
 	ModelManager::GetInstance()->LoadModel("Entity/Enemy/trace");
 	model_.Initialize("Entity/Enemy/trace");
 	model_.transform = transform;
+
+	TextureManager::GetInstance()->LoadTexture("Resources/Map/" + filename + ".png");
+	model_.textureIndex = TextureManager::GetInstance()->GetTextureIndexByFilePath("Resources/Map/" + filename + ".png");
 
 	//model_.transform.translate = {0.0f,0.0f,0.0f};
 	model_.transform.scale = {1.0f,1.0f,1.0f};

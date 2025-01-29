@@ -30,6 +30,7 @@ struct Direction {
 
 struct ObjectData {
 	bool isItem;
+	bool isEnemy;
 	Direction direction;
 	bool isDoor;
 	Transform transform;
