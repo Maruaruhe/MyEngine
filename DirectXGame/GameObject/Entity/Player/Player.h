@@ -1,3 +1,4 @@
+#pragma once
 #include "../../../Object/Anime/Anime.h"
 #include "../../../Object/Model/Model.h"
 #include "../../../Object/Sprite/Sprite.h"
