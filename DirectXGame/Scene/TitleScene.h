@@ -18,6 +18,11 @@ struct tmpParticle {
 	float rotate;
 };
 
+enum Phase {
+	first,
+	second,
+};
+
 //TitleScene
 class TitleScene : public IScene
 {
@@ -26,39 +31,22 @@ public:
 	void Update() override;
 	void Draw() override;
 	void SceneChange() override;
-
-	void bInit();
-	void bUpdate();
-	void CreateParticle();
 	
 	~TitleScene();
 
 private:
 	MyEngine::KeyInput* input = nullptr;
 	
-	Sprite title;
-	Sprite black;
+	Phase phase_;
 
-	//std::vector<Sprite> blacks;
-	std::list<tmpParticle*> blacks;
-	int ct;
+	Sprite back;
+	Sprite title;
+	Sprite explain;
+
 
 	int sceneChangeFrame;
-	bool startChanging;
-	int howManyParticle;
-
-	int setTime;
-
-	Model model;
-
-	Scope transXScope;
-	Scope timeScope;
-	Scope sScope;
-
-	Scope vScope;
-
-	float velocity = 0.3f;
-
-	std::unique_ptr<Camera> camera2;
+	bool startTitleChanging;
+	bool startExplainChanging;
+	bool sceneMove;
 };
 

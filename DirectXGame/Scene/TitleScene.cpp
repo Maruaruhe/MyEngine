@@ -4,132 +4,69 @@
 using namespace MyEngine;
 
 TitleScene::~TitleScene() {
-	for (tmpParticle* s : blacks) {
-		delete s;
-	}
+
 }
 
 void TitleScene::Initialize() {
 	input = KeyInput::GetInstance();
 
-	TextureManager::GetInstance()->LoadTexture("Resources/Title/title.png");
-	title.Initialize({1280,720}, "Resources/Title/title.png");
+	phase_ = first;
+
+	sceneMove = false;
+
+	TextureManager::GetInstance()->LoadTexture("Resources/Title/background.png");
+	back.Initialize({ 1280,720 }, "Resources/Title/background.png");
+	back.transform.translate = { 640,360 ,0 };
+	back.anchorPoint = { 0.5f,0.5f };
+
+	TextureManager::GetInstance()->LoadTexture("Resources/Title/titletmp.png");
+	title.Initialize({1280,720}, "Resources/Title/titletmp.png");
 	title.transform.translate = { 640,360 ,0};
 	title.anchorPoint = { 0.5f,0.5f };
 
-	TextureManager::GetInstance()->LoadTexture("Resources/Title/titleHeart.png");
-
-	transXScope.min = -100.0f;
-	transXScope.max = 1280.0f;
-
-	timeScope.min = 30.0f;
-	timeScope.max = 60.0f;
-
-	sScope.min = 0.3f;
-	sScope.max = 1.0f;
-
-	vScope.min = 5.3f;
-	vScope.max = 7.3f;
-
-	setTime = 15;
-
-	sceneChangeFrame = 0;
-	startChanging = false;
-	howManyParticle = 1;
+	TextureManager::GetInstance()->LoadTexture("Resources/Title/explain.png");
+	explain.Initialize({1280,720}, "Resources/Title/explain.png");
+	explain.transform.translate = { 640,360 ,0};
+	explain.transform.scale = { 0.0,0.0 ,0};
+	explain.anchorPoint = { 0.5f,0.5f };
 }
 
 void TitleScene::Update() {
-	bUpdate();
-	blacks.remove_if([](tmpParticle* black) {
-		if (black->sprite->transform.translate.y <= -black->sprite->size_.y) {
-			delete black;
-			return true;
+	back.Update();
+	title.Update();
+	explain.Update();
+
+	if (input->TriggerKey(DIK_SPACE)) {
+		if (title.transform.scale.x > 0.0f) {
+			startTitleChanging = true;
 		}
-		return false;
-		});
+	}
+	if (startTitleChanging) {
+		title.transform.scale.x -= 0.1f;
+		title.transform.scale.y -= 0.1f;
+		if (title.transform.scale.x <= 0.0f) {
+			startTitleChanging = false; 
+			startExplainChanging = true;
+		}
+	}
+	if (startExplainChanging) {
+		explain.transform.scale.x += 0.1f;
+		explain.transform.scale.y += 0.1f;
+		if (explain.transform.scale.x >= 1.0f) {
+			startExplainChanging = false;
+			sceneMove = true;
+		}
+	}
 }
 
 void TitleScene::Draw() {
+	back.Draw();
 	title.Draw();
-	for (tmpParticle* b : blacks) {
-		b->sprite->transform.translate.y -= b->velocity;
-		b->sprite->Draw();
-	}
+	explain.Draw();
 }
 
 void TitleScene::SceneChange() {
-	if (sceneChangeFrame >= 600) {
+	if (sceneMove && input->TriggerKey(DIK_SPACE)) {
 		sceneNo = INGAME;
-
-		//for (tmpParticle* s : blacks) {
-		//	delete s;
-		//}
 	}
-}
-
-void TitleScene::bInit(){
-
-}
-
-void TitleScene::bUpdate(){
-	ct--;
-
-	if (ct <= 0) {
-		for (int i = 0; i < howManyParticle; i++) {
-			CreateParticle();
-		}
-	}
-	//シーン遷移スタート
-	if (KeyInput::GetInstance()->TriggerKey(DIK_SPACE)) {
-		startChanging = true;
-	}
-
-	//フレーム計算
-	if (startChanging) {
-		sceneChangeFrame++;
-		
-		if (sceneChangeFrame >= 0) {
-			howManyParticle = 3;
-			setTime = 3;
-		}
-
-		if (sceneChangeFrame >= 120) {
-			howManyParticle = 8;
-			setTime = 2;
-		}
-		if (sceneChangeFrame >= 360) {
-			howManyParticle = 3;
-			setTime = 4;
-		}
-		if (sceneChangeFrame >= 480) {
-			howManyParticle = 1;
-			setTime = 30;
-		}
-
-
-	}
-
-}
-
-void TitleScene::CreateParticle() {
-	tmpParticle* b = new tmpParticle();
-	b->sprite = new Sprite();
-
-	float x = RandomGenerator::GetInstance()->getRandom(transXScope);
-	float s = RandomGenerator::GetInstance()->getRandom(sScope);
-
-	float v = RandomGenerator::GetInstance()->getRandom(vScope);
-
-	//b->sprite->Initialize({ x - 100,y }, { x, y + 100 }, "Resources/Title/aaa.png");
-	b->sprite->Initialize({ 100, 100 }, "Resources/Title/titleHeart.png");
-
-	b->sprite->transform.translate.x = x;
-	b->sprite->transform.translate.y = 720;
-
-	b->velocity = v;
-	b->sprite->transform.scale *= s;
-	blacks.push_back(b);
-
-	ct = int(setTime);
-	//ct = int(0);
 }
