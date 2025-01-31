@@ -1,6 +1,6 @@
 #include "GameScene.h"
-#include "../Manager/ModelManager.h"
-#include "../Base/Input/Input.h"
+
+using namespace MyEngine;
 
 void GameScene::Initialize() {
 	stageArr[SHIP] = std::make_unique<ShipStage>();
@@ -12,6 +12,8 @@ void GameScene::Initialize() {
 	stageArr[SHIP]->FirstInitialize({});
 	stageArr[OUTSIDE]->FirstInitialize({});
 	stageArr[INSIDE]->FirstInitialize({});
+
+	//TextureManager::GetInstance()->LoadTexture("Resources/Title/background.png");
 }
 
 void GameScene::Update() {
@@ -35,6 +37,7 @@ void GameScene::Update() {
 	stageArr[currentStageNo]->StageChange();
 	stageArr[currentStageNo]->Update();
 	stageArr[currentStageNo]->ItemUpdate(currentStageNo);
+	stageArr[currentStageNo]->CheckItemNum(currentStageNo);
 
 #ifdef _DEBUG
 	stageArr[currentStageNo]->TimeLapse();
@@ -49,6 +52,6 @@ void GameScene::Draw() {
 
 void GameScene::SceneChange() {
 	if (stageArr[currentStageNo]->GetToClear()) {
-		//sceneNo = CLEAR;
+		sceneNo = CLEAR;
 	}
 }

@@ -8,6 +8,7 @@ void ClearScene::Initialize() {
 
 	TextureManager::GetInstance()->LoadTexture("Resources/Title/clear.png");
 	title.Initialize({ 1280,720 }, "Resources/Title/clear.png");
+	title.anchorPoint = {};
 
 	TextureManager::GetInstance()->LoadTexture("Resources/Title/black.png");
 	black.Initialize({ 1280,720 }, "Resources/Title/black.png");
@@ -21,7 +22,7 @@ void ClearScene::Update() {
 
 void ClearScene::Draw() {
 	title.Draw();
-	black.Draw();
+	//black.Draw();
 }
 
 void ClearScene::SceneChange() {

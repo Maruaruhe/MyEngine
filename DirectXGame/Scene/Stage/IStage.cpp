@@ -59,3 +59,24 @@ void IStage::ItemDraw(int currentStage){
 		}
 	}
 }
+
+void IStage::CheckItemNum(int currentStage) {
+	shipItemNums = 0;
+	for (std::shared_ptr<mapItem> item : items_) {
+		//SHIPの中にあるアイテムの数をカウント
+		if (item->nowWhere_ == SH) {
+			shipItemNums++;
+		}
+	}
+	if (shipItemNums >= 1) {
+		toClearScene = true;
+	}
+	else {
+		toClearScene = false;
+	}
+#ifdef _DEBUG
+	ImGui::Begin("items");
+	ImGui::SliderInt("num = %d", &shipItemNums, 0, 0);
+	ImGui::End();
+#endif // _DEBUG
+}

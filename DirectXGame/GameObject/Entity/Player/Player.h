@@ -124,7 +124,12 @@ private:
 	Sprite toggleLight_;
 	Sprite holdQ_;
 
+	Sprite takeItem_;
+	Sprite dropItem_;
+
 	bool canOpenDoor_;
+	bool canTakeItem_;
+	bool canDropItem_;
 
 	WASD wasd_;
 	const float kXkeys = 50;

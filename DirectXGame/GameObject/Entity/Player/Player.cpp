@@ -46,11 +46,20 @@ void Player::Initialize() {
 	deads_.Initialize({ 1280,720 }, "Resources/Dead/youdied.png");
 	deads_.anchorPoint = {};
 	toggleLight_.Initialize({ 214,31 }, "Resources/Entity/Player/ToggleLight.png");
-	toggleLight_.transform.translate = { 1000,30,0 };
+	toggleLight_.transform.translate = { 1100,30,0 };
+
+	dropItem_.Initialize({ 200,35 }, "Resources/Entity/Player/dropItem.png");
+	dropItem_.anchorPoint = { 0.5f,0.5f };
+	dropItem_.transform.translate = { 1100,70,0 };
 
 	holdQ_.Initialize({ 358,31 }, "Resources/Entity/Player/HoldR.png");
 	holdQ_.anchorPoint = { 0.5f,0.5f };
 	holdQ_.transform.translate = { 640,360,0 };
+
+	takeItem_.Initialize({ 200,30 }, "Resources/Entity/Player/takeItem.png");
+	takeItem_.anchorPoint = { 0.5f,0.5f };
+	takeItem_.transform.translate = { 640,360,0 };
+
 
 	wasd_.w[0].Initialize({ 32,32 }, "Resources/Entity/Player/falseW.png");
 	wasd_.w[1].Initialize({ 32,32 }, "Resources/Entity/Player/trueW.png");
@@ -131,6 +140,8 @@ void Player::Update() {
 	//テクスチャ
 	toggleLight_.Update();
 	holdQ_.Update();
+	takeItem_.Update();
+	dropItem_.Update();
 
 	for (int i = 0; i < 2; i++) {
 		wasd_.w[i].Update();
@@ -205,9 +216,17 @@ void Player::Draw() {
 void Player::SpriteDraw() {
 	if (state_.isAlive) {
 		toggleLight_.Draw();
+		if (canDropItem_) {
+			dropItem_.Draw();
+		}
+
 		if (canOpenDoor_) {
 			holdQ_.Draw();
 		}
+		if (canTakeItem_) {
+			takeItem_.Draw();
+		}
+
 		wasd_.w[wasd_.isw].Draw();
 		wasd_.a[wasd_.isa].Draw();
 		wasd_.s[wasd_.iss].Draw();
@@ -437,16 +456,19 @@ void Player::CheckItemCollision() {
 		if (itemAABB.CheckLineCollision(playerSight)) {
 			//拾う処理
 			items_[i]->TakenItem();
+			canTakeItem_ = true;
 		}
 		else {
-
+			canTakeItem_ = false;
 		}
 
 		//Item Update
 		if (items_[i]->isTaken_) {
 			items_[i]->model_.transform.translate = {};
+			canDropItem_ = true;
 			if (KeyInput::GetInstance()->TriggerKey(DIK_G)) {
 				items_[i]->DropItem(model.transform.translate);
+				canDropItem_ = false;
 			}
 		}
 	}

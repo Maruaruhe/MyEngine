@@ -86,6 +86,8 @@ public:
 	void ItemUpdate(int currentStage);
 	void ItemDraw(int currentStage);
 
+	void CheckItemNum(int currentStage);
+
 	void SpriteView();
 
 	IStage();
@@ -96,5 +98,7 @@ public:
 	bool GetToClear() {return toClearScene;}
 
 private :
+
+	int shipItemNums = 0;
 };
 
