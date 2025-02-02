@@ -39,6 +39,7 @@ void GameScene::Update() {
 	stageArr[currentStageNo]->Update();
 	stageArr[currentStageNo]->ItemUpdate(currentStageNo);
 	stageArr[currentStageNo]->CheckItemNum(currentStageNo);
+	stageArr[currentStageNo]->DeadCheck();
 
 #ifdef _DEBUG
 	stageArr[currentStageNo]->TimeLapse();
@@ -49,10 +50,14 @@ void GameScene::Draw() {
 	stageArr[currentStageNo]->Draw();
 	stageArr[currentStageNo]->ItemDraw(currentStageNo);
 	stageArr[currentStageNo]->SpriteDraw();
+	stageArr[currentStageNo]->ClearDraw();
 }
 
 void GameScene::SceneChange() {
 	if (stageArr[currentStageNo]->GetToClear()) {
 		sceneNo = CLEAR;
+	}
+	if (stageArr[currentStageNo]->GetToOver()) {
+		sceneNo = TITLE;
 	}
 }

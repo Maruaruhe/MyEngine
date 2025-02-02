@@ -46,11 +46,11 @@ protected:
 
 	static Lighting light_;
 
+	static Sprite toClear_;
+
 	static std::unique_ptr<Camera> camera2;
 
 	MapJson mapJson_;
-
-	static Sprite toggleLight_;
 
 	static std::vector<std::shared_ptr<mapItem>> items_;
 
@@ -84,10 +84,12 @@ public:
 	void GameInitialize();
 
 	void TimeLapse();
+	void ClearDraw();
 	void ItemUpdate(int currentStage);
 	void ItemDraw(int currentStage);
 
 	void CheckItemNum(int currentStage);
+	void DeadCheck();
 
 	void SpriteView();
 
@@ -97,6 +99,7 @@ public:
 	//Getter
 	int GetStageNo() { return stageNo; }
 	bool GetToClear() {return toClearScene;}
+	bool GetToOver() {return toOverScene;}
 
 private :
 

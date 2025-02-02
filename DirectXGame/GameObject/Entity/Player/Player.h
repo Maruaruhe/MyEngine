@@ -79,6 +79,7 @@ public:
 	Vector3 GetFrontVector(float length);
 	Vector3 GetFrontLightVector(float length);
 	bool StageChangeByDoor();
+	bool GetIsAlive() { return state_.isAlive; }
 
 	AABB GetCollision();
 private:

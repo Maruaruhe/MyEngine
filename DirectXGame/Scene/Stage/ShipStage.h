@@ -1,6 +1,7 @@
 #pragma once
 #include "IStage.h"
 #include "../../Manager/FileManager.h"
+#include "../../Manager/TextureManager.h"
 #include "../../Object/Particle/Particle.h"
 
 #include "../../GameObject/Object/Map/MapJson.h"

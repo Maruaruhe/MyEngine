@@ -342,6 +342,11 @@ void Player::Move() {
 	Vector3 fixVec{};
 	mapJson_->CheckCollision(GetCollision(), { move.x, state_.velocity.y, move.z }, & fixVec);
 	model.transform.translate += fixVec;
+
+	//死亡チェック
+	if (model.transform.translate.y <= -7.0f) {
+		state_.isAlive = false;
+	}
 }
 
 void Player::Jump() {

@@ -1,17 +1,21 @@
 #include "IStage.h"
+#include "../../Manager/TextureManager.h"
 
-int IStage::stageNo = INSIDE;
+using namespace MyEngine;
+
+int IStage::stageNo = SHIP;
 
 int IStage::flame = 0;
 int IStage::time = 0;
 
 bool IStage::toClearScene = false;
+bool IStage::toOverScene = false;
+
+Sprite IStage::toClear_ = {};
 
 Player IStage::player_ = {};
 
 Lighting IStage::light_ = {};
-
-Sprite IStage::toggleLight_ = {};
 
 std::vector<std::shared_ptr<mapItem>> IStage::items_ = {};
 
@@ -34,9 +38,13 @@ void IStage::GameInitialize() {
 	flame = 0;
 	time = 0;
 
-	stageNo = INSIDE;
+	stageNo = SHIP;
 
 	toClearScene = false;
+	toOverScene = false;
+
+	toClear_.Initialize({ 180,35 }, "Resources/Title/toClear.png");
+	toClear_.transform.translate = { 640,500,0 };
 }
 
 void IStage::TimeLapse() {
@@ -47,6 +55,13 @@ void IStage::TimeLapse() {
 	ImGui::Begin("nowTime");
 	ImGui::Text("time : %d", time);
 	ImGui::End();
+}
+
+void IStage::ClearDraw() {
+	if (shipItemNums >= 1) {
+		toClear_.Update();
+		toClear_.Draw();
+	}
 }
 
 void IStage::ItemUpdate(int currentStage){
@@ -76,7 +91,7 @@ void IStage::CheckItemNum(int currentStage) {
 		}
 	}
 	if (shipItemNums >= 1) {
-		if (MyEngine::KeyInput::GetInstance()->TriggerKey(DIK_G)) {
+		if (MyEngine::KeyInput::GetInstance()->TriggerKey(DIK_C)) {
 			toClearScene = true;
 		}
 	}
@@ -88,4 +103,12 @@ void IStage::CheckItemNum(int currentStage) {
 	ImGui::SliderInt("num = %d", &shipItemNums, 0, 0);
 	ImGui::End();
 #endif // _DEBUG
+}
+
+void IStage::DeadCheck() {
+	if (!player_.GetIsAlive() && player_.deadFlame >= 180) {
+		if (MyEngine::KeyInput::GetInstance()->TriggerKey(DIK_SPACE)) {
+			toOverScene = true;
+		}
+	}
 }
