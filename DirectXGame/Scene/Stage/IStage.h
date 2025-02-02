@@ -33,6 +33,7 @@ protected:
 	static int stageNo;
 
 	static bool toClearScene;
+	static bool toOverScene;
 
 	//現在の時刻
 	static int flame;

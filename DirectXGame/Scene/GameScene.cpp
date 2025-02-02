@@ -13,6 +13,7 @@ void GameScene::Initialize() {
 	stageArr[OUTSIDE]->FirstInitialize({});
 	stageArr[INSIDE]->FirstInitialize({});
 
+	currentStageNo = 0;
 	//TextureManager::GetInstance()->LoadTexture("Resources/Title/background.png");
 }
 

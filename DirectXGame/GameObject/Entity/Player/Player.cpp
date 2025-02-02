@@ -347,7 +347,7 @@ void Player::Move() {
 void Player::Jump() {
 
 	//Jump
-	if (kInput_->PushKey(DIK_SPACE)) {
+	if (kInput_->TriggerKey(DIK_SPACE)) {
 		if (!state_.isJump) {
 			state_.velocity.y = 0.25f;
 			state_.isJump = true;

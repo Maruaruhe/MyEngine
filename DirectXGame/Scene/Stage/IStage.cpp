@@ -30,6 +30,13 @@ void IStage::GameInitialize() {
 
 	items_ = mapJson_.CreateItem(camera2.get(), "Inside");
 	player_.SetItems(items_);
+
+	flame = 0;
+	time = 0;
+
+	stageNo = SHIP;
+
+	toClearScene = false;
 }
 
 void IStage::TimeLapse() {
