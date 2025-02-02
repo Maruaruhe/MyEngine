@@ -1,6 +1,6 @@
 #include "IStage.h"
 
-int IStage::stageNo = SHIP;
+int IStage::stageNo = INSIDE;
 
 int IStage::flame = 0;
 int IStage::time = 0;
@@ -34,7 +34,7 @@ void IStage::GameInitialize() {
 	flame = 0;
 	time = 0;
 
-	stageNo = SHIP;
+	stageNo = INSIDE;
 
 	toClearScene = false;
 }
@@ -76,7 +76,9 @@ void IStage::CheckItemNum(int currentStage) {
 		}
 	}
 	if (shipItemNums >= 1) {
-		toClearScene = true;
+		if (MyEngine::KeyInput::GetInstance()->TriggerKey(DIK_G)) {
+			toClearScene = true;
+		}
 	}
 	else {
 		toClearScene = false;

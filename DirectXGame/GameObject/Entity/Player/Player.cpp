@@ -444,6 +444,8 @@ void Player::CheckItemCollision() {
 	//mapからItem情報を取得
 	//std::vector<mapItem*> items = mapJson_->GetItems();
 
+		int itemNum = 0;
+
 	for (int i = 0; i < items_.size(); i++) {
 		AABB itemAABB;
 		itemAABB.CreateEntityAABB(items_[i]->model_.transform);
@@ -452,13 +454,15 @@ void Player::CheckItemCollision() {
 		playerSight.start = model.transform.translate;
 		playerSight.end = GetFrontVector(2.0f);
 
+
 		//視線との当たり判定
 		if (itemAABB.CheckLineCollision(playerSight)) {
 			//拾う処理
 			items_[i]->TakenItem();
 			canTakeItem_ = true;
+			itemNum++;
 		}
-		else {
+		if (itemNum <= 0) {
 			canTakeItem_ = false;
 		}
 

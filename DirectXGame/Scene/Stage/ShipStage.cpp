@@ -18,7 +18,7 @@ void ShipStage::Initialize(int prevStage) {
 	player_.view.SetCamera(camera2.get());
 	player_.model.transform.translate = { 4.0f,1.5f,-11.0f };
 	player_.model.transform.translate = { 0.0f,1.5f,0.0f };
-	player_.model.transform.rotate = { 0.0f,0.0f,0.0f };
+	player_.model.transform.rotate = { 0.0f,3.14f,0.0f };
 
 	stageChangeCount = 0;
 
