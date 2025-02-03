@@ -13,6 +13,7 @@ bool IStage::toOverScene = false;
 bool IStage::isPosed = false;
 
 Sprite IStage::toClear_ = {};
+Sprite IStage::isPosed_ = {};
 
 Player IStage::player_ = {};
 
@@ -64,6 +65,9 @@ void IStage::GameInitialize() {
 
 	toClear_.Initialize({ 180,35 }, "Resources/Title/toClear.png");
 	toClear_.transform.translate = { 640,500,0 };
+
+	isPosed_.Initialize({ 300,40 }, "Resources/Title/isPosed.png");
+	isPosed_.transform.translate = { 150,50,0 };
 }
 
 void IStage::TimeLapse() {
@@ -81,6 +85,8 @@ void IStage::ClearDraw() {
 		toClear_.Update();
 		toClear_.Draw();
 	}
+	isPosed_.Update();
+	isPosed_.Draw();
 }
 
 void IStage::ItemUpdate(int currentStage){

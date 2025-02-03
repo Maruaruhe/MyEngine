@@ -50,6 +50,7 @@ protected:
 	static Lighting light_;
 
 	static Sprite toClear_;
+	static Sprite isPosed_;
 
 	static std::unique_ptr<Camera> camera2;
 
