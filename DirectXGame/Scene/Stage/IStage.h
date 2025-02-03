@@ -42,6 +42,9 @@ protected:
 	//初回ロードかどうか
 	bool isFirstLoad = true;
 
+	//pose
+	static bool isPosed;
+
 	static Player player_;
 
 	static Lighting light_;
@@ -87,6 +90,7 @@ public:
 	void ClearDraw();
 	void ItemUpdate(int currentStage);
 	void ItemDraw(int currentStage);
+	bool ChackIsPosed();
 
 	void CheckItemNum(int currentStage);
 	void DeadCheck();
@@ -100,6 +104,9 @@ public:
 	int GetStageNo() { return stageNo; }
 	bool GetToClear() {return toClearScene;}
 	bool GetToOver() {return toOverScene;}
+	bool GetIsPosed() { return isPosed; }
+
+	void SetPose(bool answer) { isPosed = answer; }
 
 private :
 

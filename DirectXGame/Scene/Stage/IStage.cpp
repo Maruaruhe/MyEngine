@@ -10,6 +10,7 @@ int IStage::time = 0;
 
 bool IStage::toClearScene = false;
 bool IStage::toOverScene = false;
+bool IStage::isPosed = false;
 
 Sprite IStage::toClear_ = {};
 
@@ -23,6 +24,24 @@ std::unique_ptr<Camera> IStage::camera2;
 
 IStage::IStage(){}
 IStage::~IStage() {}
+
+bool IStage::ChackIsPosed() {
+	if (MyEngine::KeyInput::GetInstance()->TriggerKey(DIK_ESCAPE)) {
+		if (!isPosed) {
+			isPosed = true;
+		}
+		else {
+			isPosed = false;
+		}
+	}
+
+	if (isPosed) {
+		return true;
+	}
+	else{
+		return false;
+	}
+}
 
 void IStage::GameInitialize() {
 	camera2 = std::make_unique<Camera>();

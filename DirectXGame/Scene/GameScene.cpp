@@ -36,10 +36,12 @@ void GameScene::Update() {
 
 
 	stageArr[currentStageNo]->StageChange();
-	stageArr[currentStageNo]->Update();
-	stageArr[currentStageNo]->ItemUpdate(currentStageNo);
-	stageArr[currentStageNo]->CheckItemNum(currentStageNo);
-	stageArr[currentStageNo]->DeadCheck();
+	if (!stageArr[currentStageNo]->ChackIsPosed()) {
+		stageArr[currentStageNo]->Update();
+		stageArr[currentStageNo]->ItemUpdate(currentStageNo);
+		stageArr[currentStageNo]->CheckItemNum(currentStageNo);
+		stageArr[currentStageNo]->DeadCheck();
+	}
 
 #ifdef _DEBUG
 	stageArr[currentStageNo]->TimeLapse();
