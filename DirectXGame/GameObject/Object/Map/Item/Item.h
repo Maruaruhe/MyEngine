@@ -32,6 +32,7 @@ public:
 	/// 取得状況
 	/// </summary>
 	void TakenItem();
+	void SetTakenItem(bool answer) { isTaken_ = answer; }
 
 	void DropItem(Vector3 player);
 

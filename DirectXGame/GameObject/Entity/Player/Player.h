@@ -7,7 +7,12 @@
 #include "../../Object/Map/MapJson.h"
 #include "../../../Object/SpotLight/SpotLight.h"
 
+struct ItemSlot {
+	bool isFilled;//埋まっているか
+};
+
 struct State {
+	ItemSlot itemSlot[4]; //アイテム枠
 	float kMapSpeed; //移動速度制限
 	float moveSpeed; //移動速度
 	float stamina; //スタミナ
@@ -109,7 +114,7 @@ private:
 
 	//Item判定
 	void CheckItemCollision();
-	void CheckItemBring();
+	//void CheckItemBring(std::shared_ptr<mapItem> item);
 
 private:
 	MyEngine::GamePadInput* pInput_;

@@ -131,7 +131,7 @@ void Player::Update() {
 
 
 	CheckItemCollision();
-	CheckItemBring();
+	//CheckItemBring();
 
 	model.Update();
 	view.Update();
@@ -248,22 +248,27 @@ void Player::SpriteDraw() {
 void Player::Move() {
 	Vector3 move{};
 
+	float moveSpeed = 0.075f;
+	if (KeyInput::GetInstance()->PushKey(DIK_LSHIFT)) {
+		moveSpeed = 0.125f;
+	}
+
 	if (kInput_->PushKey(DIK_W)) {
-		move.z += 0.1f;
+		move.z += moveSpeed;
 		wasd_.isw = true;
 	}
 	else {
 		wasd_.isw = false;
 	}
 	if (kInput_->PushKey(DIK_S)) {
-		move.z -= 0.1f;
+		move.z -= moveSpeed;
 		wasd_.iss = true;
 	}
 	else {
 		wasd_.iss = false;
 	}
 	if (kInput_->PushKey(DIK_A)) {
-		move.x -= 0.1f;
+		move.x -= moveSpeed;
 		wasd_.isa = true;
 	}
 	else {
@@ -271,11 +276,17 @@ void Player::Move() {
 	}
 
 	if (kInput_->PushKey(DIK_D)) {
-		move.x += 0.1f;
+		move.x += moveSpeed;
 		wasd_.isd = true;
 	}
 	else {
 		wasd_.isd = false;
+	}
+
+	//斜め移動の場合　減速
+	if (move.x != 0.0f && move.z != 0.0f) {
+		move.x *= 0.71f;
+		move.z *= 0.71f;
 	}
 
 	//rotate
@@ -491,25 +502,25 @@ void Player::CheckItemCollision() {
 }
 
 
-void Player::CheckItemBring() {
-	//if (map_->GetItem()->isTaken_) {
-	//	//所持しているとき手に持つ
-	//	map_->GetItem()->model_.transform.translate = GetItemFrontVector();
-	//	//PlayerのRotateと同期
-	//	map_->GetItem()->model_.transform.rotate = model.transform.rotate;
-
-	//	//
-	//	if (KeyInput::GetInstance()->PushKey(DIK_G)) {//Drop処理
-	//		map_->GetItem()->isTaken_ = false;
-	//		//足元に落とす & リセット
-	//		map_->GetItem()->model_.transform.translate = GetFrontVector(0.7f);
-	//		map_->GetItem()->model_.transform.translate.y = 0.0f;
-	//		map_->GetItem()->model_.transform.scale = { 1.0f,1.0f,1.0f };
-	//		map_->GetItem()->model_.transform.rotate.x = {};
-	//		map_->GetItem()->model_.transform.rotate.z = {};
-	//	}
-	//}
-}
+//void Player::CheckItemBring(std::shared_ptr<mapItem> item) {
+//	//if (map_->GetItem()->isTaken_) {
+//	//	//所持しているとき手に持つ
+//	//	map_->GetItem()->model_.transform.translate = GetItemFrontVector();
+//	//	//PlayerのRotateと同期
+//	//	map_->GetItem()->model_.transform.rotate = model.transform.rotate;
+//
+//	//	//
+//	//	if (KeyInput::GetInstance()->PushKey(DIK_G)) {//Drop処理
+//	//		map_->GetItem()->isTaken_ = false;
+//	//		//足元に落とす & リセット
+//	//		map_->GetItem()->model_.transform.translate = GetFrontVector(0.7f);
+//	//		map_->GetItem()->model_.transform.translate.y = 0.0f;
+//	//		map_->GetItem()->model_.transform.scale = { 1.0f,1.0f,1.0f };
+//	//		map_->GetItem()->model_.transform.rotate.x = {};
+//	//		map_->GetItem()->model_.transform.rotate.z = {};
+//	//	}
+//	//}
+//}
 
 void Player::DeathUpdate() {
 	if (!state_.isAlive) {
