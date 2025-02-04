@@ -32,7 +32,7 @@ public:
 
 	//当たり判定
 	void CheckCollision(AABB pAABB, Vector3 move, Vector3* fixVector);
-	void CheckCollisionFloor(AABB pAABB, Vector3 move, Vector3* fixVector, bool* isFloor);
+	void CheckCollisionFloor(AABB pAABB, Vector3* move, Vector3* fixVector, bool* isFloor);
 	bool CheckCollisionWithEye(const Segment& eyeSegment);
 
 	LevelData GetLevel() { return level_; }

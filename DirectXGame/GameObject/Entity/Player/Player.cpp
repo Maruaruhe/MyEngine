@@ -368,13 +368,13 @@ void Player::Jump() {
 	Vector3 fixVector{};
 
 	//床との当たり判定
-	mapJson_->CheckCollisionFloor(GetCollision(), state_.velocity, &fixVector, &state_.onFloor);
+	mapJson_->CheckCollisionFloor(GetCollision(), &state_.velocity, &fixVector, &state_.onFloor);
 
 	if (!state_.onFloor) { //空中
 		state_.velocity.y -= 0.02f;
 	}
 	else { //地上
-		state_.velocity.y = 0.0f;
+		//state_.velocity.y = 0.0f;
 		state_.isJump = false;
 	}
 
