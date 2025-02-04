@@ -249,6 +249,7 @@ void Player::Move() {
 	Vector3 move{};
 
 	float moveSpeed = 0.075f;
+	//Dash
 	if (KeyInput::GetInstance()->PushKey(DIK_LSHIFT)) {
 		moveSpeed = 0.125f;
 	}
