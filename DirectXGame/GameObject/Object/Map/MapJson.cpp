@@ -101,16 +101,16 @@ void MapJson::CheckCollisionFloor(AABB pAABB, Vector3 move, Vector3* fixVector, 
             if (wallAABB.CheckCollision(pAABB)) {
                 //Y軸の当たり判定
                 if (pAABB.max.y > wallAABB.max.y && wall.direction_.toBot) {//壁に下方面へ衝突
-                    distance.y = pAABB.max.y - wallAABB.min.y;
+                    distance.y = pAABB.min.y - wallAABB.max.y;
                     if (fabs(move.y) + dis >= fabs(distance.y)) {//移動量が差分より大きかったら調整
-                        fixVector->y = -fabs(distance.y);
+                        fixVector->y = fabs(distance.y);
                         *isFloor = true;
                     }
                 }
                 if (pAABB.max.y < wallAABB.max.y && wall.direction_.toTop) {//上方面へ
-                    distance.y = pAABB.min.y - wallAABB.max.y;
+                    distance.y = pAABB.max.y - wallAABB.min.y;
                     if (fabs(move.y) + dis >= fabs(distance.y)) {//移動量が差分より大きかったら調整
-                        fixVector->y = fabs(distance.y);
+                        fixVector->y = -fabs(distance.y);
                         *isFloor = true;
                     }
                 }
