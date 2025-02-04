@@ -476,6 +476,10 @@ void Player::CheckItemCollision() {
 		if (itemAABB.CheckLineCollision(playerSight)) {
 			//拾う処理
 			items_[i]->TakenItem();
+			//Fキーでアイテムを取得
+			if (KeyInput::GetInstance()->TriggerKey(DIK_F)) {
+
+			}
 			canTakeItem_ = true;
 			itemNum++;
 		}
@@ -503,25 +507,25 @@ void Player::CheckItemCollision() {
 }
 
 
-//void Player::CheckItemBring(std::shared_ptr<mapItem> item) {
-//	//if (map_->GetItem()->isTaken_) {
-//	//	//所持しているとき手に持つ
-//	//	map_->GetItem()->model_.transform.translate = GetItemFrontVector();
-//	//	//PlayerのRotateと同期
-//	//	map_->GetItem()->model_.transform.rotate = model.transform.rotate;
-//
-//	//	//
-//	//	if (KeyInput::GetInstance()->PushKey(DIK_G)) {//Drop処理
-//	//		map_->GetItem()->isTaken_ = false;
-//	//		//足元に落とす & リセット
-//	//		map_->GetItem()->model_.transform.translate = GetFrontVector(0.7f);
-//	//		map_->GetItem()->model_.transform.translate.y = 0.0f;
-//	//		map_->GetItem()->model_.transform.scale = { 1.0f,1.0f,1.0f };
-//	//		map_->GetItem()->model_.transform.rotate.x = {};
-//	//		map_->GetItem()->model_.transform.rotate.z = {};
-//	//	}
-//	//}
-//}
+void Player::CheckItemBring(std::shared_ptr<mapItem> item) {
+	//if (map_->GetItem()->isTaken_) {
+	//	//所持しているとき手に持つ
+	//	map_->GetItem()->model_.transform.translate = GetItemFrontVector();
+	//	//PlayerのRotateと同期
+	//	map_->GetItem()->model_.transform.rotate = model.transform.rotate;
+
+	//	//
+	//	if (KeyInput::GetInstance()->PushKey(DIK_G)) {//Drop処理
+	//		map_->GetItem()->isTaken_ = false;
+	//		//足元に落とす & リセット
+	//		map_->GetItem()->model_.transform.translate = GetFrontVector(0.7f);
+	//		map_->GetItem()->model_.transform.translate.y = 0.0f;
+	//		map_->GetItem()->model_.transform.scale = { 1.0f,1.0f,1.0f };
+	//		map_->GetItem()->model_.transform.rotate.x = {};
+	//		map_->GetItem()->model_.transform.rotate.z = {};
+	//	}
+	//}
+}
 
 void Player::DeathUpdate() {
 	if (!state_.isAlive) {

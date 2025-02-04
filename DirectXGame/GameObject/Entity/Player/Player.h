@@ -114,7 +114,7 @@ private:
 
 	//Item判定
 	void CheckItemCollision();
-	//void CheckItemBring(std::shared_ptr<mapItem> item);
+	void CheckItemBring(std::shared_ptr<mapItem> item);
 
 private:
 	MyEngine::GamePadInput* pInput_;

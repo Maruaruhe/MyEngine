@@ -41,6 +41,8 @@ public:
 	Model model_;
 	nowWhere nowWhere_;
 
+	int whereSlot = 0;
+
 
 private:
 	Camera* camera_;
