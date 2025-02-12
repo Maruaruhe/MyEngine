@@ -41,7 +41,7 @@ public:
 	Model model_;
 	nowWhere nowWhere_;
 
-	int whereSlot = 0;
+	int whereSlot = -1;
 
 
 private:

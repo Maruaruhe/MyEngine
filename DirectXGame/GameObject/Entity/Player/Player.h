@@ -9,6 +9,8 @@
 
 struct ItemSlot {
 	bool isFilled;//埋まっているか
+	bool isSelected;//選択されているか
+	Sprite sprite[2];
 };
 
 struct State {
@@ -97,6 +99,10 @@ private:
 	/// </summary>
 	void Jump();
 	/// <summary>
+	/// アイテムバー更新処理
+	/// </summary>
+	void ItemSlotUpdate();
+	/// <summary>
 	/// マップ関連
 	/// </summary>
 
@@ -115,6 +121,9 @@ private:
 	//Item判定
 	void CheckItemCollision();
 	void CheckItemBring(std::shared_ptr<mapItem> item);
+
+	int CheckItemSlot();
+	int GetNowSlot();
 
 private:
 	MyEngine::GamePadInput* pInput_;

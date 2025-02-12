@@ -21,6 +21,7 @@ void mapItem::Initialize(const Transform transform,  std::string filename) {
 	model_.material->enableLighting = true;
 
 	nowWhere_ = INS;
+	whereSlot = -1;
 }
 
 void mapItem::Update() {

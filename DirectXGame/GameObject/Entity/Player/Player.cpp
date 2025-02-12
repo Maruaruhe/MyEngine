@@ -33,6 +33,17 @@ void Player::Initialize() {
 	state_.moveSpeed;
 	state_.stamina;
 	state_.weight;
+	for (int i = 0; i < 4; i++) {
+		state_.itemSlot[i].isFilled = false;
+		state_.itemSlot[i].isSelected = false;
+		state_.itemSlot[i].sprite[0].Initialize({64,64}, "Resources/Entity/Player/itemEmptySlot.png");
+		state_.itemSlot[i].sprite[1].Initialize({64,64}, "Resources/Entity/Player/itemFillSlot.png");
+
+		int distance = 120;
+		state_.itemSlot[i].sprite[0].transform.translate = {460.0f + distance * i,  600, 0};
+		state_.itemSlot[i].sprite[1].transform.translate = {460.0f + distance * i,  600, 0};
+	}
+	state_.itemSlot[0].isSelected = true;
 
 	tForCamera = {};
 	deadCamera = {};
@@ -105,8 +116,8 @@ void Player::Initialize() {
 
 	space_.sprite[0].Initialize({ 64,32 }, "Resources/Entity/Player/falseSpace.png");
 	space_.sprite[1].Initialize({ 64,32 }, "Resources/Entity/Player/trueSpace.png");
-	space_.sprite[0].transform.translate = {640,650,0};
-	space_.sprite[1].transform.translate = { 640,650,0 };
+	space_.sprite[0].transform.translate = {640,680,0};
+	space_.sprite[1].transform.translate = { 640,680,0 };
 	space_.sprite[0].transform.scale*=2;
 	space_.sprite[1].transform.scale *= 2;
 	space_.isUsed = false;
@@ -123,6 +134,7 @@ void Player::Update() {
 	if (state_.isAlive) {
 		Move();
 		Jump();
+		ItemSlotUpdate();
 	}
 	else {
 	DeathUpdate();
@@ -238,6 +250,10 @@ void Player::SpriteDraw() {
 		arrows_.d[arrows_.isd].Draw();
 
 		space_.sprite[space_.isUsed].Draw();
+
+		for (int i = 0; i < 4; i++) {
+			state_.itemSlot[i].sprite[state_.itemSlot[i].isFilled].Draw();
+		}
 	}
 
 	if (!state_.isAlive) {
@@ -393,6 +409,43 @@ void Player::Jump() {
 	model.transform.translate += fixVector;
 }
 
+void Player::ItemSlotUpdate() {
+	//現在のアイテムスロット番号を取得
+	int whereNowSlot = GetNowSlot();
+	//ローテーション
+	if (KeyInput::GetInstance()->TriggerKey(DIK_O)) {
+		whereNowSlot--;
+		if (whereNowSlot <= -1) {
+			whereNowSlot = 3;
+		}
+	}
+	if (KeyInput::GetInstance()->TriggerKey(DIK_P)) {
+		whereNowSlot++;
+		if (whereNowSlot >= 4) {
+			whereNowSlot = 0;
+		}
+	}
+
+	//選択されているものの切り替え
+	state_.itemSlot[GetNowSlot()].isSelected = false;
+	state_.itemSlot[whereNowSlot].isSelected = true;
+
+	//選択されているものは大きく表示
+	for (int i = 0; i < 4; i++) {
+		if (state_.itemSlot[i].isSelected) {
+			float selectedScale = 1.3f;
+			state_.itemSlot[i].sprite[0].transform.scale = {selectedScale,selectedScale,selectedScale};
+			state_.itemSlot[i].sprite[1].transform.scale = {selectedScale,selectedScale,selectedScale};
+		}
+		else {
+			//非選択時は元に戻す
+			state_.itemSlot[i].sprite[0].transform.scale = {1.0f,1.0f,1.0f};
+			state_.itemSlot[i].sprite[1].transform.scale = {1.0f,1.0f,1.0f};
+		}
+	}
+
+}
+
 bool Player::StageChangeByDoor() {
 	//ドア判定
 	Segment playerEyeSegment;
@@ -458,9 +511,6 @@ Vector3 Player::GetItemFrontVector() {
 }
 
 void Player::CheckItemCollision() {
-	//mapからItem情報を取得
-	//std::vector<mapItem*> items = mapJson_->GetItems();
-
 		int itemNum = 0;
 
 	for (int i = 0; i < items_.size(); i++) {
@@ -475,10 +525,11 @@ void Player::CheckItemCollision() {
 		//視線との当たり判定
 		if (itemAABB.CheckLineCollision(playerSight)) {
 			//拾う処理
-			items_[i]->TakenItem();
 			//Fキーでアイテムを取得
 			if (KeyInput::GetInstance()->TriggerKey(DIK_F)) {
-
+				items_[i]->isTaken_ = true;
+				items_[i]->whereSlot = CheckItemSlot();
+				state_.itemSlot[CheckItemSlot()].isFilled = true;
 			}
 			canTakeItem_ = true;
 			itemNum++;
@@ -488,11 +539,20 @@ void Player::CheckItemCollision() {
 		}
 
 		//Item Update
+		//所持されている状態 & 選択されているスロットにアイテムがある場合
 		if (items_[i]->isTaken_) {
 			items_[i]->model_.transform.translate = {};
 			canDropItem_ = true;
-			if (KeyInput::GetInstance()->TriggerKey(DIK_G)) {
-				items_[i]->DropItem(model.transform.translate);
+			//選択されているスロットにアイテムがある場合
+			if (state_.itemSlot[i].isFilled && GetNowSlot() == i) {
+				if (KeyInput::GetInstance()->TriggerKey(DIK_G)) {
+					items_[i]->DropItem(model.transform.translate);
+					items_[i]->whereSlot = -1;
+					items_[i]->isTaken_ = false;
+					state_.itemSlot[i].isFilled = false;
+				}
+			}
+			else {
 				canDropItem_ = false;
 			}
 		}
@@ -504,6 +564,43 @@ void Player::CheckItemCollision() {
 	ImGui::End();
 
 #endif // DEBUG
+}
+
+int Player::CheckItemSlot() {
+	//前から順に埋めていく
+	if (!state_.itemSlot[0].isFilled) { //埋まってなかったら
+		return 0;
+	}
+	else if (!state_.itemSlot[1].isFilled) { //埋まってなかったら
+		return 1;
+	}
+	else if (!state_.itemSlot[2].isFilled) { //埋まってなかったら
+		return 2;
+	}
+	else if (!state_.itemSlot[3].isFilled) { //埋まってなかったら
+		return 3;
+	}
+	else {
+		return -1;
+	}
+}
+
+int Player::GetNowSlot() {
+	if (state_.itemSlot[0].isSelected) {
+		return 0;
+	}
+	else if (state_.itemSlot[1].isSelected) {
+		return 1;
+	}
+	else if (state_.itemSlot[2].isSelected) {
+		return 2;
+	}
+	else if (state_.itemSlot[3].isSelected) {
+		return 3;
+	}
+	else {
+		return -1;
+	}
 }
 
 
