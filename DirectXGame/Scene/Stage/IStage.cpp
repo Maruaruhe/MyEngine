@@ -58,7 +58,7 @@ void IStage::GameInitialize() {
 	flame = 0;
 	time = 0;
 
-	stageNo = INSIDE;
+	stageNo = SHIP;
 
 	toClearScene = false;
 	toOverScene = false;

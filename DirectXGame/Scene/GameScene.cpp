@@ -51,7 +51,9 @@ void GameScene::Update() {
 void GameScene::Draw() {
 	stageArr[currentStageNo]->Draw();
 	stageArr[currentStageNo]->ItemDraw(currentStageNo);
-	stageArr[currentStageNo]->SpriteDraw();
+	if (!stageArr[currentStageNo]->GetIsPosed()) {
+		stageArr[currentStageNo]->SpriteDraw();
+	}
 	stageArr[currentStageNo]->ClearDraw();
 }
 
